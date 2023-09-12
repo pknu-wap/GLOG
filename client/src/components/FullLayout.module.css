@@ -1,0 +1,14 @@
+.content_card {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  padding-top: 124px;
+  padding-bottom: 124px;
+}
+
+.content_card_background_light {
+  background-color: white;
+}
+.content_card_background_dark {
+  background-color: black;
+}

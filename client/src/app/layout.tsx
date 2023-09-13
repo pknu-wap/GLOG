@@ -1,3 +1,5 @@
+'use client';
+
 import './globals.css';
 import React, { ReactNode } from 'react';
 import ThemeRegistry from './ThemeRegistry';

@@ -2,12 +2,12 @@
 
 import './globals.css';
 import React, { ReactNode } from 'react';
-import ThemeRegistry from './ThemeRegistry';
-import Header from '@/components/Header';
 // import Footer from '@/components/Footer';
-import FullLayout from '@/components/FullLayout';
-import ReactQuery from '@/components/Provider';
-import Recoil from '@/components/Recoil';
+import Recoil from '@/components/Recoil/Recoil';
+import ThemeRegistry from '@/components/ReactQuery/ThemeRegistry';
+import ReactQuery from '@/components/ReactQuery/Provider';
+import Header from '@/components/Layout/Header';
+import FullLayout from '@/components/Layout/FullLayout';
 
 // app/layout.js
 export default function RootLayout(props: { children: ReactNode }) {

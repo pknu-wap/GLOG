@@ -7,9 +7,9 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import type { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache';
 import React from 'react';
-import { lightTheme } from '@/themes/LightTheme';
-import { useRecoilValue } from 'recoil';
-import { userThemeState } from '@/recoil/atom';
+// import { lightTheme } from '@/themes/LightTheme';
+// import { useRecoilValue } from 'recoil';
+// import { userThemeState } from '@/recoil/atom';
 import { darkTheme } from '@/themes/DarkTheme';
 
 export type NextAppDirEmotionCacheProviderProps = {
@@ -27,7 +27,8 @@ export type NextAppDirEmotionCacheProviderProps = {
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
 export default function ThemeRegistry(props: NextAppDirEmotionCacheProviderProps) {
   const { options, children } = props;
-  const userTheme = useRecoilValue(userThemeState);
+  // const userTheme = useRecoilValue(userThemeState);
+  // const userTheme: 'dark' | 'light' = 'dark';
 
   const [{ cache, flush }] = React.useState(() => {
     const cache = createCache(options);
@@ -71,7 +72,10 @@ export default function ThemeRegistry(props: NextAppDirEmotionCacheProviderProps
 
   return (
     <CacheProvider value={cache}>
-      <ThemeProvider theme={userTheme === 'light' ? lightTheme : darkTheme}>
+      <ThemeProvider
+        theme={darkTheme}
+        // theme={userTheme === 'light' ? lightTheme : darkTheme}
+      >
         <CssBaseline />
         {children}
       </ThemeProvider>

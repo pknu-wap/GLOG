@@ -1,13 +1,11 @@
-'use client';
-
 import './globals.css';
 import React, { ReactNode } from 'react';
 import ThemeRegistry from './ThemeRegistry';
 import Header from '@/components/Header';
 // import Footer from '@/components/Footer';
 import FullLayout from '@/components/FullLayout';
-import { RecoilRoot } from 'recoil';
-import Providers from '@/components/Provider';
+import ReactQuery from '@/components/Provider';
+import Recoil from '@/components/Recoil';
 
 // app/layout.js
 export default function RootLayout(props: { children: ReactNode }) {
@@ -15,8 +13,8 @@ export default function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <RecoilRoot>
+        <Recoil>
+          <ReactQuery>
             <ThemeRegistry options={{ key: 'mui' }}>
               <Header />
               <div className="light">
@@ -24,8 +22,8 @@ export default function RootLayout(props: { children: ReactNode }) {
               </div>
               {/* <Footer /> */}
             </ThemeRegistry>
-          </RecoilRoot>
-        </Providers>
+          </ReactQuery>
+        </Recoil>
       </body>
     </html>
   );

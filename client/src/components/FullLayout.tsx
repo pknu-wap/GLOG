@@ -1,6 +1,6 @@
-import { useRecoilValue } from 'recoil';
+// import { useRecoilValue } from 'recoil';
 import classes from './FullLayout.module.css';
-import { userThemeState } from '@/recoil/atom';
+// import { userThemeState } from '@/recoil/atom';
 import { getCurrentThemeClass } from '@/constant/common';
 
 type Children = {
@@ -8,7 +8,8 @@ type Children = {
 };
 
 export default function FullLayout({ children }: Children) {
-  const userTheme = useRecoilValue(userThemeState);
+  const userTheme = 'dark';
+  // const userTheme = useRecoilValue(userThemeState);
 
   return (
     <div

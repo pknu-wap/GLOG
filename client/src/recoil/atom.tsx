@@ -8,3 +8,9 @@ export const userThemeState = atom<ThemeType>({
   default: 'dark',
   effects_UNSTABLE: [persistAtom],
 });
+
+export const isSidebarOpenState = atom<boolean>({
+  key: 'sidebarOpen',
+  default: true,
+  effects_UNSTABLE: [persistAtom],
+});

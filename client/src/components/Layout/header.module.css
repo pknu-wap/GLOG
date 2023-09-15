@@ -1,6 +1,6 @@
 .header_container {
   width: 100%;
-  height: 100px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   position: fixed;

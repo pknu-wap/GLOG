@@ -2,6 +2,7 @@ import { useRecoilValue } from 'recoil';
 import classes from './FullLayout.module.css';
 import { userThemeState } from '@/recoil/atom';
 import { getCurrentThemeClass } from '@/constant/common';
+import Sidebar from '../Sidebar/Sidebar';
 
 type Children = {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default function FullLayout({ children }: Children) {
         classes.content_card_background_light,
         classes.content_card_background_dark,
       )} ${classes.content_card}`}>
+      <Sidebar />
       {children}
     </div>
   );

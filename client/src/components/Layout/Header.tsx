@@ -1,7 +1,7 @@
 'use client';
 
 import { useRecoilState } from 'recoil';
-import classes from './Header.module.css';
+import classes from './header.module.css';
 import { userThemeState } from '@/recoil/atom';
 import { oppositeThemeExtraction } from '@/constant/common';
 import { useEffect } from 'react';

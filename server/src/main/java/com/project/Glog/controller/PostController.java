@@ -40,8 +40,8 @@ public class PostController {
                                        @RequestPart PostUpdateRequest postUpdateRequest) throws IOException {
 
         //TODO GetMapping으로 따로 파야할듯
-        //해당 유저의 게시글인지 판단하는 로직은 백엔드 컨트롤러 에서 이루어 져야 한다.
 
+        //해당 유저의 게시글인지 판단하는 로직은 백엔드에서 이루어 져야 한다.
         //해당 유저의 게시글이라면 업데이트 해서 돌려줌
         Post post = postService.update(userPrincipal, postUpdateRequest);
 

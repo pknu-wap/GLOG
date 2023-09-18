@@ -91,7 +91,7 @@ public class PostController {
 
     @GetMapping("/search/post/hashtag")
     public ResponseEntity<PostPreviewDtos> searchContentsByHashtag(@RequestParam String hashtag){
-        //hashtag 내용을 포함한 게시글의 리스트를 생성한다.
+        //hashtag 내용을 포함한 게시글의 리스트를 생성한다
         PostPreviewDtos postPreviewDtos = postService.searchPostsByHashtag(hashtag);
 
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);

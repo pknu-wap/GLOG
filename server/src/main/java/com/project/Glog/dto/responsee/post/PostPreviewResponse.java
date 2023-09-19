@@ -1,6 +1,5 @@
 package com.project.Glog.dto.responsee.post;
 
-import com.project.Glog.dto.PostPreviewDtos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,6 @@
 package com.project.Glog.service;
 
+import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.responsee.blog.MyPageResponse;
 import com.project.Glog.repository.BlogRepository;
@@ -15,11 +16,15 @@ import java.util.Optional;
 public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     public MyPageResponse getMypage(Long uid){
         return MyPageResponse.of(blogRepository.findByUserId(uid).get());
     }
 
+    public MyPageResponse changeBlogName(Long uid, String newBlogName){
+        Blog blog = blogRepository.findByUserId(uid).get();
+        blog.setBlogName(newBlogName);
+        blogRepository.save(blog);
+        return MyPageResponse.of(blog);
+    }
 }

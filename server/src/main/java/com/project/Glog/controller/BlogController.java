@@ -27,6 +27,15 @@ public class BlogController {
         return new ResponseEntity<>(myPageResponse, HttpStatus.OK);
     }
 
+    @PostMapping("/change/blog/name")
+    public ResponseEntity<MyPageResponse> goToMypage(@CurrentUser UserPrincipal userPrincipal,
+                                                     @RequestBody String newBlogName){
+
+        MyPageResponse myPageResponse = blogService.changeBlogName(userPrincipal.getId(), newBlogName);
+
+        return new ResponseEntity<>(myPageResponse, HttpStatus.OK);
+    }
+
     //TODO 스킨도 사용자마다 적용되는거라 유저 서비스로 넣어야 하나?
 //    @PostMapping("/mypage/change/blog/skin")
 //    public ResponseEntity<MyPageResponse> changeBlogSkin(@CurrentUser UserPrincipal userPrincipal,

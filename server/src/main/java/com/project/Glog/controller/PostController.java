@@ -2,7 +2,7 @@ package com.project.Glog.controller;
 
 
 import com.project.Glog.domain.Post;
-import com.project.Glog.dto.PostPreviewDtos;
+import com.project.Glog.dto.responsee.post.PostPreviewDtos;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
 import com.project.Glog.dto.responsee.post.PostPreviewResponse;
@@ -40,8 +40,8 @@ public class PostController {
                                        @RequestPart PostUpdateRequest postUpdateRequest) throws IOException {
 
         //TODO GetMapping으로 따로 파야할듯
-        //해당 유저의 게시글인지 판단하는 로직은 백엔드 컨트롤러 에서 이루어 져야 한다.
 
+        //해당 유저의 게시글인지 판단하는 로직은 백엔드에서 이루어 져야 한다.
         //해당 유저의 게시글이라면 업데이트 해서 돌려줌
         Post post = postService.update(userPrincipal, postUpdateRequest);
 
@@ -91,7 +91,7 @@ public class PostController {
 
     @GetMapping("/search/post/hashtag")
     public ResponseEntity<PostPreviewDtos> searchContentsByHashtag(@RequestParam String hashtag){
-        //hashtag 내용을 포함한 게시글의 리스트를 생성한다.
+        //hashtag 내용을 포함한 게시글의 리스트를 생성한다
         PostPreviewDtos postPreviewDtos = postService.searchPostsByHashtag(hashtag);
 
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);

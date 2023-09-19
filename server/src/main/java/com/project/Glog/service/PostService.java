@@ -3,7 +3,7 @@ package com.project.Glog.service;
 import com.project.Glog.domain.Post;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
-import com.project.Glog.dto.PostPreviewDtos;
+import com.project.Glog.dto.responsee.post.PostPreviewDtos;
 import com.project.Glog.dto.responsee.post.PostPreviewResponse;
 import com.project.Glog.dto.responsee.post.PostReadResponse;
 import com.project.Glog.repository.BlogRepository;

@@ -1,5 +1,6 @@
 package com.project.Glog.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.Glog.dto.request.user.UserInfoChangeRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -40,4 +41,9 @@ public class User {
     private String providerId;
 
     private String introduction;
+
+    public void updateInfo(UserInfoChangeRequest userInfoChangeRequest){
+        this.name = userInfoChangeRequest.getName();
+        this.introduction = userInfoChangeRequest.getIntroducion();
+    }
 }

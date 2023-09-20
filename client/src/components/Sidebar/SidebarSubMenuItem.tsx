@@ -1,13 +1,16 @@
 import { isSidebarOpenState } from '@/recoil/atom';
 import { ListItem, ListItemButton, ListItemText, useMediaQuery } from '@mui/material';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 
 export const SidebarSubMenuItem = ({ text, url }: { text: string; url: string }) => {
-  const router = useRouter();
+  const pathname = usePathname();
+  // const router = useRouter();
   const [, setOpenSideBar] = useRecoilState(isSidebarOpenState);
   const isLarge = useMediaQuery('(min-width:1200px');
 
+  console.log(pathname);
   return (
     <ListItem sx={{ padding: '0' }}>
       <ListItemButton
@@ -15,21 +18,23 @@ export const SidebarSubMenuItem = ({ text, url }: { text: string; url: string })
           paddingY: '8px',
           paddingX: '24px',
           ':hover': { backgroundColor: 'primary.light', color: 'primary.main' },
-          backgroundColor: window && router.pathname === url ? 'primary.light' : 'white',
-          color: window && router.pathname === url ? 'primary.main' : 'black',
+          backgroundColor: window && pathname === url ? 'primary.light' : 'white',
+          color: window && pathname === url ? 'primary.main' : 'black',
         }}
         onClick={() => {
-          router.push(url);
+          // router.push(url);
           if (!isLarge) {
             setOpenSideBar(false);
           }
         }}>
-        <ListItemText
-          sx={{
-            '& .MuiTypography-root': { fontWeight: '500' },
-          }}>
-          {text}
-        </ListItemText>
+        <Link href={`${url}`}>
+          <ListItemText
+            sx={{
+              '& .MuiTypography-root': { fontWeight: '500' },
+            }}>
+            {text}
+          </ListItemText>
+        </Link>
       </ListItemButton>
     </ListItem>
   );

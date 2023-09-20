@@ -1,7 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import classes from './FullLayout.module.css';
-import { userThemeState } from '@/recoil/atom';
-import { getCurrentThemeClass } from '@/constant/common';
+import { isSidebarOpenState, userThemeState } from '@/recoil/atom';
 import Sidebar from '../Sidebar/Sidebar';
 
 type Children = {
@@ -10,14 +8,17 @@ type Children = {
 
 export default function FullLayout({ children }: Children) {
   const userTheme = useRecoilValue(userThemeState);
+  const isSidebarOpen = useRecoilValue(isSidebarOpenState);
 
   return (
     <div
-      className={`${getCurrentThemeClass(
-        userTheme,
-        classes.content_card_background_light,
-        classes.content_card_background_dark,
-      )} ${classes.content_card}`}>
+      style={{
+        width: '100%',
+        height: 'auto',
+        minHeight: '100vh',
+        padding: isSidebarOpen ? '124px 324px' : '124px 24px',
+        backgroundColor: userTheme === 'dark' ? 'black' : 'white',
+      }}>
       <Sidebar />
       {children}
     </div>

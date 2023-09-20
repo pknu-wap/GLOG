@@ -4,7 +4,7 @@ import { SidebarSubMenuContainer } from './SidebarSubMenuContainer';
 import { SidebarSubMenuItem } from './SidebarSubMenuItem';
 
 export type CategoryType = string | number;
-export type TitleType = { contentId: number; title: string }[];
+export type TitleType = { postId: number; postTitle: string }[];
 
 const MenuList = ({
   sidebarMenuList,
@@ -12,7 +12,7 @@ const MenuList = ({
   sidebarMenuList: {
     category_id: number;
     category_name: CategoryType;
-    titles: TitleType;
+    postTitleDtos: TitleType;
   }[];
 }) => {
   return (
@@ -23,12 +23,12 @@ const MenuList = ({
             key={category.category_id}
             text={category.category_name}
             url={`/${category.category_id}`}>
-            {category.titles.map((title) => {
+            {category.postTitleDtos.map((post) => {
               return (
                 <SidebarSubMenuItem
-                  key={title.contentId}
-                  text={title.title}
-                  url={`/${category.category_id}/${title.contentId}`}
+                  key={post.postId}
+                  text={post.postTitle}
+                  url={`/${category.category_id}/${post.postId}`}
                 />
               );
             })}

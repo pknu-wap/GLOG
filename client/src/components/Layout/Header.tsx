@@ -2,13 +2,14 @@
 
 import { useRecoilState } from 'recoil';
 import classes from './header.module.css';
-import { userThemeState } from '@/recoil/atom';
+import { isSidebarOpenState, userThemeState } from '@/recoil/atom';
 import { oppositeThemeExtraction } from '@/constant/common';
 import { useEffect } from 'react';
 import { Stack } from '@mui/material';
 
 export default function Header() {
   const [userTheme, setUserTheme] = useRecoilState(userThemeState);
+  const [open, setOpen] = useRecoilState(isSidebarOpenState);
 
   useEffect(() => {
     setUserTheme(userTheme);
@@ -22,6 +23,7 @@ export default function Header() {
         }>
         스킨 바꾸기
       </Stack>
+      <Stack onClick={() => setOpen(!open)}>사이드바 여닫히기</Stack>
     </Stack>
   );
 }

@@ -6,6 +6,8 @@ import { ReactNode, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { CategoryType } from './SidebarMenuList';
 import { usePathname } from 'next/navigation';
+import { useRecoilValue } from 'recoil';
+import { userThemeState } from '@/recoil/atom';
 
 export const SidebarSubMenuContainer = ({
   children,
@@ -19,6 +21,7 @@ export const SidebarSubMenuContainer = ({
   const pathname = usePathname();
 
   const [open, setOpen] = useState(pathname.includes(url));
+  const userTheme = useRecoilValue(userThemeState);
 
   const toggleMenu = () => {
     setOpen((prev) => !prev);
@@ -26,7 +29,7 @@ export const SidebarSubMenuContainer = ({
 
   return (
     <>
-      <ListItem sx={{ padding: '0' }}>
+      <ListItem sx={{ padding: 0, '&& .MuiList-root': { paddingTop: '0px' } }}>
         <ListItemButton
           sx={{
             paddingY: '8px',
@@ -34,8 +37,8 @@ export const SidebarSubMenuContainer = ({
               backgroundColor: 'primary.light',
               color: 'primary.main',
             },
-            backgroundColor: 'white',
-            color: 'black',
+            backgroundColor: 'transparent',
+            color: userTheme === 'dark' ? 'white' : 'black',
           }}
           onClick={toggleMenu}>
           <>

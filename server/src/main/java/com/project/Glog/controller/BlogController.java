@@ -28,8 +28,8 @@ public class BlogController {
     }
 
     @PostMapping("/change/blog/name")
-    public ResponseEntity<MyPageResponse> goToMypage(@CurrentUser UserPrincipal userPrincipal,
-                                                     @RequestParam String newBlogName){
+    public ResponseEntity<MyPageResponse> changeBlogName(@CurrentUser UserPrincipal userPrincipal,
+                                                         @RequestParam String newBlogName){
 
         MyPageResponse myPageResponse = blogService.changeBlogName(userPrincipal.getId(), newBlogName);
 

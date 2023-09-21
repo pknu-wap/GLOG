@@ -5,6 +5,7 @@ import com.project.Glog.dto.responsee.user.UserDto;
 import com.project.Glog.exception.ResourceNotFoundException;
 import com.project.Glog.domain.User;
 import com.project.Glog.repository.UserRepository;
+import com.project.Glog.util.AwsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * Created by rajeevkumarsingh on 02/08/17.
@@ -22,6 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AwsUtils awsUtils;
 
     @Override
     @Transactional
@@ -53,10 +58,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         return UserDto.of(user);
     }
 
-    public UserDto changeUserImage(Long uid, MultipartFile multipartFile) {
+    public UserDto changeUserImage(Long uid, MultipartFile multipartFile) throws IOException {
         User user = userRepository.findById(uid).get();
 
-        //이미지를 S3에 저장하고 링크를 불러온다.
+        user.setImageUrl(awsUtils.upload(multipartFile, "profile").getPath());
 
         userRepository.save(user);
 

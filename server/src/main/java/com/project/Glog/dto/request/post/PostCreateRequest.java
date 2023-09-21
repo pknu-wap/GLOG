@@ -12,7 +12,6 @@ import org.springframework.security.core.parameters.P;
 public class PostCreateRequest {
     private String title;
     private String content;
-    private String imageUrl;
     private Boolean isPrivate;
     private Long categoryId;
     private String hashtags;
@@ -26,7 +25,7 @@ public class PostCreateRequest {
                 null,
                 title,
                 content,
-                imageUrl,
+                null,
                 0,
                 0,
                 isPrivate,

@@ -34,6 +34,7 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
+
     @PostMapping("/chage/user/image")
     public ResponseEntity<UserDto> chageUserImage(@CurrentUser UserPrincipal userPrincipal,
                                                  @RequestPart(value="image") MultipartFile multipartFile) {

@@ -99,7 +99,9 @@ public class SecurityConfig {
                         "/**.jpg",
                         "/**.html",
                         "/**.css",
-                        "/**.js")
+                        "/**.js",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**")
                         .permitAll()
                     .requestMatchers("/auth/**", "/oauth2/**")
                         .permitAll()

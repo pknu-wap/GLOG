@@ -25,11 +25,11 @@ public class PostController {
 
 
     @PostMapping("/post/create")
-    public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal,
+    public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal  ,
                                        @RequestPart(value = "thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {
 
-        Post post = postService.create(userPrincipal, postCreateRequest);
+        Post post = postService.create(userPrincipal, multipartFile, postCreateRequest);
 
         return new ResponseEntity<>(post.getId(), HttpStatus.OK);
     }

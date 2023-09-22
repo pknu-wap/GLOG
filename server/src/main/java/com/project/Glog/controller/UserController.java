@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 public class UserController {
 
@@ -37,7 +39,7 @@ public class UserController {
 
     @PostMapping("/chage/user/image")
     public ResponseEntity<UserDto> chageUserImage(@CurrentUser UserPrincipal userPrincipal,
-                                                 @RequestPart(value="image") MultipartFile multipartFile) {
+                                                 @RequestPart(value="image") MultipartFile multipartFile) throws IOException {
 
         UserDto userDto = userService.changeUserImage(userPrincipal.getId(), multipartFile);
 

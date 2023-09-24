@@ -25,7 +25,7 @@ const Sidebar = () => {
         },
         {
           postId: 13,
-          postTitle: 'thumbnailTest',
+          postTitle: 'login',
         },
         {
           postId: 14,

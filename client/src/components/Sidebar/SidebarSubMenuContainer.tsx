@@ -1,13 +1,11 @@
 'use client';
 
-import { Collapse, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Collapse, ListItem, ListItemText, Stack } from '@mui/material';
 
 import { ReactNode, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { CategoryType } from './SidebarMenuList';
 import { usePathname } from 'next/navigation';
-import { useRecoilValue } from 'recoil';
-import { userThemeState } from '@/recoil/atom';
 
 export const SidebarSubMenuContainer = ({
   children,
@@ -21,7 +19,6 @@ export const SidebarSubMenuContainer = ({
   const pathname = usePathname();
 
   const [open, setOpen] = useState(pathname.includes(url));
-  const userTheme = useRecoilValue(userThemeState);
 
   const toggleMenu = () => {
     setOpen((prev) => !prev);
@@ -30,15 +27,14 @@ export const SidebarSubMenuContainer = ({
   return (
     <>
       <ListItem sx={{ padding: 0, '&& .MuiList-root': { paddingTop: '0px' } }}>
-        <ListItemButton
+        <Stack
+          direction="row"
+          alignItems="center"
+          width="100%"
+          p={3}
+          color="primary.main"
           sx={{
-            paddingY: '8px',
-            ':hover': {
-              backgroundColor: 'primary.light',
-              color: 'primary.main',
-            },
-            backgroundColor: 'transparent',
-            color: userTheme === 'dark' ? 'white' : 'black',
+            cursor: 'pointer',
           }}
           onClick={toggleMenu}>
           <>
@@ -50,7 +46,7 @@ export const SidebarSubMenuContainer = ({
             </ListItemText>
             {open ? <ExpandLess /> : <ExpandMore />}
           </>
-        </ListItemButton>
+        </Stack>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         {children}

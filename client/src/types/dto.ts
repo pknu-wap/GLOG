@@ -2,3 +2,8 @@
 export interface ICollect {
   index: number;
 }
+
+// 유저 프로필 사진 불러오기
+export interface IProfile {
+  loginedMemberId: number;
+}

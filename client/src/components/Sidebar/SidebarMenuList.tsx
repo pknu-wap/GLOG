@@ -28,7 +28,8 @@ const MenuList = ({
                 <SidebarSubMenuItem
                   key={post.postId}
                   text={post.postTitle}
-                  url={`/${category.category_id}/${post.postId}`}
+                  url={post.postTitle}
+                  // url={`/${category.category_id}/${post.postId}`}
                 />
               );
             })}

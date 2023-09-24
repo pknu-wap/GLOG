@@ -1,5 +1,30 @@
-import { createTheme } from '@mui/material';
+import { PaletteColor, SimplePaletteColorOptions, createTheme } from '@mui/material';
 import { darkYellow, yellow } from './color';
+
+type PaletteColors = 'backdrop' | 'textColor' | 'themeColor' | 'oppositeColor';
+
+declare module '@mui/material' {
+  interface ButtonPropsColorOverrides {
+    themeColor: true;
+    oppositeColor: true;
+  }
+  interface IconButtonPropsColorOverrides {
+    themeColor: true;
+    oppositeColor: true;
+  }
+}
+
+declare module '@mui/material/styles' {
+  type CustomPalette = {
+    [_ in PaletteColors]: PaletteColor;
+  };
+  type CustomPaletteOptions = {
+    [_ in keyof CustomPalette]?: SimplePaletteColorOptions;
+  };
+
+  interface Palette extends CustomPalette {}
+  interface PaletteOptions extends CustomPaletteOptions {}
+}
 
 export const darkTheme = createTheme({
   breakpoints: {
@@ -19,6 +44,12 @@ export const darkTheme = createTheme({
     },
     secondary: {
       main: darkYellow[500],
+    },
+    themeColor: {
+      main: '#000000',
+    },
+    oppositeColor: {
+      main: '#ffffff',
     },
   },
 });

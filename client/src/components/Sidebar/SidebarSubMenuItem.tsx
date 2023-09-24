@@ -1,33 +1,35 @@
 import { isSidebarOpenState } from '@/recoil/atom';
-import { ListItem, ListItemButton, ListItemText, useMediaQuery } from '@mui/material';
+import { ListItem, ListItemText, Stack, useMediaQuery } from '@mui/material';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useRecoilState } from 'recoil';
+import { useSelectedLayoutSegment } from 'next/navigation';
+import { useTheme } from '@mui/material/styles';
 
 export const SidebarSubMenuItem = ({ text, url }: { text: string; url: string }) => {
-  const pathname = usePathname();
+  const segments = useSelectedLayoutSegment();
+  const theme = useTheme();
   // const router = useRouter();
   const [, setOpenSideBar] = useRecoilState(isSidebarOpenState);
   const isLarge = useMediaQuery('(min-width:1200px');
 
-  console.log(pathname);
+  console.log(segments);
   return (
     <ListItem sx={{ padding: '0' }}>
-      <ListItemButton
-        sx={{
-          paddingY: '8px',
-          paddingX: '24px',
-          ':hover': { backgroundColor: 'primary.light', color: 'primary.main' },
-          backgroundColor: window && pathname === url ? 'primary.light' : 'white',
-          color: window && pathname === url ? 'primary.main' : 'black',
-        }}
+      <Stack
+        width="100%"
+        p={3}
         onClick={() => {
           // router.push(url);
           if (!isLarge) {
             setOpenSideBar(false);
           }
         }}>
-        <Link href={`${url}`}>
+        <Link
+          style={{
+            color: window && segments === url ? theme.palette.primary.light : 'white',
+            textDecoration: 'none',
+          }}
+          href={`${url}`}>
           <ListItemText
             sx={{
               '& .MuiTypography-root': { fontWeight: '500' },
@@ -35,7 +37,7 @@ export const SidebarSubMenuItem = ({ text, url }: { text: string; url: string })
             {text}
           </ListItemText>
         </Link>
-      </ListItemButton>
+      </Stack>
     </ListItem>
   );
 };

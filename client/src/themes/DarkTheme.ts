@@ -1,5 +1,5 @@
 import { PaletteColor, SimplePaletteColorOptions, createTheme } from '@mui/material';
-import { darkYellow, yellow } from './color';
+import { yellow } from './color';
 
 type PaletteColors = 'backdrop' | 'textColor' | 'themeColor' | 'oppositeColor';
 
@@ -43,7 +43,7 @@ export const darkTheme = createTheme({
       main: yellow[500],
     },
     secondary: {
-      main: darkYellow[500],
+      main: '#ffffff',
     },
     themeColor: {
       main: '#000000',

@@ -1,11 +1,15 @@
 'use client';
 
-import { Collapse, ListItem, ListItemText, Stack } from '@mui/material';
-
+import { Collapse, Stack } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { ReactNode, useState } from 'react';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import { CategoryType } from './SidebarMenuList';
 import { usePathname } from 'next/navigation';
+import IconButton from '../Button/IconButton';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { SidebarMenuItem, SidebarTitleContainer } from './Sidebar.styles';
+import AddIcon from '@mui/icons-material/Add';
 
 export const SidebarSubMenuContainer = ({
   children,
@@ -17,8 +21,9 @@ export const SidebarSubMenuContainer = ({
   url: string;
 }) => {
   const pathname = usePathname();
+  const isMatchingUrlAndTitle = pathname.includes(url);
 
-  const [open, setOpen] = useState(pathname.includes(url));
+  const [open, setOpen] = useState(isMatchingUrlAndTitle);
 
   const toggleMenu = () => {
     setOpen((prev) => !prev);
@@ -26,28 +31,30 @@ export const SidebarSubMenuContainer = ({
 
   return (
     <>
-      <ListItem sx={{ padding: 0, '&& .MuiList-root': { paddingTop: '0px' } }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          width="100%"
-          p={3}
-          color="primary.main"
-          sx={{
-            cursor: 'pointer',
-          }}
-          onClick={toggleMenu}>
-          <>
-            <ListItemText
-              sx={{
-                '& .MuiTypography-root': { fontWeight: '500' },
-              }}>
-              {text}
-            </ListItemText>
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </>
+      <SidebarTitleContainer>
+        <Stack direction="row" alignItems={'center'}>
+          {open ? (
+            <IconButton size="small">
+              <ExpandMore fontSize="small" onClick={toggleMenu} />
+            </IconButton>
+          ) : (
+            <IconButton size="small">
+              <ChevronRightIcon fontSize="small" onClick={toggleMenu} />
+            </IconButton>
+          )}
+          <SidebarMenuItem isActive={window && isMatchingUrlAndTitle} href={url}>
+            {text}
+          </SidebarMenuItem>
         </Stack>
-      </ListItem>
+        <Stack direction="row" alignItems={'center'}>
+          <IconButton size="small">
+            <AddIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small">
+            <SettingsIcon fontSize="small" />
+          </IconButton>
+        </Stack>
+      </SidebarTitleContainer>
       <Collapse in={open} timeout="auto" unmountOnExit>
         {children}
       </Collapse>

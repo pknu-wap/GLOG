@@ -1,4 +1,4 @@
-import { List } from '@mui/material';
+import { Stack } from '@mui/material';
 import React from 'react';
 import { SidebarSubMenuContainer } from './SidebarSubMenuContainer';
 import { SidebarSubMenuItem } from './SidebarSubMenuItem';
@@ -16,7 +16,7 @@ const MenuList = ({
   }[];
 }) => {
   return (
-    <List>
+    <Stack>
       {sidebarMenuList.map((category) => {
         return (
           <SidebarSubMenuContainer
@@ -28,15 +28,14 @@ const MenuList = ({
                 <SidebarSubMenuItem
                   key={post.postId}
                   text={post.postTitle}
-                  url={post.postTitle}
-                  // url={`/${category.category_id}/${post.postId}`}
+                  url={`/${category.category_id}/${post.postId}`}
                 />
               );
             })}
           </SidebarSubMenuContainer>
         );
       })}
-    </List>
+    </Stack>
   );
 };
 

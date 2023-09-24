@@ -46,7 +46,7 @@ export const darkTheme = createTheme({
       main: '#ffffff',
     },
     subColor: {
-      main: '#121212',
+      main: '#0D0D0D',
     },
     themeColor: {
       main: '#000000',

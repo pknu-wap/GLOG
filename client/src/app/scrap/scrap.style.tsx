@@ -1,9 +1,18 @@
 import { styled } from '@mui/material/styles';
 
-export const PostAreaComponent = styled('div')({
+
+export const PostArea = styled('div') ({
+    marginLeft: '80px',
+    width: '400px',
+})
+
+export const ScrapList = styled('div') ({
+    margin: '10px 30px',
+    fontSize: '35px',
+})
+
+export const PostAreaComponent = styled('div') ({
     color: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: '50px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
 });

@@ -1,6 +1,5 @@
 import { Pagination } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Link from 'next/link';
 
 
 export const PostArea = styled('div') ({
@@ -13,7 +12,7 @@ export const ScrapList = styled('div') (({theme}) => ({
     fontSize: '35px',
 }));
 
-export const PostAreaComponent = styled(Link) (({theme}) => ({
+export const PostAreaComponent = styled('div') (({theme}) => ({
     color: theme.palette.oppositeColor.main,
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',

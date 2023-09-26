@@ -2,20 +2,17 @@ import CenterContent from '@/components/Layout/CenterContent';
 import { Stack } from '@mui/material';
 import React from 'react';
 
-function page({ params }: { params: { titleId: string; postId: string } }) {
+const page = ({ params }: { params: { titleId: string; postId: string } }) => {
   return (
-    <Stack justifyContent={'center'} gap={40} bgcolor="red" direction="row">
-      {/* <Stack width="100%" maxWidth={800} bgcolor="blue" justifyContent={'left'}>
-        <Stack width="fit-content">{params.titleId}</Stack>
-      </Stack> */}
+    <Stack justifyContent={'center'} gap={40} direction="row">
       <CenterContent>
-        <Stack bgcolor="yellow">{params.titleId}</Stack>
+        <Stack>{params.postId}</Stack>
       </CenterContent>
-      {/* <Stack width="100%" maxWidth={200} bgcolor="yellow" justifyContent={'left'}>
-        <Stack width="fit-content">{params.titleId}</Stack>
+      {/* <Stack bgcolor="yellow" width="200px">
+        ads
       </Stack> */}
     </Stack>
   );
-}
+};
 
 export default page;

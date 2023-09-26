@@ -1,11 +1,12 @@
+'use client';
+
 import { Stack, StackProps } from '@mui/material';
 import React from 'react';
+import { useTheme } from '@mui/material/styles';
 
-interface CenterContentProps extends StackProps {
-  maxWidth?: string | number;
-}
+const CenterContent = ({ maxWidth, children, color, ...rest }: StackProps) => {
+  const theme = useTheme();
 
-function CenterContent({ maxWidth, children, ...rest }: CenterContentProps) {
   return (
     <Stack
       gap={2}
@@ -14,15 +15,14 @@ function CenterContent({ maxWidth, children, ...rest }: CenterContentProps) {
       sx={{
         width: '100%',
         borderRadius: '8px',
-        border: '1px solid #dddddd',
-        // backgroundColor: 'white',
-        maxWidth: maxWidth ? 1280 : 'none',
+        maxWidth: maxWidth ?? 800,
         mx: 'auto',
+        color: color ?? theme.palette.oppositeColor.main,
       }}
       {...rest}>
       {children}
     </Stack>
   );
-}
+};
 
 export default CenterContent;

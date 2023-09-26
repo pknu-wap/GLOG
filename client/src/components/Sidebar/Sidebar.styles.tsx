@@ -2,22 +2,22 @@ import { Drawer, Stack, Theme, styled } from '@mui/material';
 import Button from '../Button/Button';
 import Link from 'next/link';
 
-export const SidebarDrawer = styled(Drawer)(
-  ({ theme, isPhone }: { theme?: Theme; isPhone: boolean }) => ({
-    display: 'block',
-    border: 'none',
-    '& .MuiDrawer-paper': {
-      width: isPhone ? '100%' : '240px',
-      backgroundColor: theme?.palette.themeColor.main,
-      padding: '8px',
-      boxSizing: 'border-box',
-      borderRight: 'none',
-      boxShadow: 1,
-      zIndex: 5,
-      paddingTop: '64px',
-    },
-  }),
-);
+export const SidebarDrawer = styled(Drawer, {
+  shouldForwardProp: (propName) => propName !== 'isPhone',
+})(({ theme, isPhone }: { theme?: Theme; isPhone: boolean }) => ({
+  display: 'block',
+  border: 'none',
+  '& .MuiDrawer-paper': {
+    width: isPhone ? '100%' : '240px',
+    backgroundColor: theme?.palette.themeColor.main,
+    padding: '8px',
+    boxSizing: 'border-box',
+    borderRight: 'none',
+    boxShadow: 1,
+    zIndex: 5,
+    paddingTop: '64px',
+  },
+}));
 
 // 사이드바 타이틀
 export const SidebarTitle = styled(Stack)(() => ({
@@ -88,7 +88,9 @@ interface SidebarMenuItemProps {
 }
 
 // 사이드바 링크
-export const SidebarMenuItem = styled(Link)<SidebarMenuItemProps>(({ theme, isActive }) => ({
+export const SidebarMenuItem = styled(Link, {
+  shouldForwardProp: (propName) => propName !== 'isActive',
+})<SidebarMenuItemProps>(({ theme, isActive }) => ({
   color: isActive ? theme.palette.primary.main : theme.palette.oppositeColor.main,
   textDecoration: 'none',
   ':hover': {

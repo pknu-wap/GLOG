@@ -34,12 +34,12 @@ export const SidebarSubMenuContainer = ({
       <SidebarTitleContainer>
         <Stack direction="row" alignItems={'center'}>
           {open ? (
-            <IconButton size="small">
-              <ExpandMore fontSize="small" onClick={toggleMenu} />
+            <IconButton size="small" onClick={toggleMenu}>
+              <ExpandMore fontSize="small" />
             </IconButton>
           ) : (
-            <IconButton size="small">
-              <ChevronRightIcon fontSize="small" onClick={toggleMenu} />
+            <IconButton size="small" onClick={toggleMenu}>
+              <ChevronRightIcon fontSize="small" />
             </IconButton>
           )}
           <SidebarMenuItem isActive={isMatchingUrlAndTitle} href={url}>

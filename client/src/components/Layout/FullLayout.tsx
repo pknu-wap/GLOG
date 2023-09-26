@@ -16,7 +16,7 @@ export default function FullLayout({ children }: Children) {
         width: '100%',
         height: 'auto',
         minHeight: '100vh',
-        padding: isSidebarOpen ? '124px 324px' : '124px 24px',
+        padding: isSidebarOpen ? '124px 24px 24px 324px' : '124px 24px 0px 20px',
         backgroundColor: userTheme === 'dark' ? 'black' : 'white',
       }}>
       <Sidebar />

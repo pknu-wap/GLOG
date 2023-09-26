@@ -42,7 +42,7 @@ export const SidebarSubMenuContainer = ({
               <ChevronRightIcon fontSize="small" onClick={toggleMenu} />
             </IconButton>
           )}
-          <SidebarMenuItem isActive={window && isMatchingUrlAndTitle} href={url}>
+          <SidebarMenuItem isActive={isMatchingUrlAndTitle} href={url}>
             {text}
           </SidebarMenuItem>
         </Stack>

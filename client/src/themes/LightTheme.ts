@@ -9,7 +9,7 @@ export const lightTheme = createTheme({
     values: {
       xl: 1920,
       lg: 1440,
-      md: 900,
+      md: 840,
       sm: 600,
       xs: 460,
     },

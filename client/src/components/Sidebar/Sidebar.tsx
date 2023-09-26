@@ -14,13 +14,12 @@ import {
   SidebarTitle,
 } from './Sidebar.styles';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import IconButton from '../Button/IconButton';
 
 const Sidebar = () => {
   const [openSideBar, setOpenSideBar] = useRecoilState(isSidebarOpenState);
   const theme = useTheme();
-  const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const isPhone = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     setOpenSideBar(true);
@@ -81,9 +80,7 @@ const Sidebar = () => {
           <MenuList sidebarMenuList={sidebarMenuList} />
         </SidebarDrawer>
       ) : (
-        <SidebarCloseIcon onClick={() => setOpenSideBar(true)}>
-          <KeyboardDoubleArrowRightIcon color="primary" />
-        </SidebarCloseIcon>
+        <SidebarCloseIcon onClick={() => setOpenSideBar(true)}>Menu</SidebarCloseIcon>
       )}
     </>
   );

@@ -7,7 +7,7 @@ export const SidebarSubMenuItem = ({ text, url }: { text: string; url: string })
 
   return (
     <Stack width="100%">
-      <SidebarMenuItem isActive={window && pathname === url} href={`${url}`}>
+      <SidebarMenuItem isActive={pathname === url} href={`${url}`}>
         <ListItemText
           sx={{
             paddingLeft: '32px',

@@ -2,20 +2,22 @@ import { Drawer, Stack, Theme, styled } from '@mui/material';
 import Button from '../Button/Button';
 import Link from 'next/link';
 
-export const SidebarDrawer = styled(Drawer)(({ isPhone }: { isPhone: boolean }) => ({
-  display: 'block',
-  border: 'none',
-  '& .MuiDrawer-paper': {
-    width: isPhone ? '100%' : '240px',
-    backgroundColor: 'transparent',
-    padding: '8px',
-    boxSizing: 'border-box',
-    borderRight: 'none',
-    boxShadow: 1,
-    zIndex: 5,
-    paddingTop: '64px',
-  },
-}));
+export const SidebarDrawer = styled(Drawer)(
+  ({ theme, isPhone }: { theme?: Theme; isPhone: boolean }) => ({
+    display: 'block',
+    border: 'none',
+    '& .MuiDrawer-paper': {
+      width: isPhone ? '100%' : '240px',
+      backgroundColor: theme?.palette.themeColor.main,
+      padding: '8px',
+      boxSizing: 'border-box',
+      borderRight: 'none',
+      boxShadow: 1,
+      zIndex: 5,
+      paddingTop: '64px',
+    },
+  }),
+);
 
 // 사이드바 타이틀
 export const SidebarTitle = styled(Stack)(() => ({
@@ -60,7 +62,7 @@ export const SidebarAddButtonLeftSide = styled(Button)(({ theme }) => ({
 // 사이드바 닫는 버튼
 export const SidebarCloseIcon = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
-  color: '#000000',
+  color: theme.palette.themeColor.main,
   width: '50px',
   height: '50px',
   borderRadius: '50%',
@@ -73,7 +75,7 @@ export const SidebarCloseIcon = styled(Stack)(({ theme }) => ({
   cursor: 'pointer',
 
   ':hover': {
-    left: '0px',
+    left: '4px',
     borderRadius: '8px',
     width: '50px',
     transition: 'all 0.5s ease',
@@ -87,7 +89,7 @@ interface SidebarMenuItemProps {
 
 // 사이드바 링크
 export const SidebarMenuItem = styled(Link)<SidebarMenuItemProps>(({ theme, isActive }) => ({
-  color: isActive ? theme.palette.primary.main : 'white',
+  color: isActive ? theme.palette.primary.main : theme.palette.oppositeColor.main,
   textDecoration: 'none',
   ':hover': {
     color: theme.palette.primary.main,

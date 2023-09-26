@@ -109,9 +109,11 @@ export default function Scrap() {
     return (
         <PostArea>
             <ScrapList>스크랩한 게시글</ScrapList>
-            <PostAreaComponent href="#">
+            <PostAreaComponent>
               {result.PostPreviewResponse.recent.map((postInfo) => {
                   return <PostComponent 
+                  isPrivate
+                    key={postInfo.PostPrevewDto.postId}
                     thumbnail={postInfo.PostPrevewDto.imageUrl} 
                     title={postInfo.PostPrevewDto.title}
                     likesCount={postInfo.PostPrevewDto.likesCount}
@@ -124,12 +126,11 @@ export default function Scrap() {
             <PostPagination
               count={totalPages} 
               page={page + 1}
-              onChange={(event, newPage) =>{
+              onChange={(_, newPage) =>{
                 setPage(newPage - 1);
               }}
               variant="outlined" 
-              shape="rounded">
-            </PostPagination>
+              shape="rounded"/>
         </PostArea>
     )
 };

@@ -3,4 +3,5 @@ export type PostComponentType = {
     title: string;
     likesCount: number;
     viewsCount: number;
+    isPrivate?: boolean;
 }

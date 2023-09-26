@@ -1,12 +1,15 @@
 import { styled } from '@mui/material/styles';
+import Link from 'next/link';
 
-export const Post = styled('div') (({theme}) => ({
+export const Post = styled(Link) (({theme}) => ({
     backgroundColor: theme.palette.subColor.main,
+    color: theme.palette.secondary.main,
     margin: '30px',
     width: '250px',
     height: '200px',
     padding: '10px',
     borderRadius: '10px',
+    textDecorationLine: 'none',
     boxShadow: '0px 0px 20px 1px rgba(0, 0, 0, 0.05)',
     transition: 'all .35s ease-in-out',
     ':hover': {

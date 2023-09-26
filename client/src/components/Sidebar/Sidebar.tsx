@@ -1,17 +1,28 @@
-import { Drawer, useMediaQuery } from '@mui/material';
+'use client';
+
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import React, { memo, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { isSidebarOpenState } from '@/recoil/atom';
 import MenuList from './SidebarMenuList';
+import {
+  SidebarAddButton,
+  SidebarAddButtonLeftSide,
+  SidebarCloseIcon,
+  SidebarDrawer,
+  SidebarTitle,
+} from './Sidebar.styles';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import IconButton from '../Button/IconButton';
 
 const Sidebar = () => {
   const [openSideBar, setOpenSideBar] = useRecoilState(isSidebarOpenState);
-  const isLarge = useMediaQuery('(min-width:1200px');
+  const theme = useTheme();
+  const isPhone = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
-    if (!isLarge) {
-      setOpenSideBar(true);
-    }
+    setOpenSideBar(true);
   }, []);
 
   const sidebarMenuList = [
@@ -25,7 +36,7 @@ const Sidebar = () => {
         },
         {
           postId: 13,
-          postTitle: 'thumbnailTest',
+          postTitle: 'login',
         },
         {
           postId: 14,
@@ -47,32 +58,30 @@ const Sidebar = () => {
     },
   ];
 
-  console.log(openSideBar);
   return (
     <>
-      <Drawer
-        variant={'persistent'}
-        open={openSideBar}
-        onClose={() => setOpenSideBar(false)}
-        ModalProps={{
-          keepMounted: true,
-        }}
-        sx={{
-          display: 'block',
-          border: 'none',
-          width: openSideBar ? 248 : 0,
-          transition: 'all 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
-          '& .MuiDrawer-paper': {
-            width: '299px',
-            boxSizing: 'border-box',
-            borderRight: 'none',
-            boxShadow: 1,
-            zIndex: 5,
-            paddingTop: '64px',
-          },
-        }}>
-        <MenuList sidebarMenuList={sidebarMenuList} />
-      </Drawer>
+      {openSideBar ? (
+        <SidebarDrawer
+          variant={'persistent'}
+          open={openSideBar}
+          onClose={() => setOpenSideBar(false)}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          isPhone={isPhone}
+          transitionDuration={{ appear: 500, enter: 500, exit: 500 }}>
+          <SidebarTitle>Chaeyeon Log</SidebarTitle>
+          <SidebarAddButton>
+            <SidebarAddButtonLeftSide>+ 카테고리 추가</SidebarAddButtonLeftSide>
+            <IconButton onClick={() => setOpenSideBar(false)}>
+              <KeyboardDoubleArrowLeftIcon />
+            </IconButton>
+          </SidebarAddButton>
+          <MenuList sidebarMenuList={sidebarMenuList} />
+        </SidebarDrawer>
+      ) : (
+        <SidebarCloseIcon onClick={() => setOpenSideBar(true)}>Menu</SidebarCloseIcon>
+      )}
     </>
   );
 };

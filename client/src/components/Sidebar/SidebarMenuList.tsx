@@ -1,4 +1,4 @@
-import { List } from '@mui/material';
+import { Stack } from '@mui/material';
 import React from 'react';
 import { SidebarSubMenuContainer } from './SidebarSubMenuContainer';
 import { SidebarSubMenuItem } from './SidebarSubMenuItem';
@@ -16,7 +16,7 @@ const MenuList = ({
   }[];
 }) => {
   return (
-    <List>
+    <Stack>
       {sidebarMenuList.map((category) => {
         return (
           <SidebarSubMenuContainer
@@ -35,7 +35,7 @@ const MenuList = ({
           </SidebarSubMenuContainer>
         );
       })}
-    </List>
+    </Stack>
   );
 };
 

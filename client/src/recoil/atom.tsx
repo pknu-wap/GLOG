@@ -16,3 +16,10 @@ export const isSidebarOpenState = atom<boolean>({
   default: true,
   effects_UNSTABLE: [persistAtom],
 });
+
+// 유저 토큰
+export const tokenState = atom<string>({
+  key: 'token',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});

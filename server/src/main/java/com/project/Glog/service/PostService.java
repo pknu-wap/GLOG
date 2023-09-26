@@ -11,9 +11,12 @@ import com.project.Glog.repository.CategoryRepository;
 import com.project.Glog.repository.PostRepository;
 import com.project.Glog.repository.UserRepository;
 import com.project.Glog.security.UserPrincipal;
+import com.project.Glog.util.AwsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +33,12 @@ public class PostService {
     private BlogRepository blogRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private AwsUtils awsUtils;
 
-    public Post create(UserPrincipal userPrincipal, PostCreateRequest postCreateRequest) {
+    public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest postCreateRequest) throws IOException {
         Post post = postCreateRequest.toPost();
+        post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
         post.setUser(userRepository.findById(userPrincipal.getId()).get());
         post.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
         post.setCategory(categoryRepository.findById(postCreateRequest.getCategoryId()).get());

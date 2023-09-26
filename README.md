@@ -52,10 +52,10 @@
 ## 👀참고 사항
 
 ## ⌛기한
+
 ```
 
-
 ### Contributor
-|  <img src="https://github.com/pknu-wap/GLOG/assets/66813821/d64a8c37-bd8a-4f6e-9fbf-aeeb153f358d" alt="3_pano" width="100" height="100">  | <img src="https://avatars.githubusercontent.com/u/40762111?v=4" alt="3_jumo" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/75007375?v=4" alt="3_simba" width="100" height="100">  | <img src="https://avatars.githubusercontent.com/u/48755175?v=44" alt="3_miki" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/48755175?v=44" alt="3_miki" width="100" height="100"> |
+|  <img src="https://github.com/pknu-wap/GLOG/assets/66813821/d64a8c37-bd8a-4f6e-9fbf-aeeb153f358d" alt="3_pano" width="100" height="100">  | <img src="https://github.com/pknu-wap/GLOG/assets/66813821/31fa8a99-7f76-49eb-99fc-d4695b107d2c" alt="3_jumo" width="100" height="100"> | <img src="https://github.com/pknu-wap/GLOG/assets/66813821/79de9800-c16d-4a7a-b306-c933d276cb2d" alt="3_simba" width="100" height="100">  | <img src="https://github.com/pknu-wap/GLOG/assets/66813821/30bf36d5-a886-4df9-9459-3eb890631490" alt="3_miki" width="100" height="100"> | <img src="https://github.com/pknu-wap/GLOG/assets/66813821/aece1d61-7853-42a6-ace3-ce8023cc91e0" alt="3_miki" width="100" height="100"> |
 | :------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
 |                                 [채연(F.E)](https://github.com/chaeyeon1)                                  |                                  [준서(F.E)](https://github.com/dev-junseo)                                  |                                 [도연(B.E)](https://github.com/dy102)                                 |                                [두영(B.E)](https://github.com/FhRh)                                     |                             [종경(B.E)](https://github.com/jeongkyeong)                                     |

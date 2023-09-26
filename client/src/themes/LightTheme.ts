@@ -23,6 +23,9 @@ export const lightTheme = createTheme({
     secondary: {
       main: mint[500],
     },
+    subColor: {
+      main: '#ffffff',
+    },
     themeColor: {
       main: '#ffffff',
     },

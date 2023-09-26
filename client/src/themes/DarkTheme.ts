@@ -1,7 +1,7 @@
 import { PaletteColor, SimplePaletteColorOptions, createTheme } from '@mui/material';
 import { yellow } from './color';
 
-type PaletteColors = 'backdrop' | 'textColor' | 'themeColor' | 'oppositeColor';
+type PaletteColors = 'backdrop' | 'textColor' | 'themeColor' | 'oppositeColor' | 'subColor';
 
 declare module '@mui/material' {
   interface ButtonPropsColorOverrides {
@@ -44,6 +44,9 @@ export const darkTheme = createTheme({
     },
     secondary: {
       main: '#ffffff',
+    },
+    subColor: {
+      main: '#0D0D0D',
     },
     themeColor: {
       main: '#000000',

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "posts")
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,6 @@ public class Post {
     @NotNull
     private String content;
 
-    @Nullable
     private String imageUrl;
 
     @NotNull
@@ -48,6 +47,9 @@ public class Post {
 
     @NotNull
     private Boolean isPrivate;
+
+    @NotNull
+    private Boolean isPr;
     private String hashtags; //TODO Hashtag 테이블 따로 만들어야 할듯?
 
     @CreatedDate

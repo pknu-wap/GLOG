@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 
 @AllArgsConstructor
@@ -14,14 +15,14 @@ import org.springframework.data.annotation.CreatedDate;
 @Getter
 @Setter
 @Entity
+@Table(name = "history")
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @CreatedDate
-    private DateTime date;
+    private LocalDateTime date;
 
     @ManyToOne
     private User user;

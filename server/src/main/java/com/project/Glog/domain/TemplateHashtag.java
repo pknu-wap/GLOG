@@ -12,7 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Temporary_hashtag {
+@Table(name = "templateHashtag")
+public class TemplateHashtag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,5 +22,5 @@ public class Temporary_hashtag {
     private String tag;
 
     @ManyToOne
-    private Temporary temporary;
+    private Template template;
 }

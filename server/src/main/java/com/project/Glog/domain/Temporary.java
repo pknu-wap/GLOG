@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "temporary")
 public class Temporary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

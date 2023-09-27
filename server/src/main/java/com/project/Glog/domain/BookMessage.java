@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 
 @AllArgsConstructor
@@ -14,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Getter
 @Setter
 @Entity
+@Table(name = "bookMessage")
 public class BookMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +24,8 @@ public class BookMessage {
     @NotNull
     private String message;
 
-    @NotNull
     @CreatedDate
-    private DateTime createdAt;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     private GuestBook guestBook;

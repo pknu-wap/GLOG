@@ -15,10 +15,15 @@ import lombok.Setter;
 public class Blog {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne
     private User user;
+
     @NotNull
     private String blogName;
+
     @NotNull
-    private Integer skin;
+    private String blogUrl;
+
+    private String content;   // 리드미
 }

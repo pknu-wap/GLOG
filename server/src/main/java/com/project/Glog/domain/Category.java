@@ -19,6 +19,12 @@ public class Category {
 
     @ManyToOne
     private Blog blog;
+
     @NotNull
     private String categoryName;
+
+    @NotNull
+    private Boolean isPrcategory;
+
+    private String reopsitoryAddr;
 }

@@ -19,31 +19,39 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @NotNull
+    private String loginId;
 
-    @Email
-    @Column(nullable = false)
-    private String email;
+    @NotNull
+    private String nickname;
+
+    private String introduction;
 
     private String imageUrl;
 
-    @Column(nullable = false)
-    private Boolean emailVerified = false;
+    @NotNull
+    private int friendCount;
 
-    @JsonIgnore
-    private String password;
+    @NotNull
+    private int skin;
+
+    @Email
+    @NotNull
+    private String email;
+
+    @NotNull
+    private Boolean emailVerified = false;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
+    @NotNull
     private String providerId;
 
-    private String introduction;
 
     public void updateInfo(UserInfoChangeRequest userInfoChangeRequest){
-        this.name = userInfoChangeRequest.getName();
+        this.nickname = userInfoChangeRequest.getName();
         this.introduction = userInfoChangeRequest.getIntroducion();
     }
 }

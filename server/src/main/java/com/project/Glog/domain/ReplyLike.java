@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "reply_likes")
+@Table(name = "replylike")
 public class ReplyLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +21,5 @@ public class ReplyLike {
     private User user;
 
     @ManyToOne
-    private  Reply reply;
+    private Reply reply;
 }

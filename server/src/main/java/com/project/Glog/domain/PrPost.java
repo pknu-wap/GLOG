@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "prpost")
+@Table(name = "prPost")
 public class PrPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +31,5 @@ public class PrPost {
     private String prTitle;
 
     @NotNull
-    private Boolean isPrposted;
+    private Boolean isPosted;
 }

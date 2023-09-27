@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "replies")
+@Table(name = "reply")
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +34,8 @@ public class Reply {
     private LocalDateTime createdAt;
 
     @NotNull
-    private int likesCount;
+    private Integer likesCount;
+
+    @NotNull
+    private Boolean isEdit;
 }

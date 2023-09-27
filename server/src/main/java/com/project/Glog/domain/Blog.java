@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
-@Table(name = "blogs")
+@Table(name = "blog")
 public class Blog {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +25,5 @@ public class Blog {
     @NotNull
     private String blogUrl;
 
-    private String content;   // 리드미
+    private String readme;   // 리드미
 }

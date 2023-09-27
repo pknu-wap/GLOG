@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "posts")
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +55,7 @@ public class Post {
     private String hashtags; // TODO Hashtag
 
     @NotNull
-    private Boolean isPrpost;
+    private Boolean isPrPost;
 
     @CreatedDate
     private LocalDateTime createdAt;

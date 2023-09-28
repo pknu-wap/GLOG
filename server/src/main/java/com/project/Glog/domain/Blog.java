@@ -11,14 +11,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
-@Table(name = "blogs")
+@Table(name = "blog")
 public class Blog {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne
     private User user;
+
     @NotNull
     private String blogName;
+
     @NotNull
-    private Integer skin;
+    private String blogUrl;
+
+    private String readme;   // 리드미
 }

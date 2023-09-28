@@ -6,25 +6,36 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "reply")
+public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Blog blog;
+    private User user;
+
+    @ManyToOne
+    private Post post;
 
     @NotNull
-    private String categoryName;
+    private String message;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @NotNull
-    private Boolean isPrcategory;
+    private Integer likesCount;
 
-    private String reopsitoryAddr;
+    @NotNull
+    private Boolean isEdit;
 }

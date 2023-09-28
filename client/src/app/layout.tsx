@@ -12,6 +12,7 @@ import FullLayout from '@/components/Layout/FullLayout';
 // app/layout.js
 export default function RootLayout(props: { children: ReactNode }) {
   const { children } = props;
+
   return (
     <html lang="en">
       <body>

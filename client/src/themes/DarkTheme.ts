@@ -55,8 +55,8 @@ export const darkTheme = createTheme({
       main: '#0D0D0D',
     },
     shadowColor: {
-      main: 'rgba(255, 255, 255, 0.15)',
-      dark: 'rgba(255, 255, 255, 0.25)',
+      main: 'rgba(255, 255, 255, 0.05)',
+      dark: 'rgba(255, 255, 255, 0.15)',
     },
     themeColor: {
       main: '#000000',

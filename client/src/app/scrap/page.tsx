@@ -2,7 +2,8 @@
 import React from 'react';
 import PostComponent from '../../components/Post/Post';
 import { useState } from 'react';
-import { PostArea, PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
+import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
+import CenterContent from '@/components/Layout/CenterContent';
 
 export default function Scrap() {
   //현재 페이지 상태
@@ -104,7 +105,7 @@ export default function Scrap() {
   const totalPages = backend.length;
 
   return (
-    <PostArea>
+    <CenterContent>
       <ScrapList>스크랩한 게시글</ScrapList>
       <PostAreaComponent>
         {result.PostPreviewResponse.recent.map((postInfo) => {
@@ -130,6 +131,6 @@ export default function Scrap() {
         variant="outlined"
         shape="rounded"
       />
-    </PostArea>
+    </CenterContent>
   );
 }

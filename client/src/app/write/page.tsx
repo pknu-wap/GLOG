@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import Button from '@/components/Button/Button';
 import { FooterButton, ToolBar, TopButton } from './Write.style';
 import TagList from './TagList';
+import TempSaveModal from './TempSaveModal';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
@@ -20,6 +21,7 @@ const Write: NextPage = () => {
   const [content, setContent] = useState<string | undefined>('# Hello World');
   const [tagArray, setTagArray] = useState<string[]>([]);
   const userTheme = useRecoilValue(userThemeState);
+  const [tempSaveOpen, setTempSaveOpen] = useState<boolean>(false);
 
   return (
     <Stack spacing={4} data-color-mode={userTheme}>
@@ -27,7 +29,9 @@ const Write: NextPage = () => {
       <ToolBar>
         <TagList editTagArray={(newValue) => setTagArray(newValue)} tagArray={tagArray} />
         <TopButton>
-          <Button sx={{ width: '130px' }}>임시저장 불러오기</Button>
+          <Button sx={{ width: '130px' }} onClick={() => setTempSaveOpen(true)}>
+            임시저장 불러오기
+          </Button>
           <Button sx={{ width: '130px' }}>템플릿 불러오기</Button>
         </TopButton>
       </ToolBar>
@@ -37,6 +41,7 @@ const Write: NextPage = () => {
         <Button>템플릿 저장</Button>
         <Button>글 저장</Button>
       </FooterButton>
+      <TempSaveModal open={tempSaveOpen} onClose={() => setTempSaveOpen(false)} />
     </Stack>
   );
 };

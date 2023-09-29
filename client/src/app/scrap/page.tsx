@@ -4,6 +4,7 @@ import PostComponent from '../../components/Post/Post';
 import { useState } from 'react';
 import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
 import CenterContent from '@/components/Layout/CenterContent';
+import StarIcon from '@mui/icons-material/Star';
 
 export default function Scrap() {
   //현재 페이지 상태
@@ -117,6 +118,7 @@ export default function Scrap() {
               title={postInfo.PostPrevewDto.title}
               likesCount={postInfo.PostPrevewDto.likesCount}
               viewsCount={postInfo.PostPrevewDto.viewsCount}
+              Icon={<StarIcon fontSize="small" />}
             />
           );
         })}

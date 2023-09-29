@@ -1,15 +1,20 @@
 import React from 'react';
 import { CostomizeButton, Image, Post, PostPopular, Thumbnail, Title } from './Post.style';
 import { PostComponentType } from './Post.type';
-import Script from 'next/script';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import StarIcon from '@mui/icons-material/Star';
-import IconButton from '../Button/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import IconButton from '../Button/IconButton';
 
-function PostComponent({ thumbnail, title, likesCount, viewsCount, isPrivate }: PostComponentType) {
+function PostComponent({
+  thumbnail,
+  title,
+  likesCount,
+  viewsCount,
+  Icon,
+  isPrivate,
+}: PostComponentType) {
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
@@ -18,27 +23,23 @@ function PostComponent({ thumbnail, title, likesCount, viewsCount, isPrivate }: 
     <Post href="#" isPhone={isPhone} isTablet={isTablet}>
       <Thumbnail>
         <PostPopular>
-          <IconButton size="small">
-            <FavoriteBorderIcon fontSize="small" />
-          </IconButton>
+          <FavoriteBorderIcon fontSize="small" />
           &nbsp;{likesCount}&nbsp;&nbsp;&nbsp;
-          <IconButton size="small">
-            <VisibilityIcon fontSize="small" />
-          </IconButton>
+          <VisibilityIcon fontSize="small" />
           &nbsp;{viewsCount}
         </PostPopular>
         <Image alt="" src={thumbnail} />
 
+        {isPrivate && (
+          <CostomizeButton>
+            <IconButton size="small">{Icon}</IconButton>
+          </CostomizeButton>
+        )}
         <CostomizeButton>
-          <IconButton size="small">
-            <StarIcon fontSize="small" />
-          </IconButton>
+          <IconButton size="small">{Icon}</IconButton>
         </CostomizeButton>
       </Thumbnail>
       <Title>{title}</Title>
-      {isPrivate && (
-        <Script src="https://kit.fontawesome.com/fe09364908.js" crossOrigin="anonymous"></Script>
-      )}
     </Post>
   );
 }

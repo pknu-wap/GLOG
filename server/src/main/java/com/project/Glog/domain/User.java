@@ -13,37 +13,42 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @NotNull
+    private String nickname;
 
-    @Email
-    @Column(nullable = false)
-    private String email;
+    private String introduction;
 
     private String imageUrl;
 
-    @Column(nullable = false)
-    private Boolean emailVerified = false;
+    @NotNull
+    private int friendCount;
 
-    @JsonIgnore
-    private String password;
+    @NotNull
+    private int skin;
+
+    @Email
+    @NotNull
+    private String email;
+
+    @NotNull
+    private Boolean emailVerified = false;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
+    @NotNull
     private String providerId;
 
-    private String introduction;
 
     public void updateInfo(UserInfoChangeRequest userInfoChangeRequest){
-        this.name = userInfoChangeRequest.getName();
+        this.nickname = userInfoChangeRequest.getName();
         this.introduction = userInfoChangeRequest.getIntroducion();
     }
 }

@@ -8,35 +8,37 @@ import Button from '@/components/Button/Button';
 function TempSaveModal({ open, onClose }: { open: boolean; onClose: (newValue: boolean) => void }) {
   const [clickList, setClickList] = useState<number>(0);
 
-  const lists = [
-    {
-      id: 0,
-      content: '임시저장 글 목록',
-    },
-    {
-      id: 1,
-      content: '임시저장 글 목록',
-    },
-    {
-      id: 2,
-      content: '임시저장 글 목록',
-    },
-  ];
+  const lists = {
+    postTitleResponse: [
+      {
+        postTitleDto: {
+          id: 0,
+          title: 'string',
+        },
+      },
+      {
+        postTitleDto: {
+          id: 1,
+          title: 'string',
+        },
+      },
+    ],
+  };
 
   return (
     <Modal maxWidth="lg" open={open} onClose={onClose}>
       <ModalTitle>임시저장 글 목록</ModalTitle>
       <ModalContent>
         <Stack spacing={2}>
-          {lists.map((list) => {
+          {lists.postTitleResponse.map((list) => {
             return (
               <List
-                key={list.id}
+                key={list.postTitleDto.id}
                 radioProps={{
-                  checked: clickList === list.id,
-                  onChange: () => setClickList(list.id),
+                  checked: clickList === list.postTitleDto.id,
+                  onChange: () => setClickList(list.postTitleDto.id),
                 }}
-                content={`#${list.id} ${list.content}`}
+                content={`#${list.postTitleDto.id} ${list.postTitleDto.title}`}
                 buttonAction={
                   <Button size="small" color="error">
                     삭제

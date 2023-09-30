@@ -6,6 +6,7 @@ import { Stack } from '@mui/material';
 import Button from '@/components/Button/Button';
 import { Dialog } from '@/components/Dialog/Dialog';
 import { ModalType } from '@/types/common';
+import ModalButton from '@/components/Modal/ModalButton';
 
 function TemplateModal({ open, onClose }: ModalType) {
   const [clickList, setClickList] = useState<number>(0);
@@ -26,6 +27,15 @@ function TemplateModal({ open, onClose }: ModalType) {
         },
       },
     ],
+  };
+
+  const actionClick = () => {
+    onClose();
+    console.log(`${clickList}번 클릭`);
+  };
+
+  const deleteClick = () => {
+    console.log(`${clickList}번 삭제`);
   };
 
   return (
@@ -53,12 +63,7 @@ function TemplateModal({ open, onClose }: ModalType) {
         </Stack>
       </ModalContent>
       <ModalActions>
-        <Button size="small" onClick={onClose}>
-          취소
-        </Button>
-        <Button size="small" variant="outlined">
-          불러오기
-        </Button>
+        <ModalButton onClose={onClose} action={{ content: '불러오기', action: actionClick }} />
       </ModalActions>
       <Dialog
         open={deleteConfirmOpen}
@@ -66,7 +71,7 @@ function TemplateModal({ open, onClose }: ModalType) {
         message="진짜 삭제하시겠습니까?"
         action={{
           content: '확인',
-          action: () => console.log('asdf'),
+          action: deleteClick,
         }}
       />
     </Modal>

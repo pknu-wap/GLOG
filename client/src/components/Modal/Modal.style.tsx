@@ -18,7 +18,7 @@ export const ModalActions = styled(DialogActions)(({ theme }) => ({
 
 export const DialogStyle = styled(MuiDialog)(({ theme }) => ({
   '& .MuiDialog-paper': {
-    padding: '12px 28px',
+    padding: '12px 2px 2px 20px',
     backgroundImage: 'none',
     backgroundColor: theme.palette.themeColor.main,
     border: `1px solid ${theme.palette.primary.main}`,

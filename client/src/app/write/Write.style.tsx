@@ -1,12 +1,12 @@
 import { Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const FooterButton = styled(Stack)(() => ({
+export const BottomButtonStyle = styled(Stack)(() => ({
   flexDirection: 'row',
   justifyContent: 'flex-end',
 }));
 
-export const TopButton = styled(Stack)(() => ({
+export const TopButtonStyle = styled(Stack)(() => ({
   flexDirection: 'row',
 }));
 

@@ -16,7 +16,11 @@ function TopButton() {
       <Button sx={{ width: '130px' }} onClick={() => setTemplateOpen(true)}>
         템플릿 불러오기
       </Button>
+
+      {/* 임시저장 불러오기 모달 */}
       <TempSaveModal open={tempSaveOpen} onClose={() => setTempSaveOpen(false)} />
+
+      {/* 템플릿 저장 불러오기 모달 */}
       <TemplateModal open={templateOpen} onClose={() => setTemplateOpen(false)} />
     </TopButtonStyle>
   );

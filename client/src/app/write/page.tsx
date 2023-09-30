@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { Stack, TextField } from '@mui/material';
 import { userThemeState } from '@/recoil/atom';
 import { useRecoilValue } from 'recoil';
@@ -17,21 +17,46 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
 });
 
+type WriteType = {
+  title: string;
+  content?: string;
+  tags: string[];
+};
+
+const WritePropsContext = createContext<WriteType | undefined>(undefined);
+
+export const useWriteProps = () => {
+  const state = useContext(WritePropsContext);
+
+  return state;
+};
+
 const Write: NextPage = () => {
+  const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
-  const [tagArray, setTagArray] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const userTheme = useRecoilValue(userThemeState);
 
+  const state = useMemo(() => ({ content, title, tags }), [content, title, tags]);
+
   return (
-    <Stack spacing={4} data-color-mode={userTheme}>
-      <TextField sx={{ width: '30%' }} variant="standard" placeholder="제목을 입력해주세요." />
-      <ToolBar>
-        <TagList editTagArray={(newValue) => setTagArray(newValue)} tagArray={tagArray} />
-        <TopButton />
-      </ToolBar>
-      <MDEditor height="68vh" value={content} onChange={setContent} />
-      <BottomButton />
-    </Stack>
+    <WritePropsContext.Provider value={state}>
+      <Stack spacing={4} data-color-mode={userTheme}>
+        <TextField
+          sx={{ width: '30%' }}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          variant="standard"
+          placeholder="제목을 입력해주세요."
+        />
+        <ToolBar>
+          <TagList editTagArray={(newValue) => setTags(newValue)} tagArray={tags} />
+          <TopButton />
+        </ToolBar>
+        <MDEditor height="68vh" value={content} onChange={setContent} />
+        <BottomButton />
+      </Stack>
+    </WritePropsContext.Provider>
   );
 };
 

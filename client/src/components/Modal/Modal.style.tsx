@@ -13,12 +13,12 @@ export const ModalContent = styled(DialogContent)(({ theme }) => ({
 }));
 
 export const ModalActions = styled(DialogActions)(({ theme }) => ({
-  '&&.MuiDialogActions-root': { backgroundColor: theme.palette.themeColor.main },
+  '&&.MuiDialogActions-root': { width: '100%', backgroundColor: theme.palette.themeColor.main },
 }));
 
 export const DialogStyle = styled(MuiDialog)(({ theme }) => ({
   '& .MuiDialog-paper': {
-    padding: '12px 2px 2px 20px',
+    padding: '2px 20px 2px 20px',
     backgroundImage: 'none',
     backgroundColor: theme.palette.themeColor.main,
     border: `1px solid ${theme.palette.primary.main}`,

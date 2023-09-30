@@ -1,19 +1,18 @@
-"use client"
+'use client';
 import React from 'react';
-import PostComponent from './Post/Post';
-import { useState } from "react";
-import { PostArea, PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
-
-
+import PostComponent from '../../components/Post/Post';
+import { useState } from 'react';
+import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
+import CenterContent from '@/components/Layout/CenterContent';
+import StarIcon from '@mui/icons-material/Star';
 
 export default function Scrap() {
-
   //현재 페이지 상태
   const [page, setPage] = useState(0);
 
   const backend = [
     {
-       PostPreviewResponse: {
+      PostPreviewResponse: {
         count: '0L',
         recent: [
           {
@@ -99,39 +98,41 @@ export default function Scrap() {
       },
     },
   ];
-  const result = backend[page]
+  const result = backend[page];
 
   //전체 페이지 수
-  //나중에 백에서 데이터를 받을 땐 : 
+  //나중에 백에서 데이터를 받을 땐 :
   // = result.PostPreviewResponse.count / 12 (한 페이지당 12개의 게시글 존재)
-  const totalPages = backend.length
+  const totalPages = backend.length;
 
-    return (
-        <PostArea>
-            <ScrapList>스크랩한 게시글</ScrapList>
-            <PostAreaComponent>
-              {result.PostPreviewResponse.recent.map((postInfo) => {
-                  return <PostComponent 
-                  isPrivate
-                    key={postInfo.PostPrevewDto.postId}
-                    thumbnail={postInfo.PostPrevewDto.imageUrl} 
-                    title={postInfo.PostPrevewDto.title}
-                    likesCount={postInfo.PostPrevewDto.likesCount}
-                    viewsCount={postInfo.PostPrevewDto.viewsCount}
-                  />;
-                  }
-              )}
-            </PostAreaComponent>
+  return (
+    <CenterContent maxWidth={'1280px'}>
+      <ScrapList>스크랩한 게시글</ScrapList>
+      <PostAreaComponent>
+        {result.PostPreviewResponse.recent.map((postInfo) => {
+          return (
+            <PostComponent
+              isPrivate
+              key={postInfo.PostPrevewDto.postId}
+              thumbnail={postInfo.PostPrevewDto.imageUrl}
+              title={postInfo.PostPrevewDto.title}
+              likesCount={postInfo.PostPrevewDto.likesCount}
+              viewsCount={postInfo.PostPrevewDto.viewsCount}
+              Icon={<StarIcon fontSize="small" />}
+            />
+          );
+        })}
+      </PostAreaComponent>
 
-            <PostPagination
-              count={totalPages} 
-              page={page + 1}
-              onChange={(_, newPage) =>{
-                setPage(newPage - 1);
-              }}
-              variant="outlined" 
-              shape="rounded"/>
-        </PostArea>
-    )
-};
-
+      <PostPagination
+        count={totalPages}
+        page={page + 1}
+        onChange={(_, newPage) => {
+          setPage(newPage - 1);
+        }}
+        variant="outlined"
+        shape="rounded"
+      />
+    </CenterContent>
+  );
+}

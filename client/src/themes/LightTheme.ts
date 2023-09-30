@@ -26,6 +26,10 @@ export const lightTheme = createTheme({
     subColor: {
       main: '#ffffff',
     },
+    shadowColor: {
+      main: 'rgba(0, 0, 0, 0.1)',
+      dark: 'rgba(0, 0, 0, 0.2)',
+    },
     themeColor: {
       main: '#ffffff',
     },

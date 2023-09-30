@@ -106,7 +106,7 @@ export default function Scrap() {
   const totalPages = backend.length;
 
   return (
-    <CenterContent>
+    <CenterContent maxWidth={'1280px'}>
       <ScrapList>스크랩한 게시글</ScrapList>
       <PostAreaComponent>
         {result.PostPreviewResponse.recent.map((postInfo) => {

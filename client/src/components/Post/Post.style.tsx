@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Theme } from '@mui/material';
+import { Icon, Theme } from '@mui/material';
 import Link from 'next/link';
 
 export const Post = styled(Link)(
@@ -7,7 +7,7 @@ export const Post = styled(Link)(
     backgroundColor: theme?.palette.subColor.main,
     color: theme?.palette.secondary.main,
     margin: '30px',
-    width: isPhone ? '100%' : isTablet ? '40%' : '24%',
+    width: isPhone ? '100%' : isTablet ? '40%' : '20%',
     height: '200px',
     padding: '10px',
     borderRadius: '10px',
@@ -47,6 +47,7 @@ export const PostPopular = styled('div')({
   backgroundColor: 'rgba(0, 0, 0, 0.4)',
   width: '100%',
   height: '100%',
+  gap: '5px',
   opacity: '0',
   transition: 'all .35s ease-in-out',
   ':hover': {
@@ -54,12 +55,14 @@ export const PostPopular = styled('div')({
   },
 });
 
+export const VisibilityIcon = styled(Icon)({
+  paddingLeft: '20px',
+});
+
 export const Image = styled('img')({
   width: '100%',
   height: '100%',
 });
-
-export const Icon = styled('i')({});
 
 export const Title = styled('div')({
   marginTop: '10px',

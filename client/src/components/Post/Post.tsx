@@ -24,9 +24,9 @@ function PostComponent({
       <Thumbnail>
         <PostPopular>
           <FavoriteBorderIcon fontSize="small" />
-          &nbsp;{likesCount}&nbsp;&nbsp;&nbsp;
+          {likesCount}
           <VisibilityIcon fontSize="small" />
-          &nbsp;{viewsCount}
+          {viewsCount}
         </PostPopular>
         <Image alt="" src={thumbnail} />
 
@@ -35,9 +35,6 @@ function PostComponent({
             <IconButton size="small">{Icon}</IconButton>
           </CostomizeButton>
         )}
-        <CostomizeButton>
-          <IconButton size="small">{Icon}</IconButton>
-        </CostomizeButton>
       </Thumbnail>
       <Title>{title}</Title>
     </Post>

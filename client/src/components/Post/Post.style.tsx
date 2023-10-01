@@ -6,7 +6,7 @@ export const Post = styled(Link, {
   shouldForwardProp: (propName:string) =>!['isPhone', 'isTablet', 'isLaptop'].includes(propName),
   })(({ theme, isPhone, isTablet, isLaptop }: { theme?: Theme; isPhone: boolean; isTablet: boolean; isLaptop: boolean }) => ({
     backgroundColor: theme?.palette.subColor.main,
-    color: theme?.palette.secondary.main,
+    color: theme?.palette.oppositeColor.main,
     margin: '30px 25px',
     width: isPhone ? '75%' : isTablet ? '38.5%' : isLaptop ? '26%' : '19%',
     height: '200px',

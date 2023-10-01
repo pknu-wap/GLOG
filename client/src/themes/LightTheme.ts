@@ -21,17 +21,17 @@ export const lightTheme = createTheme({
       main: mint[500],
     },
     secondary: {
-      main: mint[500],
+      main: 'rgb(240, 240, 240)',
     },
     subColor: {
-      main: '#ffffff',
+      main: 'rgb(250, 250, 250)',
     },
     shadowColor: {
       main: 'rgba(0, 0, 0, 0.1)',
       dark: 'rgba(0, 0, 0, 0.2)',
     },
     themeColor: {
-      main: '#ffffff',
+      main: 'rgb(250, 250, 250)',
     },
     oppositeColor: {
       main: '#000000',

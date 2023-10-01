@@ -1,4 +1,4 @@
-import { Pagination, Theme } from '@mui/material';
+import { Pagination } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const ScrapList = styled('div')(({ theme }) => ({

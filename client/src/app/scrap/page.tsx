@@ -30,7 +30,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 2,
               title: 'string',
               imageUrl: 'string',
               likesCount: 300,
@@ -42,7 +42,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 3,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -54,7 +54,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 4,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -66,7 +66,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 5,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -105,8 +105,10 @@ export default function Scrap() {
   // = result.PostPreviewResponse.count / 12 (한 페이지당 12개의 게시글 존재)
   const totalPages = backend.length;
 
+
+
   return (
-    <CenterContent maxWidth={'1280px'}>
+    <CenterContent maxWidth={'1440px'}>
       <ScrapList>스크랩한 게시글</ScrapList>
       <PostAreaComponent>
         {result.PostPreviewResponse.recent.map((postInfo) => {

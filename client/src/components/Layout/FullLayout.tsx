@@ -1,26 +1,24 @@
-import { useRecoilValue } from 'recoil';
-import { isSidebarOpenState, userThemeState } from '@/recoil/atom';
-import Sidebar from '../Sidebar/Sidebar';
+import { Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 type Children = {
   children: React.ReactNode;
 };
 
+
+const MainStack = styled(Stack)(({ theme }) => ({
+  width: '100%',
+  height: 'auto',
+  minHeight: '100vh',
+  padding: '124px 24px 0px 20px',
+  backgroundColor: theme.palette.themeColor.main,
+}))
+
 export default function FullLayout({ children }: Children) {
-  const userTheme = useRecoilValue(userThemeState);
-  const isSidebarOpen = useRecoilValue(isSidebarOpenState);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: 'auto',
-        minHeight: '100vh',
-        padding: isSidebarOpen ? '124px 24px 24px 324px' : '124px 24px 0px 20px',
-        backgroundColor: userTheme === 'dark' ? 'black' : 'white',
-      }}>
-      <Sidebar />
+    <MainStack>
       {children}
-    </div>
+    </MainStack>
   );
 }

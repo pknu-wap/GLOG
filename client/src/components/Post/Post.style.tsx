@@ -2,12 +2,13 @@ import { styled } from '@mui/material/styles';
 import { Icon, Theme } from '@mui/material';
 import Link from 'next/link';
 
-export const Post = styled(Link)(
-  ({ theme, isPhone, isTablet }: { theme?: Theme; isPhone: boolean; isTablet: boolean }) => ({
+export const Post = styled(Link, {
+  shouldForwardProp: (propName:string) =>!['isPhone', 'isTablet', 'isLaptop'].includes(propName),
+  })(({ theme, isPhone, isTablet, isLaptop }: { theme?: Theme; isPhone: boolean; isTablet: boolean; isLaptop: boolean }) => ({
     backgroundColor: theme?.palette.subColor.main,
-    color: theme?.palette.secondary.main,
-    margin: '30px',
-    width: isPhone ? '100%' : isTablet ? '40%' : '20%',
+    color: theme?.palette.oppositeColor.main,
+    margin: '30px 25px',
+    width: isPhone ? '75%' : isTablet ? '38.5%' : isLaptop ? '26%' : '19%',
     height: '200px',
     padding: '10px',
     borderRadius: '10px',
@@ -28,7 +29,7 @@ export const Thumbnail = styled('div')({
   borderRadius: '15px',
 });
 
-export const CostomizeButton = styled('button')({
+export const CostomizeButton = styled('div')({
   position: 'absolute',
   //나중에 버튼 테두리 없앨때 border: 'none', 추가
   border: 'none',

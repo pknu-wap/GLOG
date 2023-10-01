@@ -35,8 +35,8 @@ declare module '@mui/material/styles' {
 export const darkTheme = createTheme({
   breakpoints: {
     values: {
-      xl: 1920,
-      lg: 1440,
+      xl: 1440,
+      lg: 1280,
       md: 900,
       sm: 600,
       xs: 460,

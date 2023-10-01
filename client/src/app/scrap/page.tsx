@@ -30,7 +30,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 2,
               title: 'string',
               imageUrl: 'string',
               likesCount: 300,
@@ -42,7 +42,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 3,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -54,7 +54,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 4,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -66,7 +66,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 5,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,

@@ -2,8 +2,6 @@
 import React from 'react';
 import PostComponent from '../../components/Post/Post';
 import { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { useMediaQuery } from '@mui/material';
 import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
 import CenterContent from '@/components/Layout/CenterContent';
 import StarIcon from '@mui/icons-material/Star';

@@ -29,7 +29,7 @@ export const Thumbnail = styled('div')({
   borderRadius: '15px',
 });
 
-export const CostomizeButton = styled('button')({
+export const CostomizeButton = styled('div')({
   position: 'absolute',
   //나중에 버튼 테두리 없앨때 border: 'none', 추가
   border: 'none',

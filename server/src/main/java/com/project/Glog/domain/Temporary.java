@@ -9,22 +9,21 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "temporary")
+public class Temporary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
+    private String content;
+
+    private String thumbnail;
+
     @ManyToOne
-    private Blog blog;
-
-    @NotNull
-    private String categoryName;
-
-    @NotNull
-    private Boolean isPrcategory;
-
-    private String reopsitoryAddr;
+    private User user;
 }

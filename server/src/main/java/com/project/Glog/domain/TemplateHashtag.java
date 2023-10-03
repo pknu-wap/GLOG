@@ -9,22 +9,18 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "templateHashtag")
+public class TemplateHashtag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    private String tag;
+
     @ManyToOne
-    private Blog blog;
-
-    @NotNull
-    private String categoryName;
-
-    @NotNull
-    private Boolean isPrcategory;
-
-    private String reopsitoryAddr;
+    private Template template;
 }

@@ -6,12 +6,12 @@ import com.project.Glog.dto.request.reply.ReplyUpdateRequest;
 import com.project.Glog.dto.responsee.reply.ReplyGetResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
+import com.project.Glog.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 
 @RestController
 public class ReplyController {
@@ -41,8 +41,12 @@ public class ReplyController {
     public ResponseEntity<String> update(@CurrentUser UserPrincipal userPrincipal,
                                          @RequestBody ReplyUpdateRequest replyupdateRequest)  {
 
-        replyService.updateReply(userPrincipal, replyupdateRequest);
-
+        try{
+            replyService.updateReply(userPrincipal, replyupdateRequest);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("not owner", HttpStatus.NOT_ACCEPTABLE);
+        }
         return new ResponseEntity<>("success update reply", HttpStatus.OK);
     }
 
@@ -50,8 +54,12 @@ public class ReplyController {
     public ResponseEntity<String> delete(@CurrentUser UserPrincipal userPrincipal,
                                          @RequestParam Long replyId) {
 
-        replyService.deleteReply(userPrincipal, replyId);
-
+        try{
+            replyService.deleteReply(userPrincipal, replyId);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("not owner", HttpStatus.NOT_ACCEPTABLE);
+        }
         return new ResponseEntity<>("success delete reply", HttpStatus.OK);
     }
 

@@ -40,6 +40,9 @@ public class Post {
     private String imageUrl;
 
     @NotNull
+    private String blogUrl;
+
+    @NotNull
     private Integer likesCount;
 
     @NotNull
@@ -50,10 +53,11 @@ public class Post {
 
     @NotNull
     private Boolean isPr;
-    private String hashtags; //TODO Hashtag 테이블 따로 만들어야 할듯?
-
+    private String hashtags;
     @CreatedDate
     private LocalDateTime createdAt;
+
+
 
     public void update(PostUpdateRequest postUpdateRequest){
         this.title=postUpdateRequest.getTitle();

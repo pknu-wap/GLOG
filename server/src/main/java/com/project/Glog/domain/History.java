@@ -6,25 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+import org.springframework.data.annotation.CreatedDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "history")
+public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreatedDate
+    private LocalDateTime date;
+
     @ManyToOne
-    private Blog blog;
-
-    @NotNull
-    private String categoryName;
-
-    @NotNull
-    private Boolean isPrcategory;
-
-    private String reopsitoryAddr;
+    private User user;
 }

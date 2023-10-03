@@ -1,7 +1,6 @@
 package com.project.Glog.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,22 +8,18 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "replylike")
+public class ReplyLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Blog blog;
+    private User user;
 
-    @NotNull
-    private String categoryName;
-
-    @NotNull
-    private Boolean isPrcategory;
-
-    private String reopsitoryAddr;
+    @ManyToOne
+    private Reply reply;
 }

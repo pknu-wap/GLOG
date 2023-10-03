@@ -2,7 +2,7 @@
 import React from 'react';
 import PostComponent from '../../components/Post/Post';
 import { useState } from 'react';
-import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
+import { PostAreaComponent, PostPagination, ScrapList } from './category.style';
 import CenterContent from '@/components/Layout/CenterContent';
 import StarIcon from '@mui/icons-material/Star';
 
@@ -16,7 +16,7 @@ export default function Scrap() {
         count: '0L',
         recent: [
           {
-            PostPreviewDto: {
+            PostPrevewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -28,7 +28,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPreviewDto: {
+            PostPrevewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -40,7 +40,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPreviewDto: {
+            PostPrevewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -52,7 +52,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPreviewDto: {
+            PostPrevewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -64,7 +64,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPreviewDto: {
+            PostPrevewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -83,7 +83,7 @@ export default function Scrap() {
         count: '0L',
         recent: [
           {
-            PostPreviewDto: {
+            PostPrevewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -113,11 +113,11 @@ export default function Scrap() {
           return (
             <PostComponent
               isPrivate
-              key={postInfo.PostPreviewDto.postId}
-              thumbnail={postInfo.PostPreviewDto.imageUrl}
-              title={postInfo.PostPreviewDto.title}
-              likesCount={postInfo.PostPreviewDto.likesCount}
-              viewsCount={postInfo.PostPreviewDto.viewsCount}
+              key={postInfo.PostPrevewDto.postId}
+              thumbnail={postInfo.PostPrevewDto.imageUrl}
+              title={postInfo.PostPrevewDto.title}
+              likesCount={postInfo.PostPrevewDto.likesCount}
+              viewsCount={postInfo.PostPrevewDto.viewsCount}
               Icon={<StarIcon fontSize="small" />}
             />
           );

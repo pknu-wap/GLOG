@@ -1,15 +1,14 @@
 package com.project.Glog.service;
 
 import com.project.Glog.domain.Post;
+import com.project.Glog.domain.PostLike;
+import com.project.Glog.domain.User;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
 import com.project.Glog.dto.responsee.post.PostPreviewDtos;
 import com.project.Glog.dto.responsee.post.PostPreviewResponse;
 import com.project.Glog.dto.responsee.post.PostReadResponse;
-import com.project.Glog.repository.BlogRepository;
-import com.project.Glog.repository.CategoryRepository;
-import com.project.Glog.repository.PostRepository;
-import com.project.Glog.repository.UserRepository;
+import com.project.Glog.repository.*;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.util.AwsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,8 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private PostLikeRepository postLikeRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -148,6 +149,24 @@ public class PostService {
             //게시글 +1
             //좋아요 테이블에 데이터 삽입
             //"success add like" 반환
+        Post post = postRepository.findById(postId).get();
+        User currentUser = userRepository.findById(userPrincipal.getId()).get();
+
+        Optional<PostLike> postLikeOptional = postLikeRepository.findByReplyAndUser(post, currentUser);
+        if(postLikeOptional.isPresent()){
+            post.setLikesCount(post.getLikesCount()-1);
+            postRepository.save(post);
+
+            postLikeRepository.delete(postLikeOptional.get());
+            return "remove";
+        }
+        else{
+            post.setLikesCount(post.getLikesCount()+1);
+            postRepository.save(post);
+
+            PostLike postLike = new PostLike(null,currentUser,post);
+            postLikeRepository.save(postLike);
+            return "add";
 
         return "";
     }

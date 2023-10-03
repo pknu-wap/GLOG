@@ -1,8 +1,10 @@
 'use client';
 import React from 'react';
-import PostComponent from './Post/Post';
+import PostComponent from '../../components/Post/Post';
 import { useState } from 'react';
-import { PostArea, PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
+import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
+import CenterContent from '@/components/Layout/CenterContent';
+import StarIcon from '@mui/icons-material/Star';
 
 export default function Scrap() {
   //현재 페이지 상태
@@ -28,7 +30,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 2,
               title: 'string',
               imageUrl: 'string',
               likesCount: 300,
@@ -40,7 +42,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 3,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -52,7 +54,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 4,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -64,7 +66,7 @@ export default function Scrap() {
           {
             PostPrevewDto: {
               blogUrl: 'string',
-              postId: 1,
+              postId: 5,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -104,7 +106,7 @@ export default function Scrap() {
   const totalPages = backend.length;
 
   return (
-    <PostArea>
+    <CenterContent maxWidth={'1440px'}>
       <ScrapList>스크랩한 게시글</ScrapList>
       <PostAreaComponent>
         {result.PostPreviewResponse.recent.map((postInfo) => {
@@ -116,6 +118,7 @@ export default function Scrap() {
               title={postInfo.PostPrevewDto.title}
               likesCount={postInfo.PostPrevewDto.likesCount}
               viewsCount={postInfo.PostPrevewDto.viewsCount}
+              Icon={<StarIcon fontSize="small" />}
             />
           );
         })}
@@ -130,6 +133,6 @@ export default function Scrap() {
         variant="outlined"
         shape="rounded"
       />
-    </PostArea>
+    </CenterContent>
   );
 }

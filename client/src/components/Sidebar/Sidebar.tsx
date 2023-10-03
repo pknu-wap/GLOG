@@ -2,7 +2,7 @@
 
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { isSidebarOpenState } from '@/recoil/atom';
 import MenuList from './SidebarMenuList';
@@ -20,9 +20,11 @@ const Sidebar = () => {
   const [openSideBar, setOpenSideBar] = useRecoilState(isSidebarOpenState);
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down('md'));
+  const [btnWord, setBtnWord] = useState('+ 카테고리 추가');
 
   useEffect(() => {
     setOpenSideBar(true);
+    setBtnWord('+ 카테고리 추가');
   }, []);
 
   const sidebarMenuList = [
@@ -72,7 +74,7 @@ const Sidebar = () => {
           transitionDuration={{ appear: 500, enter: 500, exit: 500 }}>
           <SidebarTitle>Chaeyeon Log</SidebarTitle>
           <SidebarAddButton>
-            <SidebarAddButtonLeftSide>+ 카테고리 추가</SidebarAddButtonLeftSide>
+            <SidebarAddButtonLeftSide>{btnWord}</SidebarAddButtonLeftSide>
             <IconButton onClick={() => setOpenSideBar(false)}>
               <KeyboardDoubleArrowLeftIcon />
             </IconButton>

@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { mint } from './color';
 
 export const lightTheme = createTheme({
   typography: {
@@ -18,7 +17,7 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: mint[500],
+      main: '#e4ba5a',
     },
     secondary: {
       main: 'rgb(240, 240, 240)',

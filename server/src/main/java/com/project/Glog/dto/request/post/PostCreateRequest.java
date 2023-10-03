@@ -27,6 +27,7 @@ public class PostCreateRequest {
                 title,
                 content,
                 null,
+                null,
                 0,
                 0,
                 isPrivate,

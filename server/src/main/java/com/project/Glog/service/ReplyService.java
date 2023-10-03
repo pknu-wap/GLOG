@@ -24,8 +24,8 @@ import java.util.Optional;
 public class ReplyService  {
     @Autowired
     private ReplyRepository replyRepository;
-    @Autowired
-    private ReplyLikeRepository replyLikeRepository;
+//    @Autowired
+//    private ReplyLikeRepository replyLikeRepository;
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -46,45 +46,45 @@ public class ReplyService  {
         return reply.getPost().getId();
     }
 
-    public ReplyGetResponse getReplies(UserPrincipal userPrincipal, ReplyGetRequest req) {
-        Post post = postRepository.findById(req.getPostId()).get();
-        User currentUser = userRepository.findById(userPrincipal.getId()).get();
-        Long authorId = postRepository.findById(post.getId()).get().getUser().getId();
-
-        Boolean imOwner = (authorId == userPrincipal.getId());
-
-        List<Reply> replys = replyRepository.findAllByPostId(req.getPostId(), req.getPage(), req.getOrder());
-        List<ReplyDto> replyDtos = new ArrayList<>();
-        for(Reply reply : replys){
-            ReplyDto replyDto = ReplyDto.of(reply);
-
-            Boolean isLiked = replyLikeRepository.findByReplyAndUser(reply, currentUser).isPresent();
-            replyDto.setIsLiked(isLiked);
-
-            String who;
-            if(reply.getUser().getId() == currentUser.getId()){
-                if(imOwner){
-                    who = "me(author)";
-                }
-                else{
-                    who = "me";
-                }
-            }
-            else{
-                if(reply.getUser().getId() == authorId){
-                    who = "author";
-                }
-                else{
-                    who = "other";
-                }
-            }
-            replyDto.setWho(who);
-
-            replyDtos.add(replyDto);
-        }
-
-        return new ReplyGetResponse(replyDtos, imOwner);
-    }
+//    public ReplyGetResponse getReplies(UserPrincipal userPrincipal, ReplyGetRequest req) {
+//        Post post = postRepository.findById(req.getPostId()).get();
+//        User currentUser = userRepository.findById(userPrincipal.getId()).get();
+//        Long authorId = postRepository.findById(post.getId()).get().getUser().getId();
+//
+//        Boolean imOwner = (authorId == userPrincipal.getId());
+//
+//        List<Reply> replys = replyRepository.findAllByPostId(req.getPostId(), req.getPage(), req.getOrder());
+//        List<ReplyDto> replyDtos = new ArrayList<>();
+//        for(Reply reply : replys){
+//            ReplyDto replyDto = ReplyDto.of(reply);
+//
+//            Boolean isLiked = replyLikeRepository.findByReplyAndUser(reply, currentUser).isPresent();
+//            replyDto.setIsLiked(isLiked);
+//
+//            String who;
+//            if(reply.getUser().getId() == currentUser.getId()){
+//                if(imOwner){
+//                    who = "me(author)";
+//                }
+//                else{
+//                    who = "me";
+//                }
+//            }
+//            else{
+//                if(reply.getUser().getId() == authorId){
+//                    who = "author";
+//                }
+//                else{
+//                    who = "other";
+//                }
+//            }
+//            replyDto.setWho(who);
+//
+//            replyDtos.add(replyDto);
+//        }
+//
+//        return new ReplyGetResponse(replyDtos, imOwner);
+//    }
 
 
     public void updateReply(UserPrincipal userPrincipal, ReplyUpdateRequest req) throws Exception{
@@ -108,25 +108,25 @@ public class ReplyService  {
         replyRepository.delete(reply);
     }
 
-    public String clickLike(UserPrincipal userPrincipal, Long replyId) {
-        Reply reply = replyRepository.findById(replyId).get();
-        User currentUser = userRepository.findById(userPrincipal.getId()).get();
-
-        Optional<ReplyLike> replyLikeOptional = replyLikeRepository.findByReplyAndUser(reply, currentUser);
-        if(replyLikeOptional.isPresent()){
-            reply.setLikesCount(reply.getLikesCount()-1);
-            replyRepository.save(reply);
-
-            replyLikeRepository.delete(replyLikeOptional.get());
-            return "remove";
-        }
-        else{
-            reply.setLikesCount(reply.getLikesCount()+1);
-            replyRepository.save(reply);
-
-            ReplyLike replyLike = new ReplyLike(null,currentUser,reply);
-            replyLikeRepository.save(replyLike);
-            return "add";
-        }
-    }
+//    public String clickLike(UserPrincipal userPrincipal, Long replyId) {
+//        Reply reply = replyRepository.findById(replyId).get();
+//        User currentUser = userRepository.findById(userPrincipal.getId()).get();
+//
+//        Optional<ReplyLike> replyLikeOptional = replyLikeRepository.findByReplyAndUser(reply, currentUser);
+//        if(replyLikeOptional.isPresent()){
+//            reply.setLikesCount(reply.getLikesCount()-1);
+//            replyRepository.save(reply);
+//
+//            replyLikeRepository.delete(replyLikeOptional.get());
+//            return "remove";
+//        }
+//        else{
+//            reply.setLikesCount(reply.getLikesCount()+1);
+//            replyRepository.save(reply);
+//
+//            ReplyLike replyLike = new ReplyLike(null,currentUser,reply);
+//            replyLikeRepository.save(replyLike);
+//            return "add";
+//        }
+//    }
 }

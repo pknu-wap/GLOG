@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface PostLikeRepository extends JpaRepository<PostLike,Long> {
 
-    @Query("SELECT l FROM PostLike l JOIN l.post p WHERE p.id = :blogId")
-    Optional<PostLike> findByReplyAndUser(@Param("post") Post post,
-                                          @Param("currentuser") User currentUser);
+    @Query("SELECT l FROM PostLike l JOIN l.post p WHERE p.id = :postId AND p.user.id = :userId")
+    Optional<PostLike> findByReplyAndUser(@Param("postId") Long postId,
+                                          @Param("userId") Long userId);
 }

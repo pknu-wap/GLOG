@@ -152,7 +152,7 @@ public class PostService {
         Post post = postRepository.findById(postId).get();
         User currentUser = userRepository.findById(userPrincipal.getId()).get();
 
-        Optional<PostLike> postLikeOptional = postLikeRepository.findByReplyAndUser(post, currentUser);
+        Optional<PostLike> postLikeOptional = postLikeRepository.findByReplyAndUser(post.getId(), currentUser.getId());
         if(postLikeOptional.isPresent()){
             post.setLikesCount(post.getLikesCount()-1);
             postRepository.save(post);

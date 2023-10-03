@@ -53,40 +53,38 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public void delete(UserPrincipal userPrincipal, Long postId) throws Exception{
+    public void delete(UserPrincipal userPrincipal, Long postId) throws Exception {
         //사용자의 게시글이 맞는지 확인 아니면 예외 던짐
         Post post = postRepository.findById(postId).get();
 
-        if(post.getUser().getId()!=userPrincipal.getId()){
+        if (post.getUser().getId() != userPrincipal.getId()) {
             throw new IllegalAccessException("It's not your post");
-        }
-        else{
+        } else {
             postRepository.delete(post);
         }
     }
 
     public PostReadResponse readPost(Long postId) {
         Optional<Post> optionalPost = postRepository.findById(postId);
-        if(optionalPost.isEmpty()){
+        if (optionalPost.isEmpty()) {
             throw new IllegalArgumentException("No Post");
-        }
-        else{
+        } else {
             return PostReadResponse.of(optionalPost.get());
         }
     }
 
     public PostPreviewResponse getPreviews(Long index) {
-        PostPreviewDtos created = getCreatedPreviews(index*8);
-        PostPreviewDtos views = getViewsPreviews(index*8);
-        PostPreviewDtos likes = getLikesPreviews(index*8);
-        PostPreviewDtos random = getRandomPreviews(index*8);
+        PostPreviewDtos created = getCreatedPreviews(index * 8);
+        PostPreviewDtos views = getViewsPreviews(index * 8);
+        PostPreviewDtos likes = getLikesPreviews(index * 8);
+        PostPreviewDtos random = getRandomPreviews(index * 8);
         //얘네 메서드도 페이지네이션 사용해서 처리하면 참 좋은데
         //중복되는 코드 리팩토링 필요
 
         return new PostPreviewResponse(created, likes, views, random);
     }
 
-    private PostPreviewDtos getCreatedPreviews(Long cursor){
+    private PostPreviewDtos getCreatedPreviews(Long cursor) {
         List<Post> allCratedPosts = postRepository.findAllByOrderByIdDesc(); //posts 생성자
         List<Post> createdPosts = allCratedPosts.stream() //posts의 메서드로 실행
                 .skip(cursor)
@@ -95,7 +93,8 @@ public class PostService {
 
         return new PostPreviewDtos(createdPosts);
     }
-    public PostPreviewDtos getViewsPreviews(Long cursor){
+
+    public PostPreviewDtos getViewsPreviews(Long cursor) {
         List<Post> allViewsPosts = postRepository.findAllByOrderByViewsDesc();
         List<Post> viewsPosts = allViewsPosts.stream()
                 .skip(cursor)
@@ -104,7 +103,8 @@ public class PostService {
 
         return new PostPreviewDtos(viewsPosts);
     }
-    public PostPreviewDtos getLikesPreviews(Long cursor){
+
+    public PostPreviewDtos getLikesPreviews(Long cursor) {
         List<Post> allLikesPosts = postRepository.findAllByOrderByLikesDesc();
         List<Post> likesPosts = allLikesPosts.stream()
                 .skip(cursor)
@@ -113,7 +113,8 @@ public class PostService {
 
         return new PostPreviewDtos(likesPosts);
     }
-    public PostPreviewDtos getRandomPreviews(Long cursor){
+
+    public PostPreviewDtos getRandomPreviews(Long cursor) {
         List<Post> allRandomPosts = postRepository.findAll();
         Collections.shuffle(allRandomPosts);
         List<Post> randomPosts = allRandomPosts.stream()
@@ -142,32 +143,31 @@ public class PostService {
 
         //좋아요 DB에 사용자, 게시글 매칭되는 데이터 찾기
         //있으면
-            //게시글 좋아요수 -1
-            //좋아요 테이블에 데이터 삭제
-            //"success removed like" 반환
+        //게시글 좋아요수 -1
+        //좋아요 테이블에 데이터 삭제
+        //"success removed like" 반환
         //없으면
-            //게시글 +1
-            //좋아요 테이블에 데이터 삽입
-            //"success add like" 반환
+        //게시글 +1
+        //좋아요 테이블에 데이터 삽입
+        //"success add like" 반환
         Post post = postRepository.findById(postId).get();
         User currentUser = userRepository.findById(userPrincipal.getId()).get();
 
         Optional<PostLike> postLikeOptional = postLikeRepository.findByReplyAndUser(post.getId(), currentUser.getId());
-        if(postLikeOptional.isPresent()){
-            post.setLikesCount(post.getLikesCount()-1);
+        if (postLikeOptional.isPresent()) {
+            post.setLikesCount(post.getLikesCount() - 1);
             postRepository.save(post);
 
             postLikeRepository.delete(postLikeOptional.get());
             return "remove";
-        }
-        else{
-            post.setLikesCount(post.getLikesCount()+1);
+        } else {
+            post.setLikesCount(post.getLikesCount() + 1);
             postRepository.save(post);
 
-            PostLike postLike = new PostLike(null,currentUser,post);
+            PostLike postLike = new PostLike(null, currentUser, post);
             postLikeRepository.save(postLike);
             return "add";
 
-        return "";
+        }
     }
 }

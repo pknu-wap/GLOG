@@ -10,11 +10,11 @@ function TopButton() {
 
   return (
     <TopButtonStyle>
-      <Button sx={{ width: '130px' }} onClick={() => setTempSaveOpen(true)}>
-        임시저장 불러오기
+      <Button variant="outlined" sx={{ width: '85px' }} onClick={() => setTempSaveOpen(true)}>
+        임시저장
       </Button>
-      <Button sx={{ width: '130px' }} onClick={() => setTemplateOpen(true)}>
-        템플릿 불러오기
+      <Button variant="outlined" sx={{ width: '80px' }} onClick={() => setTemplateOpen(true)}>
+        템플릿
       </Button>
 
       {/* 임시저장 불러오기 모달 */}

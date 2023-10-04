@@ -33,11 +33,11 @@ public class BlogService {
     }
     public String registerBlog(UserPrincipal userPrincipal, UserCreateRequest userCreateRequest){
         Blog blog = new Blog();
-        blog.setUser(userRepository.findById(userPrincipal.getId()).get());
+        User user = userRepository.findById(userPrincipal.getId()).get();
+
+        blog.setUser(user);
         blog.setBlogName(userCreateRequest.getBlogName());
         blog.setBlogUrl(userCreateRequest.getBlogUrl());
-
-        User user = userRepository.findById(userPrincipal.getId()).get();
         user.setNickname(userCreateRequest.getNickname());
 
         blogRepository.save(blog);

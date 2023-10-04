@@ -14,6 +14,8 @@ import com.project.Glog.repository.ReplyRepository;
 import com.project.Glog.repository.UserRepository;
 import com.project.Glog.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -53,7 +55,8 @@ public class ReplyService  {
 //
 //        Boolean imOwner = (authorId == userPrincipal.getId());
 //
-//        List<Reply> replys = replyRepository.findAllByPostId(req.getPostId(), req.getPage(), req.getOrder());
+//        PageRequest pageRequest = PageRequest.of(req.getPage(), 10, Sort.by(req.getOrder()).descending());
+//        List<Reply> replys = replyRepository.findRepliesByPost(post, pageRequest).getContent();
 //        List<ReplyDto> replyDtos = new ArrayList<>();
 //        for(Reply reply : replys){
 //            ReplyDto replyDto = ReplyDto.of(reply);

@@ -10,6 +10,7 @@ import com.project.Glog.dto.request.reply.ReplyGetRequest;
 import com.project.Glog.dto.request.reply.ReplyUpdateRequest;
 import com.project.Glog.dto.responsee.reply.ReplyGetResponse;
 import com.project.Glog.repository.PostRepository;
+import com.project.Glog.repository.ReplyLikeRepository;
 import com.project.Glog.repository.ReplyRepository;
 import com.project.Glog.repository.UserRepository;
 import com.project.Glog.security.UserPrincipal;
@@ -24,8 +25,8 @@ import java.util.Optional;
 public class ReplyService  {
     @Autowired
     private ReplyRepository replyRepository;
-//    @Autowired
-//    private ReplyLikeRepository replyLikeRepository;
+    @Autowired
+    private ReplyLikeRepository replyLikeRepository;
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -108,25 +109,25 @@ public class ReplyService  {
         replyRepository.delete(reply);
     }
 
-//    public String clickLike(UserPrincipal userPrincipal, Long replyId) {
-//        Reply reply = replyRepository.findById(replyId).get();
-//        User currentUser = userRepository.findById(userPrincipal.getId()).get();
-//
-//        Optional<ReplyLike> replyLikeOptional = replyLikeRepository.findByReplyAndUser(reply, currentUser);
-//        if(replyLikeOptional.isPresent()){
-//            reply.setLikesCount(reply.getLikesCount()-1);
-//            replyRepository.save(reply);
-//
-//            replyLikeRepository.delete(replyLikeOptional.get());
-//            return "remove";
-//        }
-//        else{
-//            reply.setLikesCount(reply.getLikesCount()+1);
-//            replyRepository.save(reply);
-//
-//            ReplyLike replyLike = new ReplyLike(null,currentUser,reply);
-//            replyLikeRepository.save(replyLike);
-//            return "add";
-//        }
-//    }
+    public String clickLike(UserPrincipal userPrincipal, Long replyId) {
+        Reply reply = replyRepository.findById(replyId).get();
+        User currentUser = userRepository.findById(userPrincipal.getId()).get();
+
+        Optional<ReplyLike> replyLikeOptional = replyLikeRepository.findByReplyAndUser(reply.getId(), currentUser.getId());
+        if(replyLikeOptional.isPresent()){
+            reply.setLikesCount(reply.getLikesCount()-1);
+            replyRepository.save(reply);
+
+            replyLikeRepository.delete(replyLikeOptional.get());
+            return "remove";
+        }
+        else{
+            reply.setLikesCount(reply.getLikesCount()+1);
+            replyRepository.save(reply);
+
+            ReplyLike replyLike = new ReplyLike(null,currentUser,reply);
+            replyLikeRepository.save(replyLike);
+            return "add";
+        }
+    }
 }

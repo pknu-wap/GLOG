@@ -1,5 +1,6 @@
 package com.project.Glog.controller;
 
+import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.responsee.blog.MyPageResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
@@ -45,4 +46,12 @@ public class BlogController {
 //
 //        return new ResponseEntity<>(myPageResponse, HttpStatus.OK);
 //    }
+    @PostMapping("/create/blog")
+    public ResponseEntity<String> createBlog(@CurrentUser UserPrincipal userPrincipal,
+                                             @RequestBody UserCreateRequest userCreateRequest){
+        //UserCreateRequest를 받아서 정보를 저장한다.
+        String blogUrl = blogService.registerBlog(userPrincipal, userCreateRequest);
+
+        return new ResponseEntity<>(blogUrl, HttpStatus.OK);
+    }
 }

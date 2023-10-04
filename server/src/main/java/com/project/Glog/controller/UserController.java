@@ -1,5 +1,6 @@
 package com.project.Glog.controller;
 
+import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
 import com.project.Glog.dto.responsee.user.UserDetailResponse;
 import com.project.Glog.security.CurrentUser;

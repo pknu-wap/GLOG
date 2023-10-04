@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Getter @Setter
 @Entity
@@ -26,4 +26,10 @@ public class Blog {
     private String blogUrl;
 
     private String readme;   // 리드미
+
+    public Blog(User user, String blogUrl, String blogName) {
+        this.user = user;
+        this.blogUrl = blogUrl;
+        this.blogName = blogName;
+    }
 }

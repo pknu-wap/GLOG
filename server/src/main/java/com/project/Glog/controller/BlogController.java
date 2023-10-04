@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 public class BlogController {
@@ -50,7 +47,7 @@ public class BlogController {
     public ResponseEntity<String> createBlog(@CurrentUser UserPrincipal userPrincipal,
                                              @RequestBody UserCreateRequest userCreateRequest){
         //UserCreateRequest를 받아서 정보를 저장한다.
-        String blogUrl = blogService.registerBlog(userPrincipal, userCreateRequest);
+        String blogUrl = blogService.registerBlogAndSetUserNickname(userPrincipal, userCreateRequest);
 
         return new ResponseEntity<>(blogUrl, HttpStatus.OK);
     }

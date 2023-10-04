@@ -63,7 +63,7 @@ public class ReplyController {
         return new ResponseEntity<>("success delete reply", HttpStatus.OK);
     }
 
-    @PatchMapping("/replies/{postId}/like")
+    @PatchMapping("/replies/{replyId}/like")
     public ResponseEntity<String> create(@CurrentUser UserPrincipal userPrincipal,
                                          @RequestParam Long replyId) {
 

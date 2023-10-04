@@ -1,9 +1,11 @@
 package com.project.Glog.security.oauth2;
 
+import com.project.Glog.domain.Blog;
 import com.project.Glog.exception.OAuth2AuthenticationProcessingException;
 import com.project.Glog.domain.AuthProvider;
 import com.project.Glog.domain.User;
 import com.project.Glog.repository.UserRepository;
+import com.project.Glog.security.CustomUserDetailsService;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.security.oauth2.user.OAuth2UserInfo;
 import com.project.Glog.security.oauth2.user.OAuth2UserInfoFactory;
@@ -24,6 +26,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CustomUserDetailsService userService;
 
     //백엔드 리다이렉션 페이지에서 토큰을 받은 후 리소스에 다시 요청해서 유저 정보를 받아옴
     @Override
@@ -71,6 +76,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setNickname(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
+
         return userRepository.save(user);
     }
 

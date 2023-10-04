@@ -1,5 +1,6 @@
 package com.project.Glog.security;
 
+import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +28,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = Collections.
                 singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-
         return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),

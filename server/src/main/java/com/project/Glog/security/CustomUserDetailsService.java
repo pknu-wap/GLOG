@@ -28,8 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private BlogRepository blogRepository;
+
     @Autowired
     private AwsUtils awsUtils;
 

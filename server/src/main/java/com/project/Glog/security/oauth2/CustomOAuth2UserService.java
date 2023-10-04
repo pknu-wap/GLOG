@@ -1,11 +1,9 @@
 package com.project.Glog.security.oauth2;
 
-import com.project.Glog.domain.Blog;
 import com.project.Glog.exception.OAuth2AuthenticationProcessingException;
 import com.project.Glog.domain.AuthProvider;
 import com.project.Glog.domain.User;
 import com.project.Glog.repository.UserRepository;
-import com.project.Glog.security.CustomUserDetailsService;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.security.oauth2.user.OAuth2UserInfo;
 import com.project.Glog.security.oauth2.user.OAuth2UserInfoFactory;

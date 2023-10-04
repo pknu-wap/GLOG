@@ -1,6 +1,5 @@
 package com.project.Glog.security;
 
-import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

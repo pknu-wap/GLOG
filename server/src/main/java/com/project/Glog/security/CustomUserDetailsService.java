@@ -1,12 +1,9 @@
 package com.project.Glog.security;
 
-import com.project.Glog.domain.Blog;
-import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
 import com.project.Glog.dto.responsee.user.UserDetailResponse;
 import com.project.Glog.exception.ResourceNotFoundException;
 import com.project.Glog.domain.User;
-import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.repository.UserRepository;
 import com.project.Glog.util.AwsUtils;
 import org.springframework.beans.factory.annotation.Autowired;

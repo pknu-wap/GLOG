@@ -4,6 +4,7 @@ import { Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { useRouter } from 'next/navigation';
+import { BearFootprint, Big__toe, Small__toe, Small__toe2, Small__toe3 } from './DragANdDrop.style';
 
 interface Category {
   categoryId: number;
@@ -53,7 +54,7 @@ function DragAndDrop<T extends Footprint>({ rightContainer, footprintList }: Dra
                     }}
                     {...provided.droppableProps}
                     ref={provided.innerRef}>
-                    <Stack gap={4}>
+                    <Stack gap={15}>
                       {footprintList.map((item, index) => {
                         const postId = 'postId' in item ? item.postId : undefined;
                         const postTitle = 'postTitle' in item ? item.postTitle : undefined;
@@ -72,13 +73,18 @@ function DragAndDrop<T extends Footprint>({ rightContainer, footprintList }: Dra
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}>
-                                <Stack direction="row" alignItems="center" gap={4}>
+                                <Stack
+                                  direction="row"
+                                  justifyContent="right"
+                                  alignItems="center"
+                                  gap={10}>
                                   <Stack>{postTitle || categoryTitle}</Stack>
-                                  <Stack
-                                    bgcolor="#ffffff"
-                                    borderRadius="50%"
-                                    width="50px"
-                                    height="50px"></Stack>
+                                  <BearFootprint>
+                                    <Big__toe></Big__toe>
+                                    <Small__toe></Small__toe>
+                                    <Small__toe2></Small__toe2>
+                                    <Small__toe3></Small__toe3>
+                                  </BearFootprint>
                                 </Stack>
                               </div>
                             )}

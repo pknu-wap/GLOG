@@ -63,16 +63,16 @@ public class ReplyController {
         return new ResponseEntity<>("success delete reply", HttpStatus.OK);
     }
 
-//    @PatchMapping("/replies/like")
-//    public ResponseEntity<String> create(@CurrentUser UserPrincipal userPrincipal,
-//                                         @RequestParam Long replyId) {
-//
-//        String result = replyService.clickLike(userPrincipal, replyId);
-//
-//        if (result.equals("remove")){
-//            return new ResponseEntity<>("success remove like", HttpStatus.OK);
-//        }
-//
-//        return new ResponseEntity<>("success add like", HttpStatus.OK);
-//    }
+    @PatchMapping("/replies/{replyId}/like")
+    public ResponseEntity<String> create(@CurrentUser UserPrincipal userPrincipal,
+                                         @RequestParam Long replyId) {
+
+        String result = replyService.clickLike(userPrincipal, replyId);
+
+        if (result.equals("remove")){
+            return new ResponseEntity<>("success remove like", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("success add like", HttpStatus.OK);
+    }
 }

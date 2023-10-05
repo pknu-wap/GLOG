@@ -2,11 +2,13 @@ package com.project.Glog.service;
 
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
+import com.project.Glog.dto.request.category.CategoryCreateRequest;
 import com.project.Glog.dto.responsee.category.SidebarDto;
 import com.project.Glog.dto.responsee.category.SidebarDtos;
 import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.repository.CategoryRepository;
 import com.project.Glog.repository.PostRepository;
+import com.project.Glog.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +25,9 @@ public class CategoryService {
     private PostRepository postRepository;
 
 
-    public Category create(Long uid, String categoryName){
-        Category category = new Category();
-        category.setCategoryName(categoryName);
-        category.setBlog(blogRepository.findByUserId(uid).get());
+    public Category create(UserPrincipal userPrincipal, CategoryCreateRequest req){
+        Category category = req.toCategory();
+        category.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
 
         return categoryRepository.save(category);
     }

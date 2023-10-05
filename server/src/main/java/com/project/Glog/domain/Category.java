@@ -26,5 +26,5 @@ public class Category {
     @NotNull
     private Boolean isPrcategory;
 
-    private String reopsitoryAddr;
+    private String reopsitoryUrl;
 }

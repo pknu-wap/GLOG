@@ -4,7 +4,6 @@ import { Dialog } from '@/components/Dialog/Dialog';
 import { ModalType, PrivateMapType } from '@/types/common';
 import ModalButton from '@/components/Modal/ModalButton';
 import { ModalActions, ModalContent } from '@/components/Modal/Modal.style';
-import { useWriteProps } from '../page';
 import { Chip, Stack } from '@mui/material';
 import IconButton from '@/components/Button/IconButton';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,6 +16,7 @@ import {
   TagContent,
   ButtonContainer,
 } from './SaveModal.style';
+import { useWriteProps } from '@/util/useWriteProps';
 
 function SaveModal({ open, onClose }: ModalType) {
   const [postConfirmOpen, setPostConfirmOpen] = useState<boolean>(false);

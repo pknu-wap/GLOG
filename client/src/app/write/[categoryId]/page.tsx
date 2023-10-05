@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
-import { createContext, useContext, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Stack, TextField } from '@mui/material';
 import { userThemeState } from '@/recoil/atom';
 import { useRecoilValue } from 'recoil';
@@ -12,24 +12,11 @@ import { ToolBar } from '../Write.style';
 import TagList from '../TagList';
 import BottomButton from './Bottom/BottomButton';
 import TopButton from './Top/TopButton';
+import { WritePropsContext } from '@/util/useWriteProps';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
 });
-
-type WriteType = {
-  title: string;
-  content?: string;
-  tags: string[];
-};
-
-const WritePropsContext = createContext<WriteType | undefined>(undefined);
-
-export const useWriteProps = () => {
-  const state = useContext(WritePropsContext);
-
-  return state;
-};
 
 const Write: NextPage = () => {
   const [title, setTitle] = useState<string>('');

@@ -23,7 +23,7 @@ public class TemporaryController {
         return new ResponseEntity<>(postTitleResponse, HttpStatus.OK);
     }
 
-    @GetMapping(".temporary/detail")
+    @GetMapping("/temporary/detail")
     public ResponseEntity<PostBasicDto> readTemporaryDetail(@CurrentUser UserPrincipal userPrincipal,
                                                             @RequestParam("temporaryId") Long temporaryId){
 
@@ -34,8 +34,8 @@ public class TemporaryController {
 
 
     @PostMapping("/temporary")
-    public ResponseEntity<String> updateTemporary(@CurrentUser UserPrincipal userPrincipal,
-                                                  @RequestParam PostBasicDto postBasicDto){
+    public ResponseEntity<String> createTemporary(@CurrentUser UserPrincipal userPrincipal,
+                                                  @RequestBody PostBasicDto postBasicDto){
 
         temporaryService.create(userPrincipal, postBasicDto);
 

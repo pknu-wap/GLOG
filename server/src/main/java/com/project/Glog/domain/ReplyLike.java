@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "replylike")
+@Table(name = "replyLike")
 public class ReplyLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

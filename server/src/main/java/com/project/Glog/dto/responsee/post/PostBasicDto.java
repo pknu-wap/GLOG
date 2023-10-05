@@ -18,7 +18,7 @@ public class PostBasicDto {
     private String title;
     private String content;
     private String thumbnail;
-    private String[] hashtag;
+    private String[] hashtags;
     public static PostBasicDto of (Temporary temporary, String[] hashtag){
         return new PostBasicDto(temporary.getId(),
                 temporary.getTitle(),

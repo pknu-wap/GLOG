@@ -43,7 +43,7 @@ public class TemporaryService {
             return list;
         }).orElse(new ArrayList<>());
 
-        String[] hashtags = hashtag.stream()   //TODO// 리스트에서 배열로 바꾸는 것이 아니라 바로 배열로 생성 하는게 좋지 않을까?
+        String[] hashtags = hashtag.stream()   //TODO 리스트에서 배열로 바꾸는 것이 아니라 바로 배열로 생성 하는게 좋지 않을까?
                 .toArray(String[]::new);
 
 
@@ -62,7 +62,7 @@ public class TemporaryService {
         temporary.setContent(postBasicDto.getContent());
         temporary.setThumbnail(postBasicDto.getThumbnail());
 
-        String[] hashtags = postBasicDto.getHashtag();
+        String[] hashtags = postBasicDto.getHashtags();
         for(String hashtag :hashtags){
             TemporaryHashtag temporaryHashtag = new TemporaryHashtag();
             temporaryHashtag.setTag(hashtag);

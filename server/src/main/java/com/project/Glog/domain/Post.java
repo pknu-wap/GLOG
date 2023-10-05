@@ -37,7 +37,6 @@ public class Post {
     @NotNull
     private String content;
 
-    @Nullable
     private String imageUrl;
 
     @NotNull
@@ -52,11 +51,9 @@ public class Post {
     @NotNull
     private Boolean isPrivate;
 
-    private String hashtags; // TODO Hashtag
-
     @NotNull
-    private Boolean isPrPost;
-
+    private Boolean isPr;
+    private String hashtags;
     @CreatedDate
     private LocalDateTime createdAt;
 

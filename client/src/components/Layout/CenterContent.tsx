@@ -12,10 +12,10 @@ const CenterContent = ({ maxWidth, children, color, ...rest }: StackProps) => {
       gap={2}
       padding={{ xs: '20px 8px', sm: '28px' }}
       flex={1}
+      maxWidth={maxWidth ?? '800px'}
       sx={{
         width: '100%',
         borderRadius: '8px',
-        maxWidth: maxWidth ?? 800,
         mx: 'auto',
         color: color ?? theme.palette.oppositeColor.main,
       }}

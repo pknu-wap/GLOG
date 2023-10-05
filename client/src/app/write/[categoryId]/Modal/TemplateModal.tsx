@@ -68,7 +68,7 @@ function TemplateModal({ open, onClose }: ModalType) {
       <Dialog
         open={deleteConfirmOpen}
         onClose={() => setDeleteConfirmOpen(false)}
-        message="진짜 삭제하시겠습니까?"
+        message="삭제하시겠습니까?"
         action={{
           content: '확인',
           action: deleteClick,

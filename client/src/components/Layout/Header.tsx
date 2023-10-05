@@ -8,20 +8,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useRouter } from 'next/navigation';
-// import { useGetMypageQuery } from '@/api/header-api';
-// import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const router = useRouter();
   const [userTheme, setUserTheme] = useRecoilState(userThemeState);
-  // const [open, setOpen] = useRecoilState(isSidebarOpenState);
-  // const { data } = useGetMypageQuery({ loginedMemberId: 0 });
-  // const [token, setToken] = useRecoilState(tokenState);
-
-  // useEffect(() => {
-  //   setUserTheme(userTheme);
-  //   // setToken('asdfadf');
-  // }, []);
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -32,7 +22,10 @@ export default function Header() {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout') => {
+    if (page !== 'logout') {
+      router.push(`/${page}`);
+    }
     setAnchorEl(null);
   };
 
@@ -71,10 +64,10 @@ export default function Header() {
           <MenuIcon fontSize="large" />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>마이페이지</MenuItem>
-          <MenuItem onClick={handleClose}>친구</MenuItem>
-          <MenuItem onClick={handleClose}>스크랩</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={() => handleClose('mypage')}>마이페이지</MenuItem>
+          <MenuItem onClick={() => handleClose('friend')}>친구</MenuItem>
+          <MenuItem onClick={() => handleClose('scrap')}>스크랩</MenuItem>
+          <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
         </Menu>
       </Stack>
     </Stack>

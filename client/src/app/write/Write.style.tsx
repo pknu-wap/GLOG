@@ -4,10 +4,12 @@ import { styled } from '@mui/material/styles';
 export const BottomButtonStyle = styled(Stack)(() => ({
   flexDirection: 'row',
   justifyContent: 'flex-end',
+  gap: '4px',
 }));
 
 export const TopButtonStyle = styled(Stack)(() => ({
   flexDirection: 'row',
+  gap: '8px',
 }));
 
 export const TagContainer = styled(Stack)(() => ({

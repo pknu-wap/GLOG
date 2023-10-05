@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BottomButtonStyle } from '../Write.style';
+import { BottomButtonStyle } from '../../Write.style';
 import Button from '@/components/Button/Button';
 import SaveDialog from './SaveDialog';
 import SaveModal from '../Modal/SaveModal';
@@ -21,9 +21,15 @@ function BottomButton() {
 
   return (
     <BottomButtonStyle>
-      <Button onClick={tempSaveOnClick}>임시 저장</Button>
-      <Button onClick={templateSaveOnClick}>템플릿 저장</Button>
-      <Button onClick={() => setWriteSaveOpen(true)}>글 저장</Button>
+      <Button variant="outlined" onClick={tempSaveOnClick}>
+        임시 저장
+      </Button>
+      <Button variant="outlined" onClick={templateSaveOnClick}>
+        템플릿 저장
+      </Button>
+      <Button variant="contained" onClick={() => setWriteSaveOpen(true)}>
+        글 저장
+      </Button>
 
       {/* 임시저장, 템플릿 저장 모달 */}
       <SaveDialog open={saveOpen} onClose={() => setSaveOpen(false)} saveType={saveType} />

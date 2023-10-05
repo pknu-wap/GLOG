@@ -1,7 +1,7 @@
 package com.project.Glog.security;
 
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
-import com.project.Glog.dto.responsee.user.UserDto;
+import com.project.Glog.dto.responsee.user.UserDetailResponse;
 import com.project.Glog.exception.ResourceNotFoundException;
 import com.project.Glog.domain.User;
 import com.project.Glog.repository.UserRepository;
@@ -25,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private AwsUtils awsUtils;
 
@@ -49,22 +50,23 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
 
-    public UserDto changeUserInfo(Long uid, UserInfoChangeRequest userInfoChangeRequest) {
+    public UserDetailResponse changeUserInfo(Long uid, UserInfoChangeRequest userInfoChangeRequest) {
 
         User user = userRepository.findById(uid).get();
         user.updateInfo(userInfoChangeRequest);
         userRepository.save(user);
 
-        return UserDto.of(user);
+        return UserDetailResponse.of(user);
     }
 
-    public UserDto changeUserImage(Long uid, MultipartFile multipartFile) throws IOException {
+    public UserDetailResponse changeUserImage(Long uid, MultipartFile multipartFile) throws IOException {
         User user = userRepository.findById(uid).get();
 
         user.setImageUrl(awsUtils.upload(multipartFile, "profile").getPath());
 
         userRepository.save(user);
 
-        return UserDto.of(user);
+        return UserDetailResponse.of(user);
     }
+
 }

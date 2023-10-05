@@ -1,7 +1,8 @@
 package com.project.Glog.controller;
 
+import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
-import com.project.Glog.dto.responsee.user.UserDto;
+import com.project.Glog.dto.responsee.user.UserDetailResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.CustomUserDetailsService;
 import com.project.Glog.security.UserPrincipal;
@@ -28,20 +29,20 @@ public class UserController {
 
     //쪼개서 요청해도 되는데 일단 한번에
     @PostMapping("/chage/user/info")
-    public ResponseEntity<UserDto> chageUserInfo(@CurrentUser UserPrincipal userPrincipal,
-                                                 @RequestBody UserInfoChangeRequest userInfoChangeRequest) {
+    public ResponseEntity<UserDetailResponse> chageUserInfo(@CurrentUser UserPrincipal userPrincipal,
+                                                            @RequestBody UserInfoChangeRequest userInfoChangeRequest) {
 
-        UserDto userDto = userService.changeUserInfo(userPrincipal.getId(), userInfoChangeRequest);
+        UserDetailResponse userDto = userService.changeUserInfo(userPrincipal.getId(), userInfoChangeRequest);
 
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
 
     @PostMapping("/chage/user/image")
-    public ResponseEntity<UserDto> chageUserImage(@CurrentUser UserPrincipal userPrincipal,
-                                                 @RequestPart(value="image") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<UserDetailResponse> chageUserImage(@CurrentUser UserPrincipal userPrincipal,
+                                                             @RequestPart(value="image") MultipartFile multipartFile) throws IOException {
 
-        UserDto userDto = userService.changeUserImage(userPrincipal.getId(), multipartFile);
+        UserDetailResponse userDto = userService.changeUserImage(userPrincipal.getId(), multipartFile);
 
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }

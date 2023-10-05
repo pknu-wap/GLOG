@@ -13,6 +13,7 @@ public class PostCreateRequest {
     private String title;
     private String content;
     private Boolean isPrivate;
+    private Boolean isPr;
     private Long categoryId;
     private String hashtags;
 
@@ -26,9 +27,11 @@ public class PostCreateRequest {
                 title,
                 content,
                 null,
+                null,
                 0,
                 0,
                 isPrivate,
+                isPr,
                 hashtags,
                 null);
     }

@@ -9,7 +9,7 @@ export const SidebarDrawer = styled(Drawer, {
   border: 'none',
   '& .MuiDrawer-paper': {
     width: isPhone ? '100%' : '240px',
-    backgroundColor: theme?.palette.themeColor.main,
+    backgroundColor: theme?.palette.secondary.main,
     padding: '8px',
     boxSizing: 'border-box',
     borderRight: 'none',
@@ -61,8 +61,8 @@ export const SidebarAddButtonLeftSide = styled(Button)(({ theme }) => ({
 
 // 사이드바 닫는 버튼
 export const SidebarCloseIcon = styled(Stack)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main,
-  color: theme.palette.themeColor.main,
+  backgroundColor: theme.palette.primary.main,
+  color: '#ffffff',
   width: '50px',
   height: '50px',
   borderRadius: '50%',

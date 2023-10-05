@@ -57,8 +57,6 @@ public class Post {
     @CreatedDate
     private LocalDateTime createdAt;
 
-
-
     public void update(PostUpdateRequest postUpdateRequest){
         this.title=postUpdateRequest.getTitle();
         this.content=postUpdateRequest.getContent();

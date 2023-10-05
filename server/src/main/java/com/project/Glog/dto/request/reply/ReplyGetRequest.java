@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter @Setter
 public class ReplyGetRequest {
     private Long postId;
-    private Integer page;
+    private int page;
     private String order;
 
 }

@@ -171,7 +171,7 @@ function SaveModal({ open, onClose }: ModalType) {
               <SectionTitle>태그목록</SectionTitle>
               <TagContent>
                 {write?.tags?.map((tag, i) => {
-                  return <Chip sx={{ marginBottom: '8px' }} key={i} label={tag} />;
+                  return <Chip color="primary" sx={{ marginBottom: '8px' }} key={i} label={tag} />;
                 })}
               </TagContent>
             </Stack>

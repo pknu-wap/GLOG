@@ -7,7 +7,9 @@ type Children = {
   children: React.ReactNode;
 };
 
-const MainStack = styled(Stack)(({ theme, isOpen }: { theme?: Theme; isOpen: boolean }) => ({
+const MainStack = styled(Stack, {
+  shouldForwardProp: (propName: string) => propName !== 'isOpen',
+})(({ theme, isOpen }: { theme?: Theme; isOpen: boolean }) => ({
   width: '100%',
   height: 'auto',
   minHeight: '100vh',

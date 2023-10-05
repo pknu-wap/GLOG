@@ -20,9 +20,14 @@ type Footprint = Category | Post;
 interface DragAndDropProps<T> {
   rightContainer: ReactNode;
   footprintList: T[];
+  categoryNumber?: string;
 }
 
-function DragAndDrop<T extends Footprint>({ rightContainer, footprintList }: DragAndDropProps<T>) {
+function DragAndDrop<T extends Footprint>({
+  rightContainer,
+  footprintList,
+  categoryNumber,
+}: DragAndDropProps<T>) {
   const [isBrowser, setIsBrowser] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -34,7 +39,9 @@ function DragAndDrop<T extends Footprint>({ rightContainer, footprintList }: Dra
       result.destination?.droppableId === 'right-droppable' &&
       result.source.droppableId === 'left-droppable'
     ) {
-      router.push(`/${result.source.index}`);
+      router.push(
+        categoryNumber ? `/${categoryNumber}/${result.source.index}` : `/${result.source.index}`,
+      );
     }
   };
 

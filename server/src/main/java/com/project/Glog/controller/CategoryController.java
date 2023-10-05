@@ -1,5 +1,6 @@
 package com.project.Glog.controller;
 
+import com.project.Glog.dto.request.category.CategoryCreateRequest;
 import com.project.Glog.dto.responsee.category.SidebarDtos;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
@@ -16,11 +17,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/category/create") //TODO 수정 필요
+    @PostMapping("/category")
     public ResponseEntity<String> save(@CurrentUser UserPrincipal userPrincipal,
-                                       @RequestParam String categoryName){
+                                       @RequestBody CategoryCreateRequest categoryCreateRequest){
 
-        categoryService.create(userPrincipal.getId(), categoryName);
+        categoryService.create(userPrincipal, categoryCreateRequest);
 
         return new ResponseEntity<>("success create category",HttpStatus.OK);
     }

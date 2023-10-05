@@ -28,14 +28,14 @@ public class ReplyController {
         return new ResponseEntity<>(postId, HttpStatus.OK);
     }
 
-//    @GetMapping("/replies")
-//    public ResponseEntity<ReplyGetResponse> read(@CurrentUser UserPrincipal userPrincipal,
-//                                                 @RequestBody ReplyGetRequest replyGetRequest) {
-//
-//        ReplyGetResponse replyGetReponse = replyService.getReplies(userPrincipal, replyGetRequest);
-//
-//        return new ResponseEntity<>(replyGetReponse, HttpStatus.OK);
-//    }
+    @GetMapping("/replies")
+    public ResponseEntity<ReplyGetResponse> read(@CurrentUser UserPrincipal userPrincipal,
+                                                 @RequestBody ReplyGetRequest replyGetRequest) {
+
+        ReplyGetResponse replyGetReponse = replyService.getReplies(userPrincipal, replyGetRequest);
+
+        return new ResponseEntity<>(replyGetReponse, HttpStatus.OK);
+    }
 
     @PutMapping("/replies")
     public ResponseEntity<String> update(@CurrentUser UserPrincipal userPrincipal,

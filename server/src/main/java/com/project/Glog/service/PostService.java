@@ -39,11 +39,16 @@ public class PostService {
 
     public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest postCreateRequest) throws IOException {
         Post post = postCreateRequest.toPost();
+
+        //참조
         post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
         post.setUser(userRepository.findById(userPrincipal.getId()).get());
         post.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
         post.setCategory(categoryRepository.findById(postCreateRequest.getCategoryId()).get());
-        //형식상 예외처리 해야하나? 모르겠다
+
+        //다른 엔티티 필요
+        post.setBlogUrl(blogRepository.findByUserId(userPrincipal.getId()).get().getBlogUrl());
+
         return postRepository.save(post);
     }
 

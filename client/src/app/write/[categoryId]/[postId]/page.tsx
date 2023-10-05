@@ -8,10 +8,10 @@ import { useMemo, useState } from 'react';
 import { Stack, TextField } from '@mui/material';
 import { userThemeState } from '@/recoil/atom';
 import { useRecoilValue } from 'recoil';
-import { ToolBar } from '../Write.style';
-import TagList from '../TagList';
-import BottomButton from './Bottom/BottomButton';
-import TopButton from './Top/TopButton';
+import { ToolBar } from '../../Write.style';
+import TagList from '../../TagList';
+import BottomButton from '../../Bottom/BottomButton';
+import TopButton from '../Top/TopButton';
 import { WritePropsContext } from '@/util/useWriteProps';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {

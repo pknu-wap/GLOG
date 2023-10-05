@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BottomButtonStyle } from '../../Write.style';
+import { BottomButtonStyle } from '../Write.style';
 import Button from '@/components/Button/Button';
 import SaveDialog from './SaveDialog';
 import SaveModal from '../Modal/SaveModal';

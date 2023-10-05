@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ReplyLikeRepository extends JpaRepository<ReplyLike,Long> {
 
-    @Query("SELECT l FROM ReplyLike l JOIN l.reply r WHERE r.id = :replyId AND r.user.id=:userId")
+    @Query("SELECT l FROM ReplyLike l WHERE l.reply.id = :replyId AND l.user.id=:userId")
     Optional<ReplyLike> findByReplyAndUser(@Param("replyId") Long replyId,
                                           @Param("userId") Long userId);
 }

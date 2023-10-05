@@ -28,7 +28,7 @@ public class ReplyController {
         return new ResponseEntity<>(postId, HttpStatus.OK);
     }
 
-//    @GetMapping("/replies")
+//    @GetMapping("/replies")q
 //    public ResponseEntity<ReplyGetResponse> read(@CurrentUser UserPrincipal userPrincipal,
 //                                                 @RequestBody ReplyGetRequest replyGetRequest) {
 //
@@ -64,8 +64,8 @@ public class ReplyController {
     }
 
     @PatchMapping("/replies/{replyId}/like")
-    public ResponseEntity<String> create(@CurrentUser UserPrincipal userPrincipal,
-                                         @RequestParam Long replyId) {
+    public ResponseEntity<String> clickLike(@CurrentUser UserPrincipal userPrincipal,
+                                            @PathVariable Long replyId) {
 
         String result = replyService.clickLike(userPrincipal, replyId);
 

@@ -13,4 +13,7 @@ import java.util.List;
 public interface ScrapRepository extends JpaRepository<Scrap, Long> {
     @Query("SELECT s FROM Scrap s JOIN s.user u WHERE u.id = :userId")
     List<Post> findAllByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT s FROM Scrap s JOIN s.user u join s.post p WHERE u.id = :userId AND p.id = :postId")
+    Scrap findByUserPostId(@Param("userId") Long userId, @Param("postId") Long postId);
 }

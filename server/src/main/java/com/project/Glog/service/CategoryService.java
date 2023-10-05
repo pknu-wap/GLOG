@@ -23,6 +23,7 @@ public class CategoryService {
     private PostRepository postRepository;
 
 
+    //TODO 수정 필요
     public Category create(Long uid, String categoryName){
         Category category = new Category();
         category.setCategoryName(categoryName);

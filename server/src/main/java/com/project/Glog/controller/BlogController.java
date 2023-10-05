@@ -18,7 +18,6 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-
     //TODO 기능 대부분을 User에 넘길지 고려해봐야 함
     @GetMapping("/mypage")
     public ResponseEntity<MyPageResponse> goToMypage(@CurrentUser UserPrincipal userPrincipal){
@@ -37,15 +36,6 @@ public class BlogController {
         return new ResponseEntity<>(myPageResponse, HttpStatus.OK);
     }
 
-    //TODO 스킨도 사용자마다 적용되는거라 유저 서비스로 넣어야 하나?
-//    @PostMapping("/mypage/change/blog/skin")
-//    public ResponseEntity<MyPageResponse> changeBlogSkin(@CurrentUser UserPrincipal userPrincipal,
-//                                                         @RequestBody Integer blogSkin) {
-//
-//        MyPageResponse myPageResponse = blogService.changeBlogSkin(userPrincipal, blogSkin);
-//
-//        return new ResponseEntity<>(myPageResponse, HttpStatus.OK);
-//    }
     @PostMapping("/create/blog")
     public ResponseEntity<String> createBlog(@CurrentUser UserPrincipal userPrincipal,
                                              @RequestBody UserCreateRequest userCreateRequest){

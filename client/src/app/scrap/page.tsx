@@ -105,8 +105,6 @@ export default function Scrap() {
   // = result.PostPreviewResponse.count / 12 (한 페이지당 12개의 게시글 존재)
   const totalPages = backend.length;
 
-
-
   return (
     <CenterContent maxWidth={'1440px'}>
       <ScrapList>스크랩한 게시글</ScrapList>

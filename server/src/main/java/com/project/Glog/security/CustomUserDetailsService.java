@@ -25,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private AwsUtils awsUtils;
 
@@ -67,4 +68,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return UserDetailResponse.of(user);
     }
+
 }

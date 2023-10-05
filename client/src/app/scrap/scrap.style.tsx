@@ -12,7 +12,7 @@ export const PostAreaComponent = styled('div')(({ theme }) => ({
   color: theme.palette.oppositeColor.main,
   display: 'flex',
   flexWrap: 'wrap',
-  marginLeft:'50px',
+  marginLeft: '50px',
 }));
 
 export const PostPagination = styled(Pagination)({

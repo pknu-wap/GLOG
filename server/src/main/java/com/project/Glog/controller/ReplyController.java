@@ -28,6 +28,7 @@ public class ReplyController {
         return new ResponseEntity<>(postId, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
 //    @GetMapping("/replies")q
 //    public ResponseEntity<ReplyGetResponse> read(@CurrentUser UserPrincipal userPrincipal,
 //                                                 @RequestBody ReplyGetRequest replyGetRequest) {
@@ -36,6 +37,16 @@ public class ReplyController {
 //
 //        return new ResponseEntity<>(replyGetReponse, HttpStatus.OK);
 //    }
+=======
+    @GetMapping("/replies")
+    public ResponseEntity<ReplyGetResponse> read(@CurrentUser UserPrincipal userPrincipal,
+                                                 @RequestBody ReplyGetRequest replyGetRequest) {
+
+        ReplyGetResponse replyGetReponse = replyService.getReplies(userPrincipal, replyGetRequest);
+
+        return new ResponseEntity<>(replyGetReponse, HttpStatus.OK);
+    }
+>>>>>>> a2a4778b2dd5358fb45307fa184e50feb2339e5d
 
     @PutMapping("/replies")
     public ResponseEntity<String> update(@CurrentUser UserPrincipal userPrincipal,
@@ -63,9 +74,9 @@ public class ReplyController {
         return new ResponseEntity<>("success delete reply", HttpStatus.OK);
     }
 
-    @PatchMapping("/replies/{replyId}/like")
+    @PatchMapping("/replies/like/{replyId}")
     public ResponseEntity<String> clickLike(@CurrentUser UserPrincipal userPrincipal,
-                                            @PathVariable Long replyId) {
+                                         @PathVariable Long replyId) {
 
         String result = replyService.clickLike(userPrincipal, replyId);
 

@@ -24,7 +24,6 @@ public class CategoryService {
     @Autowired
     private PostRepository postRepository;
 
-
     public Category create(UserPrincipal userPrincipal, CategoryCreateRequest req){
         Category category = req.toCategory();
         category.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());

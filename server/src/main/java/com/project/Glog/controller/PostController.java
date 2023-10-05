@@ -24,9 +24,9 @@ public class PostController {
     private PostService postService;
 
 
-    @PostMapping("/post/create")
-    public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal  ,
-                                       @RequestPart(value = "thumbnail", required = false) MultipartFile multipartFile,
+    @PostMapping("/post")
+    public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal,
+                                       @RequestParam(value = "thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {
 
         Post post = postService.create(userPrincipal, multipartFile, postCreateRequest);

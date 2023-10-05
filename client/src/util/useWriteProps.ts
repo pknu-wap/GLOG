@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react';
 
-type WriteType = {
+export type WriteType = {
   title: string;
   content?: string;
   tags: string[];
+  params: { categoryId: string; postId: string };
 };
 
 export const WritePropsContext = createContext<WriteType | undefined>(undefined);

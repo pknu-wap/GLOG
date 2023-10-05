@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { mint } from './color';
 
 export const lightTheme = createTheme({
   typography: {
@@ -7,9 +6,9 @@ export const lightTheme = createTheme({
   },
   breakpoints: {
     values: {
-      xl: 1920,
-      lg: 1440,
-      md: 840,
+      xl: 1440,
+      lg: 1280,
+      md: 900,
       sm: 600,
       xs: 460,
     },
@@ -18,20 +17,20 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: mint[500],
+      main: '#e4ba5a',
     },
     secondary: {
-      main: mint[500],
+      main: 'rgb(240, 240, 240)',
     },
     subColor: {
-      main: '#ffffff',
+      main: 'rgb(250, 250, 250)',
     },
     shadowColor: {
       main: 'rgba(0, 0, 0, 0.1)',
       dark: 'rgba(0, 0, 0, 0.2)',
     },
     themeColor: {
-      main: '#ffffff',
+      main: 'rgb(250, 250, 250)',
     },
     oppositeColor: {
       main: '#000000',

@@ -18,9 +18,10 @@ function PostComponent({
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
-    <Post href="#" isPhone={isPhone} isTablet={isTablet}>
+    <Post href="#" isPhone={isPhone} isTablet={isTablet} isLaptop={isLaptop}>
       <Thumbnail>
         <PostPopular>
           <FavoriteBorderIcon fontSize="small" />

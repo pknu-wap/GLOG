@@ -1,7 +1,13 @@
 import React from 'react';
 import { ButtonProps, Button as MuiButton, styled } from '@mui/material';
 
-export const ButtonStyled = styled(MuiButton)(() => ({
+export const ButtonStyled = styled(MuiButton)(({ theme, variant }) => ({
+  color:
+    variant === 'contained'
+      ? theme.palette.mode === 'light'
+        ? '#ffffff'
+        : '#000000'
+      : theme.palette.primary.main,
   ':hover': {
     transition: 'background-color 0.5s ease, border 0.5s ease',
     boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)',
@@ -13,9 +19,9 @@ export const ButtonStyled = styled(MuiButton)(() => ({
   },
 }));
 
-const Button = ({ children, ...rest }: ButtonProps) => {
+const Button = ({ children, variant, ...rest }: ButtonProps) => {
   return (
-    <ButtonStyled disableRipple {...rest}>
+    <ButtonStyled variant={variant} disableRipple {...rest}>
       {children}
     </ButtonStyled>
   );

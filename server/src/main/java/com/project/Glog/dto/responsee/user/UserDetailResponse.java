@@ -7,15 +7,15 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @Getter @Setter
-public class UserDto {
+public class UserDetailResponse {
     private Long id;
     private String name;
     private String imageUrl;
     private String introduction;
 
-    public static UserDto of(User user){
-        return new UserDto(user.getId(),
-                user.getName(),
+    public static UserDetailResponse of(User user){
+        return new UserDetailResponse(user.getId(),
+                user.getNickname(),
                 user.getImageUrl(),
                 user.getIntroduction());
     }

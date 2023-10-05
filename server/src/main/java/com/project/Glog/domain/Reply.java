@@ -29,13 +29,11 @@ public class Reply {
 
     @NotNull
     private String message;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-
     @NotNull
     private Integer likesCount;
 
     @NotNull
     private Boolean isEdit;
+    @CreatedDate
+    private LocalDateTime createdAt;
 }

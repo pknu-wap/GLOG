@@ -77,6 +77,7 @@ function DragAndDrop<T extends Footprint>({ rightContainer, footprintList }: Dra
                                   direction="row"
                                   justifyContent="right"
                                   alignItems="center"
+                                  marginRight='30px'
                                   gap={10}>
                                   <Stack>{postTitle || categoryTitle}</Stack>
                                   <BearFootprint>

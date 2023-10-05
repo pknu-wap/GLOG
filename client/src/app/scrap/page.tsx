@@ -112,7 +112,6 @@ export default function Scrap() {
         {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
           return (
             <PostComponent
-              isPrivate
               key={postInfo.PostPreviewDto.postId}
               thumbnail={postInfo.PostPreviewDto.imageUrl}
               title={postInfo.PostPreviewDto.title}

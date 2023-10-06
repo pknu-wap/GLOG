@@ -73,9 +73,7 @@ public class PostController {
 
     @GetMapping("/main")
     public ResponseEntity<PostPreviewResponse> main(Long index){
-        //TODO
-        // 페이지네이션 공부해서 사용해보는 것도 괜찮을듯
-        // 이 페이지는 인증 안해도됨. SecurityConfig 수정 필요
+
         PostPreviewResponse postPreviewResponse = postService.getPreviews(index);
 
         return new ResponseEntity<>(postPreviewResponse,HttpStatus.OK);

@@ -1,7 +1,7 @@
 package com.project.Glog.controller;
 
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
-import com.project.Glog.dto.responsee.category.SidebarDtos;
+import com.project.Glog.dto.response.category.SidebarDtos;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.CategoryService;

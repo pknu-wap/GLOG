@@ -8,7 +8,7 @@ import com.project.Glog.dto.ReplyDto;
 import com.project.Glog.dto.request.reply.ReplyCreateRequest;
 import com.project.Glog.dto.request.reply.ReplyGetRequest;
 import com.project.Glog.dto.request.reply.ReplyUpdateRequest;
-import com.project.Glog.dto.responsee.reply.ReplyGetResponse;
+import com.project.Glog.dto.response.reply.ReplyGetResponse;
 import com.project.Glog.repository.PostRepository;
 import com.project.Glog.repository.ReplyLikeRepository;
 import com.project.Glog.repository.ReplyRepository;

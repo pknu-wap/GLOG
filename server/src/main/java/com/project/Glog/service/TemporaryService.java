@@ -2,7 +2,7 @@ package com.project.Glog.service;
 
 import com.project.Glog.domain.Temporary;
 import com.project.Glog.domain.TemporaryHashtag;
-import com.project.Glog.dto.response.post.PostBasicDto;
+import com.project.Glog.dto.PostBasicDto;
 import com.project.Glog.dto.response.post.PostTitleResponse;
 import com.project.Glog.repository.TemporaryHashtagRepository;
 import com.project.Glog.repository.TemporaryRepository;

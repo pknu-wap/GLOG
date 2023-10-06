@@ -1,4 +1,4 @@
-package com.project.Glog.dto.response.post;
+package com.project.Glog.dto;
 
 
 import com.project.Glog.domain.Temporary;

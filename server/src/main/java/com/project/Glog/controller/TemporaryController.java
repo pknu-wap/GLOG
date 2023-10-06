@@ -1,6 +1,6 @@
 package com.project.Glog.controller;
 
-import com.project.Glog.dto.response.post.PostBasicDto;
+import com.project.Glog.dto.PostBasicDto;
 import com.project.Glog.dto.response.post.PostTitleResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;

@@ -5,9 +5,9 @@ import com.project.Glog.domain.PostLike;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
-import com.project.Glog.dto.responsee.post.PostPreviewDtos;
-import com.project.Glog.dto.responsee.post.PostPreviewResponse;
-import com.project.Glog.dto.responsee.post.PostReadResponse;
+import com.project.Glog.dto.response.post.PostPreviewDtos;
+import com.project.Glog.dto.response.post.PostPreviewResponse;
+import com.project.Glog.dto.response.post.PostReadResponse;
 import com.project.Glog.repository.*;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.util.AwsUtils;
@@ -41,7 +41,8 @@ public class PostService {
         Post post = postCreateRequest.toPost();
 
         //참조
-        post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
+        if(!multipartFile.isEmpty())
+            post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
         post.setUser(userRepository.findById(userPrincipal.getId()).get());
         post.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
         post.setCategory(categoryRepository.findById(postCreateRequest.getCategoryId()).get());

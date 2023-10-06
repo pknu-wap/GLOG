@@ -1,4 +1,4 @@
-package com.project.Glog.dto.responsee.category;
+package com.project.Glog.dto.response.category;
 
 import lombok.Getter;
 import lombok.Setter;

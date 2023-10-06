@@ -1,7 +1,7 @@
 package com.project.Glog.controller;
 
 import com.project.Glog.dto.request.user.UserCreateRequest;
-import com.project.Glog.dto.responsee.blog.MyPageResponse;
+import com.project.Glog.dto.response.blog.MyPageResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.BlogService;
@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 public class BlogController {

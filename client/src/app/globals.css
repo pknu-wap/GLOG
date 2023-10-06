@@ -1,3 +1,26 @@
 html {
   background-color: white;
 }
+
+.w-md-editor {
+  background-color: transparent !important;
+  --md-editor-box-shadow-color: #d0d7de !important;
+}
+
+.wmde-markdown {
+  background-color: transparent !important;
+}
+
+.w-md-editor-toolbar {
+  background-color: transparent !important;
+}
+
+.wmde-markdown h1 {
+  border-bottom: transparent !important;
+}
+.wmde-markdown h2 {
+  border-bottom: transparent !important;
+}
+.wmde-markdown h3 {
+  border-bottom: transparent !important;
+}

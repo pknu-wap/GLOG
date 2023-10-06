@@ -4,7 +4,6 @@ import { Dialog } from '@/components/Dialog/Dialog';
 import { ModalType, PrivateMapType } from '@/types/common';
 import ModalButton from '@/components/Modal/ModalButton';
 import { ModalActions, ModalContent } from '@/components/Modal/Modal.style';
-import { useWriteProps } from '../page';
 import { Chip, Stack } from '@mui/material';
 import IconButton from '@/components/Button/IconButton';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,23 +16,66 @@ import {
   TagContent,
   ButtonContainer,
 } from './SaveModal.style';
+import { useWriteProps } from '@/util/useWriteProps';
+import { useMutation } from '@tanstack/react-query';
+import { PostWriteApi, UpdateWriteApi } from '@/api/write-api';
+import { useRouter } from 'next/navigation';
 
 function SaveModal({ open, onClose }: ModalType) {
   const [postConfirmOpen, setPostConfirmOpen] = useState<boolean>(false);
+  const router = useRouter();
   const write = useWriteProps();
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fileInput = useRef<any>(null);
   const [image, setImage] = useState('');
   const [privateMode, setPrivateMode] = useState<'private' | 'public'>('private');
+  const isNewWrite = write?.params?.postId === '0';
+
+  const postWriteCreateQuery = useMutation(PostWriteApi, {
+    onSuccess: () => router.push('/'),
+  });
+
+  const updateWriteCreateQuery = useMutation(UpdateWriteApi, {
+    onSuccess: () => router.push('/'),
+  });
 
   const actionClick = () => {
     setPostConfirmOpen(true);
   };
 
   const postOnClick = () => {
+    const formData = new FormData();
     onClose();
-    console.log(image);
+
+    const newWriteBody = {
+      title: write?.title,
+      content: write?.content,
+      isPr: true,
+      isPrivate: privateMode === 'private' ? true : false,
+      categoryId: Number(write?.params?.categoryId),
+      hashtags: write?.tags,
+    };
+
+    const modifyWriteBody = {
+      title: write?.title,
+      content: write?.content,
+      isPrivate: privateMode === 'private' ? true : false,
+      postId: Number(write?.params?.postId),
+      hashtags: write?.tags,
+    };
+
+    formData.append('thumbnail', image ?? null);
+
+    const json = JSON.stringify(isNewWrite ? newWriteBody : modifyWriteBody);
+
+    const blob = new Blob([json], {
+      type: 'application/json',
+    });
+
+    formData.append('postCreateRequest', blob);
+
+    isNewWrite ? postWriteCreateQuery.mutate(formData) : updateWriteCreateQuery.mutate(formData);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -129,7 +171,7 @@ function SaveModal({ open, onClose }: ModalType) {
               <SectionTitle>태그목록</SectionTitle>
               <TagContent>
                 {write?.tags?.map((tag, i) => {
-                  return <Chip sx={{ marginBottom: '8px' }} key={i} label={tag} />;
+                  return <Chip color="primary" sx={{ marginBottom: '8px' }} key={i} label={tag} />;
                 })}
               </TagContent>
             </Stack>

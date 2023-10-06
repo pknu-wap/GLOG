@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist();
 // 유저 테마 변경
 export const userThemeState = atom<ThemeType>({
   key: 'userTheme',
-  default: 'dark',
+  default: 'light',
   effects_UNSTABLE: [persistAtom],
 });
 

@@ -1,17 +1,16 @@
 'use client';
 
-import { useRecoilState } from 'recoil';
-import { userThemeState } from '@/recoil/atom';
 import { useState } from 'react';
 import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useRouter } from 'next/navigation';
+import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 
 export default function Header() {
   const router = useRouter();
-  const [userTheme, setUserTheme] = useRecoilState(userThemeState);
+  const [userTheme, setUserTheme] = useUserThemeSSR();
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -39,8 +38,13 @@ export default function Header() {
       height="64px"
       alignItems="center"
       p={4}
-      zIndex={10000000}>
-      <Stack width="fit-content" fontSize="24px">
+      zIndex={10000}>
+      <Stack
+        sx={{ cursor: 'pointer' }}
+        width="fit-content"
+        fontSize="24px"
+        color={'white'}
+        onClick={() => router.push('/home')}>
         GLOG
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>

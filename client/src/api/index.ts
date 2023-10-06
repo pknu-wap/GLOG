@@ -7,9 +7,14 @@ const axiosApi = (url: string, data?: any) => {
     withCredentials: true,
     ...data,
   });
+
+  // instance.defaults.headers.common[
+  //   'Authorization'
+  // ] = `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`;
+
   return instance;
 };
 
 export const defaultInstance = axiosApi(
-  'http://test-env.eba-babq7paf.us-east-1.elasticbeanstalk.com',
+  'http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
 );

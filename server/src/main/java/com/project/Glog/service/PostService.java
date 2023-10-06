@@ -41,7 +41,8 @@ public class PostService {
         Post post = postCreateRequest.toPost();
 
         //참조
-        post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
+        if(!multipartFile.isEmpty())
+            post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
         post.setUser(userRepository.findById(userPrincipal.getId()).get());
         post.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
         post.setCategory(categoryRepository.findById(postCreateRequest.getCategoryId()).get());

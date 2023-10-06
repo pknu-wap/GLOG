@@ -65,8 +65,9 @@ public class TemporaryService {
         temporary.setTitle(postBasicDto.getTitle());
         temporary.setContent(postBasicDto.getContent());
 
+        if(!multipartFile.isEmpty())
+            temporary.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
         temporary.setUser(userRepository.findById(userPrincipal.getId()).get());
-        temporary.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         String[] hashtags = postBasicDto.getHashtags();
         for(String hashtag :hashtags){

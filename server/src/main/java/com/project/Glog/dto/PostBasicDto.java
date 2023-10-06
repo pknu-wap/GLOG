@@ -5,9 +5,13 @@ import com.project.Glog.domain.Temporary;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class PostBasicDto {
@@ -16,11 +20,12 @@ public class PostBasicDto {
     private String content;
     private String thumbnail;
     private String[] hashtags;
-    public static PostBasicDto of (Temporary temporary, String[] hashtag){
-        return new PostBasicDto(temporary.getId(),
+    public static PostBasicDto of (Temporary temporary, String[] hashtags){
+        return new PostBasicDto(
+                temporary.getId(),
                 temporary.getTitle(),
                 temporary.getContent(),
-                null,
-                hashtag);
+                temporary.getThumbnail(),
+                hashtags);
     }
 }

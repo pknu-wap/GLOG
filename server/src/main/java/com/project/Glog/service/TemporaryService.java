@@ -81,7 +81,5 @@ public class TemporaryService {
         else{
             temporaryRepository.delete(temporary);
         }
-
-
     }
 }

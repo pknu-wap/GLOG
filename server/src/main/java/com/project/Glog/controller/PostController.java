@@ -34,7 +34,7 @@ public class PostController {
         return new ResponseEntity<>(post.getId(), HttpStatus.OK);
     }
 
-    @PostMapping("/post/update")
+    @PutMapping("/post")
     public ResponseEntity<Long> update(@CurrentUser UserPrincipal userPrincipal,
                                        @RequestPart(value="thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostUpdateRequest postUpdateRequest) throws IOException {
@@ -48,7 +48,7 @@ public class PostController {
         return new ResponseEntity<>(post.getId(), HttpStatus.OK);
     }
 
-    @DeleteMapping ("/post/{postId}")
+    @DeleteMapping ("/post")
     public ResponseEntity<String> delete(@CurrentUser UserPrincipal userPrincipal,
                                          @RequestParam Long postId){
 
@@ -62,8 +62,8 @@ public class PostController {
 
     }
 
-    @GetMapping("/post/{postId}")
-    public ResponseEntity<PostReadResponse> readPost(@PathVariable Long postId){
+    @GetMapping("/post")
+    public ResponseEntity<PostReadResponse> readPost(@RequestParam Long postId){
         //인증 필요 없음
 
         PostReadResponse postReadResponse = postService.readPost(postId);

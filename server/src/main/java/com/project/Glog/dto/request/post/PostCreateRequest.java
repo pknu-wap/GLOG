@@ -12,10 +12,10 @@ import org.springframework.security.core.parameters.P;
 public class PostCreateRequest {
     private String title;
     private String content;
+    private String hashtags;
     private Boolean isPrivate;
     private Boolean isPr;
     private Long categoryId;
-    private String hashtags;
 
 
     public Post toPost() {

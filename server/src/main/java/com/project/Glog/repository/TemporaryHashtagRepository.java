@@ -12,6 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface TemporaryHashtagRepository extends JpaRepository<TemporaryHashtag, Long> {
-    @Query("SELECT th FROM TemporaryHashtag th  JOIN th.temporary t WHERE t.id=:temporaryId")
-    Optional<TemporaryHashtag> findByTemporaryId(@Param("temporaryId") Long id);
+    List<TemporaryHashtag> findTemporaryHashtagsByTemporary(Temporary temporary);
+
 }

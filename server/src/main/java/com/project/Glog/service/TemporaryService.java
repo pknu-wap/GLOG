@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TemporaryService {
@@ -36,27 +37,16 @@ public class TemporaryService {
         return new PostTitleResponse(temporaries);
     }
 
+
     public PostBasicDto readTemporaryDetail(UserPrincipal userPrincipal, Long temporaryId){
+        Temporary temporary = temporaryRepository.findById(temporaryId).get();
+        List<TemporaryHashtag> temporaryHashtags = temporaryHashtagRepository.findTemporaryHashtagsByTemporary(temporary);
 
-        Optional<TemporaryHashtag> temporaryHashtag = temporaryHashtagRepository.findByTemporaryId(temporaryId);
-        Optional<Temporary> optionalTemporary = temporaryRepository.findById(temporaryId);
+        List<String> tags = temporaryHashtags.stream()
+                .map(TemporaryHashtag::getTag) // 각 Hashtags 객체에서 tag 속성을 추출
+                .collect(Collectors.toList());
 
-        List<String> hashtag = temporaryHashtag.map(value -> {   // temporaryId 값을 이용하여 해당 임시저장 해시태그 값을 가져와서 리스트로 저장
-            List<String> list = new ArrayList<>();
-            list.add(String.valueOf(value));
-            return list;
-        }).orElse(new ArrayList<>());
-
-        String[] hashtags = hashtag.stream()   //TODO 리스트에서 배열로 바꾸는 것이 아니라 바로 배열로 생성 하는게 좋지 않을까?
-                .toArray(String[]::new);
-
-
-        if(optionalTemporary.isEmpty()){
-            throw new IllegalArgumentException("No Temporary Post");
-        }
-        else{
-            return PostBasicDto.of(optionalTemporary.get(), hashtags);
-        }
+        return PostBasicDto.of(temporary,tags);
     }
 
     public Temporary create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostBasicDto postBasicDto) throws IOException {
@@ -71,7 +61,7 @@ public class TemporaryService {
 
         temporaryRepository.save(temporary);
 
-        String[] hashtags = postBasicDto.getHashtags();
+        List<String> hashtags = postBasicDto.getHashtags();
         for(String hashtag :hashtags){
             TemporaryHashtag temporaryHashtag = new TemporaryHashtag();
             temporaryHashtag.setTag(hashtag);

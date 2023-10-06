@@ -13,7 +13,6 @@ function PostComponent({
   likesCount,
   viewsCount,
   Icon,
-  isPrivate,
 }: PostComponentType) {
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
@@ -30,12 +29,10 @@ function PostComponent({
           {viewsCount}
         </PostPopular>
         <Image alt="" src={thumbnail} />
-
-        {isPrivate && (
-          <CostomizeButton>
-            <IconButton size="small">{Icon}</IconButton>
-          </CostomizeButton>
-        )}
+        <CostomizeButton>
+          <IconButton size="small">{Icon}</IconButton>
+        </CostomizeButton>
+        
       </Thumbnail>
       <Title>{title}</Title>
     </Post>

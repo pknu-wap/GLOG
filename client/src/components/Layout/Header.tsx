@@ -39,7 +39,12 @@ export default function Header() {
       alignItems="center"
       p={4}
       zIndex={10}>
-      <Stack width="fit-content" fontSize="24px">
+      <Stack
+        sx={{ cursor: 'pointer' }}
+        width="fit-content"
+        fontSize="24px"
+        color={'white'}
+        onClick={() => router.push('/home')}>
         GLOG
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>

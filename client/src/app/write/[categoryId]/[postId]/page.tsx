@@ -24,6 +24,7 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const userTheme = useRecoilValue(userThemeState);
 
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
+  // const editorClassName = `w-md-editor ${userTheme === 'light' ? 'light' : ''}`;
 
   return (
     <WritePropsContext.Provider value={state}>

@@ -16,8 +16,8 @@ public class ScrapController {
     private ScrapService scrapService;
 
     @GetMapping("/scrap/posts")
-    public ResponseEntity<PostPreviewDtos> getScaps(@CurrentUser UserPrincipal userPrincipal,
-                                                    @RequestParam Integer page){
+    public ResponseEntity<PostPreviewDtos> getScraps(@CurrentUser UserPrincipal userPrincipal,
+                                                    @RequestParam int page){
 
         PostPreviewDtos postPreviewDtos = scrapService.getScrapPosts(userPrincipal, page);
 
@@ -26,7 +26,7 @@ public class ScrapController {
 
 
     @PostMapping("/scrap")
-    public ResponseEntity<String> create(@CurrentUser UserPrincipal userPrincipal,
+    public ResponseEntity<String> update(@CurrentUser UserPrincipal userPrincipal,
                                          @RequestParam Long postId){
 
         scrapService.update(userPrincipal, postId);

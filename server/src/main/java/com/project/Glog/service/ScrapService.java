@@ -21,9 +21,8 @@ public class ScrapService {
     @Autowired
     private ScrapRepository scrapRepository;
 
-    public PostPreviewDtos getScrapPosts(UserPrincipal userPrincipal, Integer page){
+    public PostPreviewDtos getScrapPosts(UserPrincipal userPrincipal, int page){
         List<Post> posts = scrapRepository.findAllByUserId(userPrincipal.getId());
-        
 
         return new PostPreviewDtos(posts);
     }

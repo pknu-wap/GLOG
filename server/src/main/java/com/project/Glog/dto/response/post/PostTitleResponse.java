@@ -1,14 +1,14 @@
 package com.project.Glog.dto.response.post;
 
 import com.project.Glog.domain.Temporary;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 public class PostTitleResponse {
     private List<PostTitleDto> postTitleResponse = new ArrayList<>();
 

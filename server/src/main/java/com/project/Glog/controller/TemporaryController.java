@@ -19,7 +19,7 @@ public class TemporaryController {
     private TemporaryService temporaryService;
 
     @GetMapping("/temporaries")
-    public ResponseEntity<PostTitleResponse> readTemporaries(@CurrentUser UserPrincipal userPrincipal){
+    public ResponseEntity<PostTitleResponse> readTemporary(@CurrentUser UserPrincipal userPrincipal){
 
         PostTitleResponse postTitleResponse = temporaryService.readTemporaries(userPrincipal);
 

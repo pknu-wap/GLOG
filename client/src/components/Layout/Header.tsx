@@ -39,7 +39,7 @@ export default function Header() {
       height="64px"
       alignItems="center"
       p={4}
-      zIndex={10}>
+      zIndex={10000000}>
       <Stack width="fit-content" fontSize="24px">
         GLOG
       </Stack>

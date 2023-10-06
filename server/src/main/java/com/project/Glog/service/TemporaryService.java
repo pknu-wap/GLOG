@@ -69,6 +69,8 @@ public class TemporaryService {
             temporary.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
         temporary.setUser(userRepository.findById(userPrincipal.getId()).get());
 
+        temporaryRepository.save(temporary);
+
         String[] hashtags = postBasicDto.getHashtags();
         for(String hashtag :hashtags){
             TemporaryHashtag temporaryHashtag = new TemporaryHashtag();
@@ -77,7 +79,7 @@ public class TemporaryService {
             temporaryHashtagRepository.save(temporaryHashtag);
         }
 
-        return temporaryRepository.save(temporary);
+        return temporary;
     }
 
     public void delete(UserPrincipal userPrincipal, Long temporaryId) throws IllegalAccessException {

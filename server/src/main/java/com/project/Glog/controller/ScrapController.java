@@ -1,6 +1,6 @@
 package com.project.Glog.controller;
 
-import com.project.Glog.dto.responsee.post.PostPreviewDtos;
+import com.project.Glog.dto.PostPreviewDtos;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.ScrapService;
@@ -16,20 +16,20 @@ public class ScrapController {
     private ScrapService scrapService;
 
     @GetMapping("/scrap/posts")
-    public ResponseEntity<PostPreviewDtos> getScaps(@CurrentUser UserPrincipal userPrincipa,
+    public ResponseEntity<PostPreviewDtos> getScaps(@CurrentUser UserPrincipal userPrincipal,
                                                     @RequestParam Integer page){
 
-        PostPreviewDtos postPreviewDtos = scrapService.getScrapPosts(userPrincipa, page);
+        PostPreviewDtos postPreviewDtos = scrapService.getScrapPosts(userPrincipal, page);
 
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
     }
 
 
     @PostMapping("/scrap")
-    public ResponseEntity<String> update(@CurrentUser UserPrincipal userPrincipa,
+    public ResponseEntity<String> create(@CurrentUser UserPrincipal userPrincipal,
                                          @RequestParam Long postId){
 
-        scrapService.update(userPrincipa, postId);
+        scrapService.update(userPrincipal, postId);
 
         return new ResponseEntity<>("success add scrap",HttpStatus.OK);
     }

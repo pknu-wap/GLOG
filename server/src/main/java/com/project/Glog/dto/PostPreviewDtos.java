@@ -1,4 +1,4 @@
-package com.project.Glog.dto.responsee.post;
+package com.project.Glog.dto;
 
 import com.project.Glog.domain.Post;
 import lombok.Getter;

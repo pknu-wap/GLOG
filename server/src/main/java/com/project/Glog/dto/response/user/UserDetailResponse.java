@@ -1,4 +1,4 @@
-package com.project.Glog.dto.responsee.user;
+package com.project.Glog.dto.response.user;
 
 import com.project.Glog.domain.User;
 import lombok.AllArgsConstructor;

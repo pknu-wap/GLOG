@@ -1,36 +1,40 @@
-package com.project.Glog.dto.responsee.post;
+package com.project.Glog.dto.response.post;
 
 import com.project.Glog.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter @Setter
-public class PostPreviewDto {
-    private String blogUrl;
+public class PostReadResponse {
     private Long postId;
     private String title;
+    private String content;
     private String imageUrl;
     private Integer likesCount;
     private Integer viewsCount;
-    private Integer repliesCount;
+    private String hashtags;
     private LocalDateTime createdAt;
-    private Boolean isPrivate;
 
-    //TODO 어떤 정보 보여줄지 기억이 안남 API 명세 작성 필요.
-
-    public static PostPreviewDto of (Post post){
-        return new PostPreviewDto(post.getBlogUrl(),
+    public static PostReadResponse of(Post post) {
+        return new PostReadResponse(
                 post.getId(),
                 post.getTitle(),
+                post.getContent(),
                 post.getImageUrl(),
                 post.getLikesCount(),
                 post.getViewsCount(),
-                0,
-                post.getCreatedAt(),
-                post.getIsPrivate());
+                post.getHashtags(),
+                post.getCreatedAt());
     }
+
 }
+
+
+
+

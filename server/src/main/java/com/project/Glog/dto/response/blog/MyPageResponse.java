@@ -1,4 +1,4 @@
-package com.project.Glog.dto.responsee.blog;
+package com.project.Glog.dto.response.blog;
 
 import com.project.Glog.domain.Blog;
 import lombok.AllArgsConstructor;

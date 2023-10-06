@@ -1,7 +1,7 @@
 package com.project.Glog.security;
 
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
-import com.project.Glog.dto.responsee.user.UserDetailResponse;
+import com.project.Glog.dto.response.user.UserDetailResponse;
 import com.project.Glog.exception.ResourceNotFoundException;
 import com.project.Glog.domain.User;
 import com.project.Glog.repository.UserRepository;

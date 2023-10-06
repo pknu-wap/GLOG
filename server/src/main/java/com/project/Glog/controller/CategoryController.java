@@ -1,7 +1,7 @@
 package com.project.Glog.controller;
 
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
-import com.project.Glog.dto.responsee.category.SidebarDtos;
+import com.project.Glog.dto.response.category.SidebarDtos;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.CategoryService;
@@ -34,8 +34,7 @@ public class CategoryController {
             return new ResponseEntity<>("success delete category",HttpStatus.OK);
     }
 
-    @GetMapping ("/category/sidebar/{blogId}")
-    @ResponseBody
+    @GetMapping ("/category/sidebar/{blogId}") //사용 안할듯?
     public ResponseEntity<SidebarDtos> getSidebarByBlog(@PathVariable Long blogId){
 
         //해당 블로그의 사이드바를 읽어 온다

@@ -3,8 +3,8 @@ package com.project.Glog.service;
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
-import com.project.Glog.dto.responsee.category.SidebarDto;
-import com.project.Glog.dto.responsee.category.SidebarDtos;
+import com.project.Glog.dto.response.category.SidebarDto;
+import com.project.Glog.dto.response.category.SidebarDtos;
 import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.repository.CategoryRepository;
 import com.project.Glog.repository.PostRepository;
@@ -23,7 +23,6 @@ public class CategoryService {
     private BlogRepository blogRepository;
     @Autowired
     private PostRepository postRepository;
-
 
     public Category create(UserPrincipal userPrincipal, CategoryCreateRequest req){
         Category category = req.toCategory();

@@ -1,4 +1,4 @@
-package com.project.Glog.dto.responsee.category;
+package com.project.Glog.dto.response.category;
 
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;

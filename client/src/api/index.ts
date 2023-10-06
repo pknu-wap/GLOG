@@ -8,8 +8,9 @@ const axiosApi = (url: string, data?: any) => {
     ...data,
   });
 
-  instance.defaults.headers.common['Authorization'] =
-    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjk2NDk4Nzk1LCJleHAiOjE2OTczNjI3OTV9.KSuLfUWJofBh7MZQ_ZBgaaNzuD5FTlogKIDwiwaPapyFuyPzNa3nNIXWu99JIKSySvO2O-YP0QksTqDvrNVK4Q';
+  // instance.defaults.headers.common[
+  //   'Authorization'
+  // ] = `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`;
 
   return instance;
 };

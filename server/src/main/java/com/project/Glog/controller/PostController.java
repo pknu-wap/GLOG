@@ -2,11 +2,11 @@ package com.project.Glog.controller;
 
 
 import com.project.Glog.domain.Post;
-import com.project.Glog.dto.responsee.post.PostPreviewDtos;
+import com.project.Glog.dto.PostPreviewDtos;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
-import com.project.Glog.dto.responsee.post.PostPreviewResponse;
-import com.project.Glog.dto.responsee.post.PostReadResponse;
+import com.project.Glog.dto.response.post.PostPreviewResponse;
+import com.project.Glog.dto.response.post.PostReadResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.PostService;
@@ -24,9 +24,9 @@ public class PostController {
     private PostService postService;
 
 
-    @PostMapping("/post/create")
-    public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal  ,
-                                       @RequestPart(value = "thumbnail", required = false) MultipartFile multipartFile,
+    @PostMapping("/post")
+    public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal,
+                                       @RequestParam(value = "thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {
 
         Post post = postService.create(userPrincipal, multipartFile, postCreateRequest);

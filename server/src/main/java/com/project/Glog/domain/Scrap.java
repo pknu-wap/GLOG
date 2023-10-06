@@ -5,21 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "replyLike")
-public class ReplyLike {
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "scrap")
+public class Scrap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     private User user;
 
     @ManyToOne
-    private Reply reply;
+    private Post post;
+
 }

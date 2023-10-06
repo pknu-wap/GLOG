@@ -38,7 +38,7 @@ export default function Header() {
       height="64px"
       alignItems="center"
       p={4}
-      zIndex={10}>
+      zIndex={10000}>
       <Stack
         sx={{ cursor: 'pointer' }}
         width="fit-content"

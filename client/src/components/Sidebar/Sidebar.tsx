@@ -64,7 +64,7 @@ const Sidebar = () => {
     <>
       {openSideBar ? (
         <SidebarDrawer
-          variant={'persistent'}
+          variant={'temporary'}
           open={openSideBar}
           onClose={() => setOpenSideBar(false)}
           ModalProps={{

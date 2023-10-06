@@ -14,9 +14,9 @@ export default function Scrap() {
     {
       PostPreviewResponse: {
         count: '0L',
-        recent: [
+        PostPreviewDtos: [
           {
-            PostPrevewDto: {
+            PostPreviewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -28,7 +28,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPrevewDto: {
+            PostPreviewDto: {
               blogUrl: 'string',
               postId: 2,
               title: 'string',
@@ -40,7 +40,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPrevewDto: {
+            PostPreviewDto: {
               blogUrl: 'string',
               postId: 3,
               title: 'string',
@@ -52,7 +52,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPrevewDto: {
+            PostPreviewDto: {
               blogUrl: 'string',
               postId: 4,
               title: 'string',
@@ -64,7 +64,7 @@ export default function Scrap() {
             },
           },
           {
-            PostPrevewDto: {
+            PostPreviewDto: {
               blogUrl: 'string',
               postId: 5,
               title: 'string',
@@ -81,9 +81,9 @@ export default function Scrap() {
     {
       PostPreviewResponse: {
         count: '0L',
-        recent: [
+        PostPreviewDtos: [
           {
-            PostPrevewDto: {
+            PostPreviewDto: {
               blogUrl: 'string',
               postId: 1,
               title: 'string',
@@ -109,15 +109,14 @@ export default function Scrap() {
     <CenterContent maxWidth={'1440px'}>
       <ScrapList>스크랩한 게시글</ScrapList>
       <PostAreaComponent>
-        {result.PostPreviewResponse.recent.map((postInfo) => {
+        {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
           return (
             <PostComponent
-              isPrivate
-              key={postInfo.PostPrevewDto.postId}
-              thumbnail={postInfo.PostPrevewDto.imageUrl}
-              title={postInfo.PostPrevewDto.title}
-              likesCount={postInfo.PostPrevewDto.likesCount}
-              viewsCount={postInfo.PostPrevewDto.viewsCount}
+              key={postInfo.PostPreviewDto.postId}
+              thumbnail={postInfo.PostPreviewDto.imageUrl}
+              title={postInfo.PostPreviewDto.title}
+              likesCount={postInfo.PostPreviewDto.likesCount}
+              viewsCount={postInfo.PostPreviewDto.viewsCount}
               Icon={<StarIcon fontSize="small" />}
             />
           );

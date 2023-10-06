@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TagContainer, TagTextfield } from './Write.style';
 import { Chip } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
+import Toast from '@/components/Toast/Toast';
 
 function TagList({
   tagArray,
@@ -11,8 +12,9 @@ function TagList({
   editTagArray: (newValue: string[]) => void;
 }) {
   const [tag, setTag] = useState('');
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-  console.log(tag);
   return (
     <TagContainer>
       {tagArray.map((tag, i) => (
@@ -28,11 +30,9 @@ function TagList({
         placeholder="태그를 입력해주세요"
         value={tag}
         onChange={(event) => {
-          console.log(event);
           setTag(event.target.value);
         }}
         onKeyDown={(event) => {
-          console.log(event.code);
           if (event.code === 'Enter') {
             event.preventDefault();
             if (tagArray.length <= 10) {
@@ -41,17 +41,20 @@ function TagList({
                 setTag('');
               } else {
                 setTag('');
-                // setSnackbarOpen(true);
-                // setToastMessage('태그에 `#`은 포함될 수 없습니다.');
+                setToastOpen(true);
+                setToastMessage('태그에 `#`은 포함될 수 없습니다.');
               }
             } else {
               setTag('');
-              // setSnackbarOpen(true);
-              // setToastMessage('태그는 최대 10개까지 지정 가능합니다.');
+              setToastOpen(true);
+              setToastMessage(
+                '태그는 최대 10개까지 지정 가능하며, 두 글자 이상의 단어여야 합니다.',
+              );
             }
           }
         }}
       />
+      <Toast toastMessage={toastMessage} open={toastOpen} onClose={() => setToastOpen(false)} />
     </TagContainer>
   );
 }

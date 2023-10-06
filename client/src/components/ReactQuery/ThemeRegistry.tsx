@@ -8,9 +8,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import type { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache';
 import React from 'react';
 import { lightTheme } from '@/themes/LightTheme';
-import { useRecoilValue } from 'recoil';
-import { userThemeState } from '@/recoil/atom';
 import { darkTheme } from '@/themes/DarkTheme';
+import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 
 export type NextAppDirEmotionCacheProviderProps = {
   /** This is the options passed to createCache() from 'import createCache from "@emotion/cache"' */
@@ -27,7 +26,7 @@ export type NextAppDirEmotionCacheProviderProps = {
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
 export default function ThemeRegistry(props: NextAppDirEmotionCacheProviderProps) {
   const { options, children } = props;
-  const userTheme = useRecoilValue(userThemeState);
+  const [userTheme] = useUserThemeSSR();
 
   const [{ cache, flush }] = React.useState(() => {
     const cache = createCache(options);

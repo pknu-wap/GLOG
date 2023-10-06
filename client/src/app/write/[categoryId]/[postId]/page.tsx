@@ -5,13 +5,12 @@ import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
 import { Stack, TextField } from '@mui/material';
-import { userThemeState } from '@/recoil/atom';
-import { useRecoilValue } from 'recoil';
 import { ToolBar } from '../../Write.style';
 import TagList from '../../TagList';
 import BottomButton from './Bottom/BottomButton';
 import { WritePropsContext, WriteType } from '@/util/useWriteProps';
 import TopButton from '../../Top/TopButton';
+import { useUserThemeSSR } from '../../../../../hooks/useRecoilSSR';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
@@ -21,10 +20,9 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
   const [tags, setTags] = useState<string[]>([]);
-  const userTheme = useRecoilValue(userThemeState);
+  const [userTheme] = useUserThemeSSR();
 
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
-  // const editorClassName = `w-md-editor ${userTheme === 'light' ? 'light' : ''}`;
 
   return (
     <WritePropsContext.Provider value={state}>

@@ -1,17 +1,16 @@
 'use client';
 
-import { useRecoilState } from 'recoil';
-import { userThemeState } from '@/recoil/atom';
 import { useState } from 'react';
 import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useRouter } from 'next/navigation';
+import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 
 export default function Header() {
   const router = useRouter();
-  const [userTheme, setUserTheme] = useRecoilState(userThemeState);
+  const [userTheme, setUserTheme] = useUserThemeSSR();
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));

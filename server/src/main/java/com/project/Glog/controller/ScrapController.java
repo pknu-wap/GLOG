@@ -15,7 +15,7 @@ public class ScrapController {
     @Autowired
     private ScrapService scrapService;
 
-    @GetMapping("/scrap/posts")
+    @GetMapping("/scrap")
     public ResponseEntity<PostPreviewDtos> getScraps(@CurrentUser UserPrincipal userPrincipal,
                                                     @RequestParam int page){
 
@@ -25,21 +25,15 @@ public class ScrapController {
     }
 
 
-    @PostMapping("/scrap")
-    public ResponseEntity<String> update(@CurrentUser UserPrincipal userPrincipal,
-                                         @RequestParam Long postId){
+    @PatchMapping("/scrap") //패치 메서드로 업데이트와 딜리트를 한번에 수행하는게 좋을듯
+    public ResponseEntity<String> clickScrap(@CurrentUser UserPrincipal userPrincipal,
+                                             @RequestParam Long postId){
 
-        scrapService.update(userPrincipal, postId);
-
-        return new ResponseEntity<>("success add scrap",HttpStatus.OK);
+        String result = scrapService.clickScrap(userPrincipal, postId);
+        if(result.equals("add"))
+            return new ResponseEntity<>("success add scrap",HttpStatus.OK);
+        else
+            return new ResponseEntity<>("success remove scrap",HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/scrap/post")
-    public ResponseEntity<String> delete(@CurrentUser UserPrincipal userPrincipa,
-                                         @RequestParam Long postId){
-        scrapService.delete(userPrincipa, postId);
-
-        return new ResponseEntity<>("success delete scrap",HttpStatus.OK);
-    }
 }

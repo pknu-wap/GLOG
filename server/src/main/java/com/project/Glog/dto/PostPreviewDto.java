@@ -20,10 +20,10 @@ public class PostPreviewDto {
     private LocalDateTime createdAt;
     private Boolean isPrivate;
 
-    //TODO 어떤 정보 보여줄지 기억이 안남 API 명세 작성 필요.
 
     public static PostPreviewDto of (Post post){
-        return new PostPreviewDto(post.getBlogUrl(),
+        return new PostPreviewDto(
+                post.getBlogUrl(),
                 post.getId(),
                 post.getTitle(),
                 post.getImageUrl(),

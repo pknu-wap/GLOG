@@ -10,10 +10,12 @@ import java.util.List;
 @Getter @Setter
 public class PostPreviewDtos {
     private List<PostPreviewDto> postPreviewDtos = new ArrayList<>();
+    private int totalPages;
 
-    public PostPreviewDtos (List<Post> posts){
+    public PostPreviewDtos (List<Post> posts, int totalPagesNumber){
         for(Post post : posts){
             postPreviewDtos.add(PostPreviewDto.of(post));
         }
+        totalPages = totalPagesNumber;
     }
 }

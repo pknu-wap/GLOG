@@ -24,4 +24,5 @@ public class Scrap {
 
     @ManyToOne
     private Post post;
+
 }

@@ -5,7 +5,7 @@ import com.project.Glog.domain.PostLike;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
-import com.project.Glog.dto.response.post.PostPreviewDtos;
+import com.project.Glog.dto.PostPreviewDtos;
 import com.project.Glog.dto.response.post.PostPreviewResponse;
 import com.project.Glog.dto.response.post.PostReadResponse;
 import com.project.Glog.repository.*;
@@ -97,7 +97,7 @@ public class PostService {
                 .limit(8)
                 .collect(Collectors.toList());
 
-        return new PostPreviewDtos(createdPosts);
+        return new PostPreviewDtos(createdPosts, allCratedPosts.size());
     }
 
     public PostPreviewDtos getViewsPreviews(Long cursor) {
@@ -107,7 +107,7 @@ public class PostService {
                 .limit(8)
                 .collect(Collectors.toList());
 
-        return new PostPreviewDtos(viewsPosts);
+        return new PostPreviewDtos(viewsPosts, allViewsPosts.size());
     }
 
     public PostPreviewDtos getLikesPreviews(Long cursor) {
@@ -117,7 +117,7 @@ public class PostService {
                 .limit(8)
                 .collect(Collectors.toList());
 
-        return new PostPreviewDtos(likesPosts);
+        return new PostPreviewDtos(likesPosts, allLikesPosts.size());
     }
 
     public PostPreviewDtos getRandomPreviews(Long cursor) {
@@ -128,17 +128,17 @@ public class PostService {
                 .limit(8)
                 .collect(Collectors.toList());
 
-        return new PostPreviewDtos(randomPosts);
+        return new PostPreviewDtos(randomPosts, allRandomPosts.size());
     }
 
     public PostPreviewDtos searchPostsByContent(String content) {
         List<Post> posts = postRepository.findAllByContent(content);
-        return new PostPreviewDtos(posts);
+        return new PostPreviewDtos(posts, posts.size());
     }
 
     public PostPreviewDtos searchPostsByHashtag(String hashtag) {
         List<Post> posts = postRepository.findAllByHashtag(hashtag);
-        return new PostPreviewDtos(posts);
+        return new PostPreviewDtos(posts, posts.size());
     }
 
     public String clickLike(UserPrincipal userPrincipal, Long postId) {

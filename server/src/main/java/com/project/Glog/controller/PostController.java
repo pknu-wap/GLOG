@@ -2,11 +2,11 @@ package com.project.Glog.controller;
 
 
 import com.project.Glog.domain.Post;
-import com.project.Glog.dto.responsee.post.PostPreviewDtos;
+import com.project.Glog.dto.response.post.PostPreviewDtos;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
-import com.project.Glog.dto.responsee.post.PostPreviewResponse;
-import com.project.Glog.dto.responsee.post.PostReadResponse;
+import com.project.Glog.dto.response.post.PostPreviewResponse;
+import com.project.Glog.dto.response.post.PostReadResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.PostService;

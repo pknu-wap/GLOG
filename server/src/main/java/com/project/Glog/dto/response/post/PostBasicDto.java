@@ -1,4 +1,4 @@
-package com.project.Glog.dto.responsee.post;
+package com.project.Glog.dto.response.post;
 
 
 import com.project.Glog.domain.Temporary;
@@ -6,9 +6,6 @@ import com.project.Glog.domain.Temporary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Getter
@@ -23,7 +20,7 @@ public class PostBasicDto {
         return new PostBasicDto(temporary.getId(),
                 temporary.getTitle(),
                 temporary.getContent(),
-                temporary.getThumbnail(),
+                null,
                 hashtag);
     }
 }

@@ -1,4 +1,4 @@
-package com.project.Glog.dto.responsee.reply;
+package com.project.Glog.dto.response.reply;
 
 import com.project.Glog.dto.ReplyDto;
 import lombok.AllArgsConstructor;

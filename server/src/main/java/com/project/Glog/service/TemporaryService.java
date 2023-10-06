@@ -2,15 +2,18 @@ package com.project.Glog.service;
 
 import com.project.Glog.domain.Temporary;
 import com.project.Glog.domain.TemporaryHashtag;
-import com.project.Glog.dto.responsee.post.PostBasicDto;
-import com.project.Glog.dto.responsee.post.PostTitleResponse;
+import com.project.Glog.dto.response.post.PostBasicDto;
+import com.project.Glog.dto.response.post.PostTitleResponse;
 import com.project.Glog.repository.TemporaryHashtagRepository;
 import com.project.Glog.repository.TemporaryRepository;
 import com.project.Glog.repository.UserRepository;
 import com.project.Glog.security.UserPrincipal;
+import com.project.Glog.util.AwsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +22,12 @@ import java.util.Optional;
 public class TemporaryService {
     @Autowired
     private TemporaryRepository temporaryRepository;
-
+    @Autowired
     private TemporaryHashtagRepository temporaryHashtagRepository;
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AwsUtils awsUtils;
 
     public PostTitleResponse readTemporaries(UserPrincipal userPrincipal){
 
@@ -55,12 +59,14 @@ public class TemporaryService {
         }
     }
 
-    public Temporary create(UserPrincipal userPrincipal, PostBasicDto postBasicDto){
+    public Temporary create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostBasicDto postBasicDto) throws IOException {
         Temporary temporary = new Temporary();
-        temporary.setUser(userRepository.findById(userPrincipal.getId()).get());
+
         temporary.setTitle(postBasicDto.getTitle());
         temporary.setContent(postBasicDto.getContent());
-        temporary.setThumbnail(postBasicDto.getThumbnail());
+
+        temporary.setUser(userRepository.findById(userPrincipal.getId()).get());
+        temporary.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         String[] hashtags = postBasicDto.getHashtags();
         for(String hashtag :hashtags){

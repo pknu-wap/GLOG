@@ -12,6 +12,7 @@ function TagList({
 }) {
   const [tag, setTag] = useState('');
 
+  console.log(tag);
   return (
     <TagContainer>
       {tagArray.map((tag, i) => (
@@ -27,12 +28,15 @@ function TagList({
         placeholder="태그를 입력해주세요"
         value={tag}
         onChange={(event) => {
+          console.log(event);
           setTag(event.target.value);
         }}
         onKeyDown={(event) => {
-          if (event.key === ' ' || event.code === 'Space') {
+          console.log(event.code);
+          if (event.code === 'Enter') {
+            event.preventDefault();
             if (tagArray.length <= 10) {
-              if (!tag.includes('#')) {
+              if (!tag.includes('#') && tag.length > 1) {
                 editTagArray([...tagArray, tag]);
                 setTag('');
               } else {

@@ -7,9 +7,13 @@ const axiosApi = (url: string, data?: any) => {
     withCredentials: true,
     ...data,
   });
+
+  instance.defaults.headers.common['Authorization'] =
+    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjk2NDk4Nzk1LCJleHAiOjE2OTczNjI3OTV9.KSuLfUWJofBh7MZQ_ZBgaaNzuD5FTlogKIDwiwaPapyFuyPzNa3nNIXWu99JIKSySvO2O-YP0QksTqDvrNVK4Q';
+
   return instance;
 };
 
 export const defaultInstance = axiosApi(
-  'http://test-env.eba-babq7paf.us-east-1.elasticbeanstalk.com',
+  'http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
 );

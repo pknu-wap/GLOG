@@ -49,7 +49,7 @@ export const SidebarSubMenuContainer = ({
           </SidebarMenuItem>
         </Stack>
         <Stack direction="row" alignItems={'center'}>
-          <IconButton onClick={() => router.push(`/write/${url}`)} size="small">
+          <IconButton onClick={() => router.push(`/write/${url}/0`)} size="small">
             <AddIcon fontSize="small" />
           </IconButton>
           <IconButton size="small">

@@ -7,3 +7,15 @@ export interface ICollect {
 export interface IProfile {
   loginedMemberId: number;
 }
+
+// 글쓰기 페이지
+export interface IWrite {
+  thumbnail?: string | null;
+  postCreateRequest: {
+    title?: string;
+    content?: string;
+    isPrivate?: boolean;
+    categoryId?: number;
+    hashtags?: string[];
+  };
+}

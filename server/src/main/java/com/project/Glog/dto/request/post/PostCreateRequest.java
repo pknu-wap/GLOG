@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter @Setter
 public class PostCreateRequest {
+    private Long postId;
     private String title;
     private String content;
     private Boolean isPrivate;
@@ -21,6 +22,7 @@ public class PostCreateRequest {
 
 
     public Post toPost() {
+
         return new Post(
                 null,
                 null,

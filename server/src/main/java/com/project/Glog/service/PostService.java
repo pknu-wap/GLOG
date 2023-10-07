@@ -1,8 +1,6 @@
 package com.project.Glog.service;
 
-import com.project.Glog.domain.Post;
-import com.project.Glog.domain.PostLike;
-import com.project.Glog.domain.User;
+import com.project.Glog.domain.*;
 import com.project.Glog.dto.request.post.PostCreateRequest;
 import com.project.Glog.dto.request.post.PostUpdateRequest;
 import com.project.Glog.dto.PostPreviewDtos;
@@ -29,6 +27,8 @@ public class PostService {
     @Autowired
     private PostLikeRepository postLikeRepository;
     @Autowired
+    private PostHashtagRepository postHashtagRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private BlogRepository blogRepository;
@@ -37,15 +37,16 @@ public class PostService {
     @Autowired
     private AwsUtils awsUtils;
 
-    public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest postCreateRequest) throws IOException {
-        Post post = postCreateRequest.toPost();
+    public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException {
+        Post post = req.toPost();
 
         //참조
         if(!multipartFile.isEmpty())
             post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
         post.setUser(userRepository.findById(userPrincipal.getId()).get());
         post.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
-        post.setCategory(categoryRepository.findById(postCreateRequest.getCategoryId()).get());
+        post.setCategory(categoryRepository.findById(req.getCategoryId()).get());
+        setPostHashtag(post, req.getHashtags());
 
         //다른 엔티티 필요
         post.setBlogUrl(blogRepository.findByUserId(userPrincipal.getId()).get().getBlogUrl());
@@ -53,9 +54,14 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post update(UserPrincipal userPrincipal, PostUpdateRequest postUpdateRequest) {
-        Post post = postRepository.findById(postUpdateRequest.getPostId()).get(); //예외처리 필요
-        post.update(postUpdateRequest);
+    public Post update(UserPrincipal userPrincipal, PostCreateRequest req) {
+        Post post = postRepository.findById(req.getPostId()).get();
+        post.update(req);
+
+        //hashtag 설정. 전부 삭제하고 다시 저장
+        postHashtagRepository.deletePostHashtagsByPost(post);
+        setPostHashtag(post, req.getHashtags());
+
         return postRepository.save(post);
     }
 
@@ -174,6 +180,15 @@ public class PostService {
             postLikeRepository.save(postLike);
             return "add";
 
+        }
+    }
+
+    private void setPostHashtag(Post post, List<String> hashtagList){
+        for(String hashtag :hashtagList){
+            PostHashtag postHashtag = new PostHashtag();
+            postHashtag.setTag(hashtag);
+            postHashtag.setPost(post);
+            postHashtagRepository.save(postHashtag);
         }
     }
 }

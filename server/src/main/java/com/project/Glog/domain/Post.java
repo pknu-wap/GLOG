@@ -1,7 +1,6 @@
 package com.project.Glog.domain;
 
-import com.project.Glog.dto.request.post.PostUpdateRequest;
-import jakarta.annotation.Nullable;
+import com.project.Glog.dto.request.post.PostCreateRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -59,10 +58,11 @@ public class Post {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public void update(PostUpdateRequest postUpdateRequest){
-        this.title=postUpdateRequest.getTitle();
-        this.content=postUpdateRequest.getContent();
-        this.isPrivate=postUpdateRequest.getIsPrivate();
+    public void update(PostCreateRequest req){
+        this.title=req.getTitle();
+        this.content=req.getContent();
+        this.isPrivate=req.getIsPrivate();
+        this.isPr=req.getIsPr();
     }
 
 }

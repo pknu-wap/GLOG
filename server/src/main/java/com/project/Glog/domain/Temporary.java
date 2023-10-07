@@ -26,9 +26,9 @@ public class Temporary {
 
     private String thumbnail;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @OneToMany(mappedBy = "temporary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TemporaryHashtag> hashtags;
-
-    @ManyToOne
-    private User user;
 }

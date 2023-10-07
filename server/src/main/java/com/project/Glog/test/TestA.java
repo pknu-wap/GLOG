@@ -1,5 +1,7 @@
-package com.project.Glog.domain;
+package com.project.Glog.test;
 
+import com.project.Glog.domain.Post;
+import com.project.Glog.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,22 +9,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = "scrap")
-public class Scrap {
+@Table(name = "testA")
+public class TestA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Post post;
-
+    @OneToMany(mappedBy = "testA", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TestB> testBS;
 }

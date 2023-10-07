@@ -18,18 +18,15 @@ public class PrPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Post post;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
     @NotNull
     private String prNumber;
-
     @NotNull
     private String prTitle;
-
     @NotNull
     private Boolean isPosted;
 }

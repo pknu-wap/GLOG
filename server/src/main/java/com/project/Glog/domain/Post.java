@@ -24,35 +24,39 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
-    @ManyToOne
-    private Category category;
-    @ManyToOne
-    private Blog blog;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostHashtag> hashtags;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reply> replies;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostLike> postLikes;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Scrap> scraps;
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private PrPost prPost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Blog blog;
 
     @NotNull
     private String title;
-
     @NotNull
     private String content;
-
     private String imageUrl;
-
     @NotNull
     private String blogUrl;
-
     @NotNull
     private Integer likesCount;
-
     @NotNull
     private Integer viewsCount;
-
     @NotNull
     private Boolean isPrivate;
-
     @NotNull
     private Boolean isPr;
     @CreatedDate

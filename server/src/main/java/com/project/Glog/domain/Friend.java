@@ -19,12 +19,12 @@ public class Friend {
     private Long id;
 
     @NotNull
-    private boolean status;
+    private Boolean status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User fromUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User toUser;
 
 }

@@ -21,6 +21,6 @@ public class TemplateHashtag {
     @NotNull
     private String tag;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Template template;
 }

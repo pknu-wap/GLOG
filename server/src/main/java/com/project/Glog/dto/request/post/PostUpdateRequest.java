@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter @Setter
 public class PostUpdateRequest {
@@ -11,6 +13,6 @@ public class PostUpdateRequest {
     private String title;
     private String content;
     private Boolean isPrivate;
-    private String hashtags;
+    private List<String> hashtags;
 
 }

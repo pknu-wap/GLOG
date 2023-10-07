@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +31,8 @@ public class Post {
     private Category category;
     @ManyToOne
     private Blog blog;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostHashtag> hashtags;
 
     @NotNull
     private String title;
@@ -53,7 +56,6 @@ public class Post {
 
     @NotNull
     private Boolean isPr;
-    private String hashtags;
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -61,7 +63,6 @@ public class Post {
         this.title=postUpdateRequest.getTitle();
         this.content=postUpdateRequest.getContent();
         this.isPrivate=postUpdateRequest.getIsPrivate();
-        this.hashtags= postUpdateRequest.getHashtags();
     }
 
 }

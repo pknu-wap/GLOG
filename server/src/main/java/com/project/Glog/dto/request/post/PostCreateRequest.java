@@ -7,19 +7,22 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.parameters.P;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter @Setter
 public class PostCreateRequest {
     private String title;
     private String content;
-    private String hashtags;
     private Boolean isPrivate;
     private Boolean isPr;
     private Long categoryId;
+    private List<String> hashtags;
 
 
     public Post toPost() {
         return new Post(
+                null,
                 null,
                 null,
                 null,
@@ -32,7 +35,6 @@ public class PostCreateRequest {
                 0,
                 isPrivate,
                 isPr,
-                hashtags,
                 null);
     }
 }

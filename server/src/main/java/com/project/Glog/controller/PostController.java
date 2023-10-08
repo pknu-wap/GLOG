@@ -59,10 +59,15 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public ResponseEntity<PostReadResponse> readPost(@RequestParam Long postId){
-        //인증 필요 없음
+    public ResponseEntity<?> readPost(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long postId){
 
-        PostReadResponse postReadResponse = postService.readPost(postId);
+        PostReadResponse postReadResponse = new PostReadResponse();
+        try{
+                postReadResponse = postService.readPost(userPrincipal, postId);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>("no post", HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(postReadResponse, HttpStatus.OK);
     }

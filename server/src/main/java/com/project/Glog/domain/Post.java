@@ -47,7 +47,7 @@ public class Post {
     private String title;
     @NotNull
     private String content;
-    private String imageUrl;
+    private String thumbnail;
     @NotNull
     private String blogUrl;
     @NotNull

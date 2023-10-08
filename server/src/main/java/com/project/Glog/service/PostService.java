@@ -35,6 +35,8 @@ public class PostService {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
+    private ScrapRepository scrapRepository;
+    @Autowired
     private AwsUtils awsUtils;
 
     public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException {
@@ -45,7 +47,7 @@ public class PostService {
 
         //image
         if(!multipartFile.isEmpty())
-            post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
+            post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         //hashtags
         postRepository.save(post);
@@ -60,13 +62,15 @@ public class PostService {
 
         //image
         if(!multipartFile.isEmpty())
-            post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
+            post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
+
+        postRepository.save(post);
 
         //hashtag 설정. 전부 삭제하고 다시 저장
         postHashtagRepository.deletePostHashtagsByPost(post);
         setPostHashtag(post, req.getHashtags());
 
-        return postRepository.save(post);
+        return post;
     }
 
     public void delete(UserPrincipal userPrincipal, Long postId) throws Exception {
@@ -80,12 +84,36 @@ public class PostService {
         }
     }
 
-    public PostReadResponse readPost(Long postId) {
+    public PostReadResponse readPost(UserPrincipal userPrincipal, Long postId) throws Exception{
         Optional<Post> optionalPost = postRepository.findById(postId);
         if (optionalPost.isEmpty()) {
-            throw new IllegalArgumentException("No Post");
-        } else {
-            return PostReadResponse.of(optionalPost.get());
+            throw new IllegalArgumentException("no post");
+        }
+        else {
+            Post post = optionalPost.get();
+            Boolean isScraped = false;
+            Boolean isLiked = false;
+            Boolean isAuthor = false;
+
+            if(userPrincipal!=null){
+                User user = userRepository.findById(userPrincipal.getId()).get();
+
+                if(scrapRepository.findByUserIdAndPostId(user.getId(),post.getId()).isPresent())
+                    isScraped = true;
+
+                if(postLikeRepository.findByPostAndUser(post.getId(), user.getId()).isPresent())
+                    isLiked = true;
+
+                if(post.getUser().equals(user))
+                    isAuthor = true;
+            }
+
+            PostReadResponse res = PostReadResponse.of(post);
+            res.setIsScraped(isScraped);
+            res.setIsLiked(isLiked);
+            res.setIsAuthor(isAuthor);
+
+            return res;
         }
     }
 
@@ -169,7 +197,7 @@ public class PostService {
         Post post = postRepository.findById(postId).get();
         User currentUser = userRepository.findById(userPrincipal.getId()).get();
 
-        Optional<PostLike> postLikeOptional = postLikeRepository.findByReplyAndUser(post.getId(), currentUser.getId());
+        Optional<PostLike> postLikeOptional = postLikeRepository.findByPostAndUser(post.getId(), currentUser.getId());
         if (postLikeOptional.isPresent()) {
             post.setLikesCount(post.getLikesCount() - 1);
             postRepository.save(post);

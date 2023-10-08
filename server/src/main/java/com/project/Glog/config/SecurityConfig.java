@@ -10,6 +10,7 @@ import com.project.Glog.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -102,6 +103,8 @@ public class SecurityConfig {
                         "/**.js",
                         "/v3/api-docs/**",
                         "/swagger-ui/**")
+                        .permitAll()
+                    .requestMatchers(HttpMethod.GET, "/post")
                         .permitAll()
                     .requestMatchers("/auth/**", "/oauth2/**")
                         .permitAll()

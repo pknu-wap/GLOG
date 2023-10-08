@@ -39,11 +39,7 @@ public class PostController {
                                        @RequestPart(value="thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {
 
-        //TODO GetMapping으로 따로 파야할듯
-
-        //해당 유저의 게시글인지 판단하는 로직은 백엔드에서 이루어 져야 한다.
-        //해당 유저의 게시글이라면 업데이트 해서 돌려줌
-        Post post = postService.update(userPrincipal, postCreateRequest);
+        Post post = postService.update(userPrincipal, multipartFile, postCreateRequest);
 
         return new ResponseEntity<>(post.getId(), HttpStatus.OK);
     }

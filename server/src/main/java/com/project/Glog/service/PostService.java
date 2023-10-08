@@ -38,25 +38,28 @@ public class PostService {
     private AwsUtils awsUtils;
 
     public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException {
-        Post post = req.toPost();
+        User user = userRepository.findById(userPrincipal.getId()).get();
+        Category category = categoryRepository.findById(req.getCategoryId()).get();
+        Blog blog = blogRepository.findByUserId(userPrincipal.getId()).get();
+        Post post = req.toPost(user, category, blog);
 
-        //참조
+        //image
         if(!multipartFile.isEmpty())
             post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
-        post.setUser(userRepository.findById(userPrincipal.getId()).get());
-        post.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
-        post.setCategory(categoryRepository.findById(req.getCategoryId()).get());
-        setPostHashtag(post, req.getHashtags());
 
-        //다른 엔티티 필요
-        post.setBlogUrl(blogRepository.findByUserId(userPrincipal.getId()).get().getBlogUrl());
+        //hashtags
+        setPostHashtag(post, req.getHashtags());
 
         return postRepository.save(post);
     }
 
-    public Post update(UserPrincipal userPrincipal, PostCreateRequest req) {
+    public Post update(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException{
         Post post = postRepository.findById(req.getPostId()).get();
         post.update(req);
+
+        //image
+        if(!multipartFile.isEmpty())
+            post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         //hashtag 설정. 전부 삭제하고 다시 저장
         postHashtagRepository.deletePostHashtagsByPost(post);

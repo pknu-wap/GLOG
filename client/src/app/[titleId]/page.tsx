@@ -11,7 +11,6 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 function page({ params }: { params: { titleId: string } }) {
-  console.log(params.titleId);
 
   const [page, setPage] = useState(0);
 
@@ -126,7 +125,7 @@ function page({ params }: { params: { titleId: string } }) {
   return (
     <CenterContent maxWidth={'1440px'}>
       <Sidebar />
-      <ScrapList>프론트엔드</ScrapList>
+      <ScrapList>{params.titleId}</ScrapList>
       <PostAreaComponent>
         {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
           return (

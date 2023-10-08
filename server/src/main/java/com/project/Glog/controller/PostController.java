@@ -50,7 +50,7 @@ public class PostController {
 
         try {
             postService.delete(userPrincipal, postId);
-            return new ResponseEntity<>("success delete",HttpStatus.OK);
+            return new ResponseEntity<>("success delete post",HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.FORBIDDEN);
@@ -72,12 +72,20 @@ public class PostController {
         return new ResponseEntity<>(postReadResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/main")
-    public ResponseEntity<PostPreviewResponse> main(Long index){
+    @GetMapping("/collect")
+    public ResponseEntity<PostPreviewResponse> collect(@RequestParam int page){
 
-        PostPreviewResponse postPreviewResponse = postService.getPreviews(index);
+        PostPreviewResponse postPreviewResponse = postService.getCollect(page-1);
 
         return new ResponseEntity<>(postPreviewResponse,HttpStatus.OK);
+    }
+    @GetMapping("/post/previews/{kind}")
+    public ResponseEntity<PostPreviewDtos> collect(@PathVariable String kind,
+                                                       @RequestParam int page){
+
+        PostPreviewDtos previews = postService.getPreviews(kind, page-1);
+
+        return new ResponseEntity<>(previews,HttpStatus.OK);
     }
 
     @GetMapping("/search/post/content")
@@ -96,9 +104,9 @@ public class PostController {
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
     }
 
-    @GetMapping("/post/{postId}/like")
+    @PatchMapping ("/post/like")
     public ResponseEntity<String> plusLike(@CurrentUser UserPrincipal userPrincipal,
-                                            @PathVariable Long postId){
+                                            @RequestParam Long postId){
 
         String result = postService.clickLike(userPrincipal, postId);
 

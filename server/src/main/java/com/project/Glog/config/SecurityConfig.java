@@ -104,7 +104,10 @@ public class SecurityConfig {
                         "/v3/api-docs/**",
                         "/swagger-ui/**")
                         .permitAll()
-                    .requestMatchers(HttpMethod.GET, "/post")
+                    .requestMatchers(HttpMethod.GET,
+                            "/post",
+                            "/collect",
+                            "/post/previews")
                         .permitAll()
                     .requestMatchers("/auth/**", "/oauth2/**")
                         .permitAll()

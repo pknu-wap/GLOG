@@ -19,6 +19,6 @@ public class CategoryCreateRequest {
         category.setCategoryName(categoryName);
         category.setIsPrcategory(isPrCategory);
         category.setReopsitoryUrl(repositoryUrl);
-        return new Category();
+        return category;
     }
 }

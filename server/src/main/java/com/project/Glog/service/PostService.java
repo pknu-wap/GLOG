@@ -48,9 +48,10 @@ public class PostService {
             post.setImageUrl(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         //hashtags
+        postRepository.save(post);
         setPostHashtag(post, req.getHashtags());
 
-        return postRepository.save(post);
+        return post;
     }
 
     public Post update(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException{

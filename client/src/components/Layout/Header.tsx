@@ -38,18 +38,19 @@ export default function Header() {
       height="64px"
       alignItems="center"
       p={4}
-      zIndex={10000}>
+      zIndex={20000}>
       <Stack
         sx={{ cursor: 'pointer' }}
         width="fit-content"
         fontSize="24px"
         color={'white'}
-        onClick={() => router.push('/home')}>
+        onClick={() => router.push('/home')}
+        zIndex={20005}>
         GLOG
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>
         {userTheme === 'dark' ? (
-          <IconButton sx={{ color: 'white' }} onClick={toggleUserTheme}>
+          <IconButton sx={{ color: 'white', zIndex: 20005 }} onClick={toggleUserTheme}>
             <DarkModeIcon fontSize="large" />
           </IconButton>
         ) : (

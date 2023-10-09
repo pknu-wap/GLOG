@@ -7,6 +7,7 @@ export const SidebarDrawer = styled(Drawer, {
 })(({ theme, isPhone }: { theme?: Theme; isPhone: boolean }) => ({
   display: 'block',
   border: 'none',
+  zIndex: 10000,
   '& .MuiDrawer-paper': {
     width: isPhone ? '100%' : '240px',
     backgroundColor: theme?.palette.secondary.main,
@@ -14,7 +15,6 @@ export const SidebarDrawer = styled(Drawer, {
     boxSizing: 'border-box',
     borderRight: 'none',
     boxShadow: 1,
-    zIndex: 5,
     paddingTop: '64px',
   },
 }));
@@ -73,6 +73,7 @@ export const SidebarCloseIcon = styled(Stack)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
+  zIndex: '20000',
 
   ':hover': {
     left: '4px',

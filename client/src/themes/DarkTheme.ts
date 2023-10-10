@@ -49,17 +49,17 @@ export const darkTheme = createTheme({
       main: yellow[500],
     },
     secondary: {
-      main: '#0D0D0D',
+      main: 'rgb(29, 30, 31)',
     },
     subColor: {
-      main: '#0D0D0D',
+      main: 'rgb(29, 30, 31)',
     },
     shadowColor: {
       main: 'rgba(255, 255, 255, 0.01)',
       dark: 'rgba(255, 255, 255, 0.05)',
     },
     themeColor: {
-      main: 'rgb(8, 8, 8)',
+      main: 'rgb(13, 13, 18)',
     },
     oppositeColor: {
       main: '#ffffff',

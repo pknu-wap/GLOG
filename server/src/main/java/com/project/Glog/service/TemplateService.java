@@ -30,10 +30,9 @@ public class TemplateService {
     private AwsUtils awsUtils;
 
     public PostTitleResponse readTemplates(UserPrincipal userPrincipal) {
-
         List<Template> templates = templateRepository.findByUserId(userPrincipal.getId());
 
-        return new PostTitleResponse(templates);
+        return PostTitleResponse.of(templates);
     }
 
 

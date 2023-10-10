@@ -29,10 +29,9 @@ public class TemporaryService {
     private AwsUtils awsUtils;
 
     public PostTitleResponse readTemporaries(UserPrincipal userPrincipal) {
-
         List<Temporary> temporaries = temporaryRepository.findByUserId(userPrincipal.getId());
 
-        return new PostTitleResponse(temporaries);
+        return PostTitleResponse.of(temporaries);
     }
 
 

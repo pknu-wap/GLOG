@@ -13,8 +13,8 @@ public class PostTitleResponse {
     private List<PostTitleDto> postTitleResponse = new ArrayList<>();
 
     public PostTitleResponse(List<? extends TemplateTemporary> templateTemporaries) {
-        for (TemplateTemporary templateTemporary : templateTemporaries) {
-            postTitleResponse.add(PostTitleDto.of(templateTemporary));
-        }
+        templateTemporaries.stream()
+                .map(PostTitleDto::of)
+                .forEach(postTitleResponse::add);
     }
 }

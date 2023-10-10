@@ -1,12 +1,12 @@
 package com.project.Glog.domain;
 
-public abstract class TemplateTemporary {
+public interface TemplateTemporary {
 
-    public abstract Long getId();
+    Long getId();
 
-    public abstract String getTitle();
+    String getTitle();
 
-    public abstract String getContent();
+    String getContent();
 
-    public abstract String getThumbnail();
+    String getThumbnail();
 }

@@ -22,7 +22,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "template")
-public class Template extends TemplateTemporary {
+public class Template implements TemplateTemporary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

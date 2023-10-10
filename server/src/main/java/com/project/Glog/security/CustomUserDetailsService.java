@@ -62,7 +62,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetailResponse changeUserImage(Long uid, MultipartFile multipartFile) throws IOException {
         User user = userRepository.findById(uid).get();
 
-        user.setImageUrl(awsUtils.upload(multipartFile, "profile").getPath());
+        if(!multipartFile.isEmpty())
+            user.setImageUrl(awsUtils.upload(multipartFile, "profile").getPath());
 
         userRepository.save(user);
 

@@ -1,5 +1,5 @@
 /*
- 배포시에는 삭제
+배포시에는 삭제
  */
 INSERT INTO user (id, email, email_verified, friend_count, image_url, introduction, nickname, provider, provider_id, skin)
 VALUES (1, 'doyeong32@gmail.com', 0, 0, 'https://lh3.googleusercontent.com/a/ACg8ocL0TM05twyPZ0eQsEWouix_zP5Kmz9z6TqY4Pm8VMyxkg=s96-c', NULL, 'Y eong', 'google', 104384823454308011759, 0),

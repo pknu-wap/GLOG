@@ -21,7 +21,7 @@ VALUES(1, 'hashtag1', 1), (2, 'hashtag2', 1),
       (3, 'hashtag1', 2), (4, 'hashtag2', 2);
 
 INSERT INTO post_like(id, post_id, user_id)
-VALUES(1, 1, 1), (1, 1, 2);
+VALUES(1, 1, 1), (2, 1, 2);
 
 INSERT INTO reply(id, created_at, is_edit, likes_count, message, post_id, user_id)
 VALUES(1, '2023-10-08 15:14:07.377201', 0, 0, 'reply1', 1, 1);

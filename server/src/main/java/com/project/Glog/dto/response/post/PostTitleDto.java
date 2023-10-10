@@ -1,6 +1,6 @@
 package com.project.Glog.dto.response.post;
 
-import com.project.Glog.domain.Temporary;
+import com.project.Glog.domain.TemplateTemporary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +12,8 @@ public class PostTitleDto {
     private Long Id;
     private String title;
 
-    public static PostTitleDto of (Temporary temporary){
-        return new PostTitleDto(temporary.getId(),
-                temporary.getTitle());
+    public static PostTitleDto of(TemplateTemporary templateTemporary) {
+        return new PostTitleDto(templateTemporary.getId(),
+                templateTemporary.getTitle());
     }
 }

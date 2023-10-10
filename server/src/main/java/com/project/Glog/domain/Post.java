@@ -1,7 +1,6 @@
 package com.project.Glog.domain;
 
-import com.project.Glog.dto.request.post.PostUpdateRequest;
-import jakarta.annotation.Nullable;
+import com.project.Glog.dto.request.post.PostCreateRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,8 +11,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
 @Entity
@@ -24,44 +23,49 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostHashtag> hashtags;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reply> replies;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostLike> postLikes;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Scrap> scraps;
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private PrPost prPost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Blog blog;
 
     @NotNull
     private String title;
-
     @NotNull
     private String content;
-
-    private String imageUrl;
-
+    private String thumbnail;
     @NotNull
     private String blogUrl;
-
     @NotNull
     private Integer likesCount;
-
     @NotNull
     private Integer viewsCount;
-
     @NotNull
     private Boolean isPrivate;
-
     @NotNull
     private Boolean isPr;
-    private String hashtags;
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public void update(PostUpdateRequest postUpdateRequest){
-        this.title=postUpdateRequest.getTitle();
-        this.content=postUpdateRequest.getContent();
-        this.isPrivate=postUpdateRequest.getIsPrivate();
-        this.hashtags= postUpdateRequest.getHashtags();
+    public void update(PostCreateRequest req){
+        this.title=req.getTitle();
+        this.content=req.getContent();
+        this.isPrivate=req.getIsPrivate();
+        this.isPr=req.getIsPr();
     }
 
 }

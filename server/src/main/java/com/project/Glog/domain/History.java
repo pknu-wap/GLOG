@@ -24,6 +24,6 @@ public class History {
     @CreatedDate
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 }

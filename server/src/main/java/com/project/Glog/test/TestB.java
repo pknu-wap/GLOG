@@ -1,7 +1,6 @@
-package com.project.Glog.domain;
+package com.project.Glog.test;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,17 +11,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "hashtag")
-public class Hashtag {
+@Table(name = "testB")
+public class TestB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Post post;
-
-    @NotNull
-    private String tag;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TestA testA;
 
 }

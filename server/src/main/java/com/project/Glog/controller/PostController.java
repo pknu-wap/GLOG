@@ -37,13 +37,9 @@ public class PostController {
     @PutMapping("/post")
     public ResponseEntity<Long> update(@CurrentUser UserPrincipal userPrincipal,
                                        @RequestPart(value="thumbnail", required = false) MultipartFile multipartFile,
-                                       @RequestPart PostUpdateRequest postUpdateRequest) throws IOException {
+                                       @RequestPart PostCreateRequest postCreateRequest) throws IOException {
 
-        //TODO GetMapping으로 따로 파야할듯
-
-        //해당 유저의 게시글인지 판단하는 로직은 백엔드에서 이루어 져야 한다.
-        //해당 유저의 게시글이라면 업데이트 해서 돌려줌
-        Post post = postService.update(userPrincipal, postUpdateRequest);
+        Post post = postService.update(userPrincipal, multipartFile, postCreateRequest);
 
         return new ResponseEntity<>(post.getId(), HttpStatus.OK);
     }
@@ -54,7 +50,7 @@ public class PostController {
 
         try {
             postService.delete(userPrincipal, postId);
-            return new ResponseEntity<>("success delete",HttpStatus.OK);
+            return new ResponseEntity<>("success delete post",HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.FORBIDDEN);
@@ -63,22 +59,33 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public ResponseEntity<PostReadResponse> readPost(@RequestParam Long postId){
-        //인증 필요 없음
+    public ResponseEntity<?> readPost(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long postId){
 
-        PostReadResponse postReadResponse = postService.readPost(postId);
+        PostReadResponse postReadResponse = new PostReadResponse();
+        try{
+                postReadResponse = postService.readPost(userPrincipal, postId);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>("no post", HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(postReadResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/main")
-    public ResponseEntity<PostPreviewResponse> main(Long index){
-        //TODO
-        // 페이지네이션 공부해서 사용해보는 것도 괜찮을듯
-        // 이 페이지는 인증 안해도됨. SecurityConfig 수정 필요
-        PostPreviewResponse postPreviewResponse = postService.getPreviews(index);
+    @GetMapping("/collect")
+    public ResponseEntity<PostPreviewResponse> collect(@RequestParam int page){
+
+        PostPreviewResponse postPreviewResponse = postService.getCollect(page-1);
 
         return new ResponseEntity<>(postPreviewResponse,HttpStatus.OK);
+    }
+    @GetMapping("/post/previews/{kind}")
+    public ResponseEntity<PostPreviewDtos> collect(@PathVariable String kind,
+                                                       @RequestParam int page){
+
+        PostPreviewDtos previews = postService.getPreviews(kind, page-1);
+
+        return new ResponseEntity<>(previews,HttpStatus.OK);
     }
 
     @GetMapping("/search/post/content")
@@ -97,9 +104,9 @@ public class PostController {
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
     }
 
-    @GetMapping("/post/{postId}/like")
+    @PatchMapping ("/post/like")
     public ResponseEntity<String> plusLike(@CurrentUser UserPrincipal userPrincipal,
-                                            @PathVariable Long postId){
+                                            @RequestParam Long postId){
 
         String result = postService.clickLike(userPrincipal, postId);
 

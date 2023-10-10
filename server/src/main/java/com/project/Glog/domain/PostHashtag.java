@@ -7,28 +7,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "temporary")
-public class Temporary {
+@Table(name = "postHashtag")
+public class PostHashtag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-
-    private String content;
-
-    private String thumbnail;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Post post;
 
-    @OneToMany(mappedBy = "temporary", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TemporaryHashtag> hashtags;
+    @NotNull
+    private String tag;
+
+
 }

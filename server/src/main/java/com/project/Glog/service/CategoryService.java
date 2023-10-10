@@ -1,5 +1,6 @@
 package com.project.Glog.service;
 
+import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
@@ -25,8 +26,8 @@ public class CategoryService {
     private PostRepository postRepository;
 
     public Category create(UserPrincipal userPrincipal, CategoryCreateRequest req){
-        Category category = req.toCategory();
-        category.setBlog(blogRepository.findByUserId(userPrincipal.getId()).get());
+        Blog blog= blogRepository.findByUserId(userPrincipal.getId()).get();
+        Category category = req.toCategory(blog);
 
         return categoryRepository.save(category);
     }

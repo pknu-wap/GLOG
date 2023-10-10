@@ -13,7 +13,7 @@ public class PostPreviewDto {
     private String blogUrl;
     private Long postId;
     private String title;
-    private String imageUrl;
+    private String thumbnail;
     private Integer likesCount;
     private Integer viewsCount;
     private Integer repliesCount;
@@ -26,7 +26,7 @@ public class PostPreviewDto {
                 post.getBlogUrl(),
                 post.getId(),
                 post.getTitle(),
-                post.getImageUrl(),
+                post.getThumbnail(),
                 post.getLikesCount(),
                 post.getViewsCount(),
                 0,

@@ -21,6 +21,6 @@ public class TemporaryHashtag {
     @NotNull
     private String tag;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Temporary temporary;
 }

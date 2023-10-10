@@ -21,15 +21,17 @@ public class BookMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private GuestBook guestBook;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @NotNull
     private String message;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    private GuestBook guestBook;
 
-    @ManyToOne
-    private User user;
 }

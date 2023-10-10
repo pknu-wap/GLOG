@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @Getter @Setter
-public class PostPreviewResponse { //TODO 네이밍 고려해봐야 함
+public class PostPreviewResponse {
     private PostPreviewDtos craeted;
     private PostPreviewDtos likes;
     private PostPreviewDtos views;

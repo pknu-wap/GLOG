@@ -35,16 +35,12 @@ public class ReplyService  {
     private UserRepository userRepository;
 
 
-    public Long createReply(UserPrincipal userPrincipal, ReplyCreateRequest replyCreateRequest) {
-        Reply reply = new Reply(
-                null,
-                userRepository.findById(userPrincipal.getId()).get(),
-                postRepository.findById(replyCreateRequest.getPostId()).get(),
-                replyCreateRequest.getMessage(),
-                0,
-                false,
-                null
-        );
+    public Long createReply(UserPrincipal userPrincipal, ReplyCreateRequest req) {
+        User user = userRepository.findById(userPrincipal.getId()).get();
+        Post post = postRepository.findById(req.getPostId()).get();
+
+        Reply reply = req.toReply(post, user);
+
         replyRepository.save(reply);
         return reply.getPost().getId();
     }

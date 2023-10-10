@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import PostComponent from '../../components/Post/Post';
+import PostComponent from '../../../components/Post/Post';
 import { useState } from 'react';
 import { PostAreaComponent, PostPagination, ScrapList } from './tagegory.style';
 import CenterContent from '@/components/Layout/CenterContent';
@@ -10,13 +10,11 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 function page({ params }: { params: { titleId: string } }) {
-  console.log(params.titleId);
-
   const [page, setPage] = useState(0);
 
   const backend = [
     {
-      isAuthor: false,
+      isAuthor: true,
       categoryName: 'string',
 
       PostPreviewResponse: {
@@ -124,7 +122,7 @@ function page({ params }: { params: { titleId: string } }) {
 
   return (
     <CenterContent maxWidth={'1440px'}>
-      <ScrapList>프론트엔드</ScrapList>
+      <ScrapList>{params.titleId}</ScrapList>
       <PostAreaComponent>
         {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
           return (

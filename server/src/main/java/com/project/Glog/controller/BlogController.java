@@ -33,7 +33,7 @@ public class BlogController {
         return new ResponseEntity<>(myPageResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/create/blog")
+    @PostMapping("/blog")
     public ResponseEntity<String> createBlog(@CurrentUser UserPrincipal userPrincipal,
                                              @RequestBody UserCreateRequest userCreateRequest){
         //UserCreateRequest를 받아서 정보를 저장한다.

@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
+import java.util.List;
+
 @NoArgsConstructor
 @Getter @Setter
 @Entity
@@ -17,7 +18,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Post> posts;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Blog blog;
 
     @NotNull

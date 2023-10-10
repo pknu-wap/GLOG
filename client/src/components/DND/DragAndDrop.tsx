@@ -1,3 +1,4 @@
+'use client';
 import React, { ReactNode } from 'react';
 import CenterContent from '@/components/Layout/CenterContent';
 import { Stack } from '@mui/material';
@@ -84,7 +85,7 @@ function DragAndDrop<T extends Footprint>({
                                   direction="row"
                                   justifyContent="right"
                                   alignItems="center"
-                                  marginRight='30px'
+                                  marginRight="30px"
                                   gap={10}>
                                   <Stack>{postTitle || categoryTitle}</Stack>
                                   <BearFootprint>

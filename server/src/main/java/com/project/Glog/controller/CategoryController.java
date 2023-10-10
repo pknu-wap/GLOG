@@ -26,7 +26,7 @@ public class CategoryController {
         return new ResponseEntity<>("success create category",HttpStatus.OK);
     }
 
-    @DeleteMapping("/category/delete")
+    @DeleteMapping("/category")
     public ResponseEntity<String> delete(@CurrentUser UserPrincipal userPrincipal,
                                          @RequestParam("categoryId") Long categoryId){
             categoryService.delete(userPrincipal.getId(), categoryId);
@@ -34,7 +34,7 @@ public class CategoryController {
             return new ResponseEntity<>("success delete category",HttpStatus.OK);
     }
 
-    @GetMapping ("/category/sidebar/{blogId}") //사용 안할듯?
+    @GetMapping ("/category/sidebar/{blogId}")
     public ResponseEntity<SidebarDtos> getSidebarByBlog(@PathVariable Long blogId){
 
         //해당 블로그의 사이드바를 읽어 온다

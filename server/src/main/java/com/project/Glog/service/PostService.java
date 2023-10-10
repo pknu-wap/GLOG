@@ -157,7 +157,7 @@ public class PostService {
     }
 
     public PostPreviewDtos searchPostsByHashtag(String hashtag) {
-        List<Post> posts = null; //TODO 수정 필요
+        List<Post> posts = postRepository.findAllByHashtag(hashtag); //TODO 수정 필요
         return new PostPreviewDtos(posts, posts.size());
     }
 

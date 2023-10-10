@@ -15,8 +15,8 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query("SELECT p FROM Post p WHERE p.content LIKE %:string%")
     List<Post> findAllByContent(@Param("string") String string);
 
-//    @Query("SELECT p FROM Post p WHERE p.hashtags LIKE %:hashtag%")
-//    List<Post> findAllByHashtag(@Param("hashtag") String hashtag);
+    @Query("SELECT p FROM Post p JOIN p.hashtags h WHERE h.tag LIKE %:hashtag%")
+    List<Post> findAllByHashtag(@Param("hashtag") String hashtag);
 
 
     @Query("SELECT p FROM Post p JOIN p.category c WHERE c.id=:catId ")

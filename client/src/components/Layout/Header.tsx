@@ -50,7 +50,7 @@ export default function Header() {
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>
         {userTheme === 'dark' ? (
-          <IconButton sx={{ color: 'white', zIndex: 20005 }} onClick={toggleUserTheme}>
+          <IconButton sx={{ color: 'white' }} onClick={toggleUserTheme}>
             <DarkModeIcon fontSize="large" />
           </IconButton>
         ) : (

@@ -2,7 +2,14 @@
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { Stack } from '@mui/material';
 import React from 'react';
-import { PostRoute, PostTitle, ThumbnailArea, ViewPostArea } from './postId.style';
+import {
+  AuthorArea,
+  PostAuthorProfileImage,
+  PostRoute,
+  PostTitle,
+  ThumbnailArea,
+  ViewPostArea,
+} from './postId.style';
 
 const page = ({ params }: { params: { titleId: string; postId: string } }) => {
   const writeList = [
@@ -53,6 +60,12 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
         <Stack position={'absolute'}>
           <PostRoute>JunLog - {params.postId}</PostRoute>
           <PostTitle>{result.PostDetailResponse.title}</PostTitle>
+          <AuthorArea>
+            <Stack display={'flex'} justifyContent={'center'} alignItems={'center'}>
+              <PostAuthorProfileImage></PostAuthorProfileImage>
+              <Stack>{result.PostDetailResponse.author.nickname}</Stack>
+            </Stack>
+          </AuthorArea>
         </Stack>
       </ThumbnailArea>
       <DragAndDrop

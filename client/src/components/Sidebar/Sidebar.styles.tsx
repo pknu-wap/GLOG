@@ -73,7 +73,7 @@ export const SidebarCloseIcon = styled(Stack)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
-  zIndex: '20000',
+  zIndex: 20000,
 
   ':hover': {
     left: '4px',

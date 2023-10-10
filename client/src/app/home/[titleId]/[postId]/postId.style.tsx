@@ -16,7 +16,6 @@ export const ThumbnailArea = styled(Stack)({
   height: '50vh',
   padding: '20px 25%',
   transform: 'translateY(-124px) translateX(-20px)',
-  zIndex: 2000,
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -33,4 +32,17 @@ export const PostTitle = styled(Stack)({
   color: 'white',
   fontSize: '50px',
   marginTop: '10px',
+});
+
+export const AuthorArea = styled(Stack)({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+export const PostAuthorProfileImage = styled(Stack)({
+  backgroundColor: 'white',
+  borderRadius: '50%',
+  width: '30px',
+  height: '30px',
 });

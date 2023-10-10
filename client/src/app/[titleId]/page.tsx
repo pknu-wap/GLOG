@@ -1,5 +1,4 @@
 'use client';
-import Sidebar from '@/components/Sidebar/Sidebar';
 import React from 'react';
 import PostComponent from '../../components/Post/Post';
 import { useState } from 'react';
@@ -125,7 +124,6 @@ function page({ params }: { params: { titleId: string } }) {
 
   return (
     <CenterContent maxWidth={'1440px'}>
-      <Sidebar />
       <ScrapList>프론트엔드</ScrapList>
       <PostAreaComponent>
         {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {

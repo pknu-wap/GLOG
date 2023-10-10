@@ -19,3 +19,10 @@ export interface IWrite {
     hashtags?: string[];
   };
 }
+
+// 블로그
+export interface IBlog {
+  blogUrl: string;
+  blogName: string;
+  nickname: string;
+}

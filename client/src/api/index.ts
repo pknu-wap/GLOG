@@ -8,10 +8,6 @@ const axiosApi = (url: string, data?: any) => {
     ...data,
   });
 
-  // instance.defaults.headers.common[
-  //   'Authorization'
-  // ] = `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`;
-
   return instance;
 };
 

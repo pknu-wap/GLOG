@@ -7,12 +7,16 @@ export const ViewPostArea = styled(Stack)({
 });
 
 export const ThumbnailArea = styled(Stack)({
-  backgroundColor: 'rgba(0, 0, 0, 0.54)',
+  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  /*
+  backgroundColor: 'teal',
+  filter: 'grayscale(80%)',
+  */
   width: '100vw',
   height: '50vh',
   padding: '20px 25%',
   transform: 'translateY(-124px) translateX(-20px)',
-  zIndex: '20001',
+  zIndex: 2000,
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',

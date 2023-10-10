@@ -1,7 +1,7 @@
 'use client';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import React from 'react';
-import PostComponent from '../../components/Post/Post';
+import PostComponent from '../../../components/Post/Post';
 import { useState } from 'react';
 import { PostAreaComponent, PostPagination, ScrapList } from './tagegory.style';
 import CenterContent from '@/components/Layout/CenterContent';
@@ -11,12 +11,11 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 function page({ params }: { params: { titleId: string } }) {
-
   const [page, setPage] = useState(0);
 
   const backend = [
     {
-      isAuthor: false,
+      isAuthor: true,
       categoryName: 'string',
 
       PostPreviewResponse: {

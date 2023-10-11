@@ -1,20 +1,16 @@
 package com.project.Glog.dto.response.post;
 
-import com.project.Glog.domain.Temporary;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.project.Glog.domain.TemplateTemporary;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
-public class PostTitleResponse {
-    private List<PostTitleDto> postTitleResponse = new ArrayList<>();
+public record PostTitleResponse(List<PostTitleDto> postTitleResponse) {
 
-    public PostTitleResponse (List<Temporary> temporaries){
-        for(Temporary temporary : temporaries){
-            postTitleResponse.add(PostTitleDto.of(temporary));
-        }
+    public static PostTitleResponse of(List<? extends TemplateTemporary> templateTemporaries) {
+        final List<PostTitleDto> responses = templateTemporaries.stream()
+                .map(PostTitleDto::of)
+                .toList();
+
+        return new PostTitleResponse(responses);
     }
 }

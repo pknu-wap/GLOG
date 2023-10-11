@@ -3,6 +3,7 @@ package com.project.Glog.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ConfigurationProperties(prefix = "app")
@@ -10,7 +11,7 @@ public class AppProperties {
     private final Auth auth = new Auth();
     private final OAuth2 oauth2 = new OAuth2();
 
-    public static class Auth {
+    private class Auth {
         private String tokenSecret;
         private long tokenExpirationMsec;
 
@@ -31,12 +32,8 @@ public class AppProperties {
         }
     }
 
-    public static final class OAuth2 {
+    private final class OAuth2 {
         private List<String> authorizedRedirectUris = new ArrayList<>();
-
-        public List<String> getAuthorizedRedirectUris() {
-            return authorizedRedirectUris;
-        }
 
         public OAuth2 authorizedRedirectUris(List<String> authorizedRedirectUris) {
             this.authorizedRedirectUris = authorizedRedirectUris;
@@ -50,5 +47,18 @@ public class AppProperties {
 
     public OAuth2 getOauth2() {
         return oauth2;
+    }
+
+    public List<String> getAuthorizedRedirectUris() {
+        return oauth2.authorizedRedirectUris;
+    }
+
+    public Date getExpirationDate() {
+        Date now = new Date();
+        return new Date(now.getTime() + auth.tokenExpirationMsec);
+    }
+
+    public String getTokenSecret() {
+        return auth.getTokenSecret();
     }
 }

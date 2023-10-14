@@ -3,8 +3,19 @@ import { Icon, Theme } from '@mui/material';
 import Link from 'next/link';
 
 export const Post = styled(Link, {
-  shouldForwardProp: (propName:string) =>!['isPhone', 'isTablet', 'isLaptop'].includes(propName),
-  })(({ theme, isPhone, isTablet, isLaptop }: { theme?: Theme; isPhone: boolean; isTablet: boolean; isLaptop: boolean }) => ({
+  shouldForwardProp: (propName: string) => !['isPhone', 'isTablet', 'isLaptop'].includes(propName),
+})(
+  ({
+    theme,
+    isPhone,
+    isTablet,
+    isLaptop,
+  }: {
+    theme?: Theme;
+    isPhone: boolean;
+    isTablet: boolean;
+    isLaptop: boolean;
+  }) => ({
     backgroundColor: theme?.palette.subColor.main,
     color: theme?.palette.oppositeColor.main,
     margin: '30px 25px',

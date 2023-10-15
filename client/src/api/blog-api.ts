@@ -1,4 +1,4 @@
-import { IBlog, IChangeBlogName, ISidebar } from '@/types/dto';
+import { IBlog, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -7,6 +7,18 @@ export const PostBlogApi = async (body: IBlog) => {
   const { data } = await defaultInstance.post('/blog', body);
 
   return data;
+};
+
+// 게시글 조회
+export const postPostApi = async (params: IPost) => {
+  const { data } = await defaultInstance.get('/post', { params });
+
+  return data;
+};
+
+export const usePostPostQuery = (params: IPost) => {
+  const { isLoading, error, data } = useQuery([`post`, params], () => postPostApi(params));
+  return { data, isLoading, error };
 };
 
 // 블로그 이름 변경
@@ -18,7 +30,7 @@ export const PostChangeBlogNameApi = async (body: IChangeBlogName) => {
 
 // 사이드바 얻어오기
 const GetSidebarApi = async (params: ISidebar) => {
-  const { data } = await defaultInstance.get('/category/sidebar', {
+  const { data } = await defaultInstance.get(`/category/sidebar/${params.blogId}`, {
     params,
   });
 

@@ -9,19 +9,19 @@ import { BearFootprint, Big__toe, Small__toe, Small__toe2, Small__toe3 } from '.
 
 interface Category {
   categoryId: number;
-  categoryTitle: string;
+  categoryName: string;
 }
 
 interface Post {
   postId: number;
-  postTitle: string;
+  title: string;
 }
 
 type Footprint = Category | Post;
 
 interface DragAndDropProps<T> {
   rightContainer: ReactNode;
-  footprintList: T[];
+  footprintList?: T[];
   categoryNumber?: string;
 }
 
@@ -65,12 +65,12 @@ function DragAndDrop<T extends Footprint>({
                     {...provided.droppableProps}
                     ref={provided.innerRef}>
                     <Stack gap={15}>
-                      {footprintList.map((item, index) => {
+                      {footprintList?.map((item, index) => {
                         const postId = 'postId' in item ? item.postId : undefined;
-                        const postTitle = 'postTitle' in item ? item.postTitle : undefined;
+                        const title = 'title' in item ? item.title : undefined;
                         const categoryId = 'categoryId' in item ? item.categoryId : undefined;
                         const categoryTitle =
-                          'categoryTitle' in item ? item.categoryTitle : undefined;
+                          'categoryName' in item ? item.categoryName : undefined;
 
                         return (
                           <Draggable
@@ -89,7 +89,7 @@ function DragAndDrop<T extends Footprint>({
                                   alignItems="center"
                                   marginRight="30px"
                                   gap={10}>
-                                  <Stack>{postTitle || categoryTitle}</Stack>
+                                  <Stack>{title || categoryTitle}</Stack>
                                   <BearFootprint>
                                     <Big__toe></Big__toe>
                                     <Small__toe></Small__toe>

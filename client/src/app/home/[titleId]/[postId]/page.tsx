@@ -1,52 +1,34 @@
 'use client';
 import { Stack } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BlackContainer, ImageContainer, ThumbnailArea } from './postId.style';
 import profilePic from '/public/assets/test.png';
 import DragAndDrop from '@/components/DND/DragAndDrop';
+import { useGetSidebarQuery, usePostPostQuery } from '@/api/blog-api';
+import { IPostContent, ISidebarContent, ISidebarFileContent } from '@/types/dto';
 
 const page = ({ params }: { params: { titleId: string; postId: string } }) => {
-  const writeList = [
-    {
-      postId: 0,
-      postTitle: '제목입니다',
-    },
-    {
-      postId: 1,
-      postTitle: '프론트앤드',
-    },
-    {
-      postId: 2,
-      postTitle: '백앤드',
-    },
-  ];
+  const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
+  const { data: postData } = usePostPostQuery({ postId: Number(params.postId) });
 
-  const backendInfo = [
-    {
-      PostDetailResponse: {
-        author: {
-          userId: 1,
-          nickname: 'string',
-          profileImage: 'string',
-        },
-        blogUrl: 'string',
-        postId: 1,
-        title: '제목입니다.',
-        content: 'string',
-        thumbnail: 'string',
-        createdAt: 0,
-        likesCount: 0,
-        viewsCount: 0,
-        repliesCount: 0,
-        isPrivate: true,
-        isScraped: false,
-        isLiked: false,
-        isAuthor: false,
-        hastags: [],
-      },
-    },
-  ];
-  const result = backendInfo[0];
+  const [writeList, setWriteList] = useState<ISidebarFileContent[]>();
+  const [post, setPost] = useState<IPostContent>();
+
+  const sidebarContent: ISidebarContent[] = sidebarData?.sidebarDtos;
+
+  useEffect(() => {
+    setWriteList(
+      sidebarContent
+        ?.map((item) => ({
+          categoryId: item.categoryId,
+          postTitleDtos: item.postTitleDtos,
+        }))
+        .filter((items) => Number(params.titleId) === items.categoryId)
+        .map((filteredItem) => filteredItem.postTitleDtos)[0],
+    );
+
+    setPost(postData);
+  }, [sidebarData, postData]);
 
   return (
     <Stack>
@@ -54,13 +36,13 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
         <ImageContainer src={profilePic} fill alt="Picture of the author" />
         <BlackContainer></BlackContainer>
       </ThumbnailArea>
-
+      {/* <Stack>{sidebarData?.sidebarDtos[params.titleId - 1].categoryName} </Stack> */}
       <DragAndDrop
         footprintList={writeList}
-        categoryNumber={params.postId}
+        // categoryNumber={params.titleId - 1}
         rightContainer={
           <Stack width={'100%'} height={'100vh'} bgcolor="white">
-            <Stack>{result.PostDetailResponse.content}</Stack>
+            <Stack>{post?.content}</Stack>
           </Stack>
         }
       />

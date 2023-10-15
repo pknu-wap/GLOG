@@ -9,9 +9,22 @@ import LockIcon from '@mui/icons-material/Lock';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useGetSidebarQuery } from '@/api/blog-api';
+import { ISidebarCategoryContent, ISidebarContent } from '@/types/dto';
+import DragAndDrop from '@/components/DND/DragAndDrop';
 
 function page({ params }: { params: { titleId: string } }) {
   const [page, setPage] = useState(0);
+  const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
+  const [writeList, setWriteList] = useState<ISidebarCategoryContent[]>();
+
+  useEffect(() => {
+    setWriteList(
+      sidebarData?.sidebarDtos.map((item: ISidebarContent) => ({
+        categoryId: item.categoryId,
+        categoryName: item.categoryName,
+      })),
+    );
+  }, [sidebarData]);
 
   const backend = [
     {
@@ -121,50 +134,51 @@ function page({ params }: { params: { titleId: string } }) {
 
   const totalPages = backend.length;
 
-  const { data } = useGetSidebarQuery({ blogId: 1 });
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
-
   return (
     <CenterContent maxWidth={'1440px'}>
       <ScrapList>{params.titleId}</ScrapList>
-      <PostAreaComponent>
-        {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
-          return (
-            <PostComponent
-              isPrivate
-              key={postInfo.PostPreviewDto.postId}
-              thumbnail={postInfo.PostPreviewDto.imageUrl}
-              title={postInfo.PostPreviewDto.title}
-              likesCount={postInfo.PostPreviewDto.likesCount}
-              viewsCount={postInfo.PostPreviewDto.viewsCount}
-              Icon={
-                result.isAuthor ? (
-                  postInfo.PostPreviewDto.isPrivate ? (
-                    <LockIcon fontSize="small" />
-                  ) : (
-                    <LockOpenIcon fontSize="small" />
-                  )
-                ) : postInfo.PostPreviewDto.isScrapped ? (
-                  <StarIcon fontSize="small" />
-                ) : (
-                  <StarBorderIcon fontSize="small" />
-                )
-              }
+      <DragAndDrop
+        footprintList={writeList}
+        rightContainer={
+          <>
+            <PostAreaComponent>
+              {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
+                return (
+                  <PostComponent
+                    isPrivate
+                    key={postInfo.PostPreviewDto.postId}
+                    thumbnail={postInfo.PostPreviewDto.imageUrl}
+                    title={postInfo.PostPreviewDto.title}
+                    likesCount={postInfo.PostPreviewDto.likesCount}
+                    viewsCount={postInfo.PostPreviewDto.viewsCount}
+                    Icon={
+                      result.isAuthor ? (
+                        postInfo.PostPreviewDto.isPrivate ? (
+                          <LockIcon fontSize="small" />
+                        ) : (
+                          <LockOpenIcon fontSize="small" />
+                        )
+                      ) : postInfo.PostPreviewDto.isScrapped ? (
+                        <StarIcon fontSize="small" />
+                      ) : (
+                        <StarBorderIcon fontSize="small" />
+                      )
+                    }
+                  />
+                );
+              })}
+            </PostAreaComponent>
+            <PostPagination
+              count={totalPages}
+              page={page + 1}
+              onChange={(_, newPage) => {
+                setPage(newPage - 1);
+              }}
+              variant="outlined"
+              shape="rounded"
             />
-          );
-        })}
-      </PostAreaComponent>
-      <PostPagination
-        count={totalPages}
-        page={page + 1}
-        onChange={(_, newPage) => {
-          setPage(newPage - 1);
-        }}
-        variant="outlined"
-        shape="rounded"
+          </>
+        }
       />
     </CenterContent>
   );

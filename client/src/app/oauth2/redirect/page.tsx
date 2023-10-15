@@ -6,11 +6,11 @@ const Page = () => {
   const params = useSearchParams();
 
   useEffect(() => {
-    const token = params.get('token');
+    const getTokenValue = params.get('token');
     const error = params.get('error');
 
-    if (token) {
-      localStorage.setItem('token', token);
+    if (getTokenValue) {
+      localStorage.setItem('token', getTokenValue);
     } else {
       console.log(error);
     }

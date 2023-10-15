@@ -43,5 +43,14 @@ export interface IScrap {
 }
 
 // 스크랩 내용
-export interface IScrapContent {}
-[];
+export interface IScrapContent {
+  blogUrl?: string;
+  createdAt?: string;
+  isPrivate?: boolean;
+  likesCount?: number;
+  postId?: number;
+  repliesCount?: number;
+  thumbnail?: string;
+  title?: string;
+  viewsCount?: number;
+}

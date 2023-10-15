@@ -1,3 +1,5 @@
+'use client';
+
 import { isSidebarOpenState, tokenState, userThemeState } from '@/recoil/atom';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -25,11 +27,11 @@ export function useSidebarOpenSSR() {
 }
 
 export function useTokenSSR() {
-  const [isInitial, setIsInitial] = useState(true);
+  const [isInitial, setIsInitial] = useState('');
   const [value, setValue] = useRecoilState(tokenState);
 
   useEffect(() => {
-    setIsInitial(false);
+    setIsInitial('');
   }, []);
 
   return [isInitial ? '' : value, setValue] as const;

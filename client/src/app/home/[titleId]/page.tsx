@@ -11,6 +11,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useGetSidebarQuery } from '@/api/blog-api';
 import { ISidebarCategoryContent, ISidebarContent } from '@/types/dto';
 import DragAndDrop from '@/components/DND/DragAndDrop';
+import { Stack } from '@mui/material';
 
 function page({ params }: { params: { titleId: string } }) {
   const [page, setPage] = useState(0);
@@ -135,12 +136,12 @@ function page({ params }: { params: { titleId: string } }) {
   const totalPages = backend.length;
 
   return (
-    <CenterContent maxWidth={'1440px'}>
+    <CenterContent maxWidth={'2000px'}>
       <ScrapList>{params.titleId}</ScrapList>
       <DragAndDrop
         footprintList={writeList}
         rightContainer={
-          <>
+          <Stack width="100%">
             <PostAreaComponent>
               {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
                 return (
@@ -177,7 +178,7 @@ function page({ params }: { params: { titleId: string } }) {
               variant="outlined"
               shape="rounded"
             />
-          </>
+          </Stack>
         }
       />
     </CenterContent>

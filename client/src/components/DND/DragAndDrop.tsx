@@ -78,26 +78,32 @@ function DragAndDrop<T extends Footprint>({
                             draggableId={`${postId || categoryId}`}
                             index={index}>
                             {(provided) => (
-                              <div
-                                style={{ backgroundColor: 'transparent' }}
+                              <Stack
+                                sx={{
+                                  backgroundColor: 'transparent',
+                                  ':first-child': {
+                                    marginTop: '70px',
+                                  },
+                                }}
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}>
                                 <Stack
                                   direction="row"
-                                  justifyContent="right"
+                                  justifyContent="left"
                                   alignItems="center"
-                                  marginRight="30px"
-                                  gap={10}>
-                                  <Stack>{title || categoryTitle}</Stack>
-                                  <BearFootprint>
+                                  marginTop="-40px"
+                                  width="fit-content"
+                                  gap={5}>
+                                  <BearFootprint width="5px">
                                     <Big__toe></Big__toe>
                                     <Small__toe></Small__toe>
                                     <Small__toe2></Small__toe2>
                                     <Small__toe3></Small__toe3>
                                   </BearFootprint>
+                                  <Stack width="70px">{title || categoryTitle}</Stack>
                                 </Stack>
-                              </div>
+                              </Stack>
                             )}
                           </Draggable>
                         );

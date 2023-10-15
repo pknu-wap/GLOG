@@ -12,6 +12,7 @@ const MainStack = styled(Stack, {
   height: 'auto',
   minHeight: '100vh',
   // padding: '124px 24px 0px 20px',
+  padding: '124px 24px 0px 24px',
   backgroundColor: theme?.palette.themeColor.main,
 }));
 

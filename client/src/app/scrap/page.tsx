@@ -1,14 +1,21 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostComponent from '../../components/Post/Post';
 import { useState } from 'react';
 import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
 import CenterContent from '@/components/Layout/CenterContent';
 import StarIcon from '@mui/icons-material/Star';
+import { useGetScrapQuery } from '@/api/scrap-api';
 
 export default function Scrap() {
   //현재 페이지 상태
   const [page, setPage] = useState(0);
+  const { data } = useGetScrapQuery({ page });
+  // const [result, setResult] = useState([]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const backend = [
     {

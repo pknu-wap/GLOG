@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostComponent from '../../../components/Post/Post';
 import { useState } from 'react';
 import { PostAreaComponent, PostPagination, ScrapList } from './tagegory.style';
@@ -8,6 +8,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useGetSidebarQuery } from '@/api/blog-api';
 
 function page({ params }: { params: { titleId: string } }) {
   const [page, setPage] = useState(0);
@@ -37,7 +38,7 @@ function page({ params }: { params: { titleId: string } }) {
           {
             PostPreviewDto: {
               blogUrl: 'string',
-              postId: 0,
+              postId: 1,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -51,7 +52,7 @@ function page({ params }: { params: { titleId: string } }) {
           {
             PostPreviewDto: {
               blogUrl: 'string',
-              postId: 0,
+              postId: 2,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -65,7 +66,7 @@ function page({ params }: { params: { titleId: string } }) {
           {
             PostPreviewDto: {
               blogUrl: 'string',
-              postId: 0,
+              postId: 3,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -79,7 +80,7 @@ function page({ params }: { params: { titleId: string } }) {
           {
             PostPreviewDto: {
               blogUrl: 'string',
-              postId: 0,
+              postId: 4,
               title: 'string',
               imageUrl: 'string',
               likesCount: 0,
@@ -119,6 +120,12 @@ function page({ params }: { params: { titleId: string } }) {
   const result = backend[page];
 
   const totalPages = backend.length;
+
+  const { data } = useGetSidebarQuery({ blogId: 1 });
+
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   return (
     <CenterContent maxWidth={'1440px'}>

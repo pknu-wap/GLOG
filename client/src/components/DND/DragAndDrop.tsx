@@ -5,7 +5,7 @@ import { Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { useRouter } from 'next/navigation';
-import { BearFootprint, Big__toe, Small__toe, Small__toe2, Small__toe3 } from './DragANdDrop.style';
+import { BearFootprint, Big__toe, Small__toe, Small__toe2, Small__toe3 } from './DragAndDrop.style';
 
 interface Category {
   categoryId: number;
@@ -42,7 +42,9 @@ function DragAndDrop<T extends Footprint>({
       result.source.droppableId === 'left-droppable'
     ) {
       router.push(
-        categoryNumber ? `/${categoryNumber}/${result.source.index}` : `/${result.source.index}`,
+        categoryNumber
+          ? `/home/${categoryNumber}/${result.source.index}`
+          : `/home/${result.source.index}`,
       );
     }
   };

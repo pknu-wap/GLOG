@@ -5,6 +5,9 @@ const axiosApi = (url: string, data?: any) => {
   const instance = axios.create({
     baseURL: url,
     withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
     ...data,
   });
 

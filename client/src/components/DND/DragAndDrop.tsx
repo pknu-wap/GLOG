@@ -43,8 +43,8 @@ function DragAndDrop<T extends Footprint>({
     ) {
       router.push(
         categoryNumber
-          ? `/home/${categoryNumber}/${result.source.index}`
-          : `/home/${result.source.index}`,
+          ? `/home/${categoryNumber}/${result.draggableId}`
+          : `/home/${result.draggableId}`,
       );
     }
   };
@@ -75,7 +75,7 @@ function DragAndDrop<T extends Footprint>({
                         return (
                           <Draggable
                             key={postId || categoryId}
-                            draggableId={`container-${postId || categoryId}`}
+                            draggableId={`${postId || categoryId}`}
                             index={index}>
                             {(provided) => (
                               <div

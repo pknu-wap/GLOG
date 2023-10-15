@@ -36,10 +36,15 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
         <ImageContainer src={profilePic} fill alt="Picture of the author" />
         <BlackContainer></BlackContainer>
       </ThumbnailArea>
-      {/* <Stack>{sidebarData?.sidebarDtos[params.titleId - 1].categoryName} </Stack> */}
+      <Stack>
+        {
+          sidebarContent?.filter((item) => item.categoryId === Number(params.titleId))[0]
+            .categoryName
+        }
+      </Stack>
       <DragAndDrop
         footprintList={writeList}
-        // categoryNumber={params.titleId - 1}
+        categoryNumber={params.titleId}
         rightContainer={
           <Stack width={'100%'} height={'100vh'} bgcolor="white">
             <Stack>{post?.content}</Stack>

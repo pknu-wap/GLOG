@@ -14,7 +14,6 @@ export default function Scrap() {
   const [result, setResult] = useState<IScrapContent[]>();
 
   useEffect(() => {
-    console.log(data);
     setResult(data?.postPreviewDtos);
   }, [data]);
 

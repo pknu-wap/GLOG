@@ -100,6 +100,9 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                           borderRadius: '8px',
                                           backgroundColor: 'primary.light',
                                         },
+                                        ':active': {
+                                          backgroundColor: 'transparent',
+                                        },
                                       }}
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}

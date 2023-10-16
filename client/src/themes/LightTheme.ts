@@ -19,7 +19,7 @@ export const lightTheme = createTheme({
     mode: 'light',
     primary: {
       main: '#e4ba5a',
-      light: 'rgba(228,186,90,0.4)',
+      light: 'rgba(228,186,90,0.2)',
     },
     secondary: {
       main: 'rgb(240, 240, 240)',

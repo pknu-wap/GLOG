@@ -7,10 +7,12 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useRouter } from 'next/navigation';
 import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const router = useRouter();
   const [userTheme, setUserTheme] = useUserThemeSSR();
+  const pathname = usePathname();
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -30,7 +32,7 @@ export default function Header() {
 
   return (
     <Stack
-      bgcolor="primary.main"
+      bgcolor={pathname.startsWith('/home') ? 'transparent' : 'primary.main'}
       direction="row"
       position="fixed"
       justifyContent="space-between"
@@ -42,8 +44,9 @@ export default function Header() {
       <Stack
         sx={{ cursor: 'pointer' }}
         width="fit-content"
-        fontSize="24px"
-        color={'white'}
+        fontSize="32px"
+        fontWeight="700"
+        color={pathname.startsWith('/home') ? 'primary.main' : 'white'}
         onClick={() => router.push('/home')}
         zIndex={20005}>
         GLOG

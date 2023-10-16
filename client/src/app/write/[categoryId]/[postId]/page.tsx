@@ -24,6 +24,7 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
 
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
 
+  console.log(content);
   return (
     <WritePropsContext.Provider value={state}>
       <Stack spacing={4} data-color-mode={userTheme}>

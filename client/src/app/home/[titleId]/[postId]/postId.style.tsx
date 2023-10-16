@@ -1,10 +1,9 @@
 import { Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Image from 'next/image';
 
 export const ThumbnailArea = styled(Stack)({
   width: '100%',
-  height: '50vh',
+  height: '35vh',
   position: 'relative',
 });
 
@@ -15,6 +14,11 @@ export const BlackContainer = styled(Stack)({
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
 });
 
-export const ImageContainer = styled(Image)({
+export const ImageContainer = styled(Stack)(({ imageSrc }: { imageSrc: string }) => ({
   backgroundAttachment: 'fixed',
-});
+  backgroundImage: `url(${imageSrc})`,
+  backgroundSize: '100% 38vh',
+  backgroundRepeat: 'no-repeat',
+  width: '100%',
+  height: '100%',
+}));

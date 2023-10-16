@@ -5,30 +5,24 @@ import { BlackContainer, ImageContainer, ThumbnailArea } from './postId.style';
 import profilePic from '/public/assets/test.png';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, usePostPostQuery } from '@/api/blog-api';
-import { IPostContent, ISidebarContent, ISidebarFileContent } from '@/types/dto';
+import { IPostContent, ISidebarContent } from '@/types/dto';
 
 const page = ({ params }: { params: { titleId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const { data: postData } = usePostPostQuery({ postId: Number(params.postId) });
 
-  const [writeList, setWriteList] = useState<ISidebarFileContent[]>();
+  const [writeList, setWriteList] = useState<ISidebarContent[]>();
   const [post, setPost] = useState<IPostContent>();
 
   const sidebarContent: ISidebarContent[] = sidebarData?.sidebarDtos;
 
   useEffect(() => {
-    setWriteList(
-      sidebarContent
-        ?.map((item) => ({
-          categoryId: item.categoryId,
-          postTitleDtos: item.postTitleDtos,
-        }))
-        .filter((items) => Number(params.titleId) === items.categoryId)
-        .map((filteredItem) => filteredItem.postTitleDtos)[0],
-    );
+    setWriteList(sidebarContent);
 
     setPost(postData);
   }, [sidebarData, postData]);
+
+  console.log(sidebarContent);
 
   return (
     <Stack>

@@ -13,39 +13,39 @@ export const BearFootprint = styled(Stack)({
 export const Big__toe = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   borderRadius: '50%',
-  width: '20px',
-  height: '20px',
+  width: '10px',
+  height: '10px',
   position: 'relative',
   top: '5px',
-  left: '-10px',
+  left: '0px',
 }));
 
 export const Small__toe3 = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   borderRadius: '50%',
-  width: '10px',
-  height: '10px',
+  width: '5px',
+  height: '5px',
   position: 'absolute',
-  top: '-5px',
-  left: '-17px',
+  top: '0px',
+  left: '-5px',
 }));
 
 export const Small__toe2 = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   borderRadius: '50%',
-  width: '10px',
-  height: '10px',
+  width: '5px',
+  height: '5px',
   position: 'absolute',
-  top: '-10px',
-  left: '-5px',
+  top: '-5px',
+  left: '2px',
 }));
 
 export const Small__toe = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   borderRadius: '50%',
-  width: '10px',
-  height: '10px',
+  width: '5px',
+  height: '5px',
   position: 'absolute',
-  top: '-5px',
-  left: '8px',
+  top: '0px',
+  left: '10px',
 }));

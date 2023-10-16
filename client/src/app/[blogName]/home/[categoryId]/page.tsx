@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect } from 'react';
-import PostComponent from '../../../components/Post/Post';
+import PostComponent from '../../../../components/Post/Post';
 import { useState } from 'react';
-import { PostAreaComponent, PostPagination, ScrapList } from './tagegory.style';
+import { PostAreaComponent, PostPagination, ScrapList } from './category.style';
 import CenterContent from '@/components/Layout/CenterContent';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
@@ -13,7 +13,7 @@ import { ISidebarContent } from '@/types/dto';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { Stack } from '@mui/material';
 
-function page({ params }: { params: { titleId: string } }) {
+function page({ params }: { params: { blogName: string; categoryId: string } }) {
   const [page, setPage] = useState(0);
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
@@ -132,8 +132,9 @@ function page({ params }: { params: { titleId: string } }) {
 
   return (
     <CenterContent maxWidth={'2000px'}>
-      <ScrapList>{params.titleId}</ScrapList>
+      <ScrapList>{params.categoryId}</ScrapList>
       <DragAndDrop
+        blogName={params.blogName}
         footprintList={writeList}
         rightContainer={
           <Stack width="100%">

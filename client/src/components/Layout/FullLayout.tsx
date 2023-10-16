@@ -12,7 +12,7 @@ const MainStack = styled(Stack, {
   width: '100%',
   height: 'auto',
   minHeight: '100vh',
-  padding: pathname.startsWith('/home') ? '0px 0px 0px 0px' : '124px 24px 0px 24px',
+  padding: pathname.includes('/home') ? '0px' : '124px 24px 0px 24px',
   backgroundColor: theme?.palette.themeColor.main,
 }));
 

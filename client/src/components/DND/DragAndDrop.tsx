@@ -20,12 +20,13 @@ type Footprint = {
 };
 
 interface DragAndDropProps {
+  blogName: string;
   rightContainer: ReactNode;
   footprintList?: Footprint[];
   categoryNumber?: string;
 }
 
-function DragAndDrop({ rightContainer, footprintList }: DragAndDropProps) {
+function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -35,7 +36,7 @@ function DragAndDrop({ rightContainer, footprintList }: DragAndDropProps) {
   const dragHandler = (result: DropResult) => {
     console.log(result);
     if (result.destination?.droppableId === 'right-droppable') {
-      router.push(`/home/${result.source.droppableId}/${result.draggableId}`);
+      router.push(`/${blogName}/home/${result.source.droppableId}/${result.draggableId}`);
     }
   };
 
@@ -62,12 +63,14 @@ function DragAndDrop({ rightContainer, footprintList }: DragAndDropProps) {
                           <Stack
                             direction="row"
                             justifyContent="space-between"
-                            bgcolor="#e4ba5a"
+                            bgcolor="primary.main"
                             padding="4px 8px"
                             borderRadius="0px 8px">
                             <Stack>{category.categoryName}</Stack>
                             <IconButton
-                              onClick={() => router.push(`/home/${category.categoryId}`)}
+                              onClick={() =>
+                                router.push(`/${blogName}/home/${category.categoryId}`)
+                              }
                               sx={{ padding: '0px' }}
                               size="small">
                               <ArrowRight />
@@ -87,7 +90,9 @@ function DragAndDrop({ rightContainer, footprintList }: DragAndDropProps) {
                                   {(provided) => (
                                     <Stack
                                       onClick={() =>
-                                        router.push(`/home/${category.categoryId}/${post.postId}`)
+                                        router.push(
+                                          `/${blogName}/home/${category.categoryId}/${post.postId}`,
+                                        )
                                       }
                                       sx={{
                                         padding: '4px 8px',

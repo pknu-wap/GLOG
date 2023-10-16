@@ -32,7 +32,7 @@ export default function Header() {
 
   return (
     <Stack
-      bgcolor={pathname.startsWith('/home') ? 'transparent' : 'primary.main'}
+      bgcolor={pathname.includes('/home') ? 'transparent' : 'primary.main'}
       direction="row"
       position="fixed"
       justifyContent="space-between"
@@ -45,19 +45,19 @@ export default function Header() {
         sx={{ cursor: 'pointer' }}
         width="fit-content"
         fontSize="32px"
-        fontWeight="700"
-        color={pathname.startsWith('/home') ? 'primary.main' : 'white'}
-        onClick={() => router.push('/home')}
+        fontWeight={700}
+        color={pathname.includes('/home') ? 'primary.main' : 'white'}
+        onClick={() => router.push('/collect')}
         zIndex={20005}>
         GLOG
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>
         {userTheme === 'dark' ? (
-          <IconButton sx={{ color: 'white' }} onClick={toggleUserTheme}>
+          <IconButton sx={{ color: '#ffffff' }} onClick={toggleUserTheme}>
             <DarkModeIcon fontSize="large" />
           </IconButton>
         ) : (
-          <IconButton sx={{ color: 'white' }} onClick={toggleUserTheme}>
+          <IconButton sx={{ color: '#ffffff' }} onClick={toggleUserTheme}>
             <LightModeIcon fontSize="large" />
           </IconButton>
         )}
@@ -68,7 +68,7 @@ export default function Header() {
           onClick={() => router.push('/')}
           sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}
         />
-        <IconButton sx={{ color: 'white' }} size="medium" onClick={handleClick}>
+        <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={handleClick}>
           <MenuIcon fontSize="large" />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>

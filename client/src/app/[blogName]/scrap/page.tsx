@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
-import PostComponent from '../../components/Post/Post';
+import PostComponent from '../../../components/Post/Post';
 import { useState } from 'react';
 import { PostAreaComponent, PostPagination, ScrapList } from './scrap.style';
 import CenterContent from '@/components/Layout/CenterContent';

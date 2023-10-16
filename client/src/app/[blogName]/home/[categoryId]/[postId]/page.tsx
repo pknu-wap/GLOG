@@ -6,14 +6,17 @@ import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, usePostPostQuery } from '@/api/blog-api';
 import { IPostContent, ISidebarContent } from '@/types/dto';
 import CenterContent from '@/components/Layout/CenterContent';
-import { KeyboardArrowRight } from '@mui/icons-material';
+import { Home, KeyboardArrowRight } from '@mui/icons-material';
 import MDEditor from '@uiw/react-md-editor';
-import { useUserThemeSSR } from '../../../../../hooks/useRecoilSSR';
+import { useUserThemeSSR } from '../../../../../../hooks/useRecoilSSR';
+import { useRouter } from 'next/navigation';
+import IconButton from '@/components/Button/IconButton';
 
-const page = ({ params }: { params: { titleId: string; postId: string } }) => {
+const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const { data: postData } = usePostPostQuery({ postId: Number(params.postId) });
   const [userTheme] = useUserThemeSSR();
+  const router = useRouter();
 
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
   const [post, setPost] = useState<IPostContent>();
@@ -25,8 +28,6 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
 
     setPost(postData);
   }, [sidebarData, postData]);
-
-  console.log(sidebarContent);
 
   return (
     <Stack>
@@ -40,13 +41,13 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
           <CenterContent bgcolor="transparent">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack width="140px" height="100%"></Stack>
-              <Stack color="white">
+              <Stack color="#ffffff">
                 <Stack height="24px" direction={'row'} alignItems="center" gap={1}>
                   <Box>
                     {
                       sidebarContent?.filter(
-                        (category) => category.categoryId === Number(params.titleId),
-                      )[0].categoryName
+                        (category) => category.categoryId === Number(params.categoryId),
+                      )[0]?.categoryName
                     }
                   </Box>
                   <Icon fontSize="small" sx={{ marginTop: '-6px' }}>
@@ -55,7 +56,7 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
                   <Box style={{ fontWeight: 'bold' }}>{post?.title}</Box>
                 </Stack>
                 <Stack fontSize="36px">{post?.title}</Stack>
-                <Stack direction="row" alignItems={'center'} height="30px" gap={6} marginTop="24px">
+                <Stack direction="row" alignItems={'center'} height="30px" gap={3} marginTop="24px">
                   <img
                     style={{
                       width: '30px',
@@ -66,6 +67,9 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
                     alt="profileImage"
                   />
                   <Stack margin="auto 0px">{post?.author?.nickname}</Stack>
+                  <IconButton color="white">
+                    <Home fontSize="small" onClick={() => router.push(`/${params.blogName}`)} />
+                  </IconButton>
                 </Stack>
               </Stack>
             </Stack>
@@ -73,8 +77,8 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
         </BlackContainer>
       </ThumbnailArea>
       <DragAndDrop
+        blogName={params.blogName}
         footprintList={writeList}
-        categoryNumber={params.titleId}
         rightContainer={
           <Stack width={'100%'} bgcolor={userTheme === 'dark' ? 'transparent' : '#FCFAF1'} p={12}>
             <MDEditor.Markdown source={post?.content} />

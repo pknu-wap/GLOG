@@ -4,6 +4,7 @@ import { yellow } from './color';
 type PaletteColors =
   | 'backdrop'
   | 'textColor'
+  | 'white'
   | 'shadowColor'
   | 'themeColor'
   | 'oppositeColor'
@@ -13,10 +14,12 @@ declare module '@mui/material' {
   interface ButtonPropsColorOverrides {
     themeColor: true;
     oppositeColor: true;
+    white: true;
   }
   interface IconButtonPropsColorOverrides {
     themeColor: true;
     oppositeColor: true;
+    white: true;
   }
 }
 
@@ -66,6 +69,9 @@ export const darkTheme = createTheme({
       main: 'rgb(13, 13, 18)',
     },
     oppositeColor: {
+      main: '#ffffff',
+    },
+    white: {
       main: '#ffffff',
     },
   },

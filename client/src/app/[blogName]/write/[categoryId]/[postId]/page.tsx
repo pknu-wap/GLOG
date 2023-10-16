@@ -10,7 +10,7 @@ import TagList from '../../TagList';
 import BottomButton from './Bottom/BottomButton';
 import { WritePropsContext, WriteType } from '@/util/useWriteProps';
 import TopButton from '../../Top/TopButton';
-import { useUserThemeSSR } from '../../../../../hooks/useRecoilSSR';
+import { useUserThemeSSR } from '../../../../../../hooks/useRecoilSSR';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
@@ -24,7 +24,6 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
 
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
 
-  console.log(content);
   return (
     <WritePropsContext.Provider value={state}>
       <Stack spacing={4} data-color-mode={userTheme}>

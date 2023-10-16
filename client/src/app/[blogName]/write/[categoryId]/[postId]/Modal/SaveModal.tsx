@@ -33,11 +33,11 @@ function SaveModal({ open, onClose }: ModalType) {
   const isNewWrite = write?.params?.postId === '0';
 
   const postWriteCreateQuery = useMutation(PostWriteApi, {
-    onSuccess: () => router.push('/'),
+    onSuccess: () => router.push('/home'),
   });
 
   const updateWriteCreateQuery = useMutation(UpdateWriteApi, {
-    onSuccess: () => router.push('/'),
+    onSuccess: () => router.push('/home'),
   });
 
   const actionClick = () => {

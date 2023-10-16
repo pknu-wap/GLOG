@@ -37,5 +37,8 @@ export const lightTheme = createTheme({
     oppositeColor: {
       main: '#000000',
     },
+    white: {
+      main: '#ffffff',
+    },
   },
 });

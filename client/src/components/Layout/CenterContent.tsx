@@ -4,7 +4,7 @@ import { Stack, StackProps } from '@mui/material';
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
 
-const CenterContent = ({ maxWidth, children, color, bgcolor, ...rest }: StackProps) => {
+const CenterContent = ({ maxWidth, width, children, color, bgcolor, sx, ...rest }: StackProps) => {
   const theme = useTheme();
 
   console.log(maxWidth);
@@ -12,12 +12,13 @@ const CenterContent = ({ maxWidth, children, color, bgcolor, ...rest }: StackPro
   return (
     <Stack
       gap={2}
-      bgcolor={bgcolor ?? 'white'}
+      bgcolor={bgcolor ?? (theme.palette.mode === 'light' ? 'white' : 'transparent')}
       padding={{ xs: '20px 8px', sm: '28px' }}
       flex={1}
       maxWidth={maxWidth ?? '1440px'}
       sx={{
-        width: '100%',
+        ...sx,
+        width: width ?? '100%',
         borderRadius: '8px',
         mx: 'auto',
         color: color ?? theme.palette.oppositeColor.main,

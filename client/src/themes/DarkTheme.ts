@@ -50,6 +50,7 @@ export const darkTheme = createTheme({
     mode: 'dark',
     primary: {
       main: yellow[500],
+      light: 'rgba(255,255,255,0.4)',
     },
     secondary: {
       main: 'rgb(29, 30, 31)',

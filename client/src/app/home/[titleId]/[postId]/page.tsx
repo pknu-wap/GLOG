@@ -8,10 +8,12 @@ import { IPostContent, ISidebarContent } from '@/types/dto';
 import CenterContent from '@/components/Layout/CenterContent';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import MDEditor from '@uiw/react-md-editor';
+import { useUserThemeSSR } from '../../../../../hooks/useRecoilSSR';
 
 const page = ({ params }: { params: { titleId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const { data: postData } = usePostPostQuery({ postId: Number(params.postId) });
+  const [userTheme] = useUserThemeSSR();
 
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
   const [post, setPost] = useState<IPostContent>();
@@ -74,7 +76,7 @@ const page = ({ params }: { params: { titleId: string; postId: string } }) => {
         footprintList={writeList}
         categoryNumber={params.titleId}
         rightContainer={
-          <Stack width={'100%'} bgcolor="#FCFAF1" p={12}>
+          <Stack width={'100%'} bgcolor={userTheme === 'dark' ? 'transparent' : '#FCFAF1'} p={12}>
             <MDEditor.Markdown source={post?.content} />
           </Stack>
         }

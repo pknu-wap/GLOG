@@ -7,6 +7,8 @@ import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautif
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import FootPrint from '../../../public/assets/yellowFootPrint.png';
+import IconButton from '../Button/IconButton';
+import { ArrowRight } from '@mui/icons-material';
 
 type Footprint = {
   categoryId: number;
@@ -23,7 +25,7 @@ interface DragAndDropProps {
   categoryNumber?: string;
 }
 
-function DragAndDrop({ rightContainer, footprintList, categoryNumber }: DragAndDropProps) {
+function DragAndDrop({ rightContainer, footprintList }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -31,15 +33,9 @@ function DragAndDrop({ rightContainer, footprintList, categoryNumber }: DragAndD
   }, []);
 
   const dragHandler = (result: DropResult) => {
-    if (
-      result.destination?.droppableId === 'right-droppable' &&
-      result.source.droppableId === 'left-droppable'
-    ) {
-      router.push(
-        categoryNumber
-          ? `/home/${categoryNumber}/${result.draggableId}`
-          : `/home/${result.draggableId}`,
-      );
+    console.log(result);
+    if (result.destination?.droppableId === 'right-droppable') {
+      router.push(`/home/${result.source.droppableId}/${result.draggableId}`);
     }
   };
 
@@ -52,7 +48,7 @@ function DragAndDrop({ rightContainer, footprintList, categoryNumber }: DragAndD
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
                 {footprintList?.map((category) => {
                   return (
-                    <Droppable key={category.categoryId} droppableId="left-droppable">
+                    <Droppable key={category.categoryId} droppableId={String(category.categoryId)}>
                       {(provided, snapshot) => (
                         <div
                           className="top-container"
@@ -63,8 +59,19 @@ function DragAndDrop({ rightContainer, footprintList, categoryNumber }: DragAndD
                           }}
                           {...provided.droppableProps}
                           ref={provided.innerRef}>
-                          <Stack bgcolor="#e4ba5a" padding="4px 8px" borderRadius="0px 8px">
-                            {category.categoryName}
+                          <Stack
+                            direction="row"
+                            justifyContent="space-between"
+                            bgcolor="#e4ba5a"
+                            padding="4px 8px"
+                            borderRadius="0px 8px">
+                            <Stack>{category.categoryName}</Stack>
+                            <IconButton
+                              onClick={() => router.push(`/home/${category.categoryId}`)}
+                              sx={{ padding: '0px' }}
+                              size="small">
+                              <ArrowRight />
+                            </IconButton>
                           </Stack>
                           <Stack
                             sx={{
@@ -79,6 +86,16 @@ function DragAndDrop({ rightContainer, footprintList, categoryNumber }: DragAndD
                                   index={post.postId}>
                                   {(provided) => (
                                     <Stack
+                                      onClick={() =>
+                                        router.push(`/home/${category.categoryId}/${post.postId}`)
+                                      }
+                                      sx={{
+                                        padding: '4px 8px',
+                                        ':hover': {
+                                          borderRadius: '8px',
+                                          backgroundColor: 'primary.light',
+                                        },
+                                      }}
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}>

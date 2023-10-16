@@ -33,6 +33,9 @@ declare module '@mui/material/styles' {
 }
 
 export const darkTheme = createTheme({
+  typography: {
+    fontFamily: 'SUITE',
+  },
   breakpoints: {
     values: {
       xl: 1440,

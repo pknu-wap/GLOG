@@ -34,7 +34,6 @@ export default function Scrap() {
           );
         })}
       </PostAreaComponent>
-
       <PostPagination
         count={data?.totalPages}
         page={page + 1}

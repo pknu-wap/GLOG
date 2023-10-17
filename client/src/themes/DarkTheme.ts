@@ -8,7 +8,8 @@ type PaletteColors =
   | 'shadowColor'
   | 'themeColor'
   | 'oppositeColor'
-  | 'subColor';
+  | 'subColor'
+  | 'inherit';
 
 declare module '@mui/material' {
   interface ButtonPropsColorOverrides {

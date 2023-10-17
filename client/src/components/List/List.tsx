@@ -5,17 +5,20 @@ function List({
   content,
   buttonAction,
   radioProps,
+  width,
 }: {
   content: string;
   buttonAction?: ReactNode;
   radioProps?: RadioProps;
+  width?: number | string;
 } & ListProps) {
   return (
     <Stack
       sx={{
+        padding: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        width: '600px',
+        width: width ?? '600px',
         borderBottom: '1px solid #d9d9d9',
         justifyContent: 'space-between',
       }}>

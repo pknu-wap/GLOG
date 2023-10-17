@@ -65,7 +65,7 @@ export default function Header() {
           width="40px"
           height="40px"
           borderRadius="20px"
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/chaeyeon')}
           sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}
         />
         <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={handleClick}>

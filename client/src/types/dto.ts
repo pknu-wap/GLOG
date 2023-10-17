@@ -1,6 +1,26 @@
 // 모아보기 페이지
 export interface ICollect {
-  index: number;
+  page: number;
+  kind: string;
+}
+
+// 모아보기 페이지 게시글
+export interface ICollectPost {
+  blogUrl?: string;
+  createdAt?: string;
+  isPrivate?: boolean;
+  likesCount?: number;
+  postId?: number;
+  repliesCount?: number;
+  thumbnail?: string | null;
+  title?: string;
+  viewsCount?: number;
+}
+
+// 모아보기 페이지 목록
+export interface ICollectContent {
+  postPreviewDtos?: ICollectPost[];
+  totalPages: number;
 }
 
 // 유저 프로필 사진 불러오기

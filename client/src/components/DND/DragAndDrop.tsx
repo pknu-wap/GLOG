@@ -8,7 +8,8 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import FootPrint from '../../../public/assets/yellowFootPrint.png';
 import IconButton from '../Button/IconButton';
-import { ArrowRight } from '@mui/icons-material';
+import { ArrowRight, Edit } from '@mui/icons-material';
+import CategorySettingModal from './CategorySettingModal';
 
 type Footprint = {
   categoryId: number;
@@ -28,6 +29,8 @@ interface DragAndDropProps {
 
 function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
+  const [categoryEditOpen, setCategoryEditOpen] = useState(false);
+
   const router = useRouter();
   useEffect(() => {
     setIsBrowser(process.browser);
@@ -66,7 +69,15 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                             bgcolor="primary.main"
                             padding="4px 8px"
                             borderRadius="0px 8px">
-                            <Stack>{category.categoryName}</Stack>
+                            <Stack direction="row" spacing={1}>
+                              <Stack color="#000000">{category.categoryName}</Stack>
+                              <IconButton
+                                onClick={() => setCategoryEditOpen(true)}
+                                sx={{ padding: '0px' }}
+                                size="small">
+                                <Edit fontSize="small" />
+                              </IconButton>
+                            </Stack>
                             <IconButton
                               onClick={() =>
                                 router.push(`/${blogName}/home/${category.categoryId}`)
@@ -150,6 +161,10 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
               </Droppable>
             </Stack>
           </CenterContent>
+          <CategorySettingModal
+            open={categoryEditOpen}
+            onClose={() => setCategoryEditOpen(false)}
+          />
         </DragDropContext>
       ) : null}
     </>

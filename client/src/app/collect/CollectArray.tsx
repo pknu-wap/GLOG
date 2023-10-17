@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import IconButton from '@/components/Button/IconButton';
 
-import { Stack } from '@mui/material';
+import { Stack, useMediaQuery, useTheme } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { ICollectContent } from '@/types/dto';
 import { useGetCollectDataQuery } from '@/api/collect-api';
@@ -10,6 +10,25 @@ import CollectPost from './CollectPost';
 
 function CollectArray({ kind }: { kind: 'likes' | 'views' | 'recent' }) {
   const [toastOpen, setToastOpen] = useState(false);
+  const theme = useTheme();
+  const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isLabtop = useMediaQuery(theme.breakpoints.down('lg'));
+
+  const responsivePostCountMap = {
+    isPhone: 1,
+    isTablet: 2,
+    isLaptop: 3,
+    isDesktop: 4,
+  };
+
+  const postCount = isPhone
+    ? responsivePostCountMap.isPhone
+    : isTablet
+    ? responsivePostCountMap.isTablet
+    : isLabtop
+    ? responsivePostCountMap.isLaptop
+    : responsivePostCountMap.isDesktop;
 
   const [page, setPage] = useState(0);
   const [backendSendPage, setBackendSendPage] = useState(1);
@@ -32,7 +51,7 @@ function CollectArray({ kind }: { kind: 'likes' | 'views' | 'recent' }) {
     }
   };
   return (
-    <Stack direction="row" justifyContent="center" alignItems="center">
+    <Stack direction="row" justifyContent="left" alignItems="center">
       <Toast
         open={toastOpen}
         onClose={() => setToastOpen(false)}
@@ -44,9 +63,11 @@ function CollectArray({ kind }: { kind: 'likes' | 'views' | 'recent' }) {
         }}>
         <KeyboardArrowLeft />
       </IconButton>
-      {kindArray?.postPreviewDtos?.slice(page * 4, page * 4 + 4).map((like) => {
-        return <CollectPost like={like} key={like.postId} />;
-      })}
+      {kindArray?.postPreviewDtos
+        ?.slice(page * postCount, page * postCount + postCount)
+        .map((like) => {
+          return <CollectPost like={like} key={like.postId} />;
+        })}
       <IconButton onClick={newDataButtonClick}>
         <KeyboardArrowRight />
       </IconButton>

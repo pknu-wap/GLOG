@@ -19,8 +19,15 @@ function CollectPost({ like }: { like: ICollectPost }) {
   const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
+
   return (
-    <Post key={like.postId} href="#" isPhone={isPhone} isTablet={isTablet} isLaptop={isLaptop}>
+    <Post
+      key={like.postId}
+      href="#"
+      isCollect={true}
+      isPhone={isPhone}
+      isTablet={isTablet}
+      isLaptop={isLaptop}>
       <Thumbnail>
         <PostPopular>
           <FavoriteBorderIcon fontSize="small" />

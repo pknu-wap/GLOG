@@ -10,16 +10,33 @@ export const Post = styled(Link, {
     isPhone,
     isTablet,
     isLaptop,
+    // 모아보기 페이지에선 다른 퍼센트가 필요
+    isCollect,
   }: {
     theme?: Theme;
     isPhone: boolean;
     isTablet: boolean;
     isLaptop: boolean;
+    isCollect?: boolean;
   }) => ({
     backgroundColor: theme?.palette.subColor.main,
     color: theme?.palette.oppositeColor.main,
     margin: '30px 25px',
-    width: isPhone ? '75%' : isTablet ? '38.5%' : isLaptop ? '26%' : '19%',
+    width: isCollect
+      ? isPhone
+        ? '75%'
+        : isTablet
+        ? '38.5%'
+        : isLaptop
+        ? '30%'
+        : '23%'
+      : isPhone
+      ? '75%'
+      : isTablet
+      ? '38.5%'
+      : isLaptop
+      ? '26%'
+      : '19%',
     height: '200px',
     padding: '10px',
     borderRadius: '10px',

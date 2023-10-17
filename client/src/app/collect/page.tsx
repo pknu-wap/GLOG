@@ -6,7 +6,7 @@ import CollectArray from './CollectArray';
 
 function Collect() {
   return (
-    <Stack>
+    <Stack padding={'10px 40px'} spacing={4}>
       <Typography color="oppositeColor.main" fontSize="24px">
         좋아요 한 게시글
       </Typography>

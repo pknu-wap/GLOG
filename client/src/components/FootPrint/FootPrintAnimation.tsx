@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import FootPrint from './FootPrint';
 import FootPrintWrap from './FootPrintWrap';
-import Modal from '../Modal/Modal';
 import { GuestBookButtonStyle, GuestBookTooltipStyle } from './FootPrint.style';
+import GuestBookModal from '../GuestBook/GuestBookModal';
 
 function FootPrintAnimation() {
   const [open, setOpen] = useState(false);
@@ -55,9 +55,7 @@ function FootPrintAnimation() {
           />
         );
       })}
-      <Modal open={open} onClose={() => setOpen(false)}>
-        asdfasdfasdfadsfdsa
-      </Modal>
+      <GuestBookModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

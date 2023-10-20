@@ -19,6 +19,7 @@
     "@uiw/react-md-editor": "^3.23.6",
     "axios": "^1.5.0",
     "eslint-config-next": "13.4.19",
+    "lottie-react": "^2.4.0",
     "next": "13.4.19",
     "next-auth": "^4.23.2",
     "next-remove-imports": "^1.0.12",

@@ -23,7 +23,7 @@ function CollectPost({ like }: { like: ICollectPost }) {
   return (
     <Post
       key={like.postId}
-      href="#"
+      href={`/{like.blogUrl}/home/1/${like.postId}`}
       isCollect={true}
       isPhone={isPhone}
       isTablet={isTablet}

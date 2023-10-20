@@ -3,9 +3,8 @@
 import CenterContent from '@/components/Layout/CenterContent';
 import { Stack, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
 import React, { useState } from 'react';
-import FootPrint from '../../../../public/assets/yellowFootPrint.png';
-import Image from 'next/image';
 import Button from '@/components/Button/Button';
+import FootPrint from '@/components/FootPrint/FootPrint';
 
 function page() {
   const theme = useTheme();
@@ -100,7 +99,7 @@ function page() {
                           width="14%"
                           justifyContent="flex-start"
                           alignItems="center">
-                          <Image src={FootPrint} alt="footPrint" width="30" height="30" />
+                          <FootPrint width={30} height={30} />
                         </Stack>
                       );
                     })}

@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { Theme, styled } from '@mui/material/styles';
 import { usePathname } from 'next/navigation';
-import FootPrintArray from '../FootPrint/FootPrintArray';
+import FootPrintAnimation from '../FootPrint/FootPrintAnimation';
 
 type Children = {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export default function FullLayout({ children }: Children) {
   return (
     <MainStack pathname={pathname}>
       {children}
-      <FootPrintArray />
+      <FootPrintAnimation />
     </MainStack>
   );
 }

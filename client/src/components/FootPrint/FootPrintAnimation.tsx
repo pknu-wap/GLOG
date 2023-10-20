@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import FootPrint from './FootPrint';
-import { Stack } from '@mui/material';
 import FootPrintWrap from './FootPrintWrap';
 import Modal from '../Modal/Modal';
+import { GuestBookButtonStyle, GuestBookTooltipStyle } from './FootPrint.style';
 
-function FootPrintArray() {
+function FootPrintAnimation() {
   const [open, setOpen] = useState(false);
   const [newFootprints, setNewFootPrints] = useState<number[]>([]);
-  const [tooltipOpacity, setTooltipOpacity] = useState(0);
+  const [tooltipOpacity, setTooltipOpacity] = useState<0 | 1>(0);
 
   let bottom = 20;
   let right = 100;
@@ -28,41 +28,27 @@ function FootPrintArray() {
 
   return (
     <>
-      <Stack
+      <GuestBookButtonStyle
+        newFootprints={newFootprints}
         onMouseOver={() => setTooltipOpacity(1)}
         onMouseOut={() => setTooltipOpacity(0)}
-        position="fixed"
-        onClick={createFootprints}
-        bottom={50}
-        right={100}
-        sx={{
-          opacity: newFootprints.length === 0 ? 1 : 0,
-          transition: 'all .35s ease-in-out',
-        }}
-        p={4}
-        borderRadius={20}>
+        onClick={() => {
+          setTooltipOpacity(0);
+          createFootprints();
+        }}>
         <FootPrint width={60} height={60} />
-      </Stack>
-      <Stack
-        sx={{ opacity: tooltipOpacity, transition: 'all .35s ease-in-out' }}
-        bgcolor="primary.light"
-        position="fixed"
-        width="fit-content"
-        bottom={135}
-        right={80}
-        borderRadius={2}
-        px={3}
-        py={1}>
-        방명록 보러가기
-      </Stack>
+      </GuestBookButtonStyle>
+      <GuestBookTooltipStyle tooltipOpacity={tooltipOpacity}>방명록 보러가기</GuestBookTooltipStyle>
       {Array.from({ length: 3 }, (_, i) => {
-        console.log(bottom, right);
+        // 시간초마다 발자국 id가 배열에 담기고, id에 있으면, 그 발자국 보이도록 설정
+        const isCurrentVisible = newFootprints.includes(i);
+
         bottom += 80;
         right += 100;
 
         return (
           <FootPrintWrap
-            sx={{ opacity: newFootprints.includes(i) ? 1 : 0 }}
+            sx={{ opacity: isCurrentVisible ? 1 : 0 }}
             key={i}
             bottom={bottom}
             right={right}
@@ -76,4 +62,4 @@ function FootPrintArray() {
   );
 }
 
-export default FootPrintArray;
+export default FootPrintAnimation;

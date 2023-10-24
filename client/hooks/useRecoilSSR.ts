@@ -1,6 +1,12 @@
 'use client';
 
-import { isSidebarOpenState, tokenState, userThemeState } from '@/recoil/atom';
+import {
+  androidState,
+  iPhoneState,
+  isSidebarOpenState,
+  tokenState,
+  userThemeState,
+} from '@/recoil/atom';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
@@ -35,4 +41,25 @@ export function useTokenSSR() {
   }, []);
 
   return [isInitial ? '' : value, setValue] as const;
+}
+
+export function useIphoneSSR() {
+  const [isInitial, setIsInitial] = useState(true);
+  const [value, setValue] = useRecoilState(iPhoneState);
+
+  useEffect(() => {
+    setIsInitial(false);
+  }, []);
+
+  return [isInitial ? true : value, setValue] as const;
+}
+export function useAndroidSSR() {
+  const [isInitial, setIsInitial] = useState(true);
+  const [value, setValue] = useRecoilState(androidState);
+
+  useEffect(() => {
+    setIsInitial(false);
+  }, []);
+
+  return [isInitial ? true : value, setValue] as const;
 }

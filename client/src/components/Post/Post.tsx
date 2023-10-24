@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { CostomizeButton, Image, Post, PostPopular, Thumbnail, Title } from './Post.style';
-import { PostComponentType } from './Post.type';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import IconButton from '../Button/IconButton';
+import { IScrapContent } from '@/types/dto';
 
 function PostComponent({
   thumbnail,
@@ -13,7 +13,7 @@ function PostComponent({
   likesCount,
   viewsCount,
   Icon,
-}: PostComponentType) {
+}: IScrapContent & { Icon: ReactNode }) {
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
@@ -32,7 +32,6 @@ function PostComponent({
         <CostomizeButton>
           <IconButton size="small">{Icon}</IconButton>
         </CostomizeButton>
-        
       </Thumbnail>
       <Title>{title}</Title>
     </Post>

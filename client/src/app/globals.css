@@ -24,3 +24,38 @@ html {
 .wmde-markdown h3 {
   border-bottom: transparent !important;
 }
+
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 300;
+  src: url('/fonts/SUITE-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 400;
+  src: url('/fonts/SUITE-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 500;
+  src: url('/fonts/SUITE-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 600;
+  src: url('/fonts/SUITE-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 700;
+  src: url('/fonts/SUITE-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 800;
+  src: url('/fonts/SUITE-ExtraBold.ttf') format('truetype');
+}
+
+body {
+  font-family: SUITE, sans-serif;
+}

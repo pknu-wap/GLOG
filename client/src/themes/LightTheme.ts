@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material';
 
 export const lightTheme = createTheme({
   typography: {
-    fontFamily: 'Glog',
+    fontFamily: 'SUITE',
   },
   breakpoints: {
     values: {
@@ -14,10 +14,12 @@ export const lightTheme = createTheme({
     },
   },
   spacing: 4,
+
   palette: {
     mode: 'light',
     primary: {
       main: '#e4ba5a',
+      light: 'rgba(228,186,90,0.2)',
     },
     secondary: {
       main: 'rgb(240, 240, 240)',
@@ -34,6 +36,9 @@ export const lightTheme = createTheme({
     },
     oppositeColor: {
       main: '#000000',
+    },
+    white: {
+      main: '#ffffff',
     },
   },
 });

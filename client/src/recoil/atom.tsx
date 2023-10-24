@@ -23,3 +23,15 @@ export const tokenState = atom<string>({
   default: '',
   effects_UNSTABLE: [persistAtom],
 });
+
+// 아이폰
+export const iPhoneState = atom<boolean>({
+  key: 'iphone',
+  default: false,
+});
+
+// 안드로이드
+export const androidState = atom<boolean>({
+  key: 'android',
+  default: false,
+});

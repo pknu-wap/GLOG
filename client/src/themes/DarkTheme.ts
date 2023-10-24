@@ -4,19 +4,23 @@ import { yellow } from './color';
 type PaletteColors =
   | 'backdrop'
   | 'textColor'
+  | 'white'
   | 'shadowColor'
   | 'themeColor'
   | 'oppositeColor'
-  | 'subColor';
+  | 'subColor'
+  | 'inherit';
 
 declare module '@mui/material' {
   interface ButtonPropsColorOverrides {
     themeColor: true;
     oppositeColor: true;
+    white: true;
   }
   interface IconButtonPropsColorOverrides {
     themeColor: true;
     oppositeColor: true;
+    white: true;
   }
 }
 
@@ -33,6 +37,9 @@ declare module '@mui/material/styles' {
 }
 
 export const darkTheme = createTheme({
+  typography: {
+    fontFamily: 'SUITE',
+  },
   breakpoints: {
     values: {
       xl: 1440,
@@ -47,6 +54,7 @@ export const darkTheme = createTheme({
     mode: 'dark',
     primary: {
       main: yellow[500],
+      light: 'rgba(255,255,255,0.4)',
     },
     secondary: {
       main: 'rgb(29, 30, 31)',
@@ -62,6 +70,9 @@ export const darkTheme = createTheme({
       main: 'rgb(13, 13, 18)',
     },
     oppositeColor: {
+      main: '#ffffff',
+    },
+    white: {
       main: '#ffffff',
     },
   },

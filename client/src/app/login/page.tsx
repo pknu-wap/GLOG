@@ -18,6 +18,8 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const ThreeScene: React.FC = () => {
   const sceneRef = useRef<HTMLCanvasElement | null>(null);
@@ -25,9 +27,18 @@ const ThreeScene: React.FC = () => {
   const gltfLoader = new GLTFLoader();
 
   const init = async () => {
+    // gsap register
+    gsap.registerPlugin(ScrollTrigger);
+
+    const params = {
+      waveColor: '#00ffff',
+      backgroundColor: '#ffffff',
+    };
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 500);
     const gui = new GUI();
+    gui.hide();
     // 카메라 포지션도 옮겨줌
     // camera.position.z = 5;
     camera.position.set(0, 25, 150);
@@ -37,7 +48,7 @@ const ThreeScene: React.FC = () => {
     // wireframe에 선이 없으면 검정화면인데, 선이 생기니까 검정선이 생김
     const waveMaterial = new THREE.MeshStandardMaterial({
       // wireframe: true,
-      color: '#00ffff',
+      color: params.waveColor,
     });
 
     const waveHeight = 2.5;
@@ -174,6 +185,45 @@ const ThreeScene: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
     render();
+
+    // 1. gsap 이용하기
+    gsap.to(params, {
+      waveColor: '#4268ff',
+      onUpdate: () => {
+        waveMaterial.color = new THREE.Color(params.waveColor);
+      },
+      // 뷰포트에 지정한 애가 들어온 순간, 이게 트리거 되어라!
+      scrollTrigger: {
+        trigger: '.wrapper',
+        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 하단 부분에 들어가는 순간 애니메이션을 트리거하라
+        // start: 'top bottom',
+
+        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 상단 부분에 들어가는 순간 애니메이션을 트리거하라
+        start: 'top top',
+        markers: true,
+        // 색이 천천히 변함
+        scrub: true,
+      },
+    });
+
+    gsap.to(params, {
+      backgroundColor: '#2a2a2a',
+      onUpdate: () => {
+        scene.background = new THREE.Color(params.backgroundColor);
+      },
+      // 뷰포트에 지정한 애가 들어온 순간, 이게 트리거 되어라!
+      scrollTrigger: {
+        trigger: '.wrapper',
+        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 하단 부분에 들어가는 순간 애니메이션을 트리거하라
+        // start: 'top bottom',
+
+        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 상단 부분에 들어가는 순간 애니메이션을 트리거하라
+        start: 'top top',
+        markers: true,
+        // 색이 천천히 변함
+        scrub: true,
+      },
+    });
 
     return () => {
       window.removeEventListener('resize', handleResize);

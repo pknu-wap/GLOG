@@ -25,9 +25,13 @@ const ThreeScene: React.FC = () => {
     // Create a Three.js scene
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 500);
-    camera.position.z = 5;
 
-    const waveGeometry = new THREE.PlaneGeometry(5, 5, 5, 5);
+    // 카메라 포지션도 옮겨줌
+    // camera.position.z = 5;
+    camera.position.set(0, 25, 150);
+
+    // 숫자 크기를 높이니까 정점이 엄청 많아짐
+    const waveGeometry = new THREE.PlaneGeometry(1500, 1500, 150, 150);
     // wireframe에 선이 없으면 검정화면인데, 선이 생기니까 검정선이 생김
     const waveMaterial = new THREE.MeshStandardMaterial({
       wireframe: true,
@@ -36,7 +40,7 @@ const ThreeScene: React.FC = () => {
     const wave = new THREE.Mesh(waveGeometry, waveMaterial);
 
     // x 축으로 기울여줌
-    wave.rotation.x = -Math.PI / 3;
+    wave.rotation.x = -Math.PI / 2;
     scene.add(wave);
 
     if (sceneRef.current) {

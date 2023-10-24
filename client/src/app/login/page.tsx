@@ -30,19 +30,6 @@ const ThreeScene: React.FC = () => {
     // camera.position.z = 5;
     camera.position.set(0, 25, 150);
 
-    // 숫자 크기를 높이니까 정점이 엄청 많아짐
-    const waveGeometry = new THREE.PlaneGeometry(1500, 1500, 150, 150);
-    // wireframe에 선이 없으면 검정화면인데, 선이 생기니까 검정선이 생김
-    const waveMaterial = new THREE.MeshStandardMaterial({
-      wireframe: true,
-    });
-
-    const wave = new THREE.Mesh(waveGeometry, waveMaterial);
-
-    // x 축으로 기울여줌
-    wave.rotation.x = -Math.PI / 2;
-    scene.add(wave);
-
     if (sceneRef.current) {
       // Create a Three.js renderer
       const newRenderer = new THREE.WebGLRenderer({
@@ -54,6 +41,26 @@ const ThreeScene: React.FC = () => {
       // 캔버스에다가 색상 입히는 것, 뒤에 숫자 넣으면 투명도
       // newRenderer.setClearColor('#d9d9d9', 0.5);
       newRenderer.setSize(window.innerWidth, window.innerHeight);
+
+      // 숫자 크기를 높이니까 정점이 엄청 많아짐
+      const waveGeometry = new THREE.PlaneGeometry(1500, 1500, 150, 150);
+      // wireframe에 선이 없으면 검정화면인데, 선이 생기니까 검정선이 생김
+      const waveMaterial = new THREE.MeshStandardMaterial({
+        wireframe: true,
+        color: '#00ffff',
+      });
+
+      const wave = new THREE.Mesh(waveGeometry, waveMaterial);
+
+      // x 축으로 기울여줌
+      wave.rotation.x = -Math.PI / 2;
+      scene.add(wave);
+
+      // 빛 추가 해줌
+      const pointLight = new THREE.PointLight(0xffffff, 1);
+      pointLight.position.set(15, 15, 15);
+      scene.add(pointLight);
+
       renderer.current = newRenderer;
     }
 

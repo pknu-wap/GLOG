@@ -33,6 +33,7 @@ const ThreeScene: React.FC = () => {
     const params = {
       waveColor: '#00ffff',
       backgroundColor: '#ffffff',
+      fogColor: '#f0f0f0',
     };
 
     const scene = new THREE.Scene();
@@ -187,41 +188,114 @@ const ThreeScene: React.FC = () => {
     render();
 
     // 1. gsap 이용하기
-    gsap.to(params, {
-      waveColor: '#4268ff',
-      onUpdate: () => {
-        waveMaterial.color = new THREE.Color(params.waveColor);
-      },
-      // 뷰포트에 지정한 애가 들어온 순간, 이게 트리거 되어라!
+    // gsap.to(params, {
+    //   waveColor: '#4268ff',
+    //   onUpdate: () => {
+    //     waveMaterial.color = new THREE.Color(params.waveColor);
+    //   },
+    //   // 뷰포트에 지정한 애가 들어온 순간, 이게 트리거 되어라!
+    //   scrollTrigger: {
+    //     trigger: '.wrapper',
+    //     // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 하단 부분에 들어가는 순간 애니메이션을 트리거하라
+    //     // start: 'top bottom',
+
+    //     // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 상단 부분에 들어가는 순간 애니메이션을 트리거하라
+    //     start: 'top top',
+    //     markers: true,
+    //     // 색이 천천히 변함
+    //     scrub: true,
+    //   },
+    // });
+
+    // gsap.to(params, {
+    //   backgroundColor: '#2a2a2a',
+    //   onUpdate: () => {
+    //     scene.background = new THREE.Color(params.backgroundColor);
+    //   },
+    //   // 뷰포트에 지정한 애가 들어온 순간, 이게 트리거 되어라!
+    //   scrollTrigger: {
+    //     trigger: '.wrapper',
+    //     // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 하단 부분에 들어가는 순간 애니메이션을 트리거하라
+    //     // start: 'top bottom',
+
+    //     // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 상단 부분에 들어가는 순간 애니메이션을 트리거하라
+    //     start: 'top top',
+    //     markers: true,
+    //     // 색이 천천히 변함
+    //     scrub: true,
+    //   },
+    // });
+
+    // 이전 거의 다음 순서대로 갈 수 있도록 함
+    const t1 = gsap.timeline({
       scrollTrigger: {
         trigger: '.wrapper',
-        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 하단 부분에 들어가는 순간 애니메이션을 트리거하라
-        // start: 'top bottom',
-
-        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 상단 부분에 들어가는 순간 애니메이션을 트리거하라
         start: 'top top',
-        markers: true,
-        // 색이 천천히 변함
+        end: 'bottom bottom',
+        // markers: true,
         scrub: true,
       },
     });
 
-    gsap.to(params, {
-      backgroundColor: '#2a2a2a',
+    t1.to(params, {
+      waveColor: '#4268ff',
       onUpdate: () => {
-        scene.background = new THREE.Color(params.backgroundColor);
+        waveMaterial.color = new THREE.Color(params.waveColor);
       },
-      // 뷰포트에 지정한 애가 들어온 순간, 이게 트리거 되어라!
+    })
+      .to(
+        params,
+        {
+          backgroundColor: '#2a2a2a',
+          onUpdate: () => {
+            scene.background = new THREE.Color(params.backgroundColor);
+          },
+        },
+        '<',
+      )
+      .to(
+        params,
+        {
+          fogColor: '#2f2f2f',
+          onUpdate: () => {
+            scene.fog.color = new THREE.Color(params.fogColor);
+          },
+          // <  = 바로 앞단계랑 같이 실행됨
+        },
+        '<',
+      )
+      .to(
+        camera.position,
+        {
+          x: 100,
+          z: -50,
+        },
+        '<',
+      )
+      .to(ship.position, {
+        z: 150,
+        duration: 2,
+      })
+      .to(camera.position, {
+        x: -50,
+        y: 25,
+        z: 100,
+        duration: 2,
+      })
+      .to(camera.position, {
+        x: 0,
+        y: 50,
+        z: 300,
+        duration: 2,
+      });
+
+    gsap.to('.title', {
+      opacity: 0,
       scrollTrigger: {
         trigger: '.wrapper',
-        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 하단 부분에 들어가는 순간 애니메이션을 트리거하라
-        // start: 'top bottom',
-
-        // 트리거로 지정한 요소의 상단 부분이 뷰포트 영역의 상단 부분에 들어가는 순간 애니메이션을 트리거하라
-        start: 'top top',
-        markers: true,
-        // 색이 천천히 변함
         scrub: true,
+        pin: true,
+        end: '+=1000',
       },
     });
 

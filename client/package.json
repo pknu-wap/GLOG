@@ -28,11 +28,13 @@
     "react-dom": "18.2.0",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
+    "three": "^0.157.0",
     "typescript": "5.2.2"
   },
   "devDependencies": {
     "@types/node": "^20.6.3",
     "@types/react-beautiful-dnd": "^13.1.5",
+    "@types/three": "^0.157.2",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
     "eslint": "^8.49.0",

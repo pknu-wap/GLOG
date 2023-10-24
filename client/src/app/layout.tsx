@@ -19,7 +19,7 @@ export default function RootLayout(props: { children: ReactNode }) {
         <Recoil>
           <ReactQuery>
             <ThemeRegistry options={{ key: 'mui' }}>
-              <Header />
+              {/* <Header /> */}
               <div className="light">
                 <FullLayout>{children}</FullLayout>
               </div>

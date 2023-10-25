@@ -66,19 +66,57 @@ body {
   top: 0;
 }
 
-.wrapper {
-  position: relative;
-  min-height: 1000vh;
-}
-
-header {
-  padding: 120px 24px;
-}
-
-h1 {
+.header {
   margin: 0;
   padding: 0;
   font-size: 64px;
   font-weight: bold;
   text-align: center;
+}
+
+.footPrint {
+  width: 100%;
+  height: 100%;
+  background-color: #e4ba5a;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  overflow: hidden;
+}
+
+.wrapper {
+  height: 300vh;
+  background-color: #e4ba5a;
+}
+
+.footPrintWrapper {
+  height: 300vh;
+  background-color: white;
+}
+
+.content {
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  display: flex;
+  height: 100vh;
+  background-size: 100% 100%;
+  background-image: url('./login/a.png');
+}
+
+.circle {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: #e4ba5a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

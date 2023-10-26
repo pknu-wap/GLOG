@@ -24,8 +24,12 @@ export default function Header() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout') => {
-    if (page !== 'logout') {
-      router.push(`/${page}`);
+    if (page === 'logout') {
+      console.log('logged out');
+    } else if (page === 'friend') {
+      console.log('친구');
+    } else {
+      router.push(`/chaeyeon/${page}`);
     }
     setAnchorEl(null);
   };

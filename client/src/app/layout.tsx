@@ -8,10 +8,11 @@ import ThemeRegistry from '@/components/ReactQuery/ThemeRegistry';
 import ReactQuery from '@/components/ReactQuery/Provider';
 import Header from '@/components/Layout/Header';
 import FullLayout from '@/components/Layout/FullLayout';
+import { usePathname } from 'next/navigation';
 
-// app/layout.js
 export default function RootLayout(props: { children: ReactNode }) {
   const { children } = props;
+  const pathname = usePathname();
 
   return (
     <html lang="en">
@@ -19,7 +20,7 @@ export default function RootLayout(props: { children: ReactNode }) {
         <Recoil>
           <ReactQuery>
             <ThemeRegistry options={{ key: 'mui' }}>
-              {/* <Header /> */}
+              {!pathname.startsWith('/login') && <Header />}
               <div className="light">
                 <FullLayout>{children}</FullLayout>
               </div>

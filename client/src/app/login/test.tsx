@@ -257,9 +257,9 @@ const ThreeScene: React.FC = () => {
         params,
         {
           fogColor: '#2f2f2f',
-          onUpdate: () => {
-            scene.fog.color = new THREE.Color(params.fogColor);
-          },
+          // onUpdate: () => {
+          //   scene.fog.color = new THREE.Color(params.fogColor);
+          // },
           // <  = 바로 앞단계랑 같이 실행됨
         },
         '<',

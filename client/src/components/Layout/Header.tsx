@@ -24,8 +24,12 @@ export default function Header() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout') => {
-    if (page !== 'logout') {
-      router.push(`/${page}`);
+    if (page === 'logout') {
+      console.log('logged out');
+    } else if (page === 'friend') {
+      console.log('친구');
+    } else {
+      router.push(`/chaeyeon/${page}`);
     }
     setAnchorEl(null);
   };
@@ -76,6 +80,7 @@ export default function Header() {
           <MenuItem onClick={() => handleClose('friend')}>친구</MenuItem>
           <MenuItem onClick={() => handleClose('scrap')}>스크랩</MenuItem>
           <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
+          <MenuItem onClick={() => router.push('/login')}>로그인</MenuItem>
         </Menu>
       </Stack>
     </Stack>

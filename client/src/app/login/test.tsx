@@ -230,7 +230,7 @@ const ThreeScene: React.FC = () => {
     const t1 = gsap.timeline({
       scrollTrigger: {
         trigger: '.wrapper',
-        start: 'top top',
+        start: 'bottom top',
         end: 'bottom bottom',
         // markers: true,
         scrub: true,

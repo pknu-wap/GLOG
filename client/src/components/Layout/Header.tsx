@@ -80,6 +80,7 @@ export default function Header() {
           <MenuItem onClick={() => handleClose('friend')}>친구</MenuItem>
           <MenuItem onClick={() => handleClose('scrap')}>스크랩</MenuItem>
           <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
+          <MenuItem onClick={() => router.push('/login')}>로그인</MenuItem>
         </Menu>
       </Stack>
     </Stack>

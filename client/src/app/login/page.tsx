@@ -22,6 +22,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FootPrintStyle } from '@/components/FootPrint/FootPrint.style';
 import FootPrint from '@/components/FootPrint/FootPrint';
+import Print from '../../../public/assets/print.svg';
 
 function page() {
   useEffect(() => {
@@ -144,7 +145,14 @@ function page() {
         },
         '<',
       )
-      .to('.circle', {
+      .to(
+        '.asd',
+        {
+          scale: 0.05,
+        },
+        '<',
+      )
+      .to('.asd', {
         left: '-40%',
       });
   }, []);
@@ -153,7 +161,8 @@ function page() {
     <div className="wrapper">
       <div className="footPrintWrapper">
         <div className="content">
-          <img alt="footprint" src={'/assets/yellowFootPrint.png'} className="circle"></img>
+          <Print className="asd" />
+          {/* <img alt="footprint" src={'/assets/yellowFootPrint.png'} className="circle"></img> */}
           {/* <div className="circle">
             <h1 className="header">GLOG</h1>
           </div> */}

@@ -31,7 +31,6 @@ function page() {
         trigger: '.firstLayout',
         start: 'top top',
         scrub: 1,
-        markers: true,
         pin: true,
       },
     });
@@ -47,7 +46,6 @@ function page() {
         trigger: '.footPrintWrapper',
         start: 'top top',
         scrub: 1,
-        markers: true,
         pin: true,
       },
     });
@@ -84,7 +82,7 @@ function page() {
   }, []);
 
   return (
-    <>
+    <div style={{ height: '100vh', backgroundColor: 'aqua' }}>
       <div className="firstLayout">
         <div className="displayLayout">
           <div className="firstDescription">개발자를 위한 블로그, GLOG를 소개합니다.</div>
@@ -105,8 +103,9 @@ function page() {
             <a href={GITHUB_AUTH_URL}>깃허브</a>
           </Stack>
         </div>
+        {/* <div style={{ width: '100%', height: '100vh', backgroundColor: '#e4ba5a' }}></div> */}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -9,11 +9,40 @@ import { useRouter } from 'next/navigation';
 import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 import { ModalContent } from '../Modal/Modal.style';
 import Modal from '@/components/Modal/Modal';
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
 
 export default function Header() {
   const router = useRouter();
   const [userTheme, setUserTheme] = useUserThemeSSR();
+
   const [open, setOpen] = useState(true);
+  //const backendFriendInfo = [
+  //  {	
+  //    userFriendResponse : {
+  //      count : 0,
+  //      userSimpleDtos : [
+  //        {
+  //          relationship : "me" | "friending" | "friend" | "other",
+  //          haveNewPost : false,
+  //          userSimpleDto : {
+  //            id : "long",
+  //            nickname : "string",
+  //            imageUrl: "string",
+  //          },
+  //        },
+  //        {
+  //          relationship : "me" | "friending" | "friend" | "other",
+  //          haveNewPost : false,
+  //          userSimpleDto : {
+  //            id : "long",
+  //            nickname : "string",
+  //            imageUrl: "string",
+  //          },
+  //        }
+  //      ],
+  //    },
+  //  }
+  //]
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -79,9 +108,38 @@ export default function Header() {
           <MenuItem onClick={() => handleClose('mypage')}>마이페이지</MenuItem>
           <MenuItem onClick={() => handleClose('friend')}>
             친구
-            <Modal open={open} maxWidth="md" onClose={() => setOpen(false)}>
+            <Modal open={open} maxWidth="lg" onClose={() => setOpen(false)}>
               <ModalContent>
-                <Stack bgcolor={'green'}></Stack>
+                <Stack 
+                display="flex"
+                justifyContent="center"
+                alignItems="space-between"
+                flexDirection="column"
+                width="550px"
+                padding="20px 40px">
+                  <Stack
+                  borderBottom={`1px solid green`}
+                  justifyContent="space-between"
+                  flexDirection="row"
+                  marginBottom="10px"
+                  >
+                    <Stack marginBottom="5px">
+                      친구들
+                    </Stack>
+                    <Stack>
+                      200명
+                    </Stack>
+                  </Stack>
+                  <Stack
+                  flexDirection="row"
+                  justifyContent="left">
+                    <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
+                    <Stack>정렬기준</Stack>
+                  </Stack>
+                  <Stack>
+                    rkskekfkakqktk
+                  </Stack>
+                </Stack>
               </ModalContent>
             </Modal>
           </MenuItem>

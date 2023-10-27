@@ -7,23 +7,30 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useRouter } from 'next/navigation';
 import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
+import { ModalContent } from '../Modal/Modal.style';
+import Modal from '@/components/Modal/Modal';
 
 export default function Header() {
   const router = useRouter();
   const [userTheme, setUserTheme] = useUserThemeSSR();
+  const [open, setOpen] = useState(true);
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const menuopen = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout') => {
-    if (page !== 'logout') {
-      router.push(`/${page}`);
+    if (page === 'logout') {
+      console.log('logged out');
+    } else if (page === 'friend') {
+      console.log('친구');
+    } else {
+      router.push(`/chaeyeon/${page}`);
     }
     setAnchorEl(null);
   };
@@ -68,9 +75,16 @@ export default function Header() {
         <IconButton sx={{ color: 'white' }} size="medium" onClick={handleClick}>
           <MenuIcon fontSize="large" />
         </IconButton>
-        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <Menu anchorEl={anchorEl} open={menuopen} onClose={handleClose}>
           <MenuItem onClick={() => handleClose('mypage')}>마이페이지</MenuItem>
-          <MenuItem onClick={() => handleClose('friend')}>친구</MenuItem>
+          <MenuItem onClick={() => handleClose('friend')}>
+            친구
+            <Modal open={open} maxWidth="md" onClose={() => setOpen(false)}>
+              <ModalContent>
+                <Stack bgcolor={'green'}></Stack>
+              </ModalContent>
+            </Modal>
+          </MenuItem>
           <MenuItem onClick={() => handleClose('scrap')}>스크랩</MenuItem>
           <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
         </Menu>

@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const TopStack = styled(Stack)(({theme}) => ({
@@ -7,6 +7,12 @@ export const TopStack = styled(Stack)(({theme}) => ({
     flexDirection: "row",
     marginBottom: "10px",
 }));
+
+//나중에 button으로 변경해야함
+export const Sort = styled(Stack) ({
+    padding: '0px',
+    width: '24px',
+})
 
 const ProfileImage = styled(Stack)(({ imageSrc }: {imageSrc: string}) => ({
     backgroundColor: 'teal',

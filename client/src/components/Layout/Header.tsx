@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
+import { Button, ButtonBase, IconButton, Menu, MenuItem, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -10,7 +10,7 @@ import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 import { ModalContent } from '../Modal/Modal.style';
 import Modal from '@/components/Modal/Modal';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
-import FriendListComponent, { TopStack } from './Header.style';
+import FriendListComponent, { Sort, TopStack } from './Header.style';
 
 export default function Header() {
   const router = useRouter();
@@ -40,12 +40,20 @@ export default function Header() {
               imageUrl: "string",
             },
           },
+          {
+            relationship : "friending",
+            haveNewPost : false,
+            userSimpleDto : {
+              id : "long",
+              nickname : "string",
+              imageUrl: "string",
+            },
+          },
           
         ],
       },
     }
   ]
-
   const friendCount = backendFriendInfo[0].userFriendResponse.userSimpleDtos.length;
 
 
@@ -137,7 +145,9 @@ export default function Header() {
                     flexDirection="row"
                     justifyContent="left"
                     marginBottom="10px">
-                    <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
+                    <Sort>
+                      <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
+                    </Sort>
                     <Stack
                     marginLeft="5px">
                       정렬기준

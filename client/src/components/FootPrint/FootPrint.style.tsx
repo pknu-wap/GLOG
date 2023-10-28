@@ -9,7 +9,7 @@ export const FootPrintStyle = styled(Image)({
 export const GuestBookButtonStyle = styled(Stack, {
   shouldForwardProp: (propName: string) => propName !== 'newFootprints',
 })(({ newFootprints }: { newFootprints: number[] }) => ({
-  opacity: newFootprints.length === 0 ? 1 : 0,
+  display: newFootprints.length === 0 ? 'flex' : 'none',
   transition: 'all .35s ease-in-out',
   bottom: 50,
   right: 100,
@@ -20,13 +20,16 @@ export const GuestBookButtonStyle = styled(Stack, {
 
 export const GuestBookTooltipStyle = styled(Stack, {
   shouldForwardProp: (propName: string) => propName !== 'tooltipOpacity',
-})(({ tooltipOpacity, theme }: { tooltipOpacity: 0 | 1; theme?: Theme }) => ({
-  opacity: tooltipOpacity,
-  transition: 'all .35s ease-in-out',
-  backgroundColor: theme?.palette.primary.light,
-  position: 'fixed',
-  bottom: 135,
-  right: 80,
-  borderRadius: 2,
-  padding: '4px 12px',
-}));
+})(({ tooltipOpacity, theme }: { tooltipOpacity: 0 | 1; theme?: Theme }) => {
+  console.log(tooltipOpacity);
+  return {
+    display: tooltipOpacity === 0 ? 'none' : 'flex',
+    transition: 'all .35s ease-in-out',
+    backgroundColor: theme?.palette.primary.light,
+    position: 'fixed',
+    bottom: 135,
+    right: 80,
+    borderRadius: 2,
+    padding: '4px 12px',
+  };
+});

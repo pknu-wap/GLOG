@@ -48,7 +48,7 @@ function FootPrintAnimation() {
 
         return (
           <FootPrintWrap
-            sx={{ opacity: isCurrentVisible ? 1 : 0 }}
+            sx={{ display: isCurrentVisible ? 'flex' : 'none' }}
             key={i}
             bottom={bottom}
             right={right}

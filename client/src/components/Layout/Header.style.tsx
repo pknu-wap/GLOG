@@ -15,7 +15,7 @@ export const Sort = styled(Stack) ({
 })
 
 const ProfileImage = styled(Stack)(({ imageSrc }: {imageSrc: string}) => ({
-    backgroundColor: 'teal',
+    backgroundColor: 'wheat',
     backgroundAttachment: 'fixed',
     backgroundImage: `url(${imageSrc})`,
     backgroundRepeat: "no-repeat",
@@ -27,7 +27,8 @@ const ProfileImage = styled(Stack)(({ imageSrc }: {imageSrc: string}) => ({
 function FriendListComponent({
     nickname,
     profileImg,
-}: {nickname: string, profileImg: string}) {
+    haveNewPost
+}: {nickname: string, profileImg: string, haveNewPost: boolean}) {
     return (
         <Stack
         margin="6px 0"
@@ -35,9 +36,25 @@ function FriendListComponent({
             <ProfileImage
                 imageSrc={profileImg}
             />
+
             <Stack
-            marginLeft="5px">
-                {nickname}
+            flexDirection="row"
+            whiteSpace= "nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis">
+                <Stack
+                margin="0 10px 0 5px">
+                    {nickname}
+                </Stack>
+                {/* new friend로 추가? */}
+                {haveNewPost ? (
+                    <Stack 
+                    color="#00BFFF">
+                        New Post
+                    </Stack>
+                ) : (
+                    <Stack></Stack>
+                )}
             </Stack>
         </Stack>
     )

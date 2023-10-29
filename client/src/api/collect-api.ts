@@ -3,9 +3,7 @@ import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
 const GetCollectDataApi = async (params: ICollect) => {
-  const { data } = await defaultInstance.get('/main', {
-    params,
-  });
+  const { data } = await defaultInstance.get(`/post/previews/${params.kind}?page=${params.page}`);
 
   return data;
 };

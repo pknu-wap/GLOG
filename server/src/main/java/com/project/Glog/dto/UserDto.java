@@ -10,7 +10,7 @@ import lombok.Setter;
 public class UserDto {
     private Long userId;
     private String nickname;
-    private String profileImagee;
+    private String profileImage;
 
     public static UserDto of (User user){
         return new UserDto(user.getId(),

@@ -98,7 +98,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
         blogName={params.blogName}
         footprintList={writeList}
         rightContainer={
-          <Stack overflow={'scroll'}>
+          <Stack width="80%" margin="auto" overflow={'scroll'}>
             <MDEditor.Markdown source={tempData} />
           </Stack>
         }

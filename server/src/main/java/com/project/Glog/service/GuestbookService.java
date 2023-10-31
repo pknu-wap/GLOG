@@ -49,7 +49,7 @@ public class GuestbookService {
 
         GuestbookResponse guestbookResponse = GuestbookResponse.of(guestbook, user);
 
-        return null;
+        return guestbookResponse;
     }
 
     public void update(UserPrincipal userPrincipal, GuestbookMessageRequest req) throws Exception{

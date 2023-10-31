@@ -33,5 +33,4 @@ public class BookMessage {
     @CreatedDate
     private LocalDateTime createdAt;
 
-
 }

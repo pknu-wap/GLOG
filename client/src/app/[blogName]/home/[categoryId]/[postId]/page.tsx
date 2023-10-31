@@ -3,7 +3,7 @@ import { Box, Icon, Stack, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { BlackContainer, ImageContainer, ThumbnailArea } from './postId.style';
 import DragAndDrop from '@/components/DND/DragAndDrop';
-import { useGetSidebarQuery, usePostPostQuery } from '@/api/blog-api';
+import { useGetSidebarQuery, useGetPostQuery } from '@/api/blog-api';
 import { IPostContent, ISidebarContent } from '@/types/dto';
 import CenterContent from '@/components/Layout/CenterContent';
 import { Home, KeyboardArrowRight } from '@mui/icons-material';
@@ -17,7 +17,7 @@ import Button from '@/components/Button/Button';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
-  const { data: postData } = usePostPostQuery({ postId: Number(params.postId) });
+  const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
   const [open, setOpen] = useState(false);
   const [userTheme] = useUserThemeSSR();
   const theme = useTheme();

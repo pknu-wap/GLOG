@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -22,7 +21,7 @@ public class BookMessage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private GuestBook guestBook;
+    private Guestbook guestBook;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

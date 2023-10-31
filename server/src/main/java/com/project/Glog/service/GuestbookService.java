@@ -2,7 +2,7 @@ package com.project.Glog.service;
 
 import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.BookMessage;
-import com.project.Glog.domain.GuestBook;
+import com.project.Glog.domain.Guestbook;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.request.guestbook.GuestbookMessageRequest;
 import com.project.Glog.dto.response.guestbook.GuestbookResponse;
@@ -26,7 +26,7 @@ public class GuestbookService {
     public void save(UserPrincipal userPrincipal, GuestbookMessageRequest req) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         Blog blog = user.getBlog();
-        GuestBook guestBook = blog.getGuestBook();
+        Guestbook guestBook = blog.getGuestBook();
 
         BookMessage bookMessage = new BookMessage();
         bookMessage.setMessage(req.getMessage());

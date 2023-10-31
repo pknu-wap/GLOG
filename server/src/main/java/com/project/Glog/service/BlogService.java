@@ -1,7 +1,7 @@
 package com.project.Glog.service;
 
 import com.project.Glog.domain.Blog;
-import com.project.Glog.domain.GuestBook;
+import com.project.Glog.domain.Guestbook;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.response.blog.MyPageResponse;
@@ -39,7 +39,7 @@ public class BlogService {
         blog.setBlogUrl(userCreateRequest.getBlogUrl());
         user.setNickname(userCreateRequest.getNickname());
 
-        GuestBook guestBook = new GuestBook();
+        Guestbook guestBook = new Guestbook();
         guestBook.setBlog(blog);
         guestBook.setUser(user);
         blog.setGuestBook(guestBook);

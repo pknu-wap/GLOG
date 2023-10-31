@@ -1,10 +1,12 @@
 package com.project.Glog.controller;
 
+import com.project.Glog.dto.request.guestbook.GuestbookMessageRequest;
+import com.project.Glog.dto.response.guestbook.GuestbookResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
+import com.project.Glog.service.GuestbookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,13 +39,13 @@ public class GuestbookController {
     }
 
     @GetMapping ("/guestbook")
-    ResponseEntity<GuestbookResponse> updateMessage(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long blogId){
-            GuestbookResponse res = guestbookService.read(userPrincipal, req);
+    ResponseEntity<GuestbookResponse> readMessage(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long blogId){
+            GuestbookResponse res = guestbookService.read(userPrincipal, blogId);
             return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @DeleteMapping ("/guestbook")
-    ResponseEntity<String> updateMessage(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long messageId){
+    ResponseEntity<String> deleteMessage(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long messageId){
         try{
             guestbookService.delete(userPrincipal, messageId);
             return new ResponseEntity<>("success delete guestbook message", HttpStatus.OK);

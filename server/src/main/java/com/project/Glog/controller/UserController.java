@@ -27,7 +27,7 @@ public class UserController {
 //    }
 
     //쪼개서 요청해도 되는데 일단 한번에
-    @PostMapping("/chage/user/info")
+    @PostMapping("/change/user/info")
     public ResponseEntity<UserDetailResponse> chageUserInfo(@CurrentUser UserPrincipal userPrincipal,
                                                             @RequestBody UserInfoChangeRequest userInfoChangeRequest) {
 
@@ -37,7 +37,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/chage/user/image")
+    @PostMapping("/change/user/image")
     public ResponseEntity<UserDetailResponse> chageUserImage(@CurrentUser UserPrincipal userPrincipal,
                                                              @RequestPart(value="image") MultipartFile multipartFile) throws IOException {
 

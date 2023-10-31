@@ -13,6 +13,8 @@ import com.project.Glog.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GuestbookService {
     @Autowired
@@ -41,7 +43,15 @@ public class GuestbookService {
         return null;
     }
 
-    public void update(UserPrincipal userPrincipal, GuestbookMessageRequest req) {
+    public void update(UserPrincipal userPrincipal, GuestbookMessageRequest req) throws Exception{
+        BookMessage bookMessage = bookMessageRepository.findById(req.getMessageId()).get();
+        User author = userRepository.findById(userPrincipal.getId()).get();
+
+        if(!author.equals(bookMessage.getUser()))
+            throw new Exception("not your message");
+
+        bookMessage.setMessage(req.getMessage());
+        bookMessageRepository.save(bookMessage);
     }
 
     public void delete(UserPrincipal userPrincipal, Long messageId) {

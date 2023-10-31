@@ -10,14 +10,14 @@ export const PostBlogApi = async (body: IBlog) => {
 };
 
 // 게시글 조회
-export const postPostApi = async (params: IPost) => {
+export const getPostApi = async (params: IPost) => {
   const { data } = await defaultInstance.get('/post', { params });
 
   return data;
 };
 
-export const usePostPostQuery = (params: IPost) => {
-  const { isLoading, error, data } = useQuery([`post`, params], () => postPostApi(params));
+export const useGetPostQuery = (params: IPost) => {
+  const { isLoading, error, data } = useQuery([`post`, params], () => getPostApi(params));
   return { data, isLoading, error };
 };
 

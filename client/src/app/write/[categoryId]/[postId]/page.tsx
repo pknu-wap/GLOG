@@ -10,7 +10,7 @@ import TagList from '../../TagList';
 import BottomButton from './Bottom/BottomButton';
 import { WritePropsContext, WriteType } from '@/util/useWriteProps';
 import TopButton from '../../Top/TopButton';
-import { useUserThemeSSR } from '../../../../../../hooks/useRecoilSSR';
+import { useUserThemeSSR } from '../../../../../hooks/useRecoilSSR';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,

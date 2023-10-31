@@ -102,13 +102,13 @@ export default function Header() {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout') => {
+  const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout' | 'login') => {
     if (page === 'logout') {
       console.log('logged out');
     } else if (page === 'friend') {
       console.log('친구');
     } else {
-      router.push(`/chaeyeon/${page}`);
+      router.push(`/${page}`);
     }
     setAnchorEl(null);
   };
@@ -159,7 +159,7 @@ export default function Header() {
           <MenuItem onClick={() => setOpen(true)}>친구</MenuItem>
           <MenuItem onClick={() => handleClose('scrap')}>스크랩</MenuItem>
           <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
-          <MenuItem onClick={() => router.push('/login')}>로그인</MenuItem>
+          <MenuItem onClick={() => handleClose('login')}>로그인</MenuItem>
         </Menu>
       </Stack>
 

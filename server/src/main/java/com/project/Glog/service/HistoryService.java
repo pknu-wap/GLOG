@@ -26,7 +26,8 @@ public class HistoryService {
         DayOfWeek Day = Date.getDayOfWeek();
 
 
-        LocalDate startDate = Date.minusYears(1);
+        LocalDate startDate = Date.minusDays(364);
+        LocalDate yearDate = startDate;
         LocalDate weekDate = Date.minusDays(Day.getValue()-1);
 
 
@@ -53,7 +54,7 @@ public class HistoryService {
         weekList.add(false);
 
 
-
+        int c = 0;
         List<Boolean> yearList = new ArrayList<>();
         if(ListYearHistory.isEmpty()){
             while (!startDate.isAfter(Date)){
@@ -70,11 +71,13 @@ public class HistoryService {
                     yearList.add(false);
                 }
                 startDate = startDate.plusDays(1);
+                c++;
             }
         }
+        System.out.println(c);
 
         Week week = new Week(weekList.get(0),weekList.get(1),weekList.get(2),weekList.get(3),weekList.get(4),weekList.get(5),weekList.get(6));
-        Year year = new Year(startDate,yearList);
+        Year year = new Year(yearDate,yearList);
         HistoryResponse historyResponse = new HistoryResponse(week, year);
         return historyResponse;
     }

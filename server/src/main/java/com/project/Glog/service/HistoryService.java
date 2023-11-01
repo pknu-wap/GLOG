@@ -75,7 +75,6 @@ public class HistoryService {
 
         Week week = new Week(weekList.get(0),weekList.get(1),weekList.get(2),weekList.get(3),weekList.get(4),weekList.get(5),weekList.get(6));
         Year year = new Year(startDate,yearList);
-
         HistoryResponse historyResponse = new HistoryResponse(week, year);
         return historyResponse;
     }

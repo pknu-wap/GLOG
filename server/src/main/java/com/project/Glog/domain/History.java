@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "history")
 public class History {

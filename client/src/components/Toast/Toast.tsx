@@ -1,16 +1,21 @@
 import { ModalType } from '@/types/common';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, AlertProps, Snackbar } from '@mui/material';
 import React from 'react';
 
-function Toast({ open, onClose, toastMessage }: ModalType & { toastMessage: string }) {
+function Toast({
+  open,
+  onClose,
+  toastMessage,
+  severity,
+}: ModalType & { toastMessage: string; severity?: AlertProps['severity'] }) {
   return (
     <Snackbar
       open={open}
       autoHideDuration={3000}
       onClose={onClose}
-      sx={{ '&.MuiSnackbar-root': { top: 50 } }}
+      sx={{ '&.MuiSnackbar-root': { top: 50, zIndex: 50000 } }}
       anchorOrigin={{ vertical: 'top', horizontal: 'left' }}>
-      <Alert severity={'error'} onClose={onClose}>
+      <Alert severity={severity ?? 'error'} onClose={onClose}>
         {toastMessage}
       </Alert>
     </Snackbar>

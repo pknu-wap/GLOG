@@ -22,13 +22,13 @@ const MenuList = ({
           <SidebarSubMenuContainer
             key={category.category_id}
             text={category.category_name}
-            url={`/${category.category_id}`}>
+            url={`/home/${category.category_id}`}>
             {category.postTitleDtos.map((post) => {
               return (
                 <SidebarSubMenuItem
                   key={post.postId}
                   text={post.postTitle}
-                  url={`/${category.category_id}/${post.postId}`}
+                  url={`/home/${category.category_id}/${post.postId}`}
                 />
               );
             })}

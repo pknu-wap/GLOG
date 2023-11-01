@@ -1,16 +1,22 @@
+'use client';
+
 import axios from 'axios';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const axiosApi = (url: string, data?: any) => {
+  let token: string | null = '';
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem('token');
+  }
+
   const instance = axios.create({
     baseURL: url,
     withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     ...data,
   });
-
-  // instance.defaults.headers.common[
-  //   'Authorization'
-  // ] = `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`;
 
   return instance;
 };

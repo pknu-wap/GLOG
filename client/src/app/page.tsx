@@ -1,46 +1,24 @@
-'use client';
+import { Stack, Typography } from '@mui/material';
+import React from 'react';
+import CollectArray from './collect/CollectArray';
 
-import DragAndDrop from '@/components/DND/DragAndDrop';
-import Sidebar from '@/components/Sidebar/Sidebar';
-import { Stack } from '@mui/material';
-
-const Home = () => {
-  const sidebarList = {
-    sidebarDto: {
-      categoryId: 0,
-      categoryName: '프론트엔드',
-      postTitleDtos: [
-        {
-          postId: 0,
-          postTitle: 'HTML',
-        },
-        {
-          postId: 1,
-          postTitle: 'CSS',
-        },
-        {
-          postId: 2,
-          postTitle: 'JS',
-        },
-      ],
-    },
-  };
-
-  const writeList = sidebarList.sidebarDto.postTitleDtos;
-
+function Collect() {
   return (
-    <>
-      <Sidebar />
-      <DragAndDrop
-        footprintList={writeList}
-        rightContainer={
-          <Stack width={'100%'} height={'100%'} bgcolor="white">
-            <Stack bgcolor="#ffffff" borderRadius="50%" width="50px" height="50px"></Stack>
-          </Stack>
-        }
-      />
-    </>
+    <Stack padding={'10px 40px'} spacing={4}>
+      <Typography color="oppositeColor.main" fontSize="24px">
+        좋아요 한 게시글
+      </Typography>
+      <CollectArray kind="likes" />
+      <Typography color="oppositeColor.main" fontSize="24px">
+        조회수가 많은 게시글
+      </Typography>
+      <CollectArray kind="views" />
+      <Typography color="oppositeColor.main" fontSize="24px">
+        최근 게시글
+      </Typography>
+      <CollectArray kind="recent" />
+    </Stack>
   );
-};
+}
 
-export default Home;
+export default Collect;

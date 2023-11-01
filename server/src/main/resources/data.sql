@@ -13,6 +13,10 @@ INSERT INTO guest_book(id, blog_id, user_id)
 VALUES(1, 1, 1),
       (2, 2, 2);
 
+INSERT INTO book_message(id, created_at, message, guest_book_id, user_id)
+VALUES(1, '2023-11-01 12:39:35.630800', 'hello', 1, 1),
+      (2, '2023-11-01 12:39:35.630800', 'hello', 2, 2);
+
 INSERT INTO category(id, category_name, is_prcategory, reopsitory_url, blog_id)
 VALUES(1, 'category1', 0, NULL, 1);
 

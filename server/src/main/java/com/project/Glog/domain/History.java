@@ -14,9 +14,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
-@Entity
+@Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "history")
 public class History {

@@ -2,6 +2,7 @@ package com.project.Glog.service;
 
 import com.project.Glog.domain.*;
 import com.project.Glog.dto.request.post.PostCreateRequest;
+import com.project.Glog.dto.request.post.PostUpdateRequest;
 import com.project.Glog.dto.PostPreviewDtos;
 import com.project.Glog.dto.response.post.PostPreviewResponse;
 import com.project.Glog.dto.response.post.PostReadResponse;
@@ -14,10 +15,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
+import java.util.Collections;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service

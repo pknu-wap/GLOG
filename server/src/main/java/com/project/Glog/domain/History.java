@@ -7,14 +7,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "history")
 public class History {
     @Id
@@ -22,8 +27,11 @@ public class History {
     private Long id;
 
     @CreatedDate
-    private LocalDateTime date;
+    private LocalDate date;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+
 }

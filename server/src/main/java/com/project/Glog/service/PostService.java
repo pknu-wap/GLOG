@@ -18,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Service
 public class PostService {
@@ -41,12 +43,17 @@ public class PostService {
     private ScrapRepository scrapRepository;
     @Autowired
     private AwsUtils awsUtils;
+    @Autowired
+    private HistoryRepository historyRepository;
+
+
 
     public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException {
         User user = userRepository.findById(userPrincipal.getId()).get();
         Category category = categoryRepository.findById(req.getCategoryId()).get();
         Blog blog = blogRepository.findByUserId(userPrincipal.getId()).get();
         Post post = req.toPost(user, category, blog);
+
 
         //image
         if(!multipartFile.isEmpty())
@@ -55,6 +62,20 @@ public class PostService {
         //hashtags
         postRepository.save(post);
         setPostHashtag(post, req.getHashtags());
+
+
+
+        // 발자국 저장 로직
+        // 1,0 으로 모든 날짜를 저장할지, 글을 쓴 날짜만 저장할지??
+        History history = new History();
+        history.setUser(user);
+        LocalDate localDate = LocalDate.now();
+
+        Optional<History> optionalHistory = historyRepository.findByDate(user.getId(), localDate);
+
+        if(optionalHistory.isEmpty()){
+            historyRepository.save(history);
+        }
 
         return post;
     }

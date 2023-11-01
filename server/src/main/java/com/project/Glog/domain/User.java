@@ -1,7 +1,5 @@
 package com.project.Glog.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
-import com.project.Glog.test.TestB;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -58,7 +56,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reply> replies;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private GuestBook guestBook;
+    private Guestbook guestBook;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BookMessage> bookMessages;
     @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -28,7 +28,7 @@ public class Blog {
     private List<Post> posts;
 
     @OneToOne(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private GuestBook guestBook;
+    private Guestbook guestBook;
 
     @NotNull
     private String blogName;

@@ -9,6 +9,14 @@ INSERT INTO blog(id, blog_name, blog_url, readme, user_id)
 VALUES(1, 'DueIT', 'dueit', NULL, 1),
       (2, 'Blog2', 'blog2', NULL, 2);
 
+INSERT INTO guest_book(id, blog_id, user_id)
+VALUES(1, 1, 1),
+      (2, 2, 2);
+
+INSERT INTO book_message(id, created_at, message, guest_book_id, user_id)
+VALUES(1, '2023-11-01 12:39:35.630800', 'hello', 1, 1),
+      (2, '2023-11-01 12:39:35.630800', 'hello', 2, 2);
+
 INSERT INTO category(id, category_name, is_prcategory, reopsitory_url, blog_id)
 VALUES(1, 'category1', 0, NULL, 1);
 
@@ -28,3 +36,5 @@ VALUES(1, '2023-10-08 15:14:07.377201', 0, 0, 'reply1', 1, 1);
 
 INSERT INTO scrap(id, post_id, user_id)
 VALUES(1, 1, 1);
+
+

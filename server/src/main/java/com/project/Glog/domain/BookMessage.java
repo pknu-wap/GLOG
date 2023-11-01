@@ -6,15 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "bookMessage")
 public class BookMessage {
     @Id
@@ -22,7 +24,7 @@ public class BookMessage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private GuestBook guestBook;
+    private Guestbook guestBook;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -32,6 +34,5 @@ public class BookMessage {
 
     @CreatedDate
     private LocalDateTime createdAt;
-
 
 }

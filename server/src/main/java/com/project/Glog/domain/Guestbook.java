@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "guestBook")
-public class GuestBook {
+public class Guestbook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -7,11 +7,13 @@ import com.project.Glog.domain.User;
 import com.project.Glog.security.UserPrincipal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
 public class PostCreateRequest {

@@ -1,9 +1,12 @@
 package com.project.Glog.security;
 
+import com.project.Glog.domain.Blog;
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
 import com.project.Glog.dto.response.user.UserDetailResponse;
+import com.project.Glog.dto.response.user.UserMypageResponse;
 import com.project.Glog.exception.ResourceNotFoundException;
 import com.project.Glog.domain.User;
+import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.repository.UserRepository;
 import com.project.Glog.util.AwsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BlogRepository blogRepository;
 
     @Autowired
     private AwsUtils awsUtils;
@@ -68,6 +74,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRepository.save(user);
 
         return UserDetailResponse.of(user);
+    }
+
+    public UserMypageResponse getUserDtail(UserPrincipal userPrincipal) {
+        User user = userRepository.findById(userPrincipal.getId()).get();
+        Blog blog = blogRepository.findByUserId(user.getId()).get();
+
+        return UserMypageResponse.of(user, blog);
     }
 
 }

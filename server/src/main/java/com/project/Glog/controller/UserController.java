@@ -2,6 +2,7 @@ package com.project.Glog.controller;
 
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
 import com.project.Glog.dto.response.user.UserDetailResponse;
+import com.project.Glog.dto.response.user.UserMypageResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.CustomUserDetailsService;
 import com.project.Glog.security.UserPrincipal;
@@ -44,6 +45,14 @@ public class UserController {
         UserDetailResponse userDto = userService.changeUserImage(userPrincipal.getId(), multipartFile);
 
         return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/detail")
+    public ResponseEntity<UserMypageResponse> getUserDetail(@CurrentUser UserPrincipal userPrincipal) {
+
+        UserMypageResponse userMypageResponse = userService.getUserDtail(userPrincipal);
+
+        return new ResponseEntity<>(userMypageResponse, HttpStatus.OK);
     }
 
 }

@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 const Home = ({ params }: { params: { blogName: string } }) => {
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
-  const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
+  const { data: sidebarData } = useGetSidebarQuery({ blogId: 4 });
 
   useEffect(() => {
     setWriteList(sidebarData?.sidebarDtos);

@@ -13,6 +13,8 @@ import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
 import FriendListComponent, { Sort, TopStack } from './Header.style';
 import { usePathname } from 'next/navigation';
 import PageLink from '../PageLink/PageLink';
+import Image from 'next/image';
+import Pororo from '../../../public/assets/test.png';
 
 export default function Header() {
   const router = useRouter();
@@ -143,9 +145,12 @@ export default function Header() {
           width="40px"
           height="40px"
           borderRadius="20px"
-          onClick={() => router.push('/chaeyeon')}
-          sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}
-        />
+          overflow="hidden"
+          sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}>
+          <PageLink href={'/chaeyeon'}>
+            <Image width={40} height={40} alt="profile Image" src={Pororo} />
+          </PageLink>
+        </Stack>
         <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={handleClick}>
           <MenuIcon fontSize="large" />
         </IconButton>

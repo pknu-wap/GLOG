@@ -10,7 +10,7 @@ import IconButton from '../Button/IconButton';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { SidebarMenuItem, SidebarTitleContainer } from './Sidebar.styles';
 import AddIcon from '@mui/icons-material/Add';
-import { useRouter } from 'next/navigation';
+import PageLink from '../PageLink/PageLink';
 
 export const SidebarSubMenuContainer = ({
   children,
@@ -21,7 +21,6 @@ export const SidebarSubMenuContainer = ({
   text: CategoryType;
   url: string;
 }) => {
-  const router = useRouter();
   const pathname = usePathname();
   const isMatchingUrlAndTitle = pathname.includes(url);
 
@@ -49,8 +48,10 @@ export const SidebarSubMenuContainer = ({
           </SidebarMenuItem>
         </Stack>
         <Stack direction="row" alignItems={'center'}>
-          <IconButton onClick={() => router.push(`/write/${url}/0`)} size="small">
-            <AddIcon fontSize="small" />
+          <IconButton size="small">
+            <PageLink href={`/write/${url}/0`}>
+              <AddIcon fontSize="small" />
+            </PageLink>
           </IconButton>
           <IconButton size="small">
             <SettingsIcon fontSize="small" />

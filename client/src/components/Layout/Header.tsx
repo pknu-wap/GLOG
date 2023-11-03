@@ -5,7 +5,6 @@ import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { useRouter } from 'next/navigation';
 import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 import { ModalContent } from '../Modal/Modal.style';
 import Modal from '@/components/Modal/Modal';
@@ -17,7 +16,6 @@ import Image from 'next/image';
 import Pororo from '../../../public/assets/test.png';
 
 export default function Header() {
-  const router = useRouter();
   const [userTheme, setUserTheme] = useUserThemeSSR();
   const pathname = usePathname();
 

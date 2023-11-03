@@ -41,4 +41,20 @@ public class BlogController {
 
         return new ResponseEntity<>(blogUrl, HttpStatus.OK);
     }
+
+    @GetMapping("/read-me")
+    public ResponseEntity<String> readReadme(@RequestParam Long blogId){
+
+        String readme = blogService.getReadme(blogId);
+
+        return new ResponseEntity<>(readme, HttpStatus.OK);
+    }
+
+    @PutMapping("/read-me")
+    public ResponseEntity<String> putReadme(@CurrentUser UserPrincipal userPrincipal,
+                                            @RequestBody String readme){
+        blogService.registerReadme(userPrincipal, readme);
+
+        return new ResponseEntity<>("success update read-me", HttpStatus.OK);
+    }
 }

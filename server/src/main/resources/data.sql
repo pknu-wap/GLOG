@@ -7,7 +7,7 @@ VALUES (1, 'doyeong32@gmail.com', 0, 0, 'https://lh3.googleusercontent.com/a/ACg
        (3,	'oo7bangjk@gmail.com', 0, 0, 'https://lh3.googleusercontent.com/a/ACg8ocISaV9dG1q60VmzjW0_pxYAYYVg8T2-cVmGmxhmdNaRz4k=s96-c' , NULL, 'jk', 'google' ,105693697773599263104, 0);
 
 INSERT INTO blog(id, blog_name, blog_url, readme, user_id)
-VALUES(1, 'DueIT', 'dueit', NULL, 1),
+VALUES(1, 'DueIT', 'dueit', '두영님 리드미', 1),
       (2, 'Blog2', 'blog2', NULL, 2),
       (3, 'jkjk', 'jkjk', NULL, 3);
 

@@ -12,7 +12,7 @@ import Modal from '@/components/Modal/Modal';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
 import FriendListComponent, { Sort, TopStack } from './Header.style';
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import PageLink from '../PageLink/PageLink';
 
 export default function Header() {
   const router = useRouter();
@@ -132,7 +132,9 @@ export default function Header() {
         fontWeight={700}
         color={pathname.includes('/home') ? 'primary.main' : 'white'}
         zIndex={20005}>
-        <Link href="/collect">GLOG</Link>
+        <PageLink href="/collect" color="#ffffff">
+          GLOG
+        </PageLink>
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>
         {userTheme === 'dark' ? (

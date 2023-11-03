@@ -66,15 +66,21 @@ public class PostService {
 
 
         // 발자국 저장 로직
-        // 1,0 으로 모든 날짜를 저장할지, 글을 쓴 날짜만 저장할지??
         History history = new History();
         history.setUser(user);
         LocalDate localDate = LocalDate.now();
 
-        Optional<History> optionalHistory = historyRepository.findByDate(user.getId(), localDate);
+        History repositoryHistory = historyRepository.findByDate(user.getId(), localDate);
 
-        if(optionalHistory.isEmpty()){
+        if(repositoryHistory == null){
+            history.setCount(1);
             historyRepository.save(history);
+        }
+        else{
+            if(repositoryHistory.getCount()<3){
+                repositoryHistory.setCount(repositoryHistory.getCount()+1);
+            }
+            historyRepository.save(repositoryHistory);
         }
 
         return post;

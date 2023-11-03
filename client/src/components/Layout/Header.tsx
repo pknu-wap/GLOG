@@ -103,14 +103,7 @@ export default function Header() {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout' | 'login') => {
-    if (page === 'logout') {
-      console.log('logged out');
-    } else if (page === 'friend') {
-      console.log('친구');
-    } else {
-      router.push(`/${page}`);
-    }
+  const handleClose = () => {
     setAnchorEl(null);
   };
 
@@ -157,11 +150,35 @@ export default function Header() {
           <MenuIcon fontSize="large" />
         </IconButton>
         <Menu anchorEl={anchorEl} open={menuopen} onClose={handleClose}>
-          <MenuItem onClick={() => handleClose('mypage')}>마이페이지</MenuItem>
+          <MenuItem>
+            <PageLink
+              href="/mypage"
+              onClick={() => {
+                setAnchorEl(null);
+              }}>
+              마이페이지
+            </PageLink>
+          </MenuItem>
           <MenuItem onClick={() => setOpen(true)}>친구</MenuItem>
-          <MenuItem onClick={() => handleClose('scrap')}>스크랩</MenuItem>
-          <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
-          <MenuItem onClick={() => handleClose('login')}>로그인</MenuItem>
+          <MenuItem>
+            <PageLink
+              href="/mypage"
+              onClick={() => {
+                setAnchorEl(null);
+              }}>
+              스크랩
+            </PageLink>
+          </MenuItem>
+          <MenuItem onClick={() => localStorage.setItem('token', '')}>Logout</MenuItem>
+          <MenuItem>
+            <PageLink
+              href="/login"
+              onClick={() => {
+                setAnchorEl(null);
+              }}>
+              로그인
+            </PageLink>
+          </MenuItem>
         </Menu>
       </Stack>
 

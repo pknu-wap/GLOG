@@ -7,13 +7,11 @@ import com.project.Glog.dto.response.history.Year;
 import com.project.Glog.repository.HistoryRepository;
 import com.project.Glog.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +30,7 @@ public class HistoryService {
 
 
 
-        List<LocalDate> ListYearHistory = historyRepository.findByIdYearDate(userPrincipal.getId(), Date, startDate);
+        List<History> ListYearHistory = historyRepository.findByIdYearDate(userPrincipal.getId(), Date, startDate);
         List<LocalDate> ListWeekHistory = historyRepository.findByIdWeekDate(userPrincipal.getId(), Date, weekDate);
 
         List<Boolean> weekList = new ArrayList<>();
@@ -45,29 +43,30 @@ public class HistoryService {
             }
             weekDate = weekDate.plusDays(1);
         }
-        weekList.add(false);
-        weekList.add(false);
-        weekList.add(false);
-        weekList.add(false);
-        weekList.add(false);
-        weekList.add(false);
-        weekList.add(false);
+        for (int i = 0; i < 7; i++) {
+            weekList.add(false);
+        }
 
-
-        List<Boolean> yearList = new ArrayList<>();
+        List<Integer> yearList = new ArrayList<>();
         if(ListYearHistory.isEmpty()){
             while (!startDate.isAfter(Date)){
-                yearList.add(false);
+                yearList.add(0);
                 startDate = startDate.plusDays(1);
             }
         }
         else {
             while (!startDate.isAfter(Date)) {
                 LocalDate checkDate = startDate;
-                if (ListYearHistory.contains(checkDate)) {
-                    yearList.add(true);
+
+                Optional<History> findHistory = ListYearHistory.stream()
+                        .filter(History -> History.getDate().equals(checkDate))
+                        .findAny();
+
+                if (findHistory.isPresent()) {
+                    History findedHistory = findHistory.get();
+                    yearList.add(findedHistory.getCount());
                 } else {
-                    yearList.add(false);
+                    yearList.add(0);
                 }
                 startDate = startDate.plusDays(1);
             }
@@ -75,8 +74,8 @@ public class HistoryService {
 
         Week week = new Week(weekList.get(0),weekList.get(1),weekList.get(2),weekList.get(3),weekList.get(4),weekList.get(5),weekList.get(6));
         Year year = new Year(yearDate,yearList);
-        HistoryResponse historyResponse = new HistoryResponse(week, year);
-        return historyResponse;
+
+        return new HistoryResponse(week,year);
     }
 
 }

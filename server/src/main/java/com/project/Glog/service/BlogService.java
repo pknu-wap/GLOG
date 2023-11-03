@@ -50,4 +50,14 @@ public class BlogService {
 
         return blog.getBlogUrl();
     }
+
+    public String getReadme(Long blogId){
+        return blogRepository.getReferenceById(blogId).getReadme();
+    }
+
+    public void registerReadme(UserPrincipal userPrincipal, String readme){
+        Blog blog = blogRepository.findByUserId(userPrincipal.getId()).get();
+        blog.setReadme(readme);
+        blogRepository.save(blog);
+    }
 }

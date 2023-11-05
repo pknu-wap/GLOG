@@ -7,8 +7,6 @@ import { useTheme } from '@mui/material/styles';
 const CenterContent = ({ maxWidth, width, children, color, bgcolor, sx, ...rest }: StackProps) => {
   const theme = useTheme();
 
-  console.log(maxWidth);
-
   return (
     <Stack
       gap={2}

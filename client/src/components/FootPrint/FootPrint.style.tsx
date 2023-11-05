@@ -21,7 +21,6 @@ export const GuestBookButtonStyle = styled(Stack, {
 export const GuestBookTooltipStyle = styled(Stack, {
   shouldForwardProp: (propName: string) => propName !== 'tooltipOpacity',
 })(({ tooltipOpacity, theme }: { tooltipOpacity: 0 | 1; theme?: Theme }) => {
-  console.log(tooltipOpacity);
   return {
     display: tooltipOpacity === 0 ? 'none' : 'flex',
     transition: 'all .35s ease-in-out',

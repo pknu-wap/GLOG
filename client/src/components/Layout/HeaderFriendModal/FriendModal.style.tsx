@@ -30,6 +30,7 @@ const ProfileImage = styled(Stack)(({ imageSrc }: {imageSrc: string}) => ({
     width: '30px',
     height: '30px',
     borderRadius: '50%',
+    minWidth: "30px",
 }));
 
 function FriendListComponent({

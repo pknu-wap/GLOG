@@ -92,7 +92,7 @@ function FriendModal({ open, onClose }: ModalType) {
             <BasicMenu></BasicMenu>
             <Stack>정렬기준</Stack>
           </Stack>
-          <Stack flexDirection="column" width="45vw" maxHeight="200px">
+          <Stack flexDirection="column" maxHeight="200px">
             {backendFriendInfo[0].userFriendResponse.userSimpleDtos.map((friendInfo) => {
               return (
                 <FriendListComponent

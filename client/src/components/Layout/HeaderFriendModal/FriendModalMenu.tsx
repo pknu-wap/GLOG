@@ -18,22 +18,14 @@ export default function BasicMenu() {
   return (
     <Stack>
       <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         sx={{ padding: '0 10px 0 0', minWidth: "24px"}}>
         <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
       </Button>
       <Menu
-        id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}>
+        onClose={handleClose}>
         <MenuItem onClick={handleClose}>최신순</MenuItem>
         <MenuItem onClick={handleClose}>이름순</MenuItem>
         <MenuItem onClick={handleClose}>최근 포스팅순</MenuItem>

@@ -55,7 +55,7 @@ function FriendListComponent({
                 margin="0 10px 0 5px">
                     {nickname}
                 </Stack>
-                {/* new friend로 추가? */}
+                {/*[Fix] new friend로 추가? */}
                 {haveNewPost ? (
                     <Stack 
                     color="#00BFFF">

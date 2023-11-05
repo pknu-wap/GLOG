@@ -2,7 +2,7 @@ import Modal from '@/components/Modal/Modal';
 import { ModalContent } from '@/components/Modal/Modal.style';
 import { ModalType } from '@/types/common';
 import { Stack } from '@mui/material';
-import FriendListComponent, { TopStack } from './FriendModal.style';
+import FriendListComponent, { FriendModalArea, TopStack } from './FriendModal.style';
 import BasicMenu from './FriendModalMenu';
 
 function FriendModal({ open, onClose }: ModalType) {
@@ -83,23 +83,14 @@ function FriendModal({ open, onClose }: ModalType) {
   return (
     <Modal open={open} maxWidth="lg" onClose={onClose}>
       <ModalContent>
-        <Stack
-          display="flex"
-          justifyContent="center"
-          alignItems="space-between"
-          flexDirection="column"
-          //반응형(Mobile L - 425px 부터 미흡)
-          width="50vw"
-          height="100%"
-          maxWidth="550px"
-          padding="10px 20px">
+        <FriendModalArea>
           <TopStack>
             <Stack marginBottom="5px">친구들</Stack>
             <Stack>{friendCount}명</Stack>
           </TopStack>
-          <Stack flexDirection="row" justifyContent="left" marginBottom="10px">
+          <Stack flexDirection="row" justifyContent="left" marginBottom="5px">
             <BasicMenu></BasicMenu>
-            <Stack marginLeft="5px">정렬기준</Stack>
+            <Stack>정렬기준</Stack>
           </Stack>
           <Stack flexDirection="column" width="45vw" maxHeight="200px">
             {backendFriendInfo[0].userFriendResponse.userSimpleDtos.map((friendInfo) => {
@@ -113,7 +104,7 @@ function FriendModal({ open, onClose }: ModalType) {
               );
             })}
           </Stack>
-        </Stack>
+        </FriendModalArea>
       </ModalContent>
     </Modal>
   );

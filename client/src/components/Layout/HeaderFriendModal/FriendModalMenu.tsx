@@ -23,7 +23,7 @@ export default function BasicMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{ padding: '0px' }}>
+        sx={{ padding: '0 10px 0 0', minWidth: "24px"}}>
         <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
       </Button>
       <Menu

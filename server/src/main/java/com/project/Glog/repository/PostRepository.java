@@ -1,6 +1,7 @@
 package com.project.Glog.repository;
 
 import com.project.Glog.domain.Post;
+import com.project.Glog.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,5 +36,9 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     @Query(value = "SELECT * FROM Post ORDER BY RAND() LIMIT 8", nativeQuery = true)
     List<Post> findPostsByRandom();
+
+    List<Post> findAllByTitle(String title);
+    List<Post> findAllByUser(User user);
+
 
 }

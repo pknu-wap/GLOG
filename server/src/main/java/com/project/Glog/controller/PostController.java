@@ -88,18 +88,32 @@ public class PostController {
         return new ResponseEntity<>(previews,HttpStatus.OK);
     }
 
-    @GetMapping("/search/post/content")
-    public ResponseEntity<PostPreviewDtos> searchContentsByString(@RequestParam String content){
+    @GetMapping("/search/content")
+    public ResponseEntity<PostPreviewDtos> searchContentsByContent(@RequestParam String content){
         //content 내용을 포함한 게시글의 리스트를 생성한다.
         PostPreviewDtos postPreviewDtos = postService.searchPostsByContent(content);
 
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
     }
 
-    @GetMapping("/search/post/hashtag")
+    @GetMapping("/search/hashtag")
     public ResponseEntity<PostPreviewDtos> searchContentsByHashtag(@RequestParam String hashtag){
         //hashtag 내용을 포함한 게시글의 리스트를 생성한다
         PostPreviewDtos postPreviewDtos = postService.searchPostsByHashtag(hashtag);
+
+        return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
+    }
+    @GetMapping("/search/title")
+    public ResponseEntity<PostPreviewDtos> searchContentsByTitle(@RequestParam String title){
+        //content 내용을 포함한 게시글의 리스트를 생성한다.
+        PostPreviewDtos postPreviewDtos = postService.searchPostsByTitle(title);
+
+        return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
+    }
+    @GetMapping("/search/user")
+    public ResponseEntity<PostPreviewDtos> searchContentsByUser(@RequestParam String nickname){
+        //content 내용을 포함한 게시글의 리스트를 생성한다.
+        PostPreviewDtos postPreviewDtos = postService.searchPostsByUser(nickname);
 
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
     }

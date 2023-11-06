@@ -188,6 +188,17 @@ public class PostService {
         return new PostPreviewDtos(posts, posts.size());
     }
 
+    public PostPreviewDtos searchPostsByTitle(String title) {
+        List<Post> posts = postRepository.findAllByTitle(title);
+        return new PostPreviewDtos(posts, posts.size());
+    }
+
+    public PostPreviewDtos searchPostsByUser(String nickname) {
+        User user = userRepository.findUserByNickname(nickname);
+        List<Post> posts = postRepository.findAllByUser(user);
+        return new PostPreviewDtos(posts, posts.size());
+    }
+
     public String clickLike(UserPrincipal userPrincipal, Long postId) {
 
         Post post = postRepository.findById(postId).get();

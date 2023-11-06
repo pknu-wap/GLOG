@@ -67,7 +67,7 @@ export const darkTheme = createTheme({
       dark: 'rgba(255, 255, 255, 0.05)',
     },
     themeColor: {
-      main: 'rgb(13, 13, 18)',
+      main: 'rgb(17, 17, 17)',
     },
     oppositeColor: {
       main: '#ffffff',

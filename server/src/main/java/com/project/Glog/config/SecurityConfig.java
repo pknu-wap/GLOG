@@ -108,7 +108,8 @@ public class SecurityConfig {
                             "/post",
                             "/collect",
                             "/post/previews",
-                            "/read-me")
+                            "/read-me",
+                            "/search/**")
                         .permitAll()
                     .requestMatchers("/auth/**", "/oauth2/**")
                         .permitAll()

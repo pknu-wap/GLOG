@@ -20,13 +20,13 @@ const Page = () => {
     }
   }, [params]);
 
-
   return (
     <CenterContent>
-      <Stack flexDirection="column" alignItems="center" paddingTop="15vh">
+      <Stack width="300px" margin="auto" flexDirection="column" alignItems="center">
         <TextField
           required
-          sx={{ marginBottom: '5px', width: '300px' }}
+          fullWidth
+          sx={{ marginBottom: '5px' }}
           id="outlined-basic"
           label="blog URL"
           variant="outlined"
@@ -36,14 +36,16 @@ const Page = () => {
         </Stack>
         <TextField
           required
-          sx={{ marginBottom: '30px', width: '300px' }}
+          fullWidth
+          sx={{ marginBottom: '30px' }}
           id="outlined-basic"
           label="이름"
           variant="outlined"
         />
         <TextField
           required
-          sx={{ marginBottom: '5px', width: '300px' }}
+          fullWidth
+          sx={{ marginBottom: '5px' }}
           id="outlined-basic"
           label="닉네임"
           variant="outlined"
@@ -51,8 +53,9 @@ const Page = () => {
         <Stack fontSize="10px" color="red" marginBottom="15px">
           *닉네임이 블로그 주소에 반영 됩니다.
         </Stack>
-        <Button variant='outlined'>입력</Button>
-
+        <Button fullWidth variant="outlined">
+          입력
+        </Button>
       </Stack>
     </CenterContent>
   );

@@ -72,7 +72,7 @@ public class HistoryService {
             }
         }
 
-        Week week = new Week(weekList.get(0),weekList.get(1),weekList.get(2),weekList.get(3),weekList.get(4),weekList.get(5),weekList.get(6));
+        Week week = Week.of(weekList);
         Year year = new Year(yearDate,yearList);
 
         return new HistoryResponse(week,year);

@@ -1,6 +1,17 @@
 html {
   background-color: white;
 }
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 30%;
+}
+*::-webkit-scrollbar-thumb {
+  background: wheat;
+  border-radius: 15px;
+}
+*::-webkit-scrollbar-track {
+  background-color: rgb(250, 250, 250);
+}
 
 .w-md-editor {
   background-color: transparent !important;

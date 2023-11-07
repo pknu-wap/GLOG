@@ -90,6 +90,10 @@ export const VisibilityIcon = styled(Icon)({
 });
 
 export const Image = styled('img')({
+  position: 'absolute',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
   width: '100%',
   height: '100%',
 });

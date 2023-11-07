@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.time.LocalDate;
 import java.util.List;
@@ -66,15 +67,21 @@ public class PostService {
 
 
         // 발자국 저장 로직
-        // 1,0 으로 모든 날짜를 저장할지, 글을 쓴 날짜만 저장할지??
         History history = new History();
         history.setUser(user);
         LocalDate localDate = LocalDate.now();
 
-        Optional<History> optionalHistory = historyRepository.findByDate(user.getId(), localDate);
+        History repositoryHistory = historyRepository.findByDate(user.getId(), localDate);
 
-        if(optionalHistory.isEmpty()){
+        if(repositoryHistory == null){
+            history.setCount(1);
             historyRepository.save(history);
+        }
+        else{
+            if(repositoryHistory.getCount()<3){
+                repositoryHistory.setCount(repositoryHistory.getCount()+1);
+            }
+            historyRepository.save(repositoryHistory);
         }
 
         return post;
@@ -173,12 +180,27 @@ public class PostService {
     }
 
     public PostPreviewDtos searchPostsByContent(String content) {
-        List<Post> posts = postRepository.findAllByContent(content);
+        List<Post> posts = postRepository.findAllByContentContaining(content);
         return new PostPreviewDtos(posts, posts.size());
     }
 
     public PostPreviewDtos searchPostsByHashtag(String hashtag) {
-        List<Post> posts = postRepository.findAllByHashtag(hashtag); //TODO 수정 필요
+        List<PostHashtag> postHashtags = postHashtagRepository.findAllByTagContaining(hashtag);
+        List<Post> posts = new ArrayList<>();
+        for(PostHashtag tag : postHashtags){
+            posts.add(tag.getPost());
+        }
+        return new PostPreviewDtos(posts, posts.size());
+    }
+
+    public PostPreviewDtos searchPostsByTitle(String title) {
+        List<Post> posts = postRepository.findAllByTitleContaining(title);
+        return new PostPreviewDtos(posts, posts.size());
+    }
+
+    public PostPreviewDtos searchPostsByUser(String nickname) {
+        User user = userRepository.findUserByNickname(nickname);
+        List<Post> posts = postRepository.findAllByUser(user);
         return new PostPreviewDtos(posts, posts.size());
     }
 

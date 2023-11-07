@@ -5,13 +5,14 @@ import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { useRouter } from 'next/navigation';
 import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 import { usePathname } from 'next/navigation';
 import FriendModal from './HeaderFriendModal/FriendModal';
+import PageLink from '../PageLink/PageLink';
+import Image from 'next/image';
+import Pororo from '../../../public/assets/test.png';
 
 export default function Header() {
-  const router = useRouter();
   const [userTheme, setUserTheme] = useUserThemeSSR();
   const pathname = usePathname();
 
@@ -26,14 +27,7 @@ export default function Header() {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (page: 'mypage' | 'friend' | 'scrap' | 'logout' | 'login') => {
-    if (page === 'logout') {
-      console.log('logged out');
-    } else if (page === 'friend') {
-      console.log('친구');
-    } else {
-      router.push(`/${page}`);
-    }
+  const handleClose = () => {
     setAnchorEl(null);
   };
 
@@ -54,9 +48,10 @@ export default function Header() {
         fontSize="32px"
         fontWeight={700}
         color={pathname.includes('/home') ? 'primary.main' : 'white'}
-        onClick={() => router.push('/collect')}
         zIndex={20005}>
-        GLOG
+        <PageLink href="/collect" color="#ffffff">
+          GLOG
+        </PageLink>
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>
         {userTheme === 'dark' ? (
@@ -72,18 +67,45 @@ export default function Header() {
           width="40px"
           height="40px"
           borderRadius="20px"
-          onClick={() => router.push('/chaeyeon')}
-          sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}
-        />
+          overflow="hidden"
+          sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}>
+          <PageLink href={'/chaeyeon'}>
+            <Image width={40} height={40} alt="profile Image" src={Pororo} />
+          </PageLink>
+        </Stack>
         <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={handleClick}>
           <MenuIcon fontSize="large" />
         </IconButton>
         <Menu anchorEl={anchorEl} open={menuopen} onClose={handleClose}>
-          <MenuItem onClick={() => handleClose('mypage')}>마이페이지</MenuItem>
+          <MenuItem>
+            <PageLink
+              href="/mypage"
+              onClick={() => {
+                setAnchorEl(null);
+              }}>
+              마이페이지
+            </PageLink>
+          </MenuItem>
           <MenuItem onClick={() => setFriendOpen(true)}>친구</MenuItem>
-          <MenuItem onClick={() => handleClose('scrap')}>스크랩</MenuItem>
-          <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
-          <MenuItem onClick={() => handleClose('login')}>로그인</MenuItem>
+          <MenuItem>
+            <PageLink
+              href="/mypage"
+              onClick={() => {
+                setAnchorEl(null);
+              }}>
+              스크랩
+            </PageLink>
+          </MenuItem>
+          <MenuItem onClick={() => localStorage.setItem('token', '')}>Logout</MenuItem>
+          <MenuItem>
+            <PageLink
+              href="/login"
+              onClick={() => {
+                setAnchorEl(null);
+              }}>
+              로그인
+            </PageLink>
+          </MenuItem>
         </Menu>
       </Stack>
 

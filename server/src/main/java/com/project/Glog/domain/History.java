@@ -1,6 +1,7 @@
 package com.project.Glog.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,9 @@ public class History {
     @CreatedDate
     private LocalDate date;
 
+    @NotNull
+    @Max(3)
+    private Integer count;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

@@ -107,7 +107,9 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET,
                             "/post",
                             "/collect",
-                            "/post/previews")
+                            "/post/previews",
+                            "/read-me",
+                            "/search/**")
                         .permitAll()
                     .requestMatchers("/auth/**", "/oauth2/**")
                         .permitAll()

@@ -12,5 +12,5 @@ import java.util.List;
 @Setter
 public class Year {
     private LocalDate from;
-    private List<Boolean> posted;
+    private List<Integer> posted;
 }

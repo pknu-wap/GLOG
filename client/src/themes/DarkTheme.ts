@@ -1,4 +1,4 @@
-import { PaletteColor, SimplePaletteColorOptions, createTheme } from '@mui/material';
+import { createTheme } from '@mui/material';
 import { yellow } from './color';
 
 type PaletteColors =
@@ -9,7 +9,8 @@ type PaletteColors =
   | 'themeColor'
   | 'oppositeColor'
   | 'subColor'
-  | 'inherit';
+  | 'inherit'
+  | 'law';
 
 declare module '@mui/material' {
   interface ButtonPropsColorOverrides {
@@ -25,6 +26,12 @@ declare module '@mui/material' {
 }
 
 declare module '@mui/material/styles' {
+  interface PaletteColor {
+    lighter?: string;
+  }
+  interface SimplePaletteColorOptions {
+    lighter?: string;
+  }
   type CustomPalette = {
     [_ in PaletteColors]: PaletteColor;
   };
@@ -54,7 +61,8 @@ export const darkTheme = createTheme({
     mode: 'dark',
     primary: {
       main: yellow[500],
-      light: 'rgba(255,255,255,0.4)',
+      light: 'rgba(255,255,255,0.6)',
+      lighter: 'rgba(255,255,255,0.4)',
     },
     secondary: {
       main: 'rgb(29, 30, 31)',
@@ -74,6 +82,9 @@ export const darkTheme = createTheme({
     },
     white: {
       main: '#ffffff',
+    },
+    law: {
+      main: '#161B22',
     },
   },
 });

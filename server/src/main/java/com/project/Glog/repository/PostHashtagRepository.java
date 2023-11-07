@@ -12,4 +12,6 @@ public interface PostHashtagRepository extends JpaRepository<PostHashtag, Long> 
     void deletePostHashtagsByPost(Post post);
 
     List<PostHashtag> findPostHashtagsByPost(Post post);
+
+    List<PostHashtag> findAllByTagContaining(String tag);
 }

@@ -10,6 +10,7 @@ import FootPrint from '../../../public/assets/yellowFootPrint.png';
 import IconButton from '../Button/IconButton';
 import { ArrowRight, Edit } from '@mui/icons-material';
 import CategorySettingModal from './CategorySettingModal';
+import PageLink from '../PageLink/PageLink';
 
 type Footprint = {
   categoryId: number;
@@ -37,7 +38,6 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
   }, []);
 
   const dragHandler = (result: DropResult) => {
-    console.log(result);
     if (result.destination?.droppableId === 'right-droppable') {
       router.push(`/${blogName}/home/${result.source.droppableId}/${result.draggableId}`);
     }
@@ -78,13 +78,10 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                 <Edit fontSize="small" />
                               </IconButton>
                             </Stack>
-                            <IconButton
-                              onClick={() =>
-                                router.push(`/${blogName}/home/${category.categoryId}`)
-                              }
-                              sx={{ padding: '0px' }}
-                              size="small">
-                              <ArrowRight />
+                            <IconButton sx={{ padding: '0px' }} size="small">
+                              <PageLink href={`/${blogName}/home/${category.categoryId}`}>
+                                <ArrowRight />
+                              </PageLink>
                             </IconButton>
                           </Stack>
                           <Stack
@@ -100,11 +97,6 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                   index={post.postId}>
                                   {(provided) => (
                                     <Stack
-                                      onClick={() =>
-                                        router.push(
-                                          `/${blogName}/home/${category.categoryId}/${post.postId}`,
-                                        )
-                                      }
                                       sx={{
                                         padding: '4px 8px',
                                         ':hover': {
@@ -118,20 +110,23 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}>
-                                      <Stack
-                                        direction="row"
-                                        justifyContent="left"
-                                        alignItems="center"
-                                        width="fit-content"
-                                        gap={2}>
-                                        <Image
-                                          src={FootPrint}
-                                          alt="footPrint"
-                                          width="15"
-                                          height="15"
-                                        />
-                                        <Stack width="101px">{post.title}</Stack>
-                                      </Stack>
+                                      <PageLink
+                                        href={`/${blogName}/home/${category.categoryId}/${post.postId}`}>
+                                        <Stack
+                                          direction="row"
+                                          justifyContent="left"
+                                          alignItems="center"
+                                          width="fit-content"
+                                          gap={2}>
+                                          <Image
+                                            src={FootPrint}
+                                            alt="footPrint"
+                                            width="15"
+                                            height="15"
+                                          />
+                                          <Stack width="101px">{post.title}</Stack>
+                                        </Stack>
+                                      </PageLink>
                                     </Stack>
                                   )}
                                 </Draggable>

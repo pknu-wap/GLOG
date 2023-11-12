@@ -24,9 +24,12 @@ public class PrPost {
     private Category category;
 
     @NotNull
-    private String prNumber;
+    private Integer prNumber;
     @NotNull
     private String prTitle;
     @NotNull
     private Boolean isPosted;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private GithubRepository githubRepository;
 }

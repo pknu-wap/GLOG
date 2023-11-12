@@ -13,7 +13,7 @@ public class PrPostedDto {
 
     private Long prId;
 
-    private String prNumber;
+    private Integer prNumber;
 
     private String prTitle;
 

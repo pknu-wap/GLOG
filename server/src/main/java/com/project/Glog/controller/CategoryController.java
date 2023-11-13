@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 public class CategoryController {
@@ -41,6 +43,18 @@ public class CategoryController {
             categoryService.delete(userPrincipal.getId(), categoryId);
 
             return new ResponseEntity<>("success delete category",HttpStatus.OK);
+    }
+
+    @DeleteMapping("/category/posts")
+    public ResponseEntity<String> deletePosts(@CurrentUser UserPrincipal userPrincipal,
+                                         @RequestBody List<Long> postsIds){
+        try{
+            categoryService.deletePosts(userPrincipal.getId(), postsIds);
+            return new ResponseEntity<>("success delete posts",HttpStatus.OK);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
+        }
     }
 
     @GetMapping ("/category/sidebar/{blogId}")

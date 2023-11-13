@@ -56,4 +56,23 @@ public class CategoryService {
 
         return new SidebarDtos(sidebarDtos);
     }
+
+    public void deletePosts(Long id, List<Long> postsIds) throws Exception{
+        //전부 불러온다.
+        List<Post> posts = new ArrayList<>();
+        for(Long postId : postsIds){
+            posts.add(postRepository.findById(postId).get());
+        }
+
+        int idCnt = postsIds.size();
+        int postCnt = posts.size();
+
+        if(idCnt!=postCnt){
+            throw new IllegalArgumentException("non-existent id");
+        }
+
+        for(Post post : posts){
+            postRepository.delete(post);
+        }
+    }
 }

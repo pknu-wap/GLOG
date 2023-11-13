@@ -68,13 +68,6 @@ public class CategoryService {
             posts.add(post);
         }
 
-        int idCnt = postsIds.size();
-        int postCnt = posts.size();
-
-        if(idCnt!=postCnt){
-            throw new IllegalArgumentException("non-existent id");
-        }
-
         for(Post post : posts){
             postRepository.delete(post);
         }

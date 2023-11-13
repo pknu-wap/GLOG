@@ -1,6 +1,7 @@
 package com.project.Glog.controller;
 
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
+import com.project.Glog.dto.request.category.CategoryUpdateRequest;
 import com.project.Glog.dto.response.category.CategoryDto;
 import com.project.Glog.dto.response.category.SidebarDtos;
 import com.project.Glog.security.CurrentUser;
@@ -21,12 +22,25 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/category")
-    public ResponseEntity<String> save(@CurrentUser UserPrincipal userPrincipal,
+    public ResponseEntity<String> saveCategory(@CurrentUser UserPrincipal userPrincipal,
                                        @RequestBody CategoryCreateRequest categoryCreateRequest){
 
         categoryService.create(userPrincipal, categoryCreateRequest);
 
         return new ResponseEntity<>("success create category",HttpStatus.OK);
+    }
+
+    @PutMapping("/category")
+    public ResponseEntity<String> updateCategory(@CurrentUser UserPrincipal userPrincipal,
+                                       @RequestBody CategoryUpdateRequest categoryUpdateRequest){
+
+        try{
+            categoryService.updateCategory(userPrincipal, categoryUpdateRequest);
+            return new ResponseEntity<>("success update category",HttpStatus.OK);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/category")
@@ -53,7 +67,7 @@ public class CategoryController {
             return new ResponseEntity<>("success delete posts",HttpStatus.OK);
         }
         catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

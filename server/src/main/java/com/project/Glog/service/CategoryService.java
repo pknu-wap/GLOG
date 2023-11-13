@@ -4,6 +4,7 @@ import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
+import com.project.Glog.dto.request.category.CategoryUpdateRequest;
 import com.project.Glog.dto.response.category.CategoryDto;
 import com.project.Glog.dto.response.category.SidebarDto;
 import com.project.Glog.dto.response.category.SidebarDtos;
@@ -58,10 +59,13 @@ public class CategoryService {
     }
 
     public void deletePosts(Long id, List<Long> postsIds) throws Exception{
-        //전부 불러온다.
         List<Post> posts = new ArrayList<>();
         for(Long postId : postsIds){
-            posts.add(postRepository.findById(postId).get());
+            Post post = postRepository.findById(postId).get();
+            if(post.getUser().getId()!=id)
+                throw new IllegalAccessException("not your post");
+
+            posts.add(post);
         }
 
         int idCnt = postsIds.size();
@@ -74,5 +78,15 @@ public class CategoryService {
         for(Post post : posts){
             postRepository.delete(post);
         }
+    }
+
+    public void updateCategory(UserPrincipal userPrincipal, CategoryUpdateRequest categoryUpdateRequest) throws Exception{
+        Category category = categoryRepository.findById(categoryUpdateRequest.getCategoryId()).get();
+
+        if(userPrincipal.getId()!=category.getBlog().getUser().getId())
+            throw new IllegalAccessException("not your category");
+
+        category.setCategoryName(categoryUpdateRequest.getNewCategoryName());
+        categoryRepository.save(category);
     }
 }

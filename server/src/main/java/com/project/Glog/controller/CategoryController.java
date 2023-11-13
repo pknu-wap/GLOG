@@ -1,6 +1,7 @@
 package com.project.Glog.controller;
 
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
+import com.project.Glog.dto.response.category.CategoryDto;
 import com.project.Glog.dto.response.category.SidebarDtos;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
@@ -24,6 +25,14 @@ public class CategoryController {
         categoryService.create(userPrincipal, categoryCreateRequest);
 
         return new ResponseEntity<>("success create category",HttpStatus.OK);
+    }
+
+    @GetMapping("/category")
+    public ResponseEntity<CategoryDto> getCategory(@RequestParam Long categoryId){
+
+        CategoryDto categoryDto = categoryService.getCategory(categoryId);
+
+        return new ResponseEntity<>(categoryDto,HttpStatus.OK);
     }
 
     @DeleteMapping("/category")

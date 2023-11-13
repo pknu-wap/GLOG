@@ -4,6 +4,7 @@ import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
+import com.project.Glog.dto.response.category.CategoryDto;
 import com.project.Glog.dto.response.category.SidebarDto;
 import com.project.Glog.dto.response.category.SidebarDtos;
 import com.project.Glog.repository.BlogRepository;
@@ -30,6 +31,11 @@ public class CategoryService {
         Category category = req.toCategory(blog);
 
         return categoryRepository.save(category);
+    }
+
+    public CategoryDto getCategory(Long categoryId){
+        Category category = categoryRepository.findById(categoryId).get();
+        return CategoryDto.of(category);
     }
 
     public void delete(Long uid, Long categoryId) {

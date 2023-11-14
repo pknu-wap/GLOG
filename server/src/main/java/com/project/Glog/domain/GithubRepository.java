@@ -12,24 +12,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "prPost")
-public class PrPost {
+@Table(name = "githubRepository")
+public class GithubRepository {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Post post;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
+    private User user;
 
     @NotNull
-    private Integer prNumber;
-    @NotNull
-    private String prTitle;
-    @NotNull
-    private Boolean isPosted;
+    private String repoName;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private GithubRepository githubRepository;
+    @NotNull
+    private String ownerName;
+
 }

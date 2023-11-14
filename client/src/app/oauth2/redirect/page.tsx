@@ -1,14 +1,33 @@
 'use client';
+import { PostMakeAccountApi } from '@/api/makeAccount-api';
 import CenterContent from '@/components/Layout/CenterContent';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
 import { Stack } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const Page = () => {
   const params = useSearchParams();
+  const router = useRouter();
+  const [blogUrl, setBlogUrl] = useState<string>('');
+  const [blogName, setBlogName] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
 
+  const postMakeAccountCreateQuery = useMutation(PostMakeAccountApi, {
+    onSuccess: () => router.push('/collect'),
+  });
+  const postOnClick = () => {
+    const newAccountBody = {
+      blogUrl: blogUrl,
+      blogName: blogName,
+      nickname: nickname,
+    };
+
+    postMakeAccountCreateQuery.mutate(newAccountBody);
+  };
   useEffect(() => {
     const getTokenValue = params.get('token');
     const error = params.get('error');
@@ -30,6 +49,10 @@ const Page = () => {
           id="outlined-basic"
           label="blog URL"
           variant="outlined"
+          value={blogUrl}
+          onChange={(e) => {
+            setBlogUrl(e.target.value);
+          }}
         />
         <Stack fontSize="10px" color="red" marginBottom="15px">
           *블로그 URL은 수정할 수 없으니 신중히 적어주세요.
@@ -41,6 +64,10 @@ const Page = () => {
           id="outlined-basic"
           label="이름"
           variant="outlined"
+          value={blogName}
+          onChange={(e) => {
+            setBlogName(e.target.value);
+          }}
         />
         <TextField
           required
@@ -49,11 +76,15 @@ const Page = () => {
           id="outlined-basic"
           label="닉네임"
           variant="outlined"
+          value={nickname}
+          onChange={(e) => {
+            setNickname(e.target.value);
+          }}
         />
         <Stack fontSize="10px" color="red" marginBottom="15px">
           *닉네임이 블로그 주소에 반영 됩니다.
         </Stack>
-        <Button fullWidth variant="outlined">
+        <Button fullWidth sx={{ height: '50px' }} variant="outlined" onClick={() => postOnClick()}>
           입력
         </Button>
       </Stack>

@@ -15,9 +15,7 @@ export const getCurrentThemeClass = (
 export const API_BASE_URL =
   'http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com';
 
-export const OAUTH2_REDIRECT_URI = 'https://dev-glog.vercel.app/oauth2/redirect';
+export const OAUTH2_REDIRECT_URI = 'https://glog-beta.vercel.app/oauth2/redirect';
 
-export const GOOGLE_AUTH_URL =
-  API_BASE_URL + '/oauth2/authorization/google?redirect_uri=' + OAUTH2_REDIRECT_URI;
-export const GITHUB_AUTH_URL =
-  API_BASE_URL + '/oauth2/authorization/github?redirect_uri=' + OAUTH2_REDIRECT_URI;
+export const GOOGLE_AUTH_URL = API_BASE_URL + '/oauth2/authorization/google';
+export const GITHUB_AUTH_URL = API_BASE_URL + '/oauth2/authorization/github';

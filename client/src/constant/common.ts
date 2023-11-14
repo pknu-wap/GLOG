@@ -17,5 +17,7 @@ export const API_BASE_URL =
 
 export const OAUTH2_REDIRECT_URI = 'https://glog-beta.vercel.app/oauth2/redirect';
 
-export const GOOGLE_AUTH_URL = API_BASE_URL + '/oauth2/authorization/google';
-export const GITHUB_AUTH_URL = API_BASE_URL + '/oauth2/authorization/github';
+export const GOOGLE_AUTH_URL =
+  API_BASE_URL + '/oauth2/authorization/google?redirect_uri=' + OAUTH2_REDIRECT_URI;
+export const GITHUB_AUTH_URL =
+  API_BASE_URL + '/oauth2/authorization/github?redirect_uri=' + OAUTH2_REDIRECT_URI;

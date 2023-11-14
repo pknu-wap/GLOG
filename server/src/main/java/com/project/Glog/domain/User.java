@@ -47,6 +47,10 @@ public class User {
     @NotNull
     private String providerId;
 
+    private String githubID;
+
+    private String githubToken;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Blog blog;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

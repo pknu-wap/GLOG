@@ -58,7 +58,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         user.getProvider() + " account. Please use your " + user.getProvider() +
                         " account to login.");
             }
-            user = updateExistingUser(user, oAuth2UserInfo);
+            user = updateExistingUser(user, oAuth2UserInfo, oAuth2UserRequest);
         } else {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
@@ -86,9 +86,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return userRepository.save(user);
     }
 
-    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
+    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo, OAuth2UserRequest oAuth2UserRequest) {
+        String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
+
         existingUser.setNickname(oAuth2UserInfo.getName());
         existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
+        if (registrationId.equalsIgnoreCase(AuthProvider.github.toString())) {
+            existingUser.setGithubID(oAuth2UserInfo.getName());
+            existingUser.setGithubToken(token);
+        }
         return userRepository.save(existingUser);
     }
 

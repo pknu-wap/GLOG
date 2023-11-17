@@ -12,6 +12,14 @@ const nextConfig = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
+      },
+    ],
+  },
 };
 
 module.exports = removeImports({

@@ -62,7 +62,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                 </Stack>
                 <Stack fontSize="36px">{post?.title}</Stack>
                 <Stack direction="row" alignItems={'center'} height="30px" gap={3} marginTop="24px">
-                  <img
+                  {/* <img
                     onClick={() => setOpen(true)}
                     style={{
                       width: '30px',
@@ -72,7 +72,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                     }}
                     src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
                     alt="profileImage"
-                  />
+                  /> */}
                   <Stack margin="auto 0px">{post?.author?.nickname}</Stack>
                   <IconButton color="white">
                     <Home fontSize="small" onClick={() => router.push(`/${params.blogName}`)} />
@@ -97,7 +97,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           <Stack spacing={10} padding={'40px 80px'}>
             <Stack direction="row" width="500px" spacing={10} justifyContent="space-between">
               <Stack direction="row" alignItems="center" spacing={4}>
-                <img
+                {/* <img
                   style={{
                     width: '100px',
                     height: '100px',
@@ -105,7 +105,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   }}
                   src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
                   alt="profileImage"
-                />
+                /> */}
                 <Stack>
                   <Stack padding="8px">Du yeong</Stack>
                   <Stack direction="row" spacing={2}>

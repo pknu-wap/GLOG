@@ -47,13 +47,13 @@ function page() {
             overflow="scroll"
             bgcolor={theme.palette.mode === 'dark' ? 'transparent' : '#ffffff'}>
             <Stack>
-              <img
+              {/* <img
                 width="140px"
                 height="140px"
                 style={{ borderRadius: '50%', marginBottom: '12px' }}
                 alt="profileImage"
                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
-              />
+              /> */}
               <Stack direction="row" alignItems="center" spacing={1}>
                 <Stack>신채연라면</Stack>
                 <Stack fontSize="14px">(urlurlurlu)</Stack>

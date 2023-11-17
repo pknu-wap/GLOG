@@ -145,7 +145,8 @@ function SaveModal({ open, onClose }: ModalType) {
                 </IconButton>
               </NoImageContent>
             ) : (
-              <img src={imageSrc} alt="" style={{ width: '300px', height: '180px' }} />
+              <></>
+              // <img src={imageSrc} alt="" style={{ width: '300px', height: '180px' }} />
             )}
             <Stack>{write?.title}</Stack>
           </Preview>

@@ -54,6 +54,13 @@ export interface IBlog {
   nickname: string;
 }
 
+//회원가입(블로그 이름, url, 닉네임 생성)
+export interface IMakeAccount {
+  blogUrl: string | undefined;
+  blogName: string | undefined;
+  nickname: string | undefined;
+}
+
 // 블로그 이름 변경
 export interface IChangeBlogName {
   newBlogName: string;

@@ -24,12 +24,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserRepository userRepository;
+    private String token;
 
 
     //백엔드 리다이렉션 페이지에서 토큰을 받은 후 리소스에 다시 요청해서 유저 정보를 받아옴
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
+        token = String.valueOf(oAuth2UserRequest.getAccessToken().getTokenValue());
         try {
             return processOAuth2User(oAuth2UserRequest, oAuth2User);
         } catch (AuthenticationException ex) {
@@ -56,7 +58,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         user.getProvider() + " account. Please use your " + user.getProvider() +
                         " account to login.");
             }
-            user = updateExistingUser(user, oAuth2UserInfo);
+            user = updateExistingUser(user, oAuth2UserInfo, oAuth2UserRequest);
         } else {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
@@ -65,6 +67,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
+        String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
+
         User user = new User();
 
         user.setProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
@@ -73,12 +77,24 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
 
+        if (registrationId.equalsIgnoreCase(AuthProvider.github.toString())) {
+            user.setGithubID(oAuth2UserInfo.getName());
+            user.setGithubToken(token);
+        }
+
+
         return userRepository.save(user);
     }
 
-    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
+    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo, OAuth2UserRequest oAuth2UserRequest) {
+        String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
+
         existingUser.setNickname(oAuth2UserInfo.getName());
         existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
+        if (registrationId.equalsIgnoreCase(AuthProvider.github.toString())) {
+            existingUser.setGithubID(oAuth2UserInfo.getName());
+            existingUser.setGithubToken(token);
+        }
         return userRepository.save(existingUser);
     }
 

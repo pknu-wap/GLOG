@@ -29,7 +29,7 @@ function page() {
               <Stack color="#000000" fontSize="20px" fontWeight="bold">
                 #77
               </Stack>
-              <img
+              {/* <img
                 style={{
                   width: '30px',
                   height: '30px',
@@ -38,7 +38,7 @@ function page() {
                 }}
                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
                 alt="profileImage"
-              />
+              /> */}
             </Stack>
             <Stack
               color="#000000"

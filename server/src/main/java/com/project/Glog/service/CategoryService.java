@@ -4,6 +4,8 @@ import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
+import com.project.Glog.dto.request.category.CategoryUpdateRequest;
+import com.project.Glog.dto.response.category.CategoryDto;
 import com.project.Glog.dto.response.category.SidebarDto;
 import com.project.Glog.dto.response.category.SidebarDtos;
 import com.project.Glog.repository.BlogRepository;
@@ -32,6 +34,11 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public CategoryDto getCategory(Long categoryId){
+        Category category = categoryRepository.findById(categoryId).get();
+        return CategoryDto.of(category);
+    }
+
     public void delete(Long uid, Long categoryId) {
         //TODO 인가 로직 들어가야함, 예외 처리
         categoryRepository.delete(categoryRepository.findById(categoryId).get());
@@ -49,5 +56,30 @@ public class CategoryService {
         }
 
         return new SidebarDtos(sidebarDtos);
+    }
+
+    public void deletePosts(Long id, List<Long> postsIds) throws Exception{
+        List<Post> posts = new ArrayList<>();
+        for(Long postId : postsIds){
+            Post post = postRepository.findById(postId).get();
+            if(post.getUser().getId()!=id)
+                throw new IllegalAccessException("not your post");
+
+            posts.add(post);
+        }
+
+        for(Post post : posts){
+            postRepository.delete(post);
+        }
+    }
+
+    public void updateCategory(UserPrincipal userPrincipal, CategoryUpdateRequest categoryUpdateRequest) throws Exception{
+        Category category = categoryRepository.findById(categoryUpdateRequest.getCategoryId()).get();
+
+        if(userPrincipal.getId()!=category.getBlog().getUser().getId())
+            throw new IllegalAccessException("not your category");
+
+        category.setCategoryName(categoryUpdateRequest.getNewCategoryName());
+        categoryRepository.save(category);
     }
 }

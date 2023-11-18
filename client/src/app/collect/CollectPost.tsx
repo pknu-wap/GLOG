@@ -35,7 +35,7 @@ function CollectPost({ like }: { like: ICollectPost }) {
           <VisibilityIcon fontSize="small" />
           {like.viewsCount}
         </PostPopular>
-        <img alt="" src={like.thumbnail ?? ''} />
+        {/* <img alt="" src={like.thumbnail ?? ''} /> */}
         <CostomizeButton>
           <IconButton size="small">
             <LockOutlined />

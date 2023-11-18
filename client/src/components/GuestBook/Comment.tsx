@@ -6,7 +6,7 @@ function Comment({ isMe }: { isMe?: boolean }) {
   return (
     <Stack spacing={3} width="100%" alignItems={isMe ? 'flex-end' : 'flex-start'}>
       <Stack direction="row" alignItems="center" spacing={2}>
-        <img
+        {/* <img
           style={{
             width: '30px',
             height: '30px',
@@ -14,7 +14,7 @@ function Comment({ isMe }: { isMe?: boolean }) {
           }}
           src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
           alt="profileImage"
-        />
+        /> */}
         <Stack fontSize="16px" fontWeight="bold">
           Guest 1
         </Stack>

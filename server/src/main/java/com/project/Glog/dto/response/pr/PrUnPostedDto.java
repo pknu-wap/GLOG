@@ -8,18 +8,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class PrPostedDto {
-    private Long postId;
-
+public class PrUnPostedDto {
     private Long prId;
 
     private Integer prNumber;
 
     private String prTitle;
 
-    public static PrPostedDto of(PrPost prPost){
-        return new PrPostedDto(
-                prPost.getPost().getId(),
+    public static PrUnPostedDto of(PrPost prPost){
+        return new PrUnPostedDto(
                 prPost.getId(),
                 prPost.getPrNumber(),
                 prPost.getPrTitle());

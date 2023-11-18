@@ -73,7 +73,7 @@ export interface IPost {
 
 // 사이드바
 export interface ISidebar {
-  blogId: number;
+  blogId?: number;
 }
 
 // 사이드바 전체 내용
@@ -142,4 +142,13 @@ export interface IPostContent {
 //리드미 get
 export interface IReadMeParams {
   blogId?: number;
+}
+
+//리드미 put
+export interface IReadMe {
+  content?: string;
+}
+
+export interface IBlogIdParams {
+  blogUrl?: string;
 }

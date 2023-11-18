@@ -24,6 +24,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const theme = useTheme();
   const router = useRouter();
 
+  //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('id');
   const { data: replyData } = useGetReplyQuery({

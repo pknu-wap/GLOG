@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { defaultInstance } from '.';
+import { ITemplateDetailParams } from '@/types/dto';
 
 export const PostWriteApi = async (body: FormData) => {
   const { data } = await defaultInstance.post('/post/create', {
@@ -28,13 +29,20 @@ export const useGetTemplateQuery = () => {
   return { data, isLoading, error };
 };
 
-const GetTemplateDetailApi = async () => {
-  const { data } = await defaultInstance.get(`/template/detail`);
+const GetTemplateDetailApi = async (params: ITemplateDetailParams) => {
+  const { data } = await defaultInstance.get(`/template/detail`, { params });
 
   return data;
 };
 
-export const useGetTemplateDetailQuery = () => {
-  const { isLoading, error, data } = useQuery([`templateDetail`], () => GetTemplateDetailApi());
+export const useGetTemplateDetailQuery = (params: ITemplateDetailParams) => {
+  const { isLoading, error, data } = useQuery(
+    [`templateDetail`],
+    () => GetTemplateDetailApi(params),
+
+    {
+      enabled: !!params.templateId,
+    },
+  );
   return { data, isLoading, error };
 };

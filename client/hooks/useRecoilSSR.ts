@@ -1,8 +1,8 @@
 'use client';
 
 import {
-  androidState,
-  iPhoneState,
+  temporaryIdState,
+  templateIdState,
   isSidebarOpenState,
   tokenState,
   userThemeState,
@@ -43,23 +43,23 @@ export function useTokenSSR() {
   return [isInitial ? '' : value, setValue] as const;
 }
 
-export function useIphoneSSR() {
-  const [isInitial, setIsInitial] = useState(true);
-  const [value, setValue] = useRecoilState(iPhoneState);
+export function useTemplateIdSSR() {
+  const [isInitial, setIsInitial] = useState(0);
+  const [value, setValue] = useRecoilState(templateIdState);
 
   useEffect(() => {
-    setIsInitial(false);
+    setIsInitial(0);
   }, []);
 
-  return [isInitial ? true : value, setValue] as const;
+  return [isInitial ? 0 : value, setValue] as const;
 }
-export function useAndroidSSR() {
-  const [isInitial, setIsInitial] = useState(true);
-  const [value, setValue] = useRecoilState(androidState);
+export function useTemporaryIdSSR() {
+  const [isInitial, setIsInitial] = useState(0);
+  const [value, setValue] = useRecoilState(temporaryIdState);
 
   useEffect(() => {
-    setIsInitial(false);
+    setIsInitial(0);
   }, []);
 
-  return [isInitial ? true : value, setValue] as const;
+  return [isInitial ? 0 : value, setValue] as const;
 }

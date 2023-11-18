@@ -140,6 +140,11 @@ export interface ITemplate {
   }[];
 }
 
+// 템플릿 디테일 params
+export interface ITemplateDetailParams {
+  templateId: number;
+}
+
 // 템플릿 디테일 불러오기
 export interface ITemplateDetail {
   title: string;

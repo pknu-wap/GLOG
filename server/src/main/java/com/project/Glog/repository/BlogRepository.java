@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface BlogRepository extends JpaRepository<Blog, Long> {
     @Query("SELECT b FROM Blog b JOIN b.user u WHERE u.id=:userId")
     Optional<Blog> findByUserId(@Param("userId") Long uid);
+
+    @Query("SELECT b.id FROM Blog b WHERE b.blogUrl=:blogUrl")
+    Long findByBlogUrl(@Param("blogUrl") String blogUrl);
 }

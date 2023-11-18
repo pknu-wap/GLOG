@@ -3,8 +3,10 @@ import { defaultInstance } from '.';
 import { ITemplateDetailParams } from '@/types/dto';
 
 export const PostWriteApi = async (body: FormData) => {
-  const { data } = await defaultInstance.post('/post/create', {
-    body,
+  const { data } = await defaultInstance.post('/post', body, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
   return data;
@@ -50,6 +52,16 @@ export const useGetTemplateDetailQuery = (params: ITemplateDetailParams) => {
 export const DeleteTemplateApi = async (params: ITemplateDetailParams) => {
   const { data } = await defaultInstance.delete('/template', {
     params,
+  });
+
+  return data;
+};
+
+export const PostTemplateApi = async (postData: FormData) => {
+  const { data } = await defaultInstance.post('/template', postData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
   return data;

@@ -3,7 +3,7 @@
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Stack, TextField } from '@mui/material';
 import { ToolBar } from '../../Write.style';
 import TagList from '../../TagList';
@@ -34,6 +34,11 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
 
   console.log(templateData);
+
+  useEffect(() => {
+    setTitle(templateData?.title);
+    setContent(templateData?.content);
+  }, [templateData]);
   return (
     <WritePropsContext.Provider value={state}>
       <Stack mt={10} spacing={4} data-color-mode={userTheme}>

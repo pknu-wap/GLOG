@@ -153,3 +153,14 @@ export interface ITemplateDetail {
   hashtags: string[];
   id: number;
 }
+
+// 템플릿 추가
+export interface ITemplateAdd {
+  thumbnail: string;
+  postBasicDto: {
+    title: string;
+    content: string;
+    thumbnail: string;
+    hashtags: string[];
+  };
+}

@@ -44,36 +44,33 @@ function SaveModal({ open, onClose }: ModalType) {
     setPostConfirmOpen(true);
   };
 
-  const postOnClick = () => {
+  // FormData 생성 함수
+  const createFormData = (postData) => {
     const formData = new FormData();
-    onClose();
+    formData.append('thumbnail', postData.thumbnail);
 
-    const newWriteBody = {
-      title: write?.title,
-      content: write?.content,
-      isPr: true,
-      isPrivate: privateMode === 'private' ? true : false,
-      categoryId: Number(write?.params?.categoryId),
-      hashtags: write?.tags,
-    };
-
-    const modifyWriteBody = {
-      title: write?.title,
-      content: write?.content,
-      isPrivate: privateMode === 'private' ? true : false,
-      postId: Number(write?.params?.postId),
-      hashtags: write?.tags,
-    };
-
-    formData.append('thumbnail', image ?? null);
-
-    const json = JSON.stringify(isNewWrite ? newWriteBody : modifyWriteBody);
+    const json = JSON.stringify(postData.postCreateRequest);
 
     const blob = new Blob([json], {
       type: 'application/json',
     });
 
     formData.append('postCreateRequest', blob);
+
+    return formData;
+  };
+
+  const postOnClick = () => {
+    onClose();
+    const formData = createFormData({
+      thumbnail: image,
+      postCreateRequest: {
+        title: 'string',
+        content: 'string',
+        thumbnail: 'string',
+        hashtags: ['string'],
+      },
+    });
 
     isNewWrite ? postWriteCreateQuery.mutate(formData) : updateWriteCreateQuery.mutate(formData);
   };

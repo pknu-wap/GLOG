@@ -42,6 +42,12 @@ public class BlogController {
         return new ResponseEntity<>(blogUrl, HttpStatus.OK);
     }
 
+    @GetMapping("/blogid")
+    public ResponseEntity<Long> getBlogId(@RequestParam String blogUrl){
+        Long blogId = blogService.getBlogId(blogUrl);
+        return new ResponseEntity<>(blogId, HttpStatus.OK);
+    }
+
     @GetMapping("/read-me")
     public ResponseEntity<String> readReadme(@RequestParam Long blogId){
 

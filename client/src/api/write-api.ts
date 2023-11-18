@@ -46,3 +46,11 @@ export const useGetTemplateDetailQuery = (params: ITemplateDetailParams) => {
   );
   return { data, isLoading, error };
 };
+
+export const DeleteTemplateApi = async (params: ITemplateDetailParams) => {
+  const { data } = await defaultInstance.delete('/template', {
+    params,
+  });
+
+  return data;
+};

@@ -7,9 +7,10 @@ import Button from '@/components/Button/Button';
 import { Dialog } from '@/components/Dialog/Dialog';
 import { ModalType } from '@/types/common';
 import ModalButton from '@/components/Modal/ModalButton';
-import { useGetTemplateQuery } from '@/api/write-api';
+import { DeleteTemplateApi, useGetTemplateQuery } from '@/api/write-api';
 import { ITemplate } from '@/types/dto';
 import { useTemplateIdSSR } from '../../../../../../hooks/useRecoilSSR';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 function TemplateModal({ open, onClose }: ModalType) {
   const [clickList, setClickList] = useState<number>(0);
@@ -17,6 +18,14 @@ function TemplateModal({ open, onClose }: ModalType) {
   const [lists, setLists] = useState<ITemplate>({ postTitleResponse: [{ title: '', id: 0 }] });
   const { data: templateListData } = useGetTemplateQuery();
   const [, setTemplate] = useTemplateIdSSR();
+  const queryClient = useQueryClient();
+
+  const deleteTemplateQuery = useMutation(DeleteTemplateApi, {
+    onSuccess() {
+      queryClient.invalidateQueries(['template']);
+      onClose();
+    },
+  });
 
   useEffect(() => {
     setLists(templateListData);
@@ -28,10 +37,8 @@ function TemplateModal({ open, onClose }: ModalType) {
   };
 
   const deleteClick = () => {
-    console.log(`${clickList}번 삭제`);
+    deleteTemplateQuery.mutate({ templateId: clickList });
   };
-
-  console.log(lists);
 
   return (
     <Modal maxWidth="lg" open={open} onClose={onClose}>

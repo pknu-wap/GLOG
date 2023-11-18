@@ -26,7 +26,7 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
 
   return (
     <WritePropsContext.Provider value={state}>
-      <Stack spacing={4} data-color-mode={userTheme}>
+      <Stack mt={10} spacing={4} data-color-mode={userTheme}>
         <TextField
           sx={{ width: '30%' }}
           value={title}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalActions, ModalContent, ModalTitle } from '@/components/Modal/Modal.style';
 import Modal from '@/components/Modal/Modal';
 import List from '@/components/List/List';
@@ -7,27 +7,18 @@ import Button from '@/components/Button/Button';
 import { Dialog } from '@/components/Dialog/Dialog';
 import { ModalType } from '@/types/common';
 import ModalButton from '@/components/Modal/ModalButton';
+import { useGetTemplateQuery } from '@/api/write-api';
+import { ITemplate } from '@/types/dto';
 
 function TemplateModal({ open, onClose }: ModalType) {
   const [clickList, setClickList] = useState<number>(0);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState<boolean>(false);
+  const [lists, setLists] = useState<ITemplate>({ postTitleResponse: [{ title: '', id: 0 }] });
+  const { data: templateListData } = useGetTemplateQuery();
 
-  const lists = {
-    postTitleResponse: [
-      {
-        postTitleDto: {
-          id: 0,
-          title: 'string',
-        },
-      },
-      {
-        postTitleDto: {
-          id: 1,
-          title: 'string',
-        },
-      },
-    ],
-  };
+  useEffect(() => {
+    setLists(templateListData);
+  }, [templateListData]);
 
   const actionClick = () => {
     onClose();
@@ -38,20 +29,22 @@ function TemplateModal({ open, onClose }: ModalType) {
     console.log(`${clickList}번 삭제`);
   };
 
+  console.log(lists);
+
   return (
     <Modal maxWidth="lg" open={open} onClose={onClose}>
       <ModalTitle>템플릿 글 목록</ModalTitle>
       <ModalContent>
         <Stack spacing={2}>
-          {lists.postTitleResponse.map((list) => {
+          {lists?.postTitleResponse?.map((list) => {
             return (
               <List
-                key={list.postTitleDto.id}
+                key={list.id}
                 radioProps={{
-                  checked: clickList === list.postTitleDto.id,
-                  onChange: () => setClickList(list.postTitleDto.id),
+                  checked: clickList === list.id,
+                  onChange: () => setClickList(list.id),
                 }}
-                content={`#${list.postTitleDto.id} ${list.postTitleDto.title}`}
+                content={`#${list.id} ${list.title}`}
                 buttonAction={
                   <Button onClick={() => setDeleteConfirmOpen(true)} size="small" color="error">
                     삭제

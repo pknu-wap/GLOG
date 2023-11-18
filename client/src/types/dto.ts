@@ -131,3 +131,8 @@ export interface IPostContent {
   title?: string;
   viewsCount?: number;
 }
+
+//리드미 get
+export interface IReadMeParams {
+  blogId?: number;
+}

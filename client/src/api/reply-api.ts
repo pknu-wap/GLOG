@@ -9,6 +9,6 @@ export const getPostApi = async (params: IReply) => {
 };
 
 export const useGetReplyQuery = (params: IReply) => {
-  const { isLoading, error, data } = useQuery([`post`, params], () => getPostApi(params));
+  const { isLoading, error, data } = useQuery([`replies`, params], () => getPostApi(params));
   return { data, isLoading, error };
 };

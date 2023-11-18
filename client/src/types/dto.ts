@@ -28,6 +28,13 @@ export interface IProfile {
   loginedMemberId: number;
 }
 
+// 댓글 컴포넌트 정보
+export interface IReply {
+  postId?: number;
+  page?: number;
+  order?: string;
+}
+
 // 글쓰기 페이지
 export interface IWrite {
   thumbnail?: string | null;

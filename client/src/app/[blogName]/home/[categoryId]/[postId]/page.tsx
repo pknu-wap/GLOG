@@ -14,6 +14,7 @@ import IconButton from '@/components/Button/IconButton';
 import Modal from '@/components/Modal/Modal';
 import { ModalContent } from '@/components/Modal/Modal.style';
 import Button from '@/components/Button/Button';
+import { useGetReplyQuery } from '@/api/reply-api';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
@@ -23,16 +24,27 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const theme = useTheme();
   const router = useRouter();
 
+  const [page, setPage] = useState(0);
+  const [order, setOrder] = useState('id');
+  const { data: replyData } = useGetReplyQuery({
+    postId: Number(params.postId),
+    page: page,
+    order: order,
+  });
+  const [reply, setReply] = useState();
+
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
   const [post, setPost] = useState<IPostContent>();
+  console.log(reply);
 
   const sidebarContent: ISidebarContent[] = sidebarData?.sidebarDtos;
 
   useEffect(() => {
     setWriteList(sidebarContent);
+    setReply(replyData);
 
     setPost(postData);
-  }, [sidebarData, postData]);
+  }, [sidebarData, postData, replyData]);
 
   return (
     <Stack>

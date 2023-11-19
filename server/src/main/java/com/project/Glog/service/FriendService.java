@@ -248,6 +248,9 @@ public class FriendService {
 
     public void allowFriend(UserPrincipal userPrincipal, Long personId) {
         Friend friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
+        if(friend == null){
+            return;
+        }
         if (friend.getStatus()) {
             return;
         }

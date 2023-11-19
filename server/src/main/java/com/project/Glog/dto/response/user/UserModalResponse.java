@@ -17,16 +17,6 @@ public class UserModalResponse {
     private String blogUrl;
     private String relationship;
     private int friendCount;
-
-    /*"id" : "long",
-            "introduction": "string",
-            "imageUrl": "string",
-            "nickname" : "string",
-            "blogName" : "string",
-            "blogUrl" : "string",
-            "relationship" : "me" | "friending" | "friend" | "other" | "friended"
-            "friendCount" : 0*/
-
     public static UserModalResponse of(User user) {
         return new UserModalResponse(user.getId(),
                 user.getIntroduction(),

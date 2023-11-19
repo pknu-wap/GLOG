@@ -22,14 +22,14 @@ public class UserSimpleDto {
         return new UserSimpleDto(user.getId(),
                 friend.getId(),
                 null,
-                checkHaveNewPost(friend),
+                checkHaveNewPost(user,friend),
                 user.getNickname(),
                 user.getImageUrl(),
                 relationship);
     }
 
-    public static boolean checkHaveNewPost(Friend friend) {
-        if (friend.getFromUser().equals(friend)) {
+    public static boolean checkHaveNewPost(User user, Friend friend) {
+        if (friend.getFromUser().equals(user)) {
             return friend.getFromUserNewPost();
         }
         return friend.getToUserNewPost();

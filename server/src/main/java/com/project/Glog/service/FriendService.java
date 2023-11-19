@@ -160,6 +160,9 @@ public class FriendService {
             friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
             friend.setFromUserNewPost(false);
         }
+        if (friend == null) {
+            return;
+        }
         friendRepository.save(friend);
     }
 
@@ -167,12 +170,13 @@ public class FriendService {
         for (int i = 0; i < userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().size(); i++) {
             Long friendId = userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().get(i).getFriendId();
             Friend friend = friendRepository.getById(friendId);
-            if (friend.getFromUser().equals(userPrincipal)) {
+            User user = userRepository.findById(userPrincipal.getId()).get();
+            if (friend.getFromUser().equals(user)) {
                 friend.setFromUserNewPost(true);
                 friendRepository.save(friend);
                 return;
             }
-            if (friend.getToUser().equals(userPrincipal)) {
+            if (friend.getToUser().equals(user)) {
                 friend.setToUserNewPost(true);
                 friendRepository.save(friend);
             }
@@ -206,14 +210,14 @@ public class FriendService {
     }
 
     public void allowFriend(UserPrincipal userPrincipal, Long personId) {
-        Friend friend = friendRepository.findByFromUserAndToUser(userPrincipal.getId(), personId);
+        Friend friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
         if (friend.getStatus()) {
             return;
         }
         Friend friend1 = new Friend();
         friend1.setStatus(true);
-        friend1.setFromUser(userRepository.findById(userPrincipal.getId()).get());
-        friend1.setToUser(userRepository.findById(personId).get());
+        friend1.setFromUser(userRepository.findById(personId).get());
+        friend1.setToUser(userRepository.findById(userPrincipal.getId()).get());
         friend1.setFromUserNewPost(false);
         friend1.setToUserNewPost(false);
         friendRepository.delete(friend);
@@ -221,7 +225,7 @@ public class FriendService {
     }
 
     public void refuseFriend(UserPrincipal userPrincipal, Long personId) {
-        Friend friend = friendRepository.findByFromUserAndToUser(userPrincipal.getId(), personId);
+        Friend friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
         friendRepository.delete(friend);
     }
 

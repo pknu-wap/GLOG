@@ -76,7 +76,7 @@ public class FriendService {
 
     public UserFriendResponse sortUserFriendResponse(UserPrincipal userPrincipal, String kind) {
         UserSimpleDtos userSimpleDtos = makeUserSimpleDtos(userPrincipal);
-        UserFriendResponse userFriendResponse = ifKindisRecentFriend(kind, userSimpleDtos);
+        UserFriendResponse userFriendResponse = ifKindIsRecentFriend(kind, userSimpleDtos);
         if (userFriendResponse != null) {
             return userFriendResponse;
         }
@@ -91,7 +91,7 @@ public class FriendService {
         return makeUserFriendResponse(userPrincipal); //잘못된 값이 들어갈 경우
     }
 
-    private UserFriendResponse ifKindisRecentFriend(String kind, UserSimpleDtos userSimpleDtos) {
+    private UserFriendResponse ifKindIsRecentFriend(String kind, UserSimpleDtos userSimpleDtos) {
         if (kind.equals("recentFriend")) {
             Comparator<UserSimpleDto> friendIdComparator =
                     Comparator.comparing(UserSimpleDto::getFriendId).reversed();
@@ -223,8 +223,8 @@ public class FriendService {
         return null;
     }
 
-    private static String checkIsFriendByToFriends(User user, int i) {
-        if (user.getToFriends().get(i).getStatus()) {
+    private static String checkIsFriendByToFriends(User user, int index) {
+        if (user.getToFriends().get(index).getStatus()) {
             return "friend";
         }
         return "friending";

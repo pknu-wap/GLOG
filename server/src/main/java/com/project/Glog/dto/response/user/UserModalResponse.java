@@ -17,6 +17,7 @@ public class UserModalResponse {
     private String blogUrl;
     private String relationship;
     private int friendCount;
+
     public static UserModalResponse of(User user) {
         return new UserModalResponse(user.getId(),
                 user.getIntroduction(),

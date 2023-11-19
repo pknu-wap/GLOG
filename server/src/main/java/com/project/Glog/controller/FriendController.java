@@ -20,7 +20,7 @@ public class FriendController {
     @Autowired
     private FriendService friendService;
 
-    @PutMapping("/friend")//완
+    @PutMapping("/friend")
     public ResponseEntity<UserModalResponse> requestFriend(@CurrentUser UserPrincipal userPrincipal,
                                                            @RequestParam Long userId) {
         friendService.addFriend(userPrincipal, userId);
@@ -29,7 +29,7 @@ public class FriendController {
         return new ResponseEntity<>(userModalResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/friend/read")//반만 완료 (post시 true변환필요)
+    @GetMapping("/friend/read")
     public ResponseEntity<String> readFriendPost(@CurrentUser UserPrincipal userPrincipal,
                                                  @RequestParam Long userId) {
 
@@ -37,7 +37,7 @@ public class FriendController {
         return new ResponseEntity<>("success read friend's post", HttpStatus.OK);
     }
 
-    @DeleteMapping("/friend")//완
+    @DeleteMapping("/friend")
     public ResponseEntity<String> deleteFriend(@CurrentUser UserPrincipal userPrincipal,
                                                @RequestParam Long userId) {
 
@@ -53,7 +53,7 @@ public class FriendController {
         return new ResponseEntity<>(userFriendResponseByKind, HttpStatus.OK);
     }
 
-    @GetMapping("/search/friend/name")//완
+    @GetMapping("/search/friend/name")
     public ResponseEntity<UserFriendResponse> searchFriendByName(@CurrentUser UserPrincipal userPrincipal,
                                                                  @RequestParam String name) {
         UserFriendResponse userFriendResponseByName = friendService.searchFriendByName(userPrincipal, name);
@@ -61,7 +61,7 @@ public class FriendController {
         return new ResponseEntity<>(userFriendResponseByName, HttpStatus.OK);
     }
 
-    @PutMapping("/friend/allow")//완
+    @PutMapping("/friend/allow")
     public ResponseEntity<UserFriendResponse> allowFriendRequest(@CurrentUser UserPrincipal userPrincipal,
                                                                  @RequestParam int isAccept,
                                                                  @RequestParam Long userId) {

@@ -63,11 +63,16 @@ public class FriendService {
     public UserFriendResponse searchFriendByName(UserPrincipal userPrincipal, String name) {
         List<User> users = userRepository.findUserByNicknameContaining(name);
         UserSimpleDtos userSimpleDtos = makeUserSimpleDtos(userPrincipal);
-        List<UserSimpleDto> userSimpleDtosByName = userSimpleDtos.getUserSimpleDtos().stream()
+        List<UserSimpleDto> notFriends = userSimpleDtos.getUserSimpleDtos().stream()
+                .filter(friend -> !isFriend(friend))
                 .filter(dto -> containsUser(users, dto.getUserId()))
                 .toList();
-
-        return new UserFriendResponse(new UserSimpleDtos(userSimpleDtosByName));
+        List<UserSimpleDto> friends = userSimpleDtos.getUserSimpleDtos().stream()
+                .filter(this::isFriend)
+                .filter(dto -> containsUser(users, dto.getUserId()))
+                .toList();
+        return new UserFriendResponse(new UserSimpleDtos(Stream
+                .concat(notFriends.stream(), friends.stream()).toList()));
     }
 
     private boolean containsUser(List<User> users, Long userId) {

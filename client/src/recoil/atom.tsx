@@ -25,13 +25,13 @@ export const tokenState = atom<string>({
 });
 
 // 아이폰
-export const iPhoneState = atom<boolean>({
-  key: 'iphone',
-  default: false,
+export const templateIdState = atom<number>({
+  key: 'templateId',
+  default: 0,
 });
 
-// 안드로이드
-export const androidState = atom<boolean>({
-  key: 'android',
-  default: false,
+// 임시저장 아이디
+export const temporaryIdState = atom<number>({
+  key: 'temporaryId',
+  default: 0,
 });

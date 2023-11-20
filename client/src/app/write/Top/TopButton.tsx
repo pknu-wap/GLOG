@@ -16,7 +16,6 @@ function TopButton() {
       <Button variant="outlined" sx={{ width: '80px' }} onClick={() => setTemplateOpen(true)}>
         템플릿
       </Button>
-
       {/* 임시저장 불러오기 모달 */}
       <TempSaveModal open={tempSaveOpen} onClose={() => setTempSaveOpen(false)} />
 

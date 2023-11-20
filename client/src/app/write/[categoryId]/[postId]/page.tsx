@@ -3,14 +3,19 @@
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Stack, TextField } from '@mui/material';
 import { ToolBar } from '../../Write.style';
 import TagList from '../../TagList';
 import BottomButton from './Bottom/BottomButton';
 import { WritePropsContext, WriteType } from '@/util/useWriteProps';
 import TopButton from '../../Top/TopButton';
-import { useUserThemeSSR } from '../../../../../hooks/useRecoilSSR';
+import {
+  useTemplateIdSSR,
+  // useTemporaryIdSSR,
+  useUserThemeSSR,
+} from '../../../../../hooks/useRecoilSSR';
+import { useGetTemplateDetailQuery } from '@/api/write-api';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
@@ -21,12 +26,22 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const [content, setContent] = useState<string | undefined>('# Hello World');
   const [tags, setTags] = useState<string[]>([]);
   const [userTheme] = useUserThemeSSR();
+  const [templateId] = useTemplateIdSSR();
+  // const [temporaryId, setTemporary] = useTemporaryIdSSR();
+
+  const { data: templateData } = useGetTemplateDetailQuery({ templateId });
 
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
 
+  console.log(templateData);
+
+  useEffect(() => {
+    setTitle(templateData?.title);
+    setContent(templateData?.content);
+  }, [templateData]);
   return (
     <WritePropsContext.Provider value={state}>
-      <Stack spacing={4} data-color-mode={userTheme}>
+      <Stack mt={10} spacing={4} data-color-mode={userTheme}>
         <TextField
           sx={{ width: '30%' }}
           value={title}

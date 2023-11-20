@@ -1,7 +1,6 @@
 package com.project.Glog.controller;
 
-import com.project.Glog.dto.response.alarm.AlarmResponse;
-import com.project.Glog.dto.response.blog.MyPageResponse;
+import com.project.Glog.dto.AlarmDtos;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.AlarmService;
@@ -17,9 +16,9 @@ public class AlarmController {
     private AlarmService alarmService;
 
     @GetMapping("/alarms")
-    public ResponseEntity<AlarmResponse> getAlarms(@CurrentUser UserPrincipal userPrincipal){
+    public ResponseEntity<AlarmDtos> getAlarms(@CurrentUser UserPrincipal userPrincipal){
 
-        AlarmResponse alarmsResponse = alarmService.getAlarms(userPrincipal.getId());
+        AlarmDtos alarmsResponse = alarmService.getAlarms(userPrincipal.getId());
 
         return new ResponseEntity<>(alarmsResponse, HttpStatus.OK);
     }

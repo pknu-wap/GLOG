@@ -22,7 +22,7 @@ public class Alarm {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     private String message;
-    private boolean read;
+    private Boolean read;
     @CreatedDate
     private LocalDateTime createdAt;
 

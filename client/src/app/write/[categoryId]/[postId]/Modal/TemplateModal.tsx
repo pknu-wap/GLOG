@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalActions, ModalContent, ModalTitle } from '@/components/Modal/Modal.style';
 import Modal from '@/components/Modal/Modal';
 import List from '@/components/List/List';
@@ -7,35 +7,37 @@ import Button from '@/components/Button/Button';
 import { Dialog } from '@/components/Dialog/Dialog';
 import { ModalType } from '@/types/common';
 import ModalButton from '@/components/Modal/ModalButton';
+import { DeleteTemplateApi, useGetTemplateQuery } from '@/api/write-api';
+import { ITemplate } from '@/types/dto';
+import { useTemplateIdSSR } from '../../../../../../hooks/useRecoilSSR';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 function TemplateModal({ open, onClose }: ModalType) {
   const [clickList, setClickList] = useState<number>(0);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState<boolean>(false);
+  const [lists, setLists] = useState<ITemplate>({ postTitleResponse: [{ title: '', id: 0 }] });
+  const { data: templateListData } = useGetTemplateQuery();
+  const [, setTemplate] = useTemplateIdSSR();
+  const queryClient = useQueryClient();
 
-  const lists = {
-    postTitleResponse: [
-      {
-        postTitleDto: {
-          id: 0,
-          title: 'string',
-        },
-      },
-      {
-        postTitleDto: {
-          id: 1,
-          title: 'string',
-        },
-      },
-    ],
-  };
+  const deleteTemplateQuery = useMutation(DeleteTemplateApi, {
+    onSuccess() {
+      queryClient.invalidateQueries(['template']);
+      onClose();
+    },
+  });
+
+  useEffect(() => {
+    setLists(templateListData);
+  }, [templateListData]);
 
   const actionClick = () => {
     onClose();
-    console.log(`${clickList}번 클릭`);
+    setTemplate(clickList);
   };
 
   const deleteClick = () => {
-    console.log(`${clickList}번 삭제`);
+    deleteTemplateQuery.mutate({ templateId: clickList });
   };
 
   return (
@@ -43,15 +45,15 @@ function TemplateModal({ open, onClose }: ModalType) {
       <ModalTitle>템플릿 글 목록</ModalTitle>
       <ModalContent>
         <Stack spacing={2}>
-          {lists.postTitleResponse.map((list) => {
+          {lists?.postTitleResponse?.map((list) => {
             return (
               <List
-                key={list.postTitleDto.id}
+                key={list.id}
                 radioProps={{
-                  checked: clickList === list.postTitleDto.id,
-                  onChange: () => setClickList(list.postTitleDto.id),
+                  checked: clickList === list.id,
+                  onChange: () => setClickList(list.id),
                 }}
-                content={`#${list.postTitleDto.id} ${list.postTitleDto.title}`}
+                content={`#${list.id} ${list.title}`}
                 buttonAction={
                   <Button onClick={() => setDeleteConfirmOpen(true)} size="small" color="error">
                     삭제

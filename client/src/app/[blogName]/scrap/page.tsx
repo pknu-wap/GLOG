@@ -10,7 +10,7 @@ import { IScrapContent } from '@/types/dto';
 
 export default function Scrap() {
   const [page, setPage] = useState(0);
-  const { data } = useGetScrapQuery({ page });
+  const { data } = useGetScrapQuery({ page: page });
   const [result, setResult] = useState<IScrapContent[]>();
 
   useEffect(() => {

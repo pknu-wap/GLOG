@@ -12,6 +12,7 @@ import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +25,11 @@ public class PostController {
     private PostService postService;
 
 
-    @PostMapping("/post")
+    @RequestMapping(value = "/post",
+            method = RequestMethod.POST,
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal,
                                        @RequestParam(value = "thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {

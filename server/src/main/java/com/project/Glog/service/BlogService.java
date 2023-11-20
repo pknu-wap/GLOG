@@ -51,6 +51,10 @@ public class BlogService {
         return blog.getBlogUrl();
     }
 
+    public Long getBlogId(String blogUrl){
+        return blogRepository.findByBlogUrl(blogUrl);
+    }
+
     public String getReadme(Long blogId){
         return blogRepository.getReferenceById(blogId).getReadme();
     }

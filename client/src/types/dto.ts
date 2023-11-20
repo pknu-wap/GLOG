@@ -139,6 +139,7 @@ export interface IPostContent {
   viewsCount?: number;
 }
 
+
 //리드미 get
 export interface IReadMeParams {
   blogId?: number;
@@ -151,4 +152,37 @@ export interface IReadMe {
 
 export interface IBlogIdParams {
   blogUrl?: string;
+}
+
+// 템플릿 불러오기
+export interface ITemplate {
+  postTitleResponse: {
+    title: string;
+    id: number;
+  }[];
+}
+
+// 템플릿 디테일 params
+export interface ITemplateDetailParams {
+  templateId: number;
+}
+
+// 템플릿 디테일 불러오기
+export interface ITemplateDetail {
+  title: string;
+  content: string;
+  thumbnail: string;
+  hashtags: string[];
+  id: number;
+}
+
+// 템플릿 추가
+export interface ITemplateAdd {
+  thumbnail: string;
+  postBasicDto: {
+    title: string;
+    content: string;
+    thumbnail: string;
+    hashtags: string[];
+  };
 }

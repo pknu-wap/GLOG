@@ -30,8 +30,11 @@ public class ReplyController {
 
     @GetMapping("/replies")
     public ResponseEntity<ReplyGetResponse> read(@CurrentUser UserPrincipal userPrincipal,
-                                                 @RequestBody ReplyGetRequest replyGetRequest) {
+                                                 @RequestParam Long postId,
+                                                 @RequestParam int page,
+                                                 @RequestParam String order) {
 
+        ReplyGetRequest replyGetRequest = new ReplyGetRequest(postId, page, order);
         ReplyGetResponse replyGetReponse = replyService.getReplies(userPrincipal, replyGetRequest);
 
         return new ResponseEntity<>(replyGetReponse, HttpStatus.OK);

@@ -39,7 +39,11 @@ public class PostController {
         return new ResponseEntity<>(post.getId(), HttpStatus.OK);
     }
 
-    @PutMapping("/post")
+    @RequestMapping(value = "/post",
+            method = RequestMethod.PUT,
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<Long> update(@CurrentUser UserPrincipal userPrincipal,
                                        @RequestPart(value="thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {

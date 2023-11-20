@@ -28,6 +28,13 @@ export interface IProfile {
   loginedMemberId: number;
 }
 
+// 댓글 컴포넌트 정보
+export interface IReply {
+  postId?: number;
+  page?: number;
+  order?: string;
+}
+
 // 글쓰기 페이지
 export interface IWrite {
   thumbnail?: string | null;
@@ -66,7 +73,7 @@ export interface IPost {
 
 // 사이드바
 export interface ISidebar {
-  blogId: number;
+  blogId?: number;
 }
 
 // 사이드바 전체 내용
@@ -130,6 +137,21 @@ export interface IPostContent {
   thumbnail?: string;
   title?: string;
   viewsCount?: number;
+}
+
+
+//리드미 get
+export interface IReadMeParams {
+  blogId?: number;
+}
+
+//리드미 put
+export interface IReadMe {
+  content?: string;
+}
+
+export interface IBlogIdParams {
+  blogUrl?: string;
 }
 
 // 템플릿 불러오기

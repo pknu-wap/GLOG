@@ -1,7 +1,7 @@
 'use client';
-import { Box, Icon, Stack, useTheme } from '@mui/material';
+import { Avatar, Box, Icon, Stack, TextField, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { BlackContainer, ImageContainer, ThumbnailArea } from './postId.style';
+import { BlackContainer, GetReplies, ImageContainer, PostReply, ReplyCount, ReplyHandle, RiteReply, ThumbnailArea } from './postId.style';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, useGetPostQuery } from '@/api/blog-api';
 import { IPostContent, ISidebarContent } from '@/types/dto';
@@ -15,6 +15,7 @@ import Modal from '@/components/Modal/Modal';
 import { ModalContent } from '@/components/Modal/Modal.style';
 import Button from '@/components/Button/Button';
 import { useGetReplyQuery } from '@/api/reply-api';
+import ReplyBasicMenu from './ReplyMenu';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
@@ -102,6 +103,22 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
         rightContainer={
           <Stack width={'100%'} bgcolor={userTheme === 'dark' ? 'transparent' : '#FCFAF1'} p={12}>
             <MDEditor.Markdown source={post?.content} />
+            <PostReply>
+              <ReplyHandle>
+                <ReplyCount>댓글 5개</ReplyCount>
+                <Stack flexDirection={"row"}>
+                  <ReplyBasicMenu></ReplyBasicMenu>
+                  <Stack>정렬기준</Stack>
+                </Stack>
+              </ReplyHandle>
+              <RiteReply>
+                <Avatar sx={{ width: 24, height: 24 }} alt="" src="/static/images/avatar/1.jpg" />
+                <TextField fullWidth />
+              </RiteReply>
+            </PostReply>
+            <GetReplies>
+              {/* map 이용해서 뿌려야함 */}
+            </GetReplies>
           </Stack>
         }
       />

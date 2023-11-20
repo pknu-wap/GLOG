@@ -23,4 +23,21 @@ export const ImageContainer = styled(Stack)(({ imageSrc }: { imageSrc: string })
   height: '100%',
 }));
 
-export const RepliesArea = styled(Stack)({});
+export const PostReply = styled(Stack)({
+  backgroundColor: 'teal',
+  height: '100%',
+  flexDirection: 'column',
+  
+});
+
+export const ReplyHandle = styled(Stack)({
+  flexDirection: 'row',
+});
+
+export const ReplyCount = styled(Stack)({});
+
+export const RiteReply = styled(Stack)({
+  flexDirection: 'row',
+});
+
+export const GetReplies = styled(Stack)({});

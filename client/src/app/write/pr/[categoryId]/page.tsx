@@ -28,12 +28,9 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const [userTheme] = useUserThemeSSR();
   const [templateId] = useTemplateIdSSR();
   const [temporaryId] = useTemporaryIdSSR();
-  // const [temporaryId, setTemporary] = useTemporaryIdSSR();
 
   const { data: templateData } = useGetTemplateDetailQuery({ templateId });
   const { data: temporaryData } = useGetTemporaryDetailQuery({ temporaryId });
-
-  console.log(templateData);
 
   useEffect(() => {
     setTitle(templateData?.title);

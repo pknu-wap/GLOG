@@ -12,10 +12,11 @@ import { WritePropsContext, WriteType } from '@/util/useWriteProps';
 import TopButton from '../../../Top/TopButton';
 import {
   useTemplateIdSSR,
+  useTemporaryIdSSR,
   // useTemporaryIdSSR,
   useUserThemeSSR,
 } from '../../../../../../hooks/useRecoilSSR';
-import { useGetTemplateDetailQuery } from '@/api/write-api';
+import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
@@ -27,9 +28,10 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const [tags, setTags] = useState<string[]>([]);
   const [userTheme] = useUserThemeSSR();
   const [templateId] = useTemplateIdSSR();
-  // const [temporaryId, setTemporary] = useTemporaryIdSSR();
+  const [temporaryId] = useTemporaryIdSSR();
 
   const { data: templateData } = useGetTemplateDetailQuery({ templateId });
+  const { data: temporaryData } = useGetTemporaryDetailQuery({ temporaryId });
 
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
 
@@ -38,7 +40,15 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   useEffect(() => {
     setTitle(templateData?.title);
     setContent(templateData?.content);
+    setTags(templateData?.hashtags);
   }, [templateData]);
+
+  useEffect(() => {
+    setTitle(temporaryData?.title);
+    setContent(temporaryData?.content);
+    setTags(temporaryData?.hashtags);
+  }, [temporaryData]);
+
   return (
     <WritePropsContext.Provider value={state}>
       <Stack mt={10} spacing={4} data-color-mode={userTheme}>

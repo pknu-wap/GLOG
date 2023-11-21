@@ -32,8 +32,8 @@ function TemplateModal({ open, onClose }: ModalType) {
   }, [templateListData]);
 
   const actionClick = () => {
-    onClose();
     setTemplate(clickList);
+    onClose();
   };
 
   const deleteClick = () => {

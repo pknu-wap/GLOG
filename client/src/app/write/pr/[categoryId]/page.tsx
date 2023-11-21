@@ -33,19 +33,21 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const { data: templateData } = useGetTemplateDetailQuery({ templateId });
   const { data: temporaryData } = useGetTemporaryDetailQuery({ temporaryId });
 
-  const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
-
   console.log(templateData);
 
   useEffect(() => {
     setTitle(templateData?.title);
     setContent(templateData?.content);
+    setTags(templateData?.hashtags);
   }, [templateData]);
 
   useEffect(() => {
     setTitle(temporaryData?.title);
     setContent(temporaryData?.content);
+    setTags(temporaryData?.hashtags);
   }, [temporaryData]);
+
+  const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
 
   return (
     <WritePropsContext.Provider value={state}>
@@ -58,7 +60,7 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
           placeholder="제목을 입력해주세요."
         />
         <ToolBar>
-          <TagList editTagArray={(newValue) => setTags(newValue)} tagArray={tags} />
+          <TagList editTagArray={(newValue) => setTags(newValue)} tagArray={tags ?? []} />
           <TopButton />
         </ToolBar>
         <MDEditor height="68vh" value={content} onChange={setContent} />

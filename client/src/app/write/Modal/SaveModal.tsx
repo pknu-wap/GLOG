@@ -20,6 +20,7 @@ import { useWriteProps } from '@/util/useWriteProps';
 import { useMutation } from '@tanstack/react-query';
 import { PostWriteApi, UpdateWriteApi } from '@/api/write-api';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 function SaveModal({ open, onClose }: ModalType) {
   const [postConfirmOpen, setPostConfirmOpen] = useState<boolean>(false);
@@ -30,8 +31,7 @@ function SaveModal({ open, onClose }: ModalType) {
   const fileInput = useRef<any>(null);
   const [image, setImage] = useState('');
   const [privateMode, setPrivateMode] = useState<'private' | 'public'>('private');
-  const isNewWrite = write?.params?.postId === '0';
-
+  const pathname = usePathname();
   const postWriteCreateQuery = useMutation(PostWriteApi, {
     onSuccess: () => router.push('/home'),
   });
@@ -43,6 +43,7 @@ function SaveModal({ open, onClose }: ModalType) {
   const actionClick = () => {
     setPostConfirmOpen(true);
   };
+  const isNewWrite = pathname.startsWith('/write/create');
 
   // FormData 생성 함수
   // [FIXME : 템플릿 수정하면서 같이한 거라 나중에 수정 예정]
@@ -67,10 +68,10 @@ function SaveModal({ open, onClose }: ModalType) {
     const formData = createFormData({
       thumbnail: image,
       postCreateRequest: {
-        title: 'string',
-        content: 'string',
-        thumbnail: 'string',
-        hashtags: ['string'],
+        title: write?.title,
+        content: write?.content,
+        thumbnail: image,
+        hashtags: write?.tags,
       },
     });
 

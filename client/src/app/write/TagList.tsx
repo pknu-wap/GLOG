@@ -15,6 +15,7 @@ function TagList({
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
+  console.log(tag);
   return (
     <TagContainer>
       {tagArray?.map((tag, i) => (
@@ -23,7 +24,7 @@ function TagList({
           color="primary"
           label={`# ${tag}`}
           deleteIcon={<CancelIcon />}
-          onDelete={() => editTagArray(tagArray.filter((tag, index) => index !== i))}
+          onDelete={() => editTagArray(tagArray?.filter((tag, index) => index !== i))}
         />
       ))}
       <TagTextfield
@@ -35,10 +36,16 @@ function TagList({
         onKeyDown={(event) => {
           if (event.code === 'Enter') {
             event.preventDefault();
-            if (tagArray.length <= 10) {
-              if (!tag.includes('#') && tag.length > 1) {
-                editTagArray([...tagArray, tag]);
-                setTag('');
+            if (tagArray?.length <= 10 || !tagArray) {
+              if (!tag.includes('#')) {
+                if (tag.length > 1) {
+                  editTagArray([...tagArray, tag]);
+                  setTag('');
+                } else {
+                  setTag('');
+                  // setToastOpen(true);
+                  // setToastMessage('두 글자 이상의 단어로 입력해주세요.');
+                }
               } else {
                 setTag('');
                 setToastOpen(true);

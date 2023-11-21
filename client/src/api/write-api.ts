@@ -13,7 +13,7 @@ export const PostWriteApi = async (body: FormData) => {
 };
 
 export const UpdateWriteApi = async (body: FormData) => {
-  const { data } = await defaultInstance.put('/post/update', {
+  const { data } = await defaultInstance.put('/post', {
     body,
   });
 

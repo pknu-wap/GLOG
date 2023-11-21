@@ -23,7 +23,11 @@ public class Alarm {
     private User user;
     private String message;
     private Boolean read;
+    private AlarmType type;
+    private Object referencedEntity;
     @CreatedDate
     private LocalDateTime createdAt;
+
+
 
 }

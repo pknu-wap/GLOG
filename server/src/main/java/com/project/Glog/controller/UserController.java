@@ -8,6 +8,7 @@ import com.project.Glog.security.CustomUserDetailsService;
 import com.project.Glog.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,8 +38,11 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-
-    @PostMapping("/change/user/image")
+    @RequestMapping(value = "/change/user/image",
+            method = RequestMethod.POST,
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<UserDetailResponse> chageUserImage(@CurrentUser UserPrincipal userPrincipal,
                                                              @RequestPart(value="image") MultipartFile multipartFile) throws IOException {
 

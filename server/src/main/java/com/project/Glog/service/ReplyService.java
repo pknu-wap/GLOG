@@ -1,18 +1,12 @@
 package com.project.Glog.service;
 
-import com.project.Glog.domain.Post;
-import com.project.Glog.domain.Reply;
-import com.project.Glog.domain.ReplyLike;
-import com.project.Glog.domain.User;
+import com.project.Glog.domain.*;
 import com.project.Glog.dto.ReplyDto;
 import com.project.Glog.dto.request.reply.ReplyCreateRequest;
 import com.project.Glog.dto.request.reply.ReplyGetRequest;
 import com.project.Glog.dto.request.reply.ReplyUpdateRequest;
 import com.project.Glog.dto.response.reply.ReplyGetResponse;
-import com.project.Glog.repository.PostRepository;
-import com.project.Glog.repository.ReplyLikeRepository;
-import com.project.Glog.repository.ReplyRepository;
-import com.project.Glog.repository.UserRepository;
+import com.project.Glog.repository.*;
 import com.project.Glog.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +27,8 @@ public class ReplyService  {
     private PostRepository postRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AlarmRepository alarmRepository;
 
 
     public Long createReply(UserPrincipal userPrincipal, ReplyCreateRequest req) {
@@ -42,6 +38,17 @@ public class ReplyService  {
         Reply reply = req.toReply(post, user);
 
         replyRepository.save(reply);
+
+        Alarm alarm = new Alarm(
+                null,
+                post.getUser(),
+                "게시글에 댓글이 달렸습니다.",
+                false,
+                AlarmType.reply,
+                post.getId(),
+                null);
+        alarmRepository.save(alarm);
+
         return reply.getPost().getId();
     }
 

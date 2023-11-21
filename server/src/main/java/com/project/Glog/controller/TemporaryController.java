@@ -7,6 +7,7 @@ import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.TemporaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +37,11 @@ public class TemporaryController {
     }
 
 
-    @PostMapping("/temporary") //TODO 이미지 파일 업로드 필요
+    @RequestMapping(value = "/temporary",
+            method = RequestMethod.POST,
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<String> createTemporary(@CurrentUser UserPrincipal userPrincipal,
                                                   @RequestParam(value = "thumbnail", required = false) MultipartFile multipartFile,
                                                   @RequestPart PostBasicDto postBasicDto) throws IOException {

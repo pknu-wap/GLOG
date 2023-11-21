@@ -44,8 +44,8 @@ public class ReplyService  {
                 post.getUser(),
                 "게시글에 댓글이 달렸습니다.",
                 false,
-                AlarmType.REPLY,
-                post,
+                AlarmType.reply,
+                post.getId(),
                 null);
         alarmRepository.save(alarm);
 

@@ -1,6 +1,7 @@
 package com.project.Glog.dto;
 
 import com.project.Glog.domain.Alarm;
+import com.project.Glog.domain.AlarmType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +14,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AlarmDto {
     private String message;
-    private Boolean read;
+    private Boolean checked;
+    private AlarmType type;
+    private Long referencedId;
     private LocalDateTime createdAt;
 
     public static AlarmDto of(Alarm alarm){
         return new AlarmDto(
                 alarm.getMessage(),
-                alarm.getRead(),
+                alarm.getChecked(),
+                alarm.getType(),
+                alarm.getReferencedId(),
                 alarm.getCreatedAt());
     }
 }

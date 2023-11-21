@@ -28,7 +28,7 @@ public class AlarmService {
 
         AlarmDtos alarmDtos = AlarmDtos.of(alarms);
 
-        alarms.forEach(alarm -> alarm.setRead(true));
+        alarms.forEach(alarm -> alarm.setChecked(true));
         alarmRepository.saveAll(alarms);
 
         return alarmDtos;

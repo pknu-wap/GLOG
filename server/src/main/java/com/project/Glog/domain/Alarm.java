@@ -17,17 +17,16 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "alarm")
 public class Alarm {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     private String message;
-    private Boolean read;
+    private Boolean checked;
+    @Enumerated(EnumType.STRING)
     private AlarmType type;
-    private Object referencedEntity;
+    private Long referencedId;
     @CreatedDate
     private LocalDateTime createdAt;
-
-
 
 }

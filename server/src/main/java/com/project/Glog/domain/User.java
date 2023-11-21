@@ -75,7 +75,7 @@ public class User {
     private List<Template> templates;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Temporary> temporaries;
-    @OneToMany(mappedBy = "alarm", cascade = CascadeType.ALL, fetch =FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =FetchType.LAZY)
     private List<Alarm> alarms;
 
 

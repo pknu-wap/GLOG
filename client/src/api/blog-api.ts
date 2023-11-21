@@ -38,6 +38,8 @@ const GetSidebarApi = async (params: ISidebar) => {
 };
 
 export const useGetSidebarQuery = (params: ISidebar) => {
-  const { isLoading, error, data } = useQuery([`sidebar`, params], () => GetSidebarApi(params));
+  const { isLoading, error, data } = useQuery([`sidebar`, params], () => GetSidebarApi(params), {
+    enabled: !!params.blogId,
+  });
   return { data, isLoading, error };
 };

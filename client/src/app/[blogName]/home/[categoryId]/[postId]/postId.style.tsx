@@ -22,3 +22,5 @@ export const ImageContainer = styled(Stack)(({ imageSrc }: { imageSrc: string })
   width: '100%',
   height: '100%',
 }));
+
+export const RepliesArea = styled(Stack)({});

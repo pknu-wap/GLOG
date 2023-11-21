@@ -1,44 +1,25 @@
 package com.project.Glog.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.Glog.config.AppProperties;
-import com.project.Glog.domain.Category;
 import com.project.Glog.domain.GithubRepository;
 import com.project.Glog.domain.PrPost;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.response.pr.*;
 import com.project.Glog.repository.CategoryRepository;
-import com.project.Glog.repository.GithubRepositoryRepository;
+import com.project.Glog.repository.GithubRepoRepository;
 import com.project.Glog.repository.PrPostRepository;
-import com.project.Glog.repository.UserRepository;
-import com.project.Glog.security.TokenProvider;
 import com.project.Glog.security.UserPrincipal;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.*;
 
 @Service
 public class GitHubService {
     @Autowired
-    private GithubRepositoryRepository githubRepositoryRepository;
+    private GithubRepoRepository githubRepositoryRepository;
     @Autowired
     private PrPostRepository prPostRepository;
     @Autowired
@@ -53,7 +34,6 @@ public class GitHubService {
 
     public List<GithubRepositoryInfo> getUserRepo(User user) {
         HttpHeaders headers = new HttpHeaders();
-//        headers.set("Authorization", "Bearer " + githubApiToken);
         headers.set("Authorization", "Bearer " + user.getGithubToken());
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -87,9 +67,8 @@ public class GitHubService {
         }
     }
 
-    public List<PrInfo> getPr(User user,String owner, String repo, String userName) {
+    public List<PrInfo> getPr(User user,String owner, String repo) {
         HttpHeaders headers = new HttpHeaders();
-//        headers.set("Authorization", "Bearer " + githubApiToken);
         headers.set("Authorization", "Bearer " + user.getGithubToken());
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -99,8 +78,9 @@ public class GitHubService {
 
         // 쿼리 파라미터 설정
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
-                .queryParam("state", "all")
-                .queryParam("user", "{userName}");
+                .queryParam("state", "all");
+        // 해당 유저의 pr만 가져오기?
+        //        .queryParam("user", "{userName}");
 
         String ghUrl = builder.toUriString();
 
@@ -121,38 +101,6 @@ public class GitHubService {
         }
     }
 
-//    public void getUserReposs(User user) {
-//        HttpHeaders headers = new HttpHeaders();
-////        headers.set("Authorization", "Bearer " + githubApiToken);
-//        headers.set("Authorization", "Bearer " + user.getGithubToken());
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//
-//
-//        // 인증된 사용자 리포지토리
-//        String GITHUB_USER_REPOS_ENDPOINT = "/user/repos";
-//        String url = GITHUB_API_URL + GITHUB_USER_REPOS_ENDPOINT;
-//
-//        // 쿼리 파라미터 설정
-//        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
-//                .queryParam("affiliation", "owner,collaborator,");
-//
-//        String ghUrl = builder.toUriString();
-//
-//
-//        ResponseEntity<String> responseEntity = restTemplate.exchange(
-//                ghUrl,
-//                HttpMethod.GET,
-//                new HttpEntity<>(headers),
-//                String.class  // 문자열로 직접 응답 받기
-//        );
-//
-//        String responseBody = responseEntity.getBody();
-//        System.out.println(responseBody);
-//
-//    }
-
-
 
     public String getUserGhToken(UserPrincipal userPrincipal){
         String GITHUB_USER_TOKEN_ENDPOINT = "/login/oauth/"+userPrincipal;
@@ -167,12 +115,12 @@ public class GitHubService {
             githubRepository.setRepoName(repo.getName());
             githubRepository.setOwnerName(repo.getOwner().getLogin());
 
-            if(!isSamerepos(user.getId(), githubRepository.getRepoName())) {
+            if(!isPresentRepo(user.getId(), githubRepository.getRepoName())) {
                 githubRepositoryRepository.save(githubRepository);
             }
         }
 
-        List<String> Repos = githubRepositoryRepository.findByUserIds(user.getId());
+        List<String> Repos = githubRepositoryRepository.findRepoNameByUserId(user.getId());
         Boolean isAuthor;
         if(categoryRepository.findUserByCategoryId(categoryId).getId() == user.getId()){
             isAuthor = true;
@@ -193,8 +141,7 @@ public class GitHubService {
             prPost.setPrTitle(prInfo.getTitle());
             prPost.setIsPosted(false);
 
-//            prPostRepository.save(prPost);
-            if(!isSamePr(prPost.getPrNumber(), prPost.getGithubRepository())) {
+            if(!isPresentPr(prPost.getPrNumber(), prPost.getGithubRepository())) {
                 prPostRepository.save(prPost);
             }
 
@@ -214,7 +161,7 @@ public class GitHubService {
         return prUnPostResponse;
     }
 
-    public Boolean isSamerepos(Long userId, String reponame){
+    public Boolean isPresentRepo(Long userId, String reponame){
         Optional <GithubRepository> githubRepository = githubRepositoryRepository.findByRepoName(userId, reponame);
 
         if(githubRepository.isPresent()){
@@ -225,7 +172,7 @@ public class GitHubService {
         }
     }
 
-    public Boolean isSamePr(Integer number, GithubRepository githubRepository){
+    public Boolean isPresentPr(Integer number, GithubRepository githubRepository){
         Optional <PrPost> prPost = prPostRepository.findByNumber(number, githubRepository.getId());
 
         if(prPost.isPresent()){

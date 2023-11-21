@@ -40,7 +40,7 @@ public class FriendService {
         return new UserFriendResponse(makeUserSimpleDtos(userPrincipal));
     }
 
-    public UserSimpleDtos makeUserSimpleDtos(UserPrincipal userPrincipal) {
+    private UserSimpleDtos makeUserSimpleDtos(UserPrincipal userPrincipal) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         List<User> users = new ArrayList<>();
         List<Friend> friends = new ArrayList<>();
@@ -139,7 +139,7 @@ public class FriendService {
         }
     }
 
-    public List<UserSimpleDto> makeSortedFriends(UserSimpleDtos userSimpleDtos, Comparator<UserSimpleDto> comparator){
+    private List<UserSimpleDto> makeSortedFriends(UserSimpleDtos userSimpleDtos, Comparator<UserSimpleDto> comparator){
         List<UserSimpleDto> notFriends = userSimpleDtos.getUserSimpleDtos().stream()
                 .filter(friend -> !isFriend(friend))
                 .sorted(comparator)
@@ -201,7 +201,7 @@ public class FriendService {
         }
     }
 
-    public String findRelationship(UserPrincipal userPrincipal, Long personId) {
+    private String findRelationship(UserPrincipal userPrincipal, Long personId) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         User opponent = userRepository.findById(personId).get();
 

@@ -19,6 +19,7 @@ const Page = () => {
   const postMakeAccountCreateQuery = useMutation(PostMakeAccountApi, {
     onSuccess: () => router.push('/collect'),
   });
+
   const postOnClick = () => {
     const newAccountBody = {
       blogUrl: blogUrl,
@@ -28,12 +29,14 @@ const Page = () => {
 
     postMakeAccountCreateQuery.mutate(newAccountBody);
   };
+
   useEffect(() => {
     const getTokenValue = params.get('token');
     const error = params.get('error');
 
     if (getTokenValue) {
       localStorage.setItem('token', getTokenValue);
+      console.log(getTokenValue);
     } else {
       console.log(error);
     }

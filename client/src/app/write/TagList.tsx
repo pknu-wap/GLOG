@@ -17,7 +17,7 @@ function TagList({
 
   return (
     <TagContainer>
-      {tagArray.map((tag, i) => (
+      {tagArray?.map((tag, i) => (
         <Chip
           key={i}
           color="primary"

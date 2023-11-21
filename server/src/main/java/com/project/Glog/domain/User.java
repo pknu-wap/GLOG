@@ -1,6 +1,18 @@
 package com.project.Glog.domain;
+
 import com.project.Glog.dto.request.user.UserInfoChangeRequest;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,7 +24,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
@@ -63,9 +76,9 @@ public class User {
     private Guestbook guestBook;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BookMessage> bookMessages;
-    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Friend> fromFriends;
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Friend> fromFriends;
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Friend> toFriends;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<History> histories;
@@ -77,8 +90,9 @@ public class User {
     private List<Temporary> temporaries;
 
 
-    public void updateInfo(UserInfoChangeRequest userInfoChangeRequest){
+    public void updateInfo(UserInfoChangeRequest userInfoChangeRequest) {
         this.nickname = userInfoChangeRequest.getName();
         this.introduction = userInfoChangeRequest.getIntroducion();
     }
 }
+

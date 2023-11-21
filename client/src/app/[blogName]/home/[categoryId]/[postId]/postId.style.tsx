@@ -40,7 +40,7 @@ export const ReplyHandle = styled(Stack)({
 
 export const ReplyCount = styled(Stack)({});
 
-export const RiteReply = styled(Stack)({
+export const WriteReply = styled(Stack)({
   flexDirection: 'row',
   alignItems: 'center',
 });

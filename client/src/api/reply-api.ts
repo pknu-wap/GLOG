@@ -14,9 +14,7 @@ export const useGetReplyQuery = (params: IReplyParams) => {
 };
 
 export const PostReplyApi = async (body: IReply) => {
-  const { data } = await defaultInstance.post('/replies', {
-    body,
-  });
+  const { data } = await defaultInstance.post('/replies', body);
 
   return data;
 };

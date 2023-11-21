@@ -88,6 +88,8 @@ public class User {
     private List<Template> templates;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Temporary> temporaries;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =FetchType.LAZY)
+    private List<Alarm> alarms;
 
 
     public void updateInfo(UserInfoChangeRequest userInfoChangeRequest) {

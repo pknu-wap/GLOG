@@ -15,6 +15,7 @@ import Modal from '@/components/Modal/Modal';
 import { ModalContent } from '@/components/Modal/Modal.style';
 import Button from '@/components/Button/Button';
 import { useGetReplyQuery } from '@/api/reply-api';
+import PageLink from '@/components/PageLink/PageLink';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
@@ -25,8 +26,8 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const router = useRouter();
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
-  const [page, setPage] = useState(0);
-  const [order, setOrder] = useState('id');
+  const [page] = useState(0);
+  const [order] = useState('id');
   const { data: replyData } = useGetReplyQuery({
     postId: Number(params.postId),
     page: page,
@@ -90,6 +91,10 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   <IconButton color="white">
                     <Home fontSize="small" onClick={() => router.push(`/${params.blogName}`)} />
                   </IconButton>
+                  <PageLink href={`/write/update/${params.categoryId}/${params.postId}`}>
+                    <Button>수정</Button>
+                  </PageLink>
+                  <Button color="error">삭제</Button>
                 </Stack>
               </Stack>
             </Stack>

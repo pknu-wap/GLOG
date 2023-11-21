@@ -9,7 +9,7 @@ import { ModalType } from '@/types/common';
 import ModalButton from '@/components/Modal/ModalButton';
 import { DeleteTemplateApi, useGetTemplateQuery } from '@/api/write-api';
 import { ITemplate } from '@/types/dto';
-import { useTemplateIdSSR } from '../../../../../../hooks/useRecoilSSR';
+import { useTemplateIdSSR } from '../../../../hooks/useRecoilSSR';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 function TemplateModal({ open, onClose }: ModalType) {
@@ -23,7 +23,7 @@ function TemplateModal({ open, onClose }: ModalType) {
   const deleteTemplateQuery = useMutation(DeleteTemplateApi, {
     onSuccess() {
       queryClient.invalidateQueries(['template']);
-      onClose();
+      // onClose();
     },
   });
 
@@ -55,7 +55,13 @@ function TemplateModal({ open, onClose }: ModalType) {
                 }}
                 content={`#${list.id} ${list.title}`}
                 buttonAction={
-                  <Button onClick={() => setDeleteConfirmOpen(true)} size="small" color="error">
+                  <Button
+                    onClick={() => {
+                      setClickList(list.id);
+                      setDeleteConfirmOpen(true);
+                    }}
+                    size="small"
+                    color="error">
                     삭제
                   </Button>
                 }

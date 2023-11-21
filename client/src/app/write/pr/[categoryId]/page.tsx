@@ -5,17 +5,17 @@ import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useState } from 'react';
 import { Stack, TextField } from '@mui/material';
-import { ToolBar } from '../../Write.style';
-import TagList from '../../TagList';
-import BottomButton from './Bottom/BottomButton';
 import { WritePropsContext, WriteType } from '@/util/useWriteProps';
-import TopButton from '../../Top/TopButton';
+import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 import {
   useTemplateIdSSR,
-  // useTemporaryIdSSR,
+  useTemporaryIdSSR,
   useUserThemeSSR,
 } from '../../../../../hooks/useRecoilSSR';
-import { useGetTemplateDetailQuery } from '@/api/write-api';
+import { ToolBar } from '../../Write.style';
+import TagList from '../../TagList';
+import TopButton from '../../Top/TopButton';
+import BottomButton from '../../Bottom/BottomButton';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
@@ -27,9 +27,11 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
   const [tags, setTags] = useState<string[]>([]);
   const [userTheme] = useUserThemeSSR();
   const [templateId] = useTemplateIdSSR();
+  const [temporaryId] = useTemporaryIdSSR();
   // const [temporaryId, setTemporary] = useTemporaryIdSSR();
 
   const { data: templateData } = useGetTemplateDetailQuery({ templateId });
+  const { data: temporaryData } = useGetTemporaryDetailQuery({ temporaryId });
 
   const state = useMemo(() => ({ content, title, tags, params }), [content, title, tags, params]);
 
@@ -39,6 +41,12 @@ const Write = ({ params }: { params: WriteType['params'] }) => {
     setTitle(templateData?.title);
     setContent(templateData?.content);
   }, [templateData]);
+
+  useEffect(() => {
+    setTitle(temporaryData?.title);
+    setContent(temporaryData?.content);
+  }, [temporaryData]);
+
   return (
     <WritePropsContext.Provider value={state}>
       <Stack mt={10} spacing={4} data-color-mode={userTheme}>

@@ -1,4 +1,4 @@
-import { PostTemplateApi } from '@/api/write-api';
+import { PostTemplateApi, PostTemporaryApi } from '@/api/write-api';
 import { Dialog } from '@/components/Dialog/Dialog';
 import Toast from '@/components/Toast/Toast';
 import { ModalType } from '@/types/common';
@@ -17,9 +17,16 @@ function SaveDialog({
   const write = useWriteProps();
   const [toastOpen, setToastOpen] = useState(false);
 
-  const postAddTemplate = useMutation(PostTemplateApi, {
+  const postTemplateAddTemplate = useMutation(PostTemplateApi, {
     onSuccess() {
       queryClient.invalidateQueries(['template']);
+      setToastOpen(true);
+    },
+  });
+
+  const postTemporaryAddTemplate = useMutation(PostTemporaryApi, {
+    onSuccess() {
+      queryClient.invalidateQueries(['temporaries']);
       setToastOpen(true);
     },
   });
@@ -40,7 +47,7 @@ function SaveDialog({
     return formData;
   };
 
-  const postOnClick = () => {
+  const postTemplateOnClick = () => {
     // 폼 데이터 생성
     const formData = createFormData({
       thumbnail: image,
@@ -52,12 +59,27 @@ function SaveDialog({
       },
     });
 
-    postAddTemplate.mutate(formData);
+    postTemplateAddTemplate.mutate(formData);
+  };
+
+  const postTemporaryOnClick = () => {
+    // 폼 데이터 생성
+    const formData = createFormData({
+      thumbnail: image,
+      postBasicDto: {
+        title: write?.title ?? '',
+        content: write?.content ?? '',
+        thumbnail: '',
+        hashtags: write?.tags ?? [],
+      },
+    });
+
+    postTemporaryAddTemplate.mutate(formData);
   };
 
   const typeToAction = {
-    임시: () => console.log('임시'),
-    템플릿: () => postOnClick(),
+    임시: () => postTemporaryOnClick(),
+    템플릿: () => postTemplateOnClick(),
   };
 
   return (

@@ -48,6 +48,9 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
       {isBrowser ? (
         <DragDropContext onDragEnd={dragHandler}>
           <CenterContent bgcolor="transparent">
+            <PageLink href={`/write/create`}>
+              <Stack sx={{ cursor: 'pointer', width: 'fit-content' }}>글쓰기</Stack>
+            </PageLink>
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
                 {footprintList?.map((category) => {
@@ -84,6 +87,11 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                               </PageLink>
                             </IconButton>
                           </Stack>
+                          <PageLink href={`/chaeyeon/prList/${category.categoryId}`}>
+                            <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
+                              PR 연동
+                            </Stack>
+                          </PageLink>
                           <Stack
                             sx={{
                               padding: '8px',

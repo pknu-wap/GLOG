@@ -9,7 +9,9 @@ function PageLink({
 }: LinkProps &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & { children: ReactNode; color?: string }) {
   return (
-    <Link style={{ textDecoration: 'none', color: color ?? '#000000', ...style }} {...rest}>
+    <Link
+      style={{ width: 'fit-content', textDecoration: 'none', color: color ?? '#000000', ...style }}
+      {...rest}>
       {children}
     </Link>
   );

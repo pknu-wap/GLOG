@@ -8,8 +8,8 @@ import RepliesComponent, {
   PostReply,
   ReplyHandle,
   ReplyPagenation,
-  RiteReply,
   ThumbnailArea,
+  WriteReply,
 } from './postId.style';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, useGetPostQuery } from '@/api/blog-api';
@@ -175,7 +175,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   <Stack>정렬기준</Stack>
                 </Stack>
               </ReplyHandle>
-              <RiteReply>
+              <WriteReply>
                 <Avatar sx={{ width: 35, height: 35 }} alt="" src="/static/images/avatar/1.jpg" />
                 <TextField
                   fullWidth
@@ -189,7 +189,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                 <Button variant="outlined" sx={{ width: '25px' }} onClick={() => ReplyOnClick()}>
                   등록
                 </Button>
-              </RiteReply>
+              </WriteReply>
             </PostReply>
             <GetReplies>
               {/* map 이용해서 뿌려야함 */}

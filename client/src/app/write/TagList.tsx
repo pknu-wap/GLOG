@@ -11,11 +11,11 @@ function TagList({
   tagArray: string[];
   editTagArray: (newValue: string[]) => void;
 }) {
-  const [tag, setTag] = useState('');
+  const [tag, setTag] = useState<string>('');
   const [toastOpen, setToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastMessage] = useState('');
 
-  console.log(tag);
+  console.log(tag, tagArray);
   return (
     <TagContainer>
       {tagArray?.map((tag, i) => (
@@ -36,28 +36,35 @@ function TagList({
         onKeyDown={(event) => {
           if (event.code === 'Enter') {
             event.preventDefault();
-            if (tagArray?.length <= 10 || !tagArray) {
-              if (!tag.includes('#')) {
-                if (tag.length > 1) {
-                  editTagArray([...tagArray, tag]);
-                  setTag('');
-                } else {
-                  setTag('');
-                  // setToastOpen(true);
-                  // setToastMessage('두 글자 이상의 단어로 입력해주세요.');
-                }
-              } else {
-                setTag('');
-                setToastOpen(true);
-                setToastMessage('태그에 `#`은 포함될 수 없습니다.');
-              }
+
+            if (tag.length > 1) {
+              tagArray ? editTagArray([...tagArray, tag]) : editTagArray([tag]);
+              setTag('');
             } else {
               setTag('');
-              setToastOpen(true);
-              setToastMessage(
-                '태그는 최대 10개까지 지정 가능하며, 두 글자 이상의 단어여야 합니다.',
-              );
             }
+            // if (tagArray?.length <= 10 || !tagArray) {
+            //   if (!tag.includes('#')) {
+            //     if (tag.length > 1) {
+            //       editTagArray([...tagArray, tag]);
+            //       setTag('');
+            //     } else {
+            //       setTag('');
+            //       // setToastOpen(true);
+            //       // setToastMessage('두 글자 이상의 단어로 입력해주세요.');
+            //     }
+            //   } else {
+            //     setTag('');
+            //     setToastOpen(true);
+            //     setToastMessage('태그에 `#`은 포함될 수 없습니다.');
+            //   }
+            // } else {
+            //   setTag('');
+            //   setToastOpen(true);
+            //   setToastMessage(
+            //     '태그는 최대 10개까지 지정 가능하며, 두 글자 이상의 단어여야 합니다.',
+            //   );
+            // }
           }
         }}
       />

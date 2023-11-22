@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useState } from 'react';
 import Modal from '@/components/Modal/Modal';
 import { Dialog } from '@/components/Dialog/Dialog';
@@ -16,34 +17,63 @@ import {
   TagContent,
   ButtonContainer,
 } from './SaveModal.style';
-import { useWriteProps } from '@/util/useWriteProps';
-import { useMutation } from '@tanstack/react-query';
-import { PostWriteApi, UpdateWriteApi } from '@/api/write-api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { PostTemplateApi, PostTemporaryApi, PostWriteApi, UpdateWriteApi } from '@/api/write-api';
 import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
+import Toast from '@/components/Toast/Toast';
+import { WriteModalType, WriteProps } from '@/util/useWriteProps';
 
-function SaveModal({ open, onClose }: ModalType) {
+function SaveModal({
+  open,
+  onClose,
+  writeProps,
+  modalType,
+}: ModalType & {
+  writeProps: WriteProps;
+  modalType: WriteModalType;
+}) {
   const [postConfirmOpen, setPostConfirmOpen] = useState<boolean>(false);
   const router = useRouter();
-  const write = useWriteProps();
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fileInput = useRef<any>(null);
   const [image, setImage] = useState('');
   const [privateMode, setPrivateMode] = useState<'private' | 'public'>('private');
-  const pathname = usePathname();
+  const queryClient = useQueryClient();
+  const [toastOpen, setToastOpen] = useState(false);
+
   const postWriteCreateQuery = useMutation(PostWriteApi, {
-    onSuccess: () => router.push('/home'),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['post']);
+      router.push('/home');
+    },
   });
 
+  console.log(writeProps);
   const updateWriteCreateQuery = useMutation(UpdateWriteApi, {
-    onSuccess: () => router.push('/home'),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['post']);
+      router.push('/home');
+    },
+  });
+
+  const postTemplateAddTemplate = useMutation(PostTemplateApi, {
+    onSuccess() {
+      queryClient.invalidateQueries(['template']);
+      setToastOpen(true);
+    },
+  });
+
+  const postTemporaryAddTemplate = useMutation(PostTemporaryApi, {
+    onSuccess() {
+      queryClient.invalidateQueries(['temporaries']);
+      setToastOpen(true);
+    },
   });
 
   const actionClick = () => {
     setPostConfirmOpen(true);
   };
-  const isNewWrite = pathname.startsWith('/write/create');
 
   // FormData 생성 함수
   // [FIXME : 템플릿 수정하면서 같이한 거라 나중에 수정 예정]
@@ -63,25 +93,83 @@ function SaveModal({ open, onClose }: ModalType) {
     return formData;
   };
 
+  const createToolFormData = (postData: any) => {
+    const formData = new FormData();
+    formData.append('thumbnail', postData.thumbnail);
+
+    const json = JSON.stringify(postData.postBasicDto);
+
+    const blob = new Blob([json], {
+      type: 'application/json',
+    });
+
+    formData.append('postBasicDto', blob);
+
+    return formData;
+  };
+
   const postOnClick = () => {
     onClose();
     const formData = createFormData({
       thumbnail: image,
       postCreateRequest: {
-        title: write?.title,
-        content: write?.content,
+        title: writeProps?.title,
+        content: writeProps?.content,
         thumbnail: image,
-        hashtags: write?.tags,
+        hashtags: writeProps?.tags,
       },
     });
 
-    isNewWrite ? postWriteCreateQuery.mutate(formData) : updateWriteCreateQuery.mutate(formData);
+    postWriteCreateQuery.mutate(formData);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const postUpdateOnClick = () => {
+    onClose();
+    const formData = createFormData({
+      thumbnail: image,
+      postCreateRequest: {
+        title: writeProps?.title,
+        content: writeProps?.content,
+        thumbnail: image,
+        hashtags: writeProps?.tags,
+      },
+    });
+
+    updateWriteCreateQuery.mutate(formData);
+  };
+
+  const postTemplateOnClick = () => {
+    // 폼 데이터 생성
+    const formData = createToolFormData({
+      thumbnail: image,
+      postBasicDto: {
+        title: writeProps?.title ?? '',
+        content: writeProps?.content ?? '',
+        thumbnail: '',
+        hashtags: writeProps?.tags ?? [],
+      },
+    });
+
+    postTemplateAddTemplate.mutate(formData);
+  };
+
+  const postTemporaryOnClick = () => {
+    // 폼 데이터 생성
+    const formData = createToolFormData({
+      thumbnail: image,
+      postBasicDto: {
+        title: writeProps?.title ?? '',
+        content: writeProps?.content ?? '',
+        thumbnail: '',
+        hashtags: writeProps?.tags ?? [],
+      },
+    });
+
+    postTemporaryAddTemplate.mutate(formData);
+  };
+
   const onUpload = async (e: any) => {
     const file = e.target.files[0];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const reader: any = new FileReader();
     reader.readAsDataURL(file);
 
@@ -148,7 +236,7 @@ function SaveModal({ open, onClose }: ModalType) {
               <></>
               // <img src={imageSrc} alt="" style={{ width: '300px', height: '180px' }} />
             )}
-            <Stack>{write?.title}</Stack>
+            <Stack>{writeProps?.title}</Stack>
           </Preview>
           <Stack gap={8}>
             <Stack>
@@ -171,7 +259,7 @@ function SaveModal({ open, onClose }: ModalType) {
             <Stack>
               <SectionTitle>태그목록</SectionTitle>
               <TagContent>
-                {write?.tags?.map((tag, i) => {
+                {writeProps?.tags?.map((tag, i) => {
                   return <Chip color="primary" sx={{ marginBottom: '8px' }} key={i} label={tag} />;
                 })}
               </TagContent>
@@ -180,7 +268,7 @@ function SaveModal({ open, onClose }: ModalType) {
         </Stack>
       </ModalContent>
       <ModalActions>
-        <ModalButton onClose={onClose} action={{ content: '글 게시', action: actionClick }} />
+        <ModalButton onClose={onClose} action={{ content: '전송', action: actionClick }} />
       </ModalActions>
       <Dialog
         open={postConfirmOpen}
@@ -188,8 +276,20 @@ function SaveModal({ open, onClose }: ModalType) {
         message="글을 게시하시겠습니까?"
         action={{
           content: '확인',
-          action: postOnClick,
+          action:
+            modalType === 'create'
+              ? postOnClick
+              : modalType === 'update'
+              ? postUpdateOnClick
+              : modalType === 'template'
+              ? postTemplateOnClick
+              : postTemporaryOnClick,
         }}
+      />
+      <Toast
+        toastMessage={'성공적으로 추가되었습니다.'}
+        open={toastOpen}
+        onClose={() => setToastOpen(false)}
       />
     </Modal>
   );

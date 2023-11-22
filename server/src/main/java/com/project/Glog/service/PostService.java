@@ -46,6 +46,8 @@ public class PostService {
     private AwsUtils awsUtils;
     @Autowired
     private HistoryRepository historyRepository;
+    @Autowired
+    private PrPostRepository prPostRepository;
 
 
 
@@ -54,6 +56,13 @@ public class PostService {
         Category category = categoryRepository.findById(req.getCategoryId()).get();
         Blog blog = blogRepository.findByUserId(userPrincipal.getId()).get();
         Post post = req.toPost(user, category, blog);
+
+        if(post.getPrId() != null){
+            PrPost prPost = prPostRepository.findPrByPrId(post.getPrId()).get();
+            prPost.setIsPosted(true);
+            prPost.setPost(post);
+            prPostRepository.save(prPost);
+        }
 
 
         //image

@@ -10,8 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class RepositoryResponse {
-    private Boolean isAuthor;
-
     private List<String> repository;
 
 }

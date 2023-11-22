@@ -56,8 +56,7 @@ public class Post {
     private Integer viewsCount;
     @NotNull
     private Boolean isPrivate;
-    @NotNull
-    private Boolean isPr;
+    private Long prId;
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -65,7 +64,7 @@ public class Post {
         this.title=req.getTitle();
         this.content=req.getContent();
         this.isPrivate=req.getIsPrivate();
-        this.isPr=req.getIsPr();
+        this.prId=req.getPrId();
     }
 
 }

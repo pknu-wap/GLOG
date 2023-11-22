@@ -97,7 +97,6 @@ export const useGetTemporaryDetailQuery = (params: ITemporaryDetailParams) => {
   const { isLoading, error, data, refetch } = useQuery(
     [`temporaryDetail`],
     () => GetTemporaryDetailApi(params),
-
     {
       enabled: !!params.temporaryId,
     },

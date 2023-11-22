@@ -26,8 +26,20 @@ const PR = () => {
   const [temporaryId] = useTemporaryIdSSR();
   // const [temporaryId, setTemporary] = useTemporaryIdSSR();
 
-  const { data: templateData } = useGetTemplateDetailQuery({ templateId });
-  const { data: temporaryData } = useGetTemporaryDetailQuery({ temporaryId });
+  const { data: templateData, refetch: templateRefetch } = useGetTemplateDetailQuery({
+    templateId,
+  });
+  const { data: temporaryData, refetch: temporaryRefetch } = useGetTemporaryDetailQuery({
+    temporaryId,
+  });
+
+  useEffect(() => {
+    templateRefetch();
+  }, [templateId]);
+
+  useEffect(() => {
+    temporaryRefetch();
+  }, [temporaryId]);
 
   useEffect(() => {
     setTitle(templateData?.title);

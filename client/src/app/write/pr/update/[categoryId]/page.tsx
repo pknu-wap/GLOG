@@ -7,17 +7,17 @@ import { ToolBar } from '@/app/write/Write.style';
 import TagList from '@/app/write/TagList';
 import TopButton from '@/app/write/Top/TopButton';
 import BottomButton from '@/app/write/Bottom/BottomButton';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 import {
   useTemplateIdSSR,
   useTemporaryIdSSR,
   useUserThemeSSR,
-} from '../../../../hooks/useRecoilSSR';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
+} from '../../../../../../hooks/useRecoilSSR';
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
-const Readme = () => {
+const PR = () => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
@@ -78,4 +78,4 @@ const Readme = () => {
   );
 };
 
-export default Readme;
+export default PR;

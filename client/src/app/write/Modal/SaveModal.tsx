@@ -19,7 +19,7 @@ import {
 } from './SaveModal.style';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PostTemplateApi, PostTemporaryApi, PostWriteApi, UpdateWriteApi } from '@/api/write-api';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Toast from '@/components/Toast/Toast';
 import { WriteModalType, WriteProps } from '@/util/useWriteProps';
 
@@ -32,6 +32,7 @@ function SaveModal({
   writeProps: WriteProps;
   modalType: WriteModalType;
 }) {
+  const pathname = usePathname();
   const [postConfirmOpen, setPostConfirmOpen] = useState<boolean>(false);
   const router = useRouter();
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -41,6 +42,9 @@ function SaveModal({
   const [privateMode, setPrivateMode] = useState<'private' | 'public'>('private');
   const queryClient = useQueryClient();
   const [toastOpen, setToastOpen] = useState(false);
+  const isPrUpdate = pathname.startsWith('/write/pr/update');
+  const isPr = pathname.startsWith('/write/pr');
+  console.log(modalType);
 
   const postWriteCreateQuery = useMutation(PostWriteApi, {
     onSuccess: () => {
@@ -114,7 +118,9 @@ function SaveModal({
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
-        thumbnail: image,
+        thumbnail: '',
+        isPrivate: privateMode === 'private' ? true : false,
+        isPr: isPr ? true : false,
         hashtags: writeProps?.tags,
       },
     });
@@ -129,7 +135,9 @@ function SaveModal({
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
-        thumbnail: image,
+        thumbnail: '',
+        isPrivate: privateMode === 'private' ? true : false,
+        isPr: isPrUpdate ? true : false,
         hashtags: writeProps?.tags,
       },
     });
@@ -138,6 +146,7 @@ function SaveModal({
   };
 
   const postTemplateOnClick = () => {
+    onClose();
     // 폼 데이터 생성
     const formData = createToolFormData({
       thumbnail: image,
@@ -153,6 +162,7 @@ function SaveModal({
   };
 
   const postTemporaryOnClick = () => {
+    onClose();
     // 폼 데이터 생성
     const formData = createToolFormData({
       thumbnail: image,
@@ -232,8 +242,7 @@ function SaveModal({
                 </IconButton>
               </NoImageContent>
             ) : (
-              <></>
-              // <img src={imageSrc} alt="" style={{ width: '300px', height: '180px' }} />
+              <img src={imageSrc} alt="" style={{ width: '300px', height: '180px' }} />
             )}
             <Stack>{writeProps?.title}</Stack>
           </Preview>

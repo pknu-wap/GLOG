@@ -11,6 +11,8 @@ function BottomButton({ writeProps }: { writeProps: WriteProps }) {
   const pathname = usePathname();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isNewWrite = pathname.startsWith('/write/create');
+  const isPrUpdate = pathname.startsWith('/write/pr/update');
+  const isPr = pathname.startsWith('/write/pr');
 
   const tempSaveOnClick = () => {
     setModalType('temporary');
@@ -32,6 +34,16 @@ function BottomButton({ writeProps }: { writeProps: WriteProps }) {
     setWriteSaveOpen(true);
   };
 
+  const createPrOnClick = () => {
+    setModalType('create');
+    setWriteSaveOpen(true);
+  };
+
+  const updatePrOnClick = () => {
+    setModalType('update');
+    setWriteSaveOpen(true);
+  };
+
   return (
     <BottomButtonStyle>
       <Button variant="outlined" onClick={tempSaveOnClick}>
@@ -40,12 +52,19 @@ function BottomButton({ writeProps }: { writeProps: WriteProps }) {
       <Button variant="outlined" onClick={templateSaveOnClick}>
         템플릿 저장
       </Button>
-      <Button variant="contained" onClick={isNewWrite ? createSaveOnClick : updateSaveOnClick}>
+      <Button
+        variant="contained"
+        onClick={
+          isNewWrite
+            ? createSaveOnClick
+            : isPrUpdate
+            ? updatePrOnClick
+            : isPr
+            ? createPrOnClick
+            : updateSaveOnClick
+        }>
         글 저장
       </Button>
-
-      {/* 임시저장, 템플릿 저장 모달 */}
-      {/* <SaveDialog open={saveOpen} onClose={() => setSaveOpen(false)} saveType={saveType} /> */}
 
       {/* 글 저장 모달 */}
       <SaveModal

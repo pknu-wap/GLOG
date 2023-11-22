@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 public class UserFriendResponse {
     private final UserSimpleDtos userSimpleDtos;
-    private final int count;
+    private final int realFriendCount;
 
     public UserFriendResponse(UserSimpleDtos userSimpleDtos) {
         this.userSimpleDtos = userSimpleDtos;
-        count = countFriends();
+        realFriendCount = countFriends();
     }
 
     private int countFriends() {

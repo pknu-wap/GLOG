@@ -37,10 +37,12 @@ public class FriendService {
     }
 
     public UserFriendResponse makeUserFriendResponse(UserPrincipal userPrincipal) {
-        return new UserFriendResponse(makeUserSimpleDtos(userPrincipal));
+        UserFriendResponse userFriendResponse = new UserFriendResponse(makeUserSimpleDtos(userPrincipal));
+        saveUserFriendCount(userPrincipal, userFriendResponse);
+        return userFriendResponse;
     }
 
-    public UserSimpleDtos makeUserSimpleDtos(UserPrincipal userPrincipal) {
+    private UserSimpleDtos makeUserSimpleDtos(UserPrincipal userPrincipal) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         List<User> users = new ArrayList<>();
         List<Friend> friends = new ArrayList<>();
@@ -71,8 +73,19 @@ public class FriendService {
                 .filter(this::isFriend)
                 .filter(dto -> containsUser(users, dto.getUserId()))
                 .toList();
-        return new UserFriendResponse(new UserSimpleDtos(Stream
-                .concat(notFriends.stream(), friends.stream()).toList()));
+        UserSimpleDtos userSimpleDtosByName = new UserSimpleDtos(Stream
+                .concat(notFriends.stream(), friends.stream()).toList());
+
+        setUserSimpleDtosRecentPostId(userSimpleDtosByName);
+        UserFriendResponse userFriendResponse = new UserFriendResponse(userSimpleDtosByName);
+        saveUserFriendCount(userPrincipal, userFriendResponse);
+        return userFriendResponse;
+    }
+
+    private void saveUserFriendCount(UserPrincipal userPrincipal, UserFriendResponse userFriendResponse) {
+        User user = userRepository.findById(userPrincipal.getId()).get();
+        user.setFriendCount(userFriendResponse.getRealFriendCount());
+        userRepository.save(user);
     }
 
     private boolean containsUser(List<User> users, Long userId) {
@@ -81,16 +94,20 @@ public class FriendService {
 
     public UserFriendResponse sortUserFriendResponse(UserPrincipal userPrincipal, String kind) {
         UserSimpleDtos userSimpleDtos = makeUserSimpleDtos(userPrincipal);
+        setUserSimpleDtosRecentPostId(userSimpleDtos);
         UserFriendResponse userFriendResponse = ifKindIsRecentFriend(kind, userSimpleDtos);
         if (userFriendResponse != null) {
+            saveUserFriendCount(userPrincipal, userFriendResponse);
             return userFriendResponse;
         }
         userFriendResponse = ifKindIsName(kind, userSimpleDtos);
         if (userFriendResponse != null) {
+            saveUserFriendCount(userPrincipal, userFriendResponse);
             return userFriendResponse;
         }
         userFriendResponse = ifKindIsRecentPost(kind, userSimpleDtos);
         if (userFriendResponse != null) {
+            saveUserFriendCount(userPrincipal, userFriendResponse);
             return userFriendResponse;
         }
         return makeUserFriendResponse(userPrincipal); //잘못된 값이 들어갈 경우
@@ -116,7 +133,6 @@ public class FriendService {
 
     private UserFriendResponse ifKindIsRecentPost(String kind, UserSimpleDtos userSimpleDtos) {
         if (kind.equals("recentPost")) {
-            setUserSimpleDtosRecentPostId(userSimpleDtos);
             Comparator<UserSimpleDto> recentPostComparator =
                     Comparator.comparing(UserSimpleDto::getRecentPostId).reversed();
             return new UserFriendResponse(new UserSimpleDtos(makeSortedFriends(userSimpleDtos, recentPostComparator)));
@@ -139,7 +155,7 @@ public class FriendService {
         }
     }
 
-    public List<UserSimpleDto> makeSortedFriends(UserSimpleDtos userSimpleDtos, Comparator<UserSimpleDto> comparator){
+    private List<UserSimpleDto> makeSortedFriends(UserSimpleDtos userSimpleDtos, Comparator<UserSimpleDto> comparator){
         List<UserSimpleDto> notFriends = userSimpleDtos.getUserSimpleDtos().stream()
                 .filter(friend -> !isFriend(friend))
                 .sorted(comparator)
@@ -151,9 +167,9 @@ public class FriendService {
         return Stream.concat(notFriends.stream(), friends.stream()).toList();
     }
 
-    public boolean isFriend(UserSimpleDto userSimpleDto) {
+    private boolean isFriend(UserSimpleDto userSimpleDto) {
         Friend friend = friendRepository.findById(userSimpleDto.getFriendId()).get();
-        return !friend.getStatus();
+        return friend.getStatus();
     }
 
     public void addFriend(UserPrincipal userPrincipal, Long personId) {
@@ -176,10 +192,10 @@ public class FriendService {
         }
         if (friend == null) {
             friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
+            if (friend == null) {
+                return;
+            }
             friend.setFromUserNewPost(false);
-        }
-        if (friend == null) {
-            return;
         }
         friendRepository.save(friend);
     }
@@ -188,6 +204,9 @@ public class FriendService {
         for (int i = 0; i < userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().size(); i++) {
             Long friendId = userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().get(i).getFriendId();
             Friend friend = friendRepository.getById(friendId);
+            if(!friend.getStatus()){
+                continue;
+            }
             User user = userRepository.findById(userPrincipal.getId()).get();
             if (friend.getFromUser().equals(user)) {
                 friend.setFromUserNewPost(true);
@@ -201,7 +220,7 @@ public class FriendService {
         }
     }
 
-    public String findRelationship(UserPrincipal userPrincipal, Long personId) {
+    private String findRelationship(UserPrincipal userPrincipal, Long personId) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         User opponent = userRepository.findById(personId).get();
 
@@ -219,7 +238,7 @@ public class FriendService {
         return "other";
     }
 
-    private static String findRelationshipByToFriends(User user, User opponent) {
+    private String findRelationshipByToFriends(User user, User opponent) {
         for (int index = 0; index < user.getToFriends().size(); index++) {
             if (user.getToFriends().get(index).getToUser().equals(opponent)) {
                 return checkIsFriendByToFriends(user, index);
@@ -228,14 +247,14 @@ public class FriendService {
         return null;
     }
 
-    private static String checkIsFriendByToFriends(User user, int index) {
+    private String checkIsFriendByToFriends(User user, int index) {
         if (user.getToFriends().get(index).getStatus()) {
             return "friend";
         }
         return "friending";
     }
 
-    private static String findRelationshipByFromFriends(User user, User opponent) {
+    private String findRelationshipByFromFriends(User user, User opponent) {
         for (int index = 0; index < user.getFromFriends().size(); index++) {
             if (user.getFromFriends().get(index).getFromUser().equals(opponent)) {
                 return checkIsFriendByFromFriends(user, index);
@@ -244,7 +263,7 @@ public class FriendService {
         return null;
     }
 
-    private static String checkIsFriendByFromFriends(User user, int i) {
+    private String checkIsFriendByFromFriends(User user, int i) {
         if (user.getFromFriends().get(i).getStatus()) {
             return "friend";
         }

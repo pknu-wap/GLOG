@@ -28,11 +28,36 @@ export interface IProfile {
   loginedMemberId: number;
 }
 
-// 댓글 컴포넌트 정보
+// 댓글 get 정보들
+export interface IReplyParams {
+  postId: number;
+  page: number;
+  order: string;
+}
+
+export interface IReplyDtos {
+  replyId: number;
+  userDto: {
+    userId: number;
+    nickname: string;
+    profileImage: string;
+  };
+  message: string;
+  likesCount: number;
+  isEdit: boolean;
+  createdAt: string;
+  isLiked: boolean;
+  who: string;
+}
+export interface IReplyContent {
+  replyDtos: IReplyDtos[];
+  imOwner: boolean;
+}
+
+//댓글 post
 export interface IReply {
-  postId?: number;
-  page?: number;
-  order?: string;
+  postId: number;
+  message: string;
 }
 
 // 글쓰기 페이지

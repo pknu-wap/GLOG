@@ -1,14 +1,20 @@
-import { IReply } from '@/types/dto';
+import { IReply, IReplyParams } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
-export const getPostApi = async (params: IReply) => {
+export const getReplyApi = async (params: IReplyParams) => {
   const { data } = await defaultInstance.get('/replies', { params });
 
   return data;
 };
 
-export const useGetReplyQuery = (params: IReply) => {
-  const { isLoading, error, data } = useQuery([`replies`, params], () => getPostApi(params));
+export const useGetReplyQuery = (params: IReplyParams) => {
+  const { isLoading, error, data } = useQuery([`replies`, params], () => getReplyApi(params));
   return { data, isLoading, error };
+};
+
+export const PostReplyApi = async (body: IReply) => {
+  const { data } = await defaultInstance.post('/replies', body);
+
+  return data;
 };

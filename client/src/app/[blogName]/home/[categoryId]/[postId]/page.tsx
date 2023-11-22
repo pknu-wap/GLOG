@@ -1,10 +1,19 @@
 'use client';
-import { Box, Icon, Stack, useTheme } from '@mui/material';
+import { Avatar, Box, Icon, Menu, MenuItem, Stack, TextField, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { BlackContainer, ImageContainer, ThumbnailArea } from './postId.style';
+import RepliesComponent, {
+  BlackContainer,
+  GetReplies,
+  ImageContainer,
+  PostReply,
+  ReplyHandle,
+  ReplyPagenation,
+  ThumbnailArea,
+  WriteReply,
+} from './postId.style';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, useGetPostQuery } from '@/api/blog-api';
-import { IPostContent, ISidebarContent } from '@/types/dto';
+import { IPostContent, IReplyContent, ISidebarContent } from '@/types/dto';
 import CenterContent from '@/components/Layout/CenterContent';
 import { Home, KeyboardArrowRight } from '@mui/icons-material';
 import MDEditor from '@uiw/react-md-editor';
@@ -14,8 +23,10 @@ import IconButton from '@/components/Button/IconButton';
 import Modal from '@/components/Modal/Modal';
 import { ModalContent } from '@/components/Modal/Modal.style';
 import Button from '@/components/Button/Button';
-import { useGetReplyQuery } from '@/api/reply-api';
 import PageLink from '@/components/PageLink/PageLink';
+import { PostReplyApi, useGetReplyQuery } from '@/api/reply-api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
@@ -26,26 +37,53 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const router = useRouter();
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
-  const [page] = useState(0);
-  const [order] = useState('id');
+  const [page, setPage] = useState(0);
+  const [order, setOrder] = useState('like');
+  const orderList = ['like', 'recent', 'oldest'];
   const { data: replyData } = useGetReplyQuery({
     postId: Number(params.postId),
     page: page,
     order: order,
   });
-  const [, setReply] = useState();
+  const [reply, setReply] = useState<IReplyContent>();
 
+  //sidebar, main-post
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
   const [post, setPost] = useState<IPostContent>();
-
   const sidebarContent: ISidebarContent[] = sidebarData?.sidebarDtos;
+
+  //댓글 post 기능 연동
+  const queryClient = useQueryClient();
+  const [message, setMessage] = useState('');
+  const postReplyCreateQuery = useMutation(PostReplyApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['replies']);
+    },
+  });
+  const ReplyOnClick = () => {
+    const newReplyBody = {
+      postId: Number(params.postId),
+      message: message,
+    };
+
+    postReplyCreateQuery.mutate(newReplyBody);
+  };
 
   useEffect(() => {
     setWriteList(sidebarContent);
-    setReply(replyData);
-
     setPost(postData);
+
+    setReply(replyData);
   }, [sidebarData, postData, replyData]);
+
+  //댓글 정렬기준
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Stack>
@@ -106,6 +144,80 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
         rightContainer={
           <Stack width={'100%'} bgcolor={userTheme === 'dark' ? 'transparent' : '#FCFAF1'} p={12}>
             <MDEditor.Markdown source={post?.content} />
+
+            {/* 댓글 */}
+            <PostReply>
+              <ReplyHandle>
+                <Stack flexDirection={'row'}>
+                  <Stack>
+                    <Button onClick={handleClick} sx={{ padding: '0 10px 0 0', minWidth: '24px' }}>
+                      <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
+                    </Button>
+                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+                      <MenuItem
+                        onClick={() => {
+                          handleClose();
+                          setOrder(orderList[0]);
+                        }}>
+                        인기순
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleClose();
+                          setOrder(orderList[1]);
+                        }}>
+                        최신순
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleClose();
+                          setOrder(orderList[2]);
+                        }}>
+                        오래된순
+                      </MenuItem>
+                    </Menu>
+                  </Stack>
+                  <Stack>정렬기준</Stack>
+                </Stack>
+              </ReplyHandle>
+              <WriteReply>
+                <Avatar sx={{ width: 35, height: 35 }} alt="" src="/static/images/avatar/1.jpg" />
+                <TextField
+                  fullWidth
+                  variant="standard"
+                  label={'댓글 추가'}
+                  sx={{ margin: '0 30px' }}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                  }}
+                />
+                <Button variant="outlined" sx={{ width: '25px' }} onClick={() => ReplyOnClick()}>
+                  등록
+                </Button>
+              </WriteReply>
+            </PostReply>
+            <GetReplies>
+              {/* map 이용해서 뿌려야함 */}
+              {reply?.replyDtos?.map((replyInfo) => {
+                return (
+                  <RepliesComponent
+                    key={replyInfo.replyId}
+                    nickname={replyInfo.userDto.nickname}
+                    profileImage={replyInfo.userDto.profileImage}
+                    message={replyInfo.message}
+                    likesCount={replyInfo.likesCount}
+                    isLiked={replyInfo.isLiked}
+                    isEdit={replyInfo.isEdit}></RepliesComponent>
+                );
+              })}
+              <ReplyPagenation
+                count={replyData?.totalPages}
+                page={page + 1}
+                sx={{ margin: '30px 0' }}
+                onChange={(_, newPage) => {
+                  setPage(newPage - 1);
+                }}></ReplyPagenation>
+            </GetReplies>
           </Stack>
         }
       />

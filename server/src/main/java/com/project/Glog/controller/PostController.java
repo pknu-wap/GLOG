@@ -9,9 +9,11 @@ import com.project.Glog.dto.response.post.PostPreviewResponse;
 import com.project.Glog.dto.response.post.PostReadResponse;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
+import com.project.Glog.service.FriendService;
 import com.project.Glog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,19 +24,31 @@ import java.io.IOException;
 public class PostController {
     @Autowired
     private PostService postService;
+    @Autowired
+    private FriendService friendService;
 
 
-    @PostMapping("/post")
+    @RequestMapping(value = "/post",
+            method = RequestMethod.POST,
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<Long> create(@CurrentUser UserPrincipal userPrincipal,
                                        @RequestParam(value = "thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {
 
         Post post = postService.create(userPrincipal, multipartFile, postCreateRequest);
 
+        friendService.haveNewPost(userPrincipal,friendService.makeUserFriendResponse(userPrincipal));
+
         return new ResponseEntity<>(post.getId(), HttpStatus.OK);
     }
 
-    @PutMapping("/post")
+    @RequestMapping(value = "/post",
+            method = RequestMethod.PUT,
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<Long> update(@CurrentUser UserPrincipal userPrincipal,
                                        @RequestPart(value="thumbnail", required = false) MultipartFile multipartFile,
                                        @RequestPart PostCreateRequest postCreateRequest) throws IOException {
@@ -63,7 +77,7 @@ public class PostController {
 
         PostReadResponse postReadResponse = new PostReadResponse();
         try{
-                postReadResponse = postService.readPost(userPrincipal, postId);
+            postReadResponse = postService.readPost(userPrincipal, postId);
         }
         catch(Exception e){
             return new ResponseEntity<>("no post", HttpStatus.NOT_FOUND);
@@ -81,7 +95,7 @@ public class PostController {
     }
     @GetMapping("/post/previews/{kind}")
     public ResponseEntity<PostPreviewDtos> collect(@PathVariable String kind,
-                                                       @RequestParam int page){
+                                                   @RequestParam int page){
 
         PostPreviewDtos previews = postService.getPreviews(kind, page-1);
 
@@ -120,7 +134,7 @@ public class PostController {
 
     @PatchMapping ("/post/like")
     public ResponseEntity<String> plusLike(@CurrentUser UserPrincipal userPrincipal,
-                                            @RequestParam Long postId){
+                                           @RequestParam Long postId){
 
         String result = postService.clickLike(userPrincipal, postId);
 

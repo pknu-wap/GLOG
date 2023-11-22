@@ -33,11 +33,10 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
     page: page,
     order: order,
   });
-  const [reply, setReply] = useState();
+  const [, setReply] = useState();
 
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
   const [post, setPost] = useState<IPostContent>();
-  console.log(reply);
 
   const sidebarContent: ISidebarContent[] = sidebarData?.sidebarDtos;
 

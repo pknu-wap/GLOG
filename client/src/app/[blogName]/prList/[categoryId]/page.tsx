@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetPRQuery } from '@/api/pr-api';
+// import { useGetPRQuery } from '@/api/pr-api';
 import Button from '@/components/Button/Button';
 import CenterContent from '@/components/Layout/CenterContent';
 import List from '@/components/List/List';
@@ -9,9 +9,7 @@ import { Stack } from '@mui/material';
 import React from 'react';
 
 function page({ params }: { params: { categoryId: string } }) {
-  const { data } = useGetPRQuery();
-
-  console.log(data);
+  // const { data } = useGetPRQuery();
 
   return (
     <CenterContent maxWidth="1080px">

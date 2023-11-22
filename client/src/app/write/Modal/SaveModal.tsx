@@ -44,7 +44,6 @@ function SaveModal({
   const [toastOpen, setToastOpen] = useState(false);
   const isPrUpdate = pathname.startsWith('/write/pr/update');
   const isPr = pathname.startsWith('/write/pr');
-  console.log(modalType);
 
   const postWriteCreateQuery = useMutation(PostWriteApi, {
     onSuccess: () => {

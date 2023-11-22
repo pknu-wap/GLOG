@@ -15,7 +15,6 @@ function TagList({
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage] = useState('');
 
-  console.log(tag, tagArray);
   return (
     <TagContainer>
       {tagArray?.map((tag, i) => (

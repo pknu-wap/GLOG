@@ -1,8 +1,12 @@
 'use client';
 
 import { Stack, TextField } from '@mui/material';
-import { useUserThemeSSR } from '../../../../hooks/useRecoilSSR';
-import { useState } from 'react';
+import {
+  useTemplateIdSSR,
+  useTemporaryIdSSR,
+  useUserThemeSSR,
+} from '../../../../hooks/useRecoilSSR';
+import { useEffect, useState } from 'react';
 import { ToolBar } from '../Write.style';
 import TagList from '../TagList';
 import TopButton from '../Top/TopButton';
@@ -11,12 +15,43 @@ import BottomButton from '../Bottom/BottomButton';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { WriteProps } from '@/util/useWriteProps';
+import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
 const Write = () => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
   const [tags, setTags] = useState<string[]>([]);
+  const [templateId] = useTemplateIdSSR();
+  const [temporaryId] = useTemporaryIdSSR();
+  // const [temporaryId, setTemporary] = useTemporaryIdSSR();
+
+  const { data: templateData, refetch: templateRefetch } = useGetTemplateDetailQuery({
+    templateId,
+  });
+  const { data: temporaryData, refetch: temporaryRefetch } = useGetTemporaryDetailQuery({
+    temporaryId,
+  });
+
+  useEffect(() => {
+    templateRefetch();
+  }, [templateId]);
+
+  useEffect(() => {
+    temporaryRefetch();
+  }, [temporaryId]);
+
+  useEffect(() => {
+    setTitle(templateData?.title);
+    setContent(templateData?.content);
+    setTags(templateData?.hashtags);
+  }, [templateData]);
+
+  useEffect(() => {
+    setTitle(temporaryData?.title);
+    setContent(temporaryData?.content);
+    setTags(temporaryData?.hashtags);
+  }, [temporaryData]);
 
   const writeProps: WriteProps = {
     title,

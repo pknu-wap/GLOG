@@ -1,9 +1,13 @@
 'use client';
 
 import { Stack, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
-import { useUserThemeSSR } from '../../../../../../hooks/useRecoilSSR';
+import {
+  useTemplateIdSSR,
+  useTemporaryIdSSR,
+  useUserThemeSSR,
+} from '../../../../../../hooks/useRecoilSSR';
 import { ToolBar } from '@/app/write/Write.style';
 import TagList from '@/app/write/TagList';
 import TopButton from '@/app/write/Top/TopButton';
@@ -11,12 +15,31 @@ import BottomButton from '@/app/write/Bottom/BottomButton';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { WriteProps } from '@/util/useWriteProps';
+import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
 const Update = () => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
   const [tags, setTags] = useState<string[]>([]);
+  const [templateId] = useTemplateIdSSR();
+  const [temporaryId] = useTemporaryIdSSR();
+  // const [temporaryId, setTemporary] = useTemporaryIdSSR();
+
+  const { data: templateData } = useGetTemplateDetailQuery({ templateId });
+  const { data: temporaryData } = useGetTemporaryDetailQuery({ temporaryId });
+
+  useEffect(() => {
+    setTitle(templateData?.title);
+    setContent(templateData?.content);
+    setTags(templateData?.hashtags);
+  }, [templateData]);
+
+  useEffect(() => {
+    setTitle(temporaryData?.title);
+    setContent(temporaryData?.content);
+    setTags(temporaryData?.hashtags);
+  }, [temporaryData]);
 
   const writeProps: WriteProps = {
     title,

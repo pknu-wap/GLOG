@@ -49,7 +49,6 @@ function SaveModal({
     },
   });
 
-  console.log(writeProps);
   const updateWriteCreateQuery = useMutation(UpdateWriteApi, {
     onSuccess: () => {
       queryClient.invalidateQueries(['post']);

@@ -38,15 +38,14 @@ const GetTemplateDetailApi = async (params: ITemplateDetailParams) => {
 };
 
 export const useGetTemplateDetailQuery = (params: ITemplateDetailParams) => {
-  const { isLoading, error, data } = useQuery(
+  const { isLoading, error, data, refetch } = useQuery(
     [`templateDetail`],
     () => GetTemplateDetailApi(params),
-
     {
       enabled: !!params.templateId,
     },
   );
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 export const DeleteTemplateApi = async (params: ITemplateDetailParams) => {
@@ -95,7 +94,7 @@ const GetTemporaryDetailApi = async (params: ITemporaryDetailParams) => {
 };
 
 export const useGetTemporaryDetailQuery = (params: ITemporaryDetailParams) => {
-  const { isLoading, error, data } = useQuery(
+  const { isLoading, error, data, refetch } = useQuery(
     [`temporaryDetail`],
     () => GetTemporaryDetailApi(params),
 
@@ -103,7 +102,7 @@ export const useGetTemporaryDetailQuery = (params: ITemporaryDetailParams) => {
       enabled: !!params.temporaryId,
     },
   );
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 export const DeleteTemporaryApi = async (params: ITemporaryDetailParams) => {

@@ -22,7 +22,6 @@ function TempSaveModal({ open, onClose }: ModalType) {
   const deleteTemporaryQuery = useMutation(DeleteTemporaryApi, {
     onSuccess() {
       queryClient.invalidateQueries(['template']);
-      // onClose();
     },
   });
 
@@ -32,12 +31,11 @@ function TempSaveModal({ open, onClose }: ModalType) {
 
   const actionClick = () => {
     setTemporary(clickList);
+    queryClient.invalidateQueries(['temporaryDetail', { temporaryId: clickList }]);
     onClose();
-    console.log(`${clickList}번 클릭`);
   };
 
   const deleteClick = () => {
-    console.log(`${clickList}번 삭제`);
     deleteTemporaryQuery.mutate({ temporaryId: clickList });
   };
 

@@ -299,6 +299,10 @@ public class FriendService {
     public void refuseFriend(UserPrincipal userPrincipal, Long personId) {
         Friend friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
         friendRepository.delete(friend);
+        User user = userRepository.findById(userPrincipal.getId()).get();
+        User opponent = userRepository.findById(personId).get();
+        user.setFriendCount(user.getFriendCount() - 1);
+        opponent.setFriendCount(opponent.getFriendCount() - 1);
     }
 
     public void deleteFriend(UserPrincipal userPrincipal, Long personId) {

@@ -28,9 +28,13 @@ function SaveModal({
   onClose,
   writeProps,
   modalType,
+  categoryId,
+  postId,
 }: ModalType & {
   writeProps: WriteProps;
   modalType: WriteModalType;
+  categoryId?: number;
+  postId?: number;
 }) {
   const pathname = usePathname();
   const [postConfirmOpen, setPostConfirmOpen] = useState<boolean>(false);
@@ -119,8 +123,9 @@ function SaveModal({
         content: writeProps?.content,
         thumbnail: '',
         isPrivate: privateMode === 'private' ? true : false,
-        isPr: isPr ? true : false,
+        prId: isPr ? categoryId : undefined,
         hashtags: writeProps?.tags,
+        categoryId,
       },
     });
 
@@ -136,8 +141,10 @@ function SaveModal({
         content: writeProps?.content,
         thumbnail: '',
         isPrivate: privateMode === 'private' ? true : false,
-        isPr: isPrUpdate ? true : false,
+        prId: isPrUpdate ? categoryId : undefined,
         hashtags: writeProps?.tags,
+        categoryId,
+        postId,
       },
     });
 

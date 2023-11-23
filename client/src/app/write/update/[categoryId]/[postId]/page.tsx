@@ -17,7 +17,7 @@ import '@uiw/react-markdown-preview/markdown.css';
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
-const Update = () => {
+const Update = ({ params }: { params: { categoryId: number; postId: number } }) => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
@@ -73,7 +73,7 @@ const Update = () => {
         <TopButton />
       </ToolBar>
       <MDEditor height="68vh" value={content} onChange={setContent} />
-      <BottomButton writeProps={writeProps} />
+      <BottomButton categoryId={params.categoryId} postId={params.postId} writeProps={writeProps} />
     </Stack>
   );
 };

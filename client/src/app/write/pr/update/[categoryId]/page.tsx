@@ -17,7 +17,7 @@ import {
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
-const PR = () => {
+const PR = ({ params }: { params: { categoryId: number } }) => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
@@ -73,7 +73,7 @@ const PR = () => {
         <TopButton />
       </ToolBar>
       <MDEditor height="68vh" value={content} onChange={setContent} />
-      <BottomButton writeProps={writeProps} />
+      <BottomButton categoryId={params.categoryId} writeProps={writeProps} />
     </Stack>
   );
 };

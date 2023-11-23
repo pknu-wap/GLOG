@@ -5,7 +5,11 @@ import SaveModal from '../Modal/SaveModal';
 import { WriteModalType, WriteProps } from '@/util/useWriteProps';
 import { usePathname } from 'next/navigation';
 
-function BottomButton({ writeProps }: { writeProps: WriteProps }) {
+function BottomButton({
+  writeProps,
+  categoryId,
+  postId,
+}: { writeProps: WriteProps } & { categoryId?: number; postId?: number }) {
   const [writeSaveOpen, setWriteSaveOpen] = useState<boolean>(false);
   const [modalType, setModalType] = useState<WriteModalType>('create');
   const pathname = usePathname();
@@ -68,6 +72,8 @@ function BottomButton({ writeProps }: { writeProps: WriteProps }) {
 
       {/* 글 저장 모달 */}
       <SaveModal
+        categoryId={categoryId}
+        postId={postId}
         modalType={modalType}
         writeProps={writeProps}
         open={writeSaveOpen}

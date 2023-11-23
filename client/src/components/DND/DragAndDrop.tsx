@@ -48,9 +48,6 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
       {isBrowser ? (
         <DragDropContext onDragEnd={dragHandler}>
           <CenterContent bgcolor="transparent">
-            <PageLink href={`/write/create`}>
-              <Stack sx={{ cursor: 'pointer', width: 'fit-content' }}>글쓰기</Stack>
-            </PageLink>
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
                 {footprintList?.map((category) => {
@@ -66,6 +63,9 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                           }}
                           {...provided.droppableProps}
                           ref={provided.innerRef}>
+                          <PageLink href={`/write/create/${category.categoryId}`}>
+                            <Stack sx={{ cursor: 'pointer', width: 'fit-content' }}>글쓰기</Stack>
+                          </PageLink>
                           <Stack
                             direction="row"
                             justifyContent="space-between"

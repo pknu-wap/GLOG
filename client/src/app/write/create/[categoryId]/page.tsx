@@ -5,19 +5,19 @@ import {
   useTemplateIdSSR,
   useTemporaryIdSSR,
   useUserThemeSSR,
-} from '../../../../hooks/useRecoilSSR';
+} from '../../../../../hooks/useRecoilSSR';
 import { useEffect, useState } from 'react';
-import { ToolBar } from '../Write.style';
-import TagList from '../TagList';
-import TopButton from '../Top/TopButton';
+import { ToolBar } from '../../Write.style';
+import TagList from '../../TagList';
+import TopButton from '../../Top/TopButton';
 import MDEditor from '@uiw/react-md-editor';
-import BottomButton from '../Bottom/BottomButton';
+import BottomButton from '../../Bottom/BottomButton';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
-const Write = () => {
+const Write = ({ params }: { params: { categoryId: number } }) => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('# Hello World');
@@ -73,7 +73,7 @@ const Write = () => {
         <TopButton />
       </ToolBar>
       <MDEditor height="68vh" value={content} onChange={setContent} />
-      <BottomButton writeProps={writeProps} />
+      <BottomButton categoryId={params.categoryId} writeProps={writeProps} />
     </Stack>
   );
 };

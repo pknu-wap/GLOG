@@ -210,3 +210,8 @@ export interface ITemplateAdd {
     hashtags: string[];
   };
 }
+
+// 친구 정보 get 요청값
+export interface IFriendsParams {
+  kind: string;
+}

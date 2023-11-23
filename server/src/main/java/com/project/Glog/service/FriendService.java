@@ -37,7 +37,9 @@ public class FriendService {
 
     public UserFriendResponse makeUserFriendResponse(UserPrincipal userPrincipal) {
         UserSimpleDtos userSimpleDtos = makeUserSimpleDtos(userPrincipal);
-        makeSortedFriends(userSimpleDtos, null);
+        Comparator<UserSimpleDto> friendIdComparator =
+                Comparator.comparing(UserSimpleDto::getFriendId).reversed();
+        userSimpleDtos = new UserSimpleDtos(makeSortedFriends(userSimpleDtos, friendIdComparator));
         UserFriendResponse userFriendResponse = new UserFriendResponse(userSimpleDtos);
         saveUserFriendCount(userPrincipal, userFriendResponse);
         return userFriendResponse;
@@ -299,10 +301,6 @@ public class FriendService {
     public void refuseFriend(UserPrincipal userPrincipal, Long personId) {
         Friend friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
         friendRepository.delete(friend);
-        User user = userRepository.findById(userPrincipal.getId()).get();
-        User opponent = userRepository.findById(personId).get();
-        user.setFriendCount(user.getFriendCount() - 1);
-        opponent.setFriendCount(opponent.getFriendCount() - 1);
     }
 
     public void deleteFriend(UserPrincipal userPrincipal, Long personId) {
@@ -310,6 +308,13 @@ public class FriendService {
         if (friend == null) {
             friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
         }
+        if (friend == null) {
+            return;
+        }
         friendRepository.delete(friend);
+        User user = userRepository.findById(userPrincipal.getId()).get();
+        User opponent = userRepository.findById(personId).get();
+        user.setFriendCount(user.getFriendCount() - 1);
+        opponent.setFriendCount(opponent.getFriendCount() - 1);
     }
 }

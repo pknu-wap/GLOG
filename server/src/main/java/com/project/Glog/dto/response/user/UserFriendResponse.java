@@ -19,8 +19,8 @@ public class UserFriendResponse {
 
     private int countFriends() {
         int friendCount = 0;
-        for (int i = 0; i < userSimpleDtos.getUserSimpleDtos().size(); i++) {
-            if (userSimpleDtos.getUserSimpleDtos().get(i).getRelationship().equals("friend")) {
+        for (int i = 0; i < userSimpleDtos.getSimpleDtos().size(); i++) {
+            if (userSimpleDtos.getSimpleDtos().get(i).getRelationship().equals("friend")) {
                 friendCount++;
             }
         }

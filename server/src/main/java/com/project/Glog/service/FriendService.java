@@ -67,11 +67,11 @@ public class FriendService {
         List<User> users = userRepository.findUserByNicknameContaining(name);
         UserSimpleDtos userSimpleDtos = makeUserSimpleDtos(userPrincipal);
         setUserSimpleDtosRecentPostId(userSimpleDtos);
-        List<UserSimpleDto> notFriends = userSimpleDtos.getUserSimpleDtos().stream()
+        List<UserSimpleDto> notFriends = userSimpleDtos.getSimpleDtos().stream()
                 .filter(friend -> !isFriend(friend))
                 .filter(dto -> containsUser(users, dto.getUserId()))
                 .toList();
-        List<UserSimpleDto> friends = userSimpleDtos.getUserSimpleDtos().stream()
+        List<UserSimpleDto> friends = userSimpleDtos.getSimpleDtos().stream()
                 .filter(this::isFriend)
                 .filter(dto -> containsUser(users, dto.getUserId()))
                 .toList();
@@ -142,26 +142,26 @@ public class FriendService {
     }
 
     private void setUserSimpleDtosRecentPostId(UserSimpleDtos userSimpleDtos) {
-        for (int i = 0; i < userSimpleDtos.getUserSimpleDtos().size(); i++) {
+        for (int i = 0; i < userSimpleDtos.getSimpleDtos().size(); i++) {
             List<Post> posts =
                     postRepository.findAllByUser(userRepository
-                            .findById(userSimpleDtos.getUserSimpleDtos().get(i).getUserId()).get());
+                            .findById(userSimpleDtos.getSimpleDtos().get(i).getUserId()).get());
             if (posts.isEmpty()) {
-                userSimpleDtos.getUserSimpleDtos().get(i).setRecentPostId(0L);
+                userSimpleDtos.getSimpleDtos().get(i).setRecentPostId(0L);
                 continue;
             }
             List<Post> sortedPosts =
                     posts.stream().sorted(Comparator.comparing(Post::getId).reversed()).toList();
-            userSimpleDtos.getUserSimpleDtos().get(i).setRecentPostId(sortedPosts.get(0).getId());
+            userSimpleDtos.getSimpleDtos().get(i).setRecentPostId(sortedPosts.get(0).getId());
         }
     }
 
     private List<UserSimpleDto> makeSortedFriends(UserSimpleDtos userSimpleDtos, Comparator<UserSimpleDto> comparator) {
-        List<UserSimpleDto> notFriends = userSimpleDtos.getUserSimpleDtos().stream()
+        List<UserSimpleDto> notFriends = userSimpleDtos.getSimpleDtos().stream()
                 .filter(friend -> !isFriend(friend))
                 .sorted(comparator)
                 .toList();
-        List<UserSimpleDto> friends = userSimpleDtos.getUserSimpleDtos().stream()
+        List<UserSimpleDto> friends = userSimpleDtos.getSimpleDtos().stream()
                 .filter(this::isFriend)
                 .sorted(comparator)
                 .toList();
@@ -202,8 +202,8 @@ public class FriendService {
     }
 
     public void haveNewPost(UserPrincipal userPrincipal, UserFriendResponse userFriendResponse) {
-        for (int i = 0; i < userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().size(); i++) {
-            Long friendId = userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().get(i).getFriendId();
+        for (int i = 0; i < userFriendResponse.getUserSimpleDtos().getSimpleDtos().size(); i++) {
+            Long friendId = userFriendResponse.getUserSimpleDtos().getSimpleDtos().get(i).getFriendId();
             Friend friend = friendRepository.getById(friendId);
             if (!friend.getStatus()) {
                 continue;

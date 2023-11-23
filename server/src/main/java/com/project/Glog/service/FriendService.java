@@ -11,13 +11,12 @@ import com.project.Glog.repository.FriendRepository;
 import com.project.Glog.repository.PostRepository;
 import com.project.Glog.repository.UserRepository;
 import com.project.Glog.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FriendService {
@@ -37,7 +36,9 @@ public class FriendService {
     }
 
     public UserFriendResponse makeUserFriendResponse(UserPrincipal userPrincipal) {
-        UserFriendResponse userFriendResponse = new UserFriendResponse(makeUserSimpleDtos(userPrincipal));
+        UserSimpleDtos userSimpleDtos = makeUserSimpleDtos(userPrincipal);
+        makeSortedFriends(userSimpleDtos, null);
+        UserFriendResponse userFriendResponse = new UserFriendResponse(userSimpleDtos);
         saveUserFriendCount(userPrincipal, userFriendResponse);
         return userFriendResponse;
     }
@@ -65,6 +66,7 @@ public class FriendService {
     public UserFriendResponse searchFriendByName(UserPrincipal userPrincipal, String name) {
         List<User> users = userRepository.findUserByNicknameContaining(name);
         UserSimpleDtos userSimpleDtos = makeUserSimpleDtos(userPrincipal);
+        setUserSimpleDtosRecentPostId(userSimpleDtos);
         List<UserSimpleDto> notFriends = userSimpleDtos.getUserSimpleDtos().stream()
                 .filter(friend -> !isFriend(friend))
                 .filter(dto -> containsUser(users, dto.getUserId()))
@@ -76,7 +78,6 @@ public class FriendService {
         UserSimpleDtos userSimpleDtosByName = new UserSimpleDtos(Stream
                 .concat(notFriends.stream(), friends.stream()).toList());
 
-        setUserSimpleDtosRecentPostId(userSimpleDtosByName);
         UserFriendResponse userFriendResponse = new UserFriendResponse(userSimpleDtosByName);
         saveUserFriendCount(userPrincipal, userFriendResponse);
         return userFriendResponse;
@@ -155,7 +156,7 @@ public class FriendService {
         }
     }
 
-    private List<UserSimpleDto> makeSortedFriends(UserSimpleDtos userSimpleDtos, Comparator<UserSimpleDto> comparator){
+    private List<UserSimpleDto> makeSortedFriends(UserSimpleDtos userSimpleDtos, Comparator<UserSimpleDto> comparator) {
         List<UserSimpleDto> notFriends = userSimpleDtos.getUserSimpleDtos().stream()
                 .filter(friend -> !isFriend(friend))
                 .sorted(comparator)
@@ -204,7 +205,7 @@ public class FriendService {
         for (int i = 0; i < userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().size(); i++) {
             Long friendId = userFriendResponse.getUserSimpleDtos().getUserSimpleDtos().get(i).getFriendId();
             Friend friend = friendRepository.getById(friendId);
-            if(!friend.getStatus()){
+            if (!friend.getStatus()) {
                 continue;
             }
             User user = userRepository.findById(userPrincipal.getId()).get();
@@ -272,14 +273,14 @@ public class FriendService {
 
     public void allowFriend(UserPrincipal userPrincipal, Long personId) {
         Friend friend = friendRepository.findByFromUserAndToUser(personId, userPrincipal.getId());
-        if(friend == null){
+        if (friend == null) {
             return;
         }
         if (friend.getStatus()) {
             return;
         }
         friendRepository.delete(friend);
-        Friend friend1 = makeAndSaveFriendEntity(personId,userPrincipal.getId());
+        Friend friend1 = makeAndSaveFriendEntity(personId, userPrincipal.getId());
         friend1.setStatus(true);
         friendRepository.save(friend1);
     }

@@ -10,17 +10,17 @@ import lombok.Setter;
 @Setter
 public class UserFriendResponse {
     private final UserSimpleDtos userSimpleDtos;
-    private final int count;
+    private final int realFriendCount;
 
     public UserFriendResponse(UserSimpleDtos userSimpleDtos) {
         this.userSimpleDtos = userSimpleDtos;
-        count = countFriends();
+        realFriendCount = countFriends();
     }
 
     private int countFriends() {
         int friendCount = 0;
-        for (int i = 0; i < userSimpleDtos.getUserSimpleDtos().size(); i++) {
-            if (userSimpleDtos.getUserSimpleDtos().get(i).getRelationship().equals("friend")) {
+        for (int i = 0; i < userSimpleDtos.getSimpleDtos().size(); i++) {
+            if (userSimpleDtos.getSimpleDtos().get(i).getRelationship().equals("friend")) {
                 friendCount++;
             }
         }

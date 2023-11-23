@@ -2,16 +2,15 @@ package com.project.Glog.dto;
 
 import com.project.Glog.domain.Friend;
 import com.project.Glog.domain.User;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
 public class UserSimpleDtos {
-    private final List<UserSimpleDto> userSimpleDtos;
+    private final List<UserSimpleDto> simpleDtos;
 
     public static UserSimpleDtos of(List<User> users, List<Friend> friends, List<String> relationships) {
         List<UserSimpleDto> userSimpleDtos = new ArrayList<>();
@@ -22,7 +21,7 @@ public class UserSimpleDtos {
         return new UserSimpleDtos(userSimpleDtos);
     }
 
-    public UserSimpleDtos(List<UserSimpleDto> userSimpleDtos) {
-        this.userSimpleDtos = userSimpleDtos;
+    public UserSimpleDtos(List<UserSimpleDto> simpleDtos) {
+        this.simpleDtos = simpleDtos;
     }
 }

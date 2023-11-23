@@ -57,20 +57,27 @@ public class PostService {
         Blog blog = blogRepository.findByUserId(userPrincipal.getId()).get();
         Post post = req.toPost(user, category, blog);
 
-        if(post.getPrId() != null){
-            PrPost prPost = prPostRepository.findPrByPrId(post.getPrId()).get();
-            prPost.setIsPosted(true);
-            prPost.setPost(post);
-            prPostRepository.save(prPost);
-        }
-
 
         //image
         if(!multipartFile.isEmpty())
             post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
+        if(req.getPrId() != null){
+            PrPost prPost = prPostRepository.findPrByPrId(req.getPrId()).get();
+            post.setPrPost(prPost);
+            post.setIsPr(true);
+            prPost.setIsPosted(true);
+            prPost.setPost(post);
+            postRepository.save(post);
+            prPostRepository.save(prPost);
+        }
+        else{
+            post.setIsPr(false);
+            postRepository.save(post);
+        }
+
         //hashtags
-        postRepository.save(post);
+
         setPostHashtag(post, req.getHashtags());
 
 

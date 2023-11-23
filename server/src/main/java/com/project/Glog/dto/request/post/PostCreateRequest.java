@@ -36,7 +36,6 @@ public class PostCreateRequest {
         post.setLikesCount(0);
         post.setViewsCount(0);
         post.setIsPrivate(isPrivate);
-        post.setPrId(prId);
         return post;
     }
 }

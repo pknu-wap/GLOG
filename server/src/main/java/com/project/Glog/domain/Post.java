@@ -31,7 +31,7 @@ public class Post {
     private List<PostLike> postLikes;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Scrap> scraps;
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private PrPost prPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -56,7 +56,8 @@ public class Post {
     private Integer viewsCount;
     @NotNull
     private Boolean isPrivate;
-    private Long prId;
+    @NotNull
+    private Boolean isPr;
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -64,7 +65,7 @@ public class Post {
         this.title=req.getTitle();
         this.content=req.getContent();
         this.isPrivate=req.getIsPrivate();
-        this.prId=req.getPrId();
+//        this.isPr=req.getPrId();
     }
 
 }

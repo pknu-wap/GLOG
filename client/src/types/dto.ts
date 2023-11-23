@@ -215,3 +215,19 @@ export interface ITemplateAdd {
 export interface IFriendsParams {
   kind: string;
 }
+
+export interface userSimpleDtos {
+  userId: number;
+  friendId: number;
+  recentPostId: number;
+  haveNewPost: boolean;
+  nickname: string;
+  imageUrl: string;
+  relationship: string;
+}
+
+// 친구 정보 get 반환값
+export interface IFriendsContent {
+  userSimpleDtos: userSimpleDtos[];
+  count: number;
+}

@@ -1,3 +1,5 @@
+import Button from '@/components/Button/Button';
+import PageLink from '@/components/PageLink/PageLink';
 import { Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -38,24 +40,61 @@ export const UserName = styled(Stack)({
   overflow: 'auto',
 });
 
+export const NewPost = styled(Stack)({
+  color: "#00BFFF",
+  transition: "all 0.5s ease-in-out",
+  "::before": {
+    content: "New Post",
+  },
+  ":hover::before": {
+    content: "보러가기",
+  }
+})
+
+
+
 function FriendListComponent({
   nickname,
   profileImg,
   haveNewPost,
+  recentPostId,
+  relationship,
 }: {
   nickname: string;
   profileImg: string;
   haveNewPost: boolean;
+  recentPostId: string;
+  relationship: string;
 }) {
-  return (
-    <Stack margin="6px 0" flexDirection="row">
-      <ProfileImage imageSrc={profileImg} />
 
-      <UserName>
-        <Stack margin="0 10px 0 5px">{nickname}</Stack>
-        {/*FIXME: new friend로 추가? */}
-        {haveNewPost ? <Stack color="#00BFFF">New Post</Stack> : <Stack></Stack>}
-      </UserName>
+  return (
+    <Stack>
+      <Stack margin="6px 0" flexDirection="row">
+        <ProfileImage imageSrc={profileImg} />
+
+        <UserName>
+          <Stack margin="0 10px 0 5px">{nickname}</Stack>
+          {/*FIXME: new friend로 추가? */}
+          {(relationship === "friend") ? (
+            haveNewPost ? (
+              <Button>
+                <PageLink href={recentPostId} color='#00BFFF'>
+                  <NewPost></NewPost>
+                </PageLink>
+              </Button>
+            ) : (
+            <Stack></Stack>
+            )
+          ) : (relationship === "friending")? (
+            <Stack>요청 중</Stack>
+          ) : (relationship === "friended") ? (
+            <Button>요청 받기</Button>
+          ) : (
+            <Stack></Stack>
+          )}
+        </UserName>
+      </Stack>
+      <Stack></Stack>
     </Stack>
   );
 }

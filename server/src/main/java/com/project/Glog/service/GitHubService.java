@@ -152,6 +152,7 @@ public class GitHubService {
     }
 
     public PrUnPostResponse saveAndGetPr(List<PrInfo> prInfos, GithubRepository githubRepository, Long categoryId, User user){
+        Category category = categoryRepository.findByCategoryId(categoryId);
         for (PrInfo prInfo : prInfos) {
             if(!prInfo.getUser().getLogin().equals(user.getGithubID())) {
                 continue;
@@ -162,6 +163,7 @@ public class GitHubService {
             prPost.setPrTitle(prInfo.getTitle());
             prPost.setIsPosted(false);
             prPost.setPrBody(prInfo.getBody());
+            prPost.setCategory(category);
 
             if(!isPresentPr(prPost.getPrNumber(), prPost.getGithubRepository())) {
                 prPostRepository.save(prPost);

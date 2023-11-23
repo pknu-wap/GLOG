@@ -27,7 +27,7 @@ public class GithubRepository {
     @NotNull
     private String ownerName;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Category category;
 
 }

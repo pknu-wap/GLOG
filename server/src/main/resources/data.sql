@@ -27,12 +27,12 @@ VALUES(1, 'category1', 0, NULL, 1),
       (2, 'category2', 0, NULL, 3),
       (3, 'githubCategory', 0, NULL, 4);
 
-INSERT INTO post(id, blog_url, content, created_at, thumbnail, pr_id, is_private, likes_count, title, views_count, blog_id, category_id, user_id)
-VALUES(1, 'dueit', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 0, 0, 0, 'post1', 0, 1, 1, 1),
-      (2, 'dueit', 'It is a post 2', '2023-10-08 15:14:07.377201' , NULL, 0, 0, 0, 'post2', 0, 1, 1, 1),
-      (3, 'ㅎㅎㅎㅎ', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 1, 0, 0, 'post3', 0, 3, 2, 3),
-      (4, 'ㅋㅋㅋㅋ', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 1, 0, 0, 'post4', 0, 3, 2, 3),
-      (5, 'ㅋㅋㅋㅋ', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 1, 0, 0, 'post4', 0, 3, 2, 3);
+INSERT INTO post(id, blog_url, content, created_at, thumbnail, is_pr, is_private, likes_count, title, views_count, blog_id, category_id, user_id, pr_post_id)
+VALUES(1, 'dueit', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 0, 0, 0, 'post1', 0, 1, 1, 1,NULL),
+      (2, 'dueit', 'It is a post 2', '2023-10-08 15:14:07.377201' , NULL, 0, 0, 0, 'post2', 0, 1, 1, 1,NULL),
+      (3, 'ㅎㅎㅎㅎ', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 1, 0, 0, 'post3', 0, 3, 2, 3,NULL),
+      (4, 'ㅋㅋㅋㅋ', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 1, 0, 0, 'post4', 0, 3, 2, 3,NULL),
+      (5, 'ㅋㅋㅋㅋ', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 1, 0, 0, 'post4', 0, 3, 2, 3,NULL);
 
 INSERT INTO post_hashtag(id, tag, post_id)
 VALUES(1, 'hashtag1', 1), (2, 'hashtag2', 1),

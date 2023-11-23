@@ -46,6 +46,8 @@ public class PostService {
     private AwsUtils awsUtils;
     @Autowired
     private HistoryRepository historyRepository;
+    @Autowired
+    private PrPostRepository prPostRepository;
 
 
 
@@ -60,8 +62,22 @@ public class PostService {
         if(!multipartFile.isEmpty())
             post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
+        if(req.getPrId() != null){
+            PrPost prPost = prPostRepository.findPrByPrId(req.getPrId()).get();
+            post.setPrPost(prPost);
+            post.setIsPr(true);
+            prPost.setIsPosted(true);
+            prPost.setPost(post);
+            postRepository.save(post);
+            prPostRepository.save(prPost);
+        }
+        else{
+            post.setIsPr(false);
+            postRepository.save(post);
+        }
+
         //hashtags
-        postRepository.save(post);
+
         setPostHashtag(post, req.getHashtags());
 
 

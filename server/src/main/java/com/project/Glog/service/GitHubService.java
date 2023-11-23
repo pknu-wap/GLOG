@@ -1,5 +1,6 @@
 package com.project.Glog.service;
 
+import com.project.Glog.domain.Category;
 import com.project.Glog.domain.GithubRepository;
 import com.project.Glog.domain.PrPost;
 import com.project.Glog.domain.User;
@@ -102,13 +103,36 @@ public class GitHubService {
     }
 
 
-    public String getUserGhToken(UserPrincipal userPrincipal){
-        String GITHUB_USER_TOKEN_ENDPOINT = "/login/oauth/"+userPrincipal;
-        String url = GITHUB_API_URL + GITHUB_USER_TOKEN_ENDPOINT;
-        return url;
+    public Boolean regiRepo(User user, Long categoryId, String repo){
+        GithubRepository githubRepository = githubRepositoryRepository.findByRepoName(user.getId(), repo).get();
+        Category category = categoryRepository.findByCategoryId(categoryId);
+
+        if(githubRepository.getCategory() != null){
+            return false;
+        }
+        if(category.getReopsitoryUrl() != null){
+            return  false;
+        }
+
+        category.setIsPrcategory(true);
+        category.setReopsitoryUrl(repo);
+        githubRepository.setCategory(category);
+        githubRepositoryRepository.save(githubRepository);
+        categoryRepository.save(category);
+
+        return true;
     }
 
-    public RepositoryResponse saveAndGetRepo(List<GithubRepositoryInfo> githubRepositoryInfo, User user, Long categoryId){
+    public PrWriteDto writePr(Long prId){
+        PrPost prPost = prPostRepository.findPrByPrId(prId).get();
+        prPost.setPrBody("```\n"+prPost.getPrBody()+"\n```");
+        PrWriteDto prWriteDto = new PrWriteDto(prId, prPost.getPrNumber(), prPost.getPrTitle(), prPost.getPrBody());
+        return prWriteDto;
+    }
+
+
+
+    public RepositoryResponse saveAndGetRepo(List<GithubRepositoryInfo> githubRepositoryInfo, User user){
         for (GithubRepositoryInfo repo : githubRepositoryInfo) {
             GithubRepository githubRepository = new GithubRepository();
             githubRepository.setUser(user);
@@ -121,25 +145,25 @@ public class GitHubService {
         }
 
         List<String> Repos = githubRepositoryRepository.findRepoNameByUserId(user.getId());
-        Boolean isAuthor;
-        if(categoryRepository.findUserByCategoryId(categoryId).getId() == user.getId()){
-            isAuthor = true;
-        }
-        else{
-            isAuthor = false;
-        }
-        RepositoryResponse repositoryResponse = new RepositoryResponse(isAuthor,Repos);
+
+        RepositoryResponse repositoryResponse = new RepositoryResponse(Repos);
 
         return repositoryResponse;
     }
 
     public PrUnPostResponse saveAndGetPr(List<PrInfo> prInfos, GithubRepository githubRepository, Long categoryId, User user){
+        Category category = categoryRepository.findByCategoryId(categoryId);
         for (PrInfo prInfo : prInfos) {
+            if(!prInfo.getUser().getLogin().equals(user.getGithubID())) {
+                continue;
+            }
             PrPost prPost = new PrPost();
             prPost.setGithubRepository(githubRepository);
             prPost.setPrNumber(prInfo.getNumber());
             prPost.setPrTitle(prInfo.getTitle());
             prPost.setIsPosted(false);
+            prPost.setPrBody(prInfo.getBody());
+            prPost.setCategory(category);
 
             if(!isPresentPr(prPost.getPrNumber(), prPost.getGithubRepository())) {
                 prPostRepository.save(prPost);
@@ -181,6 +205,10 @@ public class GitHubService {
         else{
             return false;
         }
+    }
+
+    public String getRepoName(Long categoryId){
+        return categoryRepository.findRepoByCategoryId(categoryId);
     }
 
 }

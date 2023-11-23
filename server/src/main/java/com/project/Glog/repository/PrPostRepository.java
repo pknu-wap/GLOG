@@ -20,5 +20,7 @@ public interface PrPostRepository extends JpaRepository<PrPost, Long> {
     @Query("SELECT pr FROM PrPost pr JOIN pr.githubRepository ghr WHERE ghr.id=:ghRepoId")
     List<PrPost> findByRepo( @Param("ghRepoId") Long ghRepoId);
 
+    @Query("SELECT pr FROM PrPost pr WHERE pr.id=:prId")
+    Optional<PrPost> findPrByPrId( @Param("prId") Long prId);
 
 }

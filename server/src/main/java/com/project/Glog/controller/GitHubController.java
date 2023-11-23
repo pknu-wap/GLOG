@@ -3,6 +3,7 @@ package com.project.Glog.controller;
 import com.project.Glog.domain.GithubRepository;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.response.pr.PrInfo;
+import com.project.Glog.dto.response.pr.PrUnPostResponse;
 import com.project.Glog.dto.response.pr.PrWriteDto;
 import com.project.Glog.dto.response.pr.RepositoryResponse;
 import com.project.Glog.repository.CategoryRepository;
@@ -35,7 +36,7 @@ public class GitHubController {
 
 
     @GetMapping("/repository")
-    public ResponseEntity<?> getRepository(@CurrentUser UserPrincipal userPrincipal) {
+    public ResponseEntity<RepositoryResponse> getRepository(@CurrentUser UserPrincipal userPrincipal) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         RepositoryResponse repositoryResponse = gitHubService.saveAndGetRepo(gitHubService.getUserRepo(user), user);
 
@@ -54,15 +55,15 @@ public class GitHubController {
     }
 
     @GetMapping("/pr/detail")
-    public ResponseEntity<?> writePrPost(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long prId) {
+    public ResponseEntity<PrWriteDto> writePrPost(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long prId) {
         PrWriteDto prWriteDto = gitHubService.writePr(prId);
 
         return new ResponseEntity<>(prWriteDto, HttpStatus.OK);
     }
 
     @GetMapping("/pr/posts/unposted")
-    public ResponseEntity<?> getPullrequest(@CurrentUser UserPrincipal userPrincipal,
-                                               @RequestParam Long categoryId) {
+    public ResponseEntity<PrUnPostResponse> getPullrequest(@CurrentUser UserPrincipal userPrincipal,
+                                                           @RequestParam Long categoryId) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         String repo = gitHubService.getRepoName(categoryId);
 

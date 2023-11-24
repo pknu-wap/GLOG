@@ -21,7 +21,7 @@ public class PostCreateRequest {
     private String title;
     private String content;
     private Boolean isPrivate;
-    private Boolean isPr;
+    private Long prId;
     private Long categoryId;
     private List<String> hashtags;
 
@@ -36,7 +36,6 @@ public class PostCreateRequest {
         post.setLikesCount(0);
         post.setViewsCount(0);
         post.setIsPrivate(isPrivate);
-        post.setIsPr(isPr);
         return post;
     }
 }

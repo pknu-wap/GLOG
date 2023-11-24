@@ -10,17 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PrInfo {
+public class PrWriteDto {
+    @NotNull
+    private Long prId;
+    @NotNull
     private Integer number;
+    @NotNull
     private String title;
+    @NotNull
     private String body;
-    private User user;
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class User{
-        private String login;
-    }
 }

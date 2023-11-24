@@ -317,4 +317,8 @@ public class FriendService {
         user.setFriendCount(user.getFriendCount() - 1);
         opponent.setFriendCount(opponent.getFriendCount() - 1);
     }
+
+    public Long findUserIdByName(String nickname) {
+        return userRepository.findUserByNickname(nickname).getId();
+    }
 }

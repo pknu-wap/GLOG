@@ -111,12 +111,12 @@ function FriendListComponent({
   };
 
   return (
-    <Stack display="flex" justifyContent="space-between">
-      <Stack margin="6px 0" flexDirection="row">
+    <Stack flexDirection="row" justifyContent="space-between">
+      <Stack margin="6px 0" flexDirection="row" justifyContent="left" alignItems="center">
         <ProfileImage imageSrc={profileImg} />
 
         <UserName>
-          <Stack margin="0 10px 0 5px">{nickname}</Stack>
+          <Stack margin="0 10px 0 10px">{nickname}</Stack>
           {/*FIXME: new friend로 추가? */}
           {relationship === 'friend' ? (
             haveNewPost ? (
@@ -129,7 +129,7 @@ function FriendListComponent({
               <Stack></Stack>
             )
           ) : relationship === 'friending' ? (
-            <Stack>요청 중</Stack>
+            <Stack marginLeft="10px" fontSize="15px" color="#FFA07A">요청 중</Stack>
           ) : relationship === 'friended' ? (
             <>
               <Stack>친구 요청</Stack>
@@ -161,7 +161,7 @@ function FriendListComponent({
         </UserName>
       </Stack>
       <Stack>
-        <Button onClick={handleClick} sx={{ padding: '0 10px 0 0', minWidth: '24px' }}>
+        <Button onClick={handleClick} sx={{ padding: '0', minWidth: '30px' }}>
           <MoreVertIcon fontSize="medium" />
         </Button>
         <Menu anchorEl={anchorEl} open={friendopen} onClose={handleClose}>

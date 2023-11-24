@@ -217,20 +217,28 @@ export interface IFriendsParams {
 }
 
 export interface userSimpleDtos {
-  userId: number;
-  friendId: number;
-  recentPostId: number;
-  haveNewPost: boolean;
-  nickname: string;
-  imageUrl: string;
-  relationship: string;
+  userSimpleDtos: {
+    userId: number;
+    friendId: number;
+    recentPostId: number;
+    haveNewPost: boolean;
+    nickname: string;
+    imageUrl: string;
+    relationship: string;
+  }[];
 }
 
 // 친구 정보 get 반환값
 export interface IFriendsContent {
-  userSimpleDtos: userSimpleDtos[];
+  userSimpleDtos: userSimpleDtos;
   count: number;
 }
+
+//친구 검색 get 요청값
+export interface IFriendSearchParams {
+  name: string;
+}
+
 
 //친구요청
 export interface IFriendAllow {

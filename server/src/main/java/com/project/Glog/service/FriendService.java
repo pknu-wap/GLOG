@@ -288,4 +288,8 @@ public class FriendService {
         }
         friendRepository.delete(friend);
     }
+
+    public Long findUserIdByName(String nickname) {
+        return userRepository.findUserByNickname(nickname).getId();
+    }
 }

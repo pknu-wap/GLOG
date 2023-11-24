@@ -231,3 +231,14 @@ export interface IFriendsContent {
   userSimpleDtos: userSimpleDtos[];
   count: number;
 }
+
+//친구요청
+export interface IFriendAllow {
+  isAccept: number;
+  userId: number;
+}
+
+//친구 삭제
+export interface IDeleteFriend {
+  userId: number;
+}

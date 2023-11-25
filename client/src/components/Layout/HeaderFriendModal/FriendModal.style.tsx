@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DeleteFriendApi, PutFriendAllowApi } from '@/api/friend-api';
+import { DeleteFriendApi, PutFriendAllowApi, useGetFriendReadQuery } from '@/api/friend-api';
 import Button from '@/components/Button/Button';
 import PageLink from '@/components/PageLink/PageLink';
 import { MenuItem, Stack, Tooltip } from '@mui/material';
@@ -76,9 +76,11 @@ function FriendListComponent({
 }) {
   const queryClient = useQueryClient();
   const [deleteConfirmOpen, setDeleteConFirmOpen] = useState<boolean>(false);
-  const [isAccept, setIsAccept] = useState<number>(2);
+  const [isAccept, setIsAccept] = useState<number>(Number);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries(['friend'])
+    },
   });
   const AllowFriendOnClick = () => {
     const newAllowBody = {
@@ -95,11 +97,14 @@ function FriendListComponent({
     },
   });
 
+  const {data: friendReadData} = useGetFriendReadQuery({
+    userId: userId
+  })
+  const [, setReadData] = useState()
+
   const deleteClick = () => {
     deleteFriendQuery.mutate({ userId: userId });
   };
-
-  useEffect(() => {}, []);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const friendopen = Boolean(anchorEl);
@@ -110,18 +115,22 @@ function FriendListComponent({
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    setReadData(friendReadData);
+  }, [friendReadData]);
+
   return (
-    <Stack flexDirection="row" justifyContent="space-between">
+    <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
       <Stack margin="6px 0" flexDirection="row" justifyContent="left" alignItems="center">
         <ProfileImage imageSrc={profileImg} />
 
-        <UserName>
-          <Stack margin="0 10px 0 10px">{nickname}</Stack>
+        <UserName alignItems="center">
+          <Stack fontSize='18px' margin="0 10px 0 10px">{nickname}</Stack>
           {/*FIXME: new friend로 추가? */}
           {relationship === 'friend' ? (
             haveNewPost ? (
               <Button>
-                <PageLink href={recentPostId} color="#00BFFF">
+                <PageLink href={recentPostId}>
                   <NewPost></NewPost>
                 </PageLink>
               </Button>
@@ -132,11 +141,12 @@ function FriendListComponent({
             <Stack marginLeft="10px" fontSize="15px" color="#FFA07A">요청 중</Stack>
           ) : relationship === 'friended' ? (
             <>
-              <Stack>친구 요청</Stack>
+              <Stack margin='0 5px 0 10px'>친구 요청</Stack>
               <Tooltip title="수락" arrow>
                 <Button
+                  sx={{minWidth: '36px', height: '36px', padding: '0'}}
                   onClick={() => {
-                    setIsAccept(1);
+                    setIsAccept(0);
                     AllowFriendOnClick();
                   }}
                   color="success">
@@ -146,8 +156,9 @@ function FriendListComponent({
 
               <Tooltip title="거절" arrow>
                 <Button
+                  sx={{minWidth: '36px', height: '36px', padding: '0'}}
                   onClick={() => {
-                    setIsAccept(0);
+                    setIsAccept(1);
                     AllowFriendOnClick();
                   }}
                   color="error">
@@ -161,7 +172,7 @@ function FriendListComponent({
         </UserName>
       </Stack>
       <Stack>
-        <Button onClick={handleClick} sx={{ padding: '0', minWidth: '30px' }}>
+        <Button onClick={handleClick} sx={{justifyContent: 'center', padding: '0', minWidth: '30px' }}>
           <MoreVertIcon fontSize="medium" />
         </Button>
         <Menu anchorEl={anchorEl} open={friendopen} onClose={handleClose}>

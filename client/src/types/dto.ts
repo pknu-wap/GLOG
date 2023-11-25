@@ -250,3 +250,8 @@ export interface IFriendAllow {
 export interface IDeleteFriend {
   userId: number;
 }
+
+//읽음 유무
+export interface IFriendReadParams {
+  userId: number;
+}

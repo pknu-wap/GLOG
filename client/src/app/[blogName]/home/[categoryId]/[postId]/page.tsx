@@ -1,5 +1,5 @@
 'use client';
-import { Avatar, Box, Icon, Menu, MenuItem, Stack, TextField, useTheme } from '@mui/material';
+import { Avatar, Box, Icon, Menu, MenuItem, Stack, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import RepliesComponent, {
   BlackContainer,

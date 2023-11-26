@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Button from '@/components/Button/Button';
+import exp from 'constants';
 
 export const ThumbnailArea = styled(Stack)({
   width: '100%',
@@ -27,6 +28,13 @@ export const ImageContainer = styled(Stack)(({ imageSrc }: { imageSrc: string })
   width: '100%',
   height: '100%',
 }));
+
+export const ProfileImg = styled(Stack)(({ imageSrc }: { imageSrc: string }) => ({
+  backgroundAttachment: 'fixed',
+  backgroundImage: `url(${imageSrc})`,
+  backgroundRepeat: 'no-repeat',
+  borderRadius: '50%',
+}))
 
 export const PostReply = styled(Stack)({
   height: '100%',

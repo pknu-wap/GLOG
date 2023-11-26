@@ -6,6 +6,7 @@ import RepliesComponent, {
   GetReplies,
   ImageContainer,
   PostReply,
+  ProfileImg,
   ReplyHandle,
   ReplyPagenation,
   ThumbnailArea,
@@ -20,19 +21,18 @@ import MDEditor from '@uiw/react-md-editor';
 import { useUserThemeSSR } from '../../../../../../hooks/useRecoilSSR';
 import { useRouter } from 'next/navigation';
 import IconButton from '@/components/Button/IconButton';
-import Modal from '@/components/Modal/Modal';
-import { ModalContent } from '@/components/Modal/Modal.style';
 import Button from '@/components/Button/Button';
 import { PostReplyApi, useGetReplyQuery } from '@/api/reply-api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
+import Image from 'next/image';
+import IntroduceModal from './IntroduceModal/IntroduceModal';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
-  const [open, setOpen] = useState(false);
+  const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [userTheme] = useUserThemeSSR();
-  const theme = useTheme();
   const router = useRouter();
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
@@ -112,17 +112,10 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                 </Stack>
                 <Stack fontSize="36px">{post?.title}</Stack>
                 <Stack direction="row" alignItems={'center'} height="30px" gap={3} marginTop="24px">
-                  {/* <img
-                    onClick={() => setOpen(true)}
-                    style={{
-                      width: '30px',
-                      height: '30px',
-                      borderRadius: '50%',
-                      cursor: 'pointer',
-                    }}
-                    src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
-                    alt="profileImage"
-                  /> */}
+                  <Button sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%'}} onClick={() => setIntroduceOpen(true)}>
+                    <ProfileImg imageSrc={post?.author?.profileImage ?? ''}/>
+                  </Button>
+
                   <Stack margin="auto 0px">{post?.author?.nickname}</Stack>
                   <IconButton color="white">
                     <Home fontSize="small" onClick={() => router.push(`/${params.blogName}`)} />
@@ -216,52 +209,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           </Stack>
         }
       />
-      <Modal open={open} maxWidth="md" onClose={() => setOpen(false)}>
-        <ModalContent>
-          <Stack spacing={10} padding={'40px 80px'}>
-            <Stack direction="row" width="500px" spacing={10} justifyContent="space-between">
-              <Stack direction="row" alignItems="center" spacing={4}>
-                {/* <img
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '50%',
-                  }}
-                  src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
-                  alt="profileImage"
-                /> */}
-                <Stack>
-                  <Stack padding="8px">Du yeong</Stack>
-                  <Stack direction="row" spacing={2}>
-                    <Button size="small" variant="outlined">
-                      블로그 바로가기
-                    </Button>
-                    <Button size="small" variant="contained">
-                      친구 요청
-                    </Button>
-                  </Stack>
-                </Stack>
-              </Stack>
-              <Stack>친구 200명</Stack>
-            </Stack>
-            <Stack width="500px" spacing={2}>
-              <Stack color="primary.main" fontSize="18px">
-                한 줄 소개
-              </Stack>
-              <Stack
-                fontSize="14px"
-                width="500px"
-                borderLeft={`1px solid ${theme.palette.primary.main}`}
-                padding={'0px 0px 0px 12px'}
-                sx={{ overflowY: 'scroll', wordBreak: 'break-all' }}
-                height="fit-content"
-                maxHeight="200px">
-                안녕
-              </Stack>
-            </Stack>
-          </Stack>
-        </ModalContent>
-      </Modal>
+      <IntroduceModal open={IntroduceOpen} onClose={() => setIntroduceOpen(false)}></IntroduceModal>
     </Stack>
   );
 };

@@ -25,7 +25,6 @@ import Button from '@/components/Button/Button';
 import { PostReplyApi, useGetReplyQuery } from '@/api/reply-api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
-import Image from 'next/image';
 import IntroduceModal from './IntroduceModal/IntroduceModal';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {

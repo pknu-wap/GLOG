@@ -28,6 +28,13 @@ export const ImageContainer = styled(Stack)(({ imageSrc }: { imageSrc: string })
   height: '100%',
 }));
 
+export const ProfileImg = styled(Stack)(({ imageSrc }: { imageSrc: string }) => ({
+  backgroundAttachment: 'fixed',
+  backgroundImage: `url(${imageSrc})`,
+  backgroundRepeat: 'no-repeat',
+  borderRadius: '50%',
+}))
+
 export const PostReply = styled(Stack)({
   height: '100%',
   flexDirection: 'column',

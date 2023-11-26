@@ -28,7 +28,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Page<Post> findAll(Pageable pageable);
 
-    @Query(value = "SELECT * FROM Post ORDER BY RAND() LIMIT 8", nativeQuery = true)
+    @Query(value = "SELECT * FROM post ORDER BY RAND() LIMIT 8", nativeQuery = true)
     List<Post> findPostsByRandom();
 
     List<Post> findAllByTitleContaining(String title);

@@ -3,13 +3,17 @@ import { DeleteFriendApi, PutFriendAllowApi, useGetFriendReadQuery } from '@/api
 import Button from '@/components/Button/Button';
 import PageLink from '@/components/PageLink/PageLink';
 import { MenuItem, Stack, Tooltip } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Menu } from '@mui/material';
 import { Dialog } from '@/components/Dialog/Dialog';
+import Modal from '@/components/Modal/Modal';
+import { ModalContent } from '@/components/Modal/Modal.style';
+import { useGetIntroduceQuery } from '@/api/introduce-api';
+import { IIntroduce } from '@/types/dto';
 
 export const FriendModalArea = styled(Stack)({
   display: 'flex',
@@ -74,7 +78,9 @@ function FriendListComponent({
   recentPostId: string;
   relationship: string;
 }) {
+  const theme = useTheme();
   const queryClient = useQueryClient();
+  const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [deleteConfirmOpen, setDeleteConFirmOpen] = useState<boolean>(false);
   const [isAccept, setIsAccept] = useState<number>(Number);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
@@ -115,24 +121,32 @@ function FriendListComponent({
     setAnchorEl(null);
   };
 
+  const {data: introduceData} = useGetIntroduceQuery({
+    userId: userId,
+  });
+  const [introduce, setIntroduce] = useState<IIntroduce>();
+
   useEffect(() => {
     setReadData(friendReadData);
-  }, [friendReadData]);
+    setIntroduce(introduceData);
+  }, [friendReadData, introduceData]);
 
   return (
     <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
       <Stack margin="6px 0" flexDirection="row" justifyContent="left" alignItems="center">
-        <ProfileImage imageSrc={profileImg} />
+        <Button sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%'}} onClick={() => setIntroduceOpen(true)}>
+          <ProfileImage imageSrc={profileImg} />
+        </Button>
+        
 
         <UserName alignItems="center">
           <Stack fontSize='18px' margin="0 10px 0 10px">{nickname}</Stack>
-          {/*FIXME: new friend로 추가? */}
+          
           {relationship === 'friend' ? (
             haveNewPost ? (
               <Button>
-                <PageLink href={recentPostId}>
-                  <NewPost></NewPost>
-                </PageLink>
+                <PageLink href={recentPostId}> </PageLink>
+                <NewPost></NewPost>
               </Button>
             ) : (
               <Stack></Stack>
@@ -193,6 +207,54 @@ function FriendListComponent({
           action: deleteClick,
         }}
       />
+
+      <Modal open={IntroduceOpen} maxWidth="md" onClose={() => setIntroduceOpen(false)}>
+        <ModalContent>
+          <Stack spacing={10} padding={'40px 80px'}>
+            <Stack direction="row" width="500px" spacing={10} justifyContent="space-between">
+              <Stack direction="row" alignItems="center" spacing={4}>
+                <img
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '50%',
+                  }}
+                  src={introduce?.imageUrl}
+                  alt="profileImage"
+                />
+                <Stack>
+                  <Stack padding="8px" fontSize='25px'>{introduce?.nickname}</Stack>
+                  <Stack direction="row" spacing={2}>
+                    <Button size="small" variant="outlined">
+                      <PageLink href={`/${introduce?.blogUrl}`}> </PageLink>
+                      블로그 바로가기
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Stack>
+              <Stack>
+                <Stack fontSize='18px' marginBottom='15px'>친구 {introduce?.friendCount} 명</Stack>
+                <Stack color='#00BFFF'>팔로잉</Stack>
+              </Stack>
+            </Stack>
+            <Stack width="500px" spacing={2}>
+              <Stack color="primary.main" fontSize="18px">
+                한 줄 소개
+              </Stack>
+              <Stack
+                fontSize="14px"
+                width="500px"
+                borderLeft={`1px solid ${theme.palette.primary.main}`}
+                padding={'0px 0px 0px 12px'}
+                sx={{ overflowY: 'scroll', wordBreak: 'break-all' }}
+                height="fit-content"
+                maxHeight="200px">
+                {introduce?.introduction}
+              </Stack>
+            </Stack>
+          </Stack>
+        </ModalContent>
+      </Modal>
     </Stack>
   );
 }

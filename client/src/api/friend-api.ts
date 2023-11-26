@@ -1,4 +1,4 @@
-import { IDeleteFriend, IFriendAllow, IFriendReadParams, IFriendSearchParams, IFriendsParams } from '@/types/dto';
+import { IDeleteFriend, IFriendAllow, IFriendReadParams, IFriendRequest, IFriendSearchParams, IFriendsParams } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -25,6 +25,15 @@ export const useGetFriendSearchQuery = (params: IFriendSearchParams) => {
   const {isLoading, error, data } = useQuery(['search', params], () => GetFriendSearchApi(params));
 
   return {isLoading, error, data };
+}
+
+//친구 요청 
+export const PutFriendRequestApi = async (body: IFriendRequest) => {
+  const { data } = await defaultInstance.put(`/friend?userId=${body.userId}`,
+     body,
+    );
+
+  return data;
 }
 
 //친구 요청 수락/거절

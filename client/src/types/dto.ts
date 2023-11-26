@@ -217,7 +217,7 @@ export interface IFriendsParams {
 }
 
 export interface userSimpleDtos {
-  userSimpleDtos: {
+  simpleDtos: {
     userId: number;
     friendId: number;
     recentPostId: number;
@@ -239,8 +239,12 @@ export interface IFriendSearchParams {
   name: string;
 }
 
-
 //친구요청
+export interface IFriendRequest {
+  userId: number;
+}
+
+//친구요청 수락/거절
 export interface IFriendAllow {
   isAccept: number;
   userId: number;
@@ -254,4 +258,20 @@ export interface IDeleteFriend {
 //읽음 유무
 export interface IFriendReadParams {
   userId: number;
+}
+
+//유저 introduction
+export interface IIntroduceParams {
+  userId: number;
+}
+
+export interface IIntroduce {
+    id: number,
+    introduction: string,
+    imageUrl: string,
+    nickname: string,
+    blogName: string,
+    blogUrl: string,
+    relationship: string,
+    friendCount: number
 }

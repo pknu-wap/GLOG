@@ -1,12 +1,11 @@
 'use client';
-import { Avatar, Box, Icon, Menu, MenuItem, Stack, TextField } from '@mui/material';
+import { Avatar, Box, Icon, Menu, MenuItem, Stack, TextField, Tooltip, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import RepliesComponent, {
   BlackContainer,
   GetReplies,
   ImageContainer,
   PostReply,
-  ProfileImg,
   ReplyHandle,
   ReplyPagenation,
   ThumbnailArea,
@@ -14,7 +13,7 @@ import RepliesComponent, {
 } from './postId.style';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, useGetPostQuery } from '@/api/blog-api';
-import { IPostContent, IReplyContent, ISidebarContent } from '@/types/dto';
+import { IIntroduce, IPostContent, IReplyContent, ISidebarContent } from '@/types/dto';
 import CenterContent from '@/components/Layout/CenterContent';
 import { Home, KeyboardArrowRight } from '@mui/icons-material';
 import MDEditor from '@uiw/react-md-editor';
@@ -25,7 +24,14 @@ import Button from '@/components/Button/Button';
 import { PostReplyApi, useGetReplyQuery } from '@/api/reply-api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
-import IntroduceModal from './IntroduceModal/IntroduceModal';
+import Modal from '@/components/Modal/Modal';
+import { ModalContent } from '@/components/Modal/Modal.style';
+import { useGetIntroduceQuery } from '@/api/introduce-api';
+import { usegetblogIdQuery } from '@/api/readme-api';
+import PageLink from '@/components/PageLink/PageLink';
+import { PutFriendAllowApi, PutFriendRequestApi } from '@/api/friend-api';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
@@ -33,6 +39,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [userTheme] = useUserThemeSSR();
   const router = useRouter();
+  const theme = useTheme();
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
   const [page, setPage] = useState(0);
@@ -67,12 +74,50 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
     postReplyCreateQuery.mutate(newReplyBody);
   };
 
+  //친구 요청/수락/거절
+  const [, setUserId] = useState(Number);
+  const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
+  console.log(params.blogName);
+  const [isAccept, setIsAccept] = useState<number>(Number);
+  const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['friend'])
+    },
+  });
+  const AllowFriendOnClick = () => {
+    const newAllowBody = {
+      isAccept: isAccept,
+      userId: blogIdData,
+    };
+
+    putAllowFriendIdCreateQuery.mutate(newAllowBody);
+  };
+  const PutFriendRequestQuery = useMutation(PutFriendRequestApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['friend'])
+    },
+  });
+  const FriendRequestOnClick = () => {
+    const newRequestBody = {
+      userId: blogIdData
+    };
+    PutFriendRequestQuery.mutate(newRequestBody);
+  };
+  
+
+  const {data: introduceData} = useGetIntroduceQuery({
+    userId: blogIdData
+  });
+  console.log(blogIdData);
+  const [introduce, setIntroduce] = useState<IIntroduce>();
+
   useEffect(() => {
     setWriteList(sidebarContent);
     setPost(postData);
-
+    setIntroduce(introduceData);
+    setUserId(blogIdData);
     setReply(replyData);
-  }, [sidebarData, postData, replyData]);
+  }, [sidebarData, postData, introduceData, blogIdData, replyData]);
 
   //댓글 정렬기준
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -111,8 +156,18 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                 </Stack>
                 <Stack fontSize="36px">{post?.title}</Stack>
                 <Stack direction="row" alignItems={'center'} height="30px" gap={3} marginTop="24px">
-                  <Button sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%'}} onClick={() => setIntroduceOpen(true)}>
-                    <ProfileImg imageSrc={post?.author?.profileImage ?? ''}/>
+                  <Button 
+                    sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%'}} 
+                    onClick={() => setIntroduceOpen(true)}>
+                      <img
+                        style={{
+                          width: '35px',
+                          height: '35px',
+                          borderRadius: '50%',
+                        }}
+                        src={post?.author?.profileImage}
+                        alt="profileImage"
+                      />
                   </Button>
 
                   <Stack margin="auto 0px">{post?.author?.nickname}</Stack>
@@ -189,6 +244,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                 return (
                   <RepliesComponent
                     key={replyInfo.replyId}
+                    userId={replyInfo.userDto.userId}
                     nickname={replyInfo.userDto.nickname}
                     profileImage={replyInfo.userDto.profileImage}
                     message={replyInfo.message}
@@ -208,7 +264,89 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           </Stack>
         }
       />
-      <IntroduceModal open={IntroduceOpen} onClose={() => setIntroduceOpen(false)}></IntroduceModal>
+      {/* 댓글 상대방 introduction */}
+      <Modal open={IntroduceOpen} maxWidth="md" onClose={() => setIntroduceOpen(false)}>
+        <ModalContent>
+          <Stack spacing={10} padding={'40px 80px'}>
+            <Stack direction="row" width="500px" spacing={10} justifyContent="space-between">
+              <Stack direction="row" alignItems="center" spacing={4}>
+                <img
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '50%',
+                  }}
+                  src={introduce?.imageUrl}
+                  alt="profileImage"
+                />
+                <Stack>
+                  <Stack padding="8px" fontSize='25px'>{introduce?.nickname}</Stack>
+                  <Stack direction="row" spacing={2}>
+                    <Button size="small" variant="outlined">
+                      <PageLink href={`/${introduce?.blogUrl}`}> </PageLink>
+                      블로그 바로가기
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Stack>
+              <Stack>
+                <Stack fontSize='18px' marginBottom='15px'>친구 {introduce?.friendCount} 명</Stack>
+                {introduce?.relationship === 'friend' ? (
+                  <Stack color='#00BFFF'>팔로잉</Stack>
+                ) : introduce?.relationship === 'friending' ? (
+                  <Stack marginLeft="10px" fontSize="15px" color="#FFA07A">요청 중</Stack>
+                ) : introduce?.relationship === 'friended' ? (
+                  <>
+                    <Stack margin='0 5px 0 10px'>친구 요청</Stack>
+                    <Tooltip title="수락" arrow>
+                      <Button
+                        sx={{minWidth: '36px', height: '36px', padding: '0'}}
+                        onClick={() => {
+                          setIsAccept(0);
+                          AllowFriendOnClick();
+                        }}
+                        color="success">
+                        <CheckIcon />
+                      </Button>
+                    </Tooltip>
+                      
+                    <Tooltip title="거절" arrow>
+                      <Button
+                        sx={{minWidth: '36px', height: '36px', padding: '0'}}
+                        onClick={() => {
+                          setIsAccept(1);
+                          AllowFriendOnClick();
+                        }}
+                        color="error">
+                        <CloseIcon />
+                      </Button>
+                    </Tooltip>
+                  </>
+                ) : (
+                <Stack>
+                  <Button onClick={() => FriendRequestOnClick()}>친구 요청</Button>
+                </Stack>
+                )}
+              </Stack>
+            </Stack>
+            <Stack width="500px" spacing={2}>
+              <Stack color="primary.main" fontSize="18px">
+                한 줄 소개
+              </Stack>
+              <Stack
+                fontSize="14px"
+                width="500px"
+                borderLeft={`1px solid ${theme.palette.primary.main}`}
+                padding={'0px 0px 0px 12px'}
+                sx={{ overflowY: 'scroll', wordBreak: 'break-all' }}
+                height="fit-content"
+                maxHeight="200px">
+                {introduce?.introduction}
+              </Stack>
+            </Stack>
+          </Stack>
+        </ModalContent>
+      </Modal>
     </Stack>
   );
 };

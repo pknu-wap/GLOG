@@ -210,3 +210,48 @@ export interface ITemplateAdd {
     hashtags: string[];
   };
 }
+
+// 친구 정보 get 요청값
+export interface IFriendsParams {
+  kind: string;
+}
+
+export interface userSimpleDtos {
+  userSimpleDtos: {
+    userId: number;
+    friendId: number;
+    recentPostId: number;
+    haveNewPost: boolean;
+    nickname: string;
+    imageUrl: string;
+    relationship: string;
+  }[];
+}
+
+// 친구 정보 get 반환값
+export interface IFriendsContent {
+  userSimpleDtos: userSimpleDtos;
+  count: number;
+}
+
+//친구 검색 get 요청값
+export interface IFriendSearchParams {
+  name: string;
+}
+
+
+//친구요청
+export interface IFriendAllow {
+  isAccept: number;
+  userId: number;
+}
+
+//친구 삭제
+export interface IDeleteFriend {
+  userId: number;
+}
+
+//읽음 유무
+export interface IFriendReadParams {
+  userId: number;
+}

@@ -82,4 +82,10 @@ public class FriendController {
         UserFriendResponse userFriendResponse = friendService.makeUserFriendResponse(userPrincipal);
         return new ResponseEntity<>(userFriendResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/friend/id")
+    public ResponseEntity<Long> findUserIdByName(@RequestParam String nickname){
+        Long userId = friendService.findUserIdByName(nickname);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
+    }
 }

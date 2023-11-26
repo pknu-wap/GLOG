@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Button from '@/components/Button/Button';
-import exp from 'constants';
 
 export const ThumbnailArea = styled(Stack)({
   width: '100%',

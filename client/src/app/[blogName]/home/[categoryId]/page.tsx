@@ -9,20 +9,28 @@ import LockIcon from '@mui/icons-material/Lock';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useGetSidebarQuery } from '@/api/blog-api';
-import { ISidebarContent } from '@/types/dto';
+import { IPostPreview, ISidebarContent } from '@/types/dto';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { Stack } from '@mui/material';
+import { useGetPostPreviewQuery } from '@/api/postPreview-api';
 
 function page({ params }: { params: { blogName: string; categoryId: string } }) {
   const [page, setPage] = useState(0);
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
 
+  const { data: postPreviewData } = useGetPostPreviewQuery({
+    kind: 'name',
+    page: page,
+  });
+  const [previewData, setPreviewData] = useState<IPostPreview>();
+
   console.log('refferer', document.referrer);
 
   useEffect(() => {
     setWriteList(sidebarData?.sidebarDtos);
-  }, [sidebarData]);
+    setPreviewData(postPreviewData);
+  }, [sidebarData, postPreviewData]);
 
   const backend = [
     {

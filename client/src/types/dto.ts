@@ -23,6 +23,28 @@ export interface ICollectContent {
   totalPages: number;
 }
 
+// 카테고리별 게시물 미리보기 불러오기
+export interface IPostPreviewParams {
+  kind: string;
+  page: number;
+}
+
+// 카테고리별 게시물 미리보기 데이터
+export interface IPostPreview {
+  postPreviewDtos: {
+    blogUrl: string;
+    postId: number;
+    title: string;
+    thumbnail: string;
+    likesCount: number;
+    viewsCount: number;
+    repliesCount: number;
+    createdAt: string;
+    isPrivate: true;
+  }[];
+  totalPages: string;
+}
+
 // 유저 프로필 사진 불러오기
 export interface IProfile {
   loginedMemberId: number;
@@ -238,7 +260,6 @@ export interface IFriendsContent {
 export interface IFriendSearchParams {
   name: string;
 }
-
 
 //친구요청
 export interface IFriendAllow {

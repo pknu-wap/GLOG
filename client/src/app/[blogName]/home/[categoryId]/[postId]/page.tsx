@@ -41,6 +41,7 @@ import PageLink from '@/components/PageLink/PageLink';
 import { PutFriendAllowApi, PutFriendRequestApi } from '@/api/friend-api';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import Image from 'next/image';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
@@ -132,7 +133,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  console.log(introduce?.imageUrl);
   return (
     <Stack>
       <ThumbnailArea>
@@ -275,15 +276,8 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           <Stack spacing={10} padding={'40px 80px'}>
             <Stack direction="row" width="500px" spacing={10} justifyContent="space-between">
               <Stack direction="row" alignItems="center" spacing={4}>
-                <img
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '50%',
-                  }}
-                  src={introduce?.imageUrl}
-                  alt="profileImage"
-                />
+                
+                <Image width={30} height={30} src={introduce?.imageUrl ?? ''} alt=''/>
                 <Stack>
                   <Stack padding="8px" fontSize="25px">
                     {introduce?.nickname}

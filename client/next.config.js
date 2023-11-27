@@ -15,8 +15,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
+        protocol: 'https',
+        hostname: 'elasticbeanstalk-us-east-1-064991853848.s3.amazonaws.com',
       },
     ],
   },

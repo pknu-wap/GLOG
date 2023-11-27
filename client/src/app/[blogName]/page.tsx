@@ -41,7 +41,6 @@ const Home = ({ params }: { params: { blogName: string } }) => {
     setReadMe(readMeData?.body?.content);
     setBlogId(blogIdData);
   }, [sidebarData, readMeData, blogIdData]);
-  console.log(blogIdData);
   return (
     <Stack height={'fit-content'}>
       <DragAndDrop

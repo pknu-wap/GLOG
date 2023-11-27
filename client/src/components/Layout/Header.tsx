@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 import FriendModal from './HeaderFriendModal/FriendModal';
 import PageLink from '../PageLink/PageLink';
 import Image from 'next/image';
-import Pororo from '../../../public/assets/test.png';
+import Pororo from '../../../public/assets/box.png';
 
 export default function Header() {
   const [userTheme, setUserTheme] = useUserThemeSSR();

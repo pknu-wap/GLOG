@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Modal from '../Modal/Modal';
 import { ModalTitle } from '../Modal/Modal.style';
@@ -25,7 +26,8 @@ function Github({
   return (
     <Modal open={open} onClose={onClose}>
       <ModalTitle>Repository 선택</ModalTitle>
-      {datas?.map((data, i) => {
+      {/* FIXME : 백엔드 타입 알게 되면 수정해야함 */}
+      {datas?.map((data: any, i: any) => {
         return (
           <Stack
             onClick={() => putAllowFriendIdCreateQuery.mutate({ category: categoryId, repo: i })}

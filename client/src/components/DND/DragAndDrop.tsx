@@ -11,6 +11,7 @@ import IconButton from '../Button/IconButton';
 import { ArrowRight, Edit } from '@mui/icons-material';
 import CategorySettingModal from './CategorySettingModal';
 import PageLink from '../PageLink/PageLink';
+import Github from '../Github/Github';
 
 type Footprint = {
   categoryId: number;
@@ -31,6 +32,8 @@ interface DragAndDropProps {
 function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [categoryEditOpen, setCategoryEditOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [categoryId, setCategoryId] = useState(0);
 
   const router = useRouter();
   useEffect(() => {
@@ -87,11 +90,20 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                               </PageLink>
                             </IconButton>
                           </Stack>
-                          <PageLink href={`/chaeyeon/prList/${category.categoryId}`}>
-                            <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
-                              PR 연동
-                            </Stack>
-                          </PageLink>
+                          {/* <PageLink
+                            onClick={() => setOpen(true)}
+                            href={`/chaeyeon/prList/${category.categoryId}`}> */}
+                          <Stack
+                            onClick={() => {
+                              setOpen(true);
+                              setCategoryId(category.categoryId);
+                            }}
+                            sx={{ cursor: 'pointer' }}
+                            pl={4}
+                            py={1}>
+                            PR 연동
+                          </Stack>
+                          {/* </PageLink> */}
                           <Stack
                             sx={{
                               padding: '8px',
@@ -168,6 +180,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
             open={categoryEditOpen}
             onClose={() => setCategoryEditOpen(false)}
           />
+          <Github categoryId={categoryId} open={open} onClose={() => setOpen(false)} />
         </DragDropContext>
       ) : null}
     </>

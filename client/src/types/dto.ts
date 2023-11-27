@@ -284,3 +284,9 @@ export interface IIntroduce {
   relationship: string;
   friendCount: number;
 }
+
+// 레포지토리 가져오기
+export interface RepositoryParams {
+  category?: number;
+  repo?: string;
+}

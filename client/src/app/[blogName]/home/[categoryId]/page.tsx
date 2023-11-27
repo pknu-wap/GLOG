@@ -18,7 +18,6 @@ function page({ params }: { params: { blogName: string; categoryId: string } }) 
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
 
-  console.log('refferer', document.referrer);
 
   useEffect(() => {
     setWriteList(sidebarData?.sidebarDtos);

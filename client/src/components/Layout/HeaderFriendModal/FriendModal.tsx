@@ -17,9 +17,9 @@ function FriendModal({ open, onClose }: ModalType) {
   });
   const [friend, setFriend] = useState<IFriendsContent>();
   const kindList = ['recentFriend', 'name', 'recentPost'];
-  const friendCount = friend?.userSimpleDtos.userSimpleDtos.length;
+  const friendCount = friend?.userSimpleDtos.simpleDtos.length;
 
-  const [nickname, setNickname] = useState(' ');
+  const [nickname, setNickname] = useState('');
   const { data: searchFriendData } = useGetFriendSearchQuery({
     name: nickname,
   });
@@ -28,7 +28,6 @@ function FriendModal({ open, onClose }: ModalType) {
     setFriend(friendData);
     setSearch(searchFriendData);
   }, [friendData, searchFriendData]);
-
 
   //정렬기준
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -40,17 +39,19 @@ function FriendModal({ open, onClose }: ModalType) {
     setAnchorEl(null);
   };
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
-  
+
   return (
     <Modal open={open} maxWidth="lg" onClose={onClose}>
       <ModalContent>
         <FriendModalArea>
           <TopStack>
-            <Stack marginBottom="5px" fontSize='20px'>친구들</Stack>
+            <Stack marginBottom="5px" fontSize="20px">
+              친구들
+            </Stack>
             <Stack>{friendCount} 명</Stack>
           </TopStack>
           <Stack flexDirection="row" justifyContent="space-between" margin="5px 0 30px 0">
-            <Stack justifyContent='center'>
+            <Stack justifyContent="center">
               <Stack flexDirection="row" justifyContent="left">
                 <Button onClick={handleClick} sx={{ padding: '0', minWidth: '24px' }}>
                   <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
@@ -78,13 +79,15 @@ function FriendModal({ open, onClose }: ModalType) {
                     최근 포스팅순
                   </MenuItem>
                 </Menu>
-                <Stack marginLeft='10px'>정렬기준</Stack>
+                <Stack marginLeft="10px">정렬기준</Stack>
               </Stack>
             </Stack>
-            <Button sx={{borderRadius: '20px'}} onClick={() => setSearchOpen(true)}>친구 검색하기</Button>
+            <Button sx={{ borderRadius: '20px' }} onClick={() => setSearchOpen(true)}>
+              친구 검색하기
+            </Button>
           </Stack>
           <Stack flexDirection="column" maxHeight="200px">
-            {friend?.userSimpleDtos?.userSimpleDtos.map((friendInfo) => {
+            {friend?.userSimpleDtos?.simpleDtos.map((friendInfo) => {
               return (
                 <FriendListComponent
                   key={friendInfo.friendId}
@@ -100,39 +103,42 @@ function FriendModal({ open, onClose }: ModalType) {
           </Stack>
         </FriendModalArea>
       </ModalContent>
-      
+
       {/* 친구 검색 모달 */}
       <Modal open={searchOpen} maxWidth="lg" onClose={() => setSearchOpen(false)}>
-        <Stack width='50vw' height='100%' maxWidth='550px' padding='10px 20px' marginTop='5px'>
-          
-          <TextField 
-            fullWidth 
-            InputProps={{ startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon/>
-              </InputAdornment>
-            ), }} 
-            placeholder="검색하기" 
-            variant="standard" 
-            label='' 
-            size='small' 
-            sx={{ marginBottom: '20px' }} 
-            onChange={(e) => {setNickname(e.target.value)}} />
+        <Stack width="50vw" height="100%" maxWidth="550px" padding="10px 20px" marginTop="5px">
+          <TextField
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            placeholder="검색하기"
+            variant="standard"
+            label=""
+            size="small"
+            sx={{ marginBottom: '20px' }}
+            onChange={(e) => {
+              setNickname(e.target.value);
+            }}
+          />
           <Stack>
-          {search?.userSimpleDtos.userSimpleDtos.map((searchInfo) => {
-            return(
-              <FriendListComponent
-              key={searchInfo.friendId}
-              userId={searchInfo.userId}
-              nickname={searchInfo.nickname}
-              profileImg={searchInfo.nickname}
-              relationship={searchInfo.relationship}
-              haveNewPost={searchInfo.haveNewPost}
-              recentPostId={`/{blogUrl}/home/1/${searchInfo.recentPostId}`}
-              />
-
-            )
-          })}
+            {search?.userSimpleDtos.simpleDtos.map((searchInfo) => {
+              return (
+                <FriendListComponent
+                  key={searchInfo.friendId}
+                  userId={searchInfo.userId}
+                  nickname={searchInfo.nickname}
+                  profileImg={searchInfo.nickname}
+                  relationship={searchInfo.relationship}
+                  haveNewPost={searchInfo.haveNewPost}
+                  recentPostId={`/{blogUrl}/home/1/${searchInfo.recentPostId}`}
+                />
+              );
+            })}
           </Stack>
         </Stack>
       </Modal>

@@ -6,13 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface VisitRepository extends JpaRepository<Visit, Long> {
-    @Query("SELECT v FROM Visit v WHERE v.blog.id = :blogId")
-    List<Visit> findAllByBlogId(@Param("blogId") Long blogId);
-
-    @Query("SELECT v FROM Visit v WHERE v.visitUser.id = :userId AND v.blog.id = :blogId")
-    Visit findByUserIdAndBlogId(@Param("userId") Long userId, @Param("blogId") Long blogId);
+    @Query("SELECT v FROM Visit v JOIN v.blog b WHERE b.id = :blogId")
+    Visit findByBlogId(@Param("blogId") Long blogId);
 }

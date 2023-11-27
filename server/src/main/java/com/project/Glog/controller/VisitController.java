@@ -3,6 +3,8 @@ package com.project.Glog.controller;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.VisitService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +21,17 @@ public class VisitController {
     @GetMapping("/visit")
     public ResponseEntity<Integer> readVisitCount(@CurrentUser UserPrincipal userPrincipal) {
 
-        int visitCount = visitService.getVisitCount(userPrincipal.getId());//하루가 지나면 삭제
+        int visitCount = visitService.getVisitCount(userPrincipal.getId());
 
         return new ResponseEntity<>(visitCount, HttpStatus.OK);
     }
 
     @PostMapping("/visit")
-    public ResponseEntity<String> saveVisitCount(@CurrentUser UserPrincipal userPrincipal,
+    public ResponseEntity<Cookie> saveVisitCount(HttpServletRequest request,
                                                  @RequestParam Long blogId) {
 
-        visitService.saveCount(userPrincipal, blogId);
+        Cookie cookie = visitService.addVisitCountByCookie(request, blogId);
 
-        return new ResponseEntity<>("success save path", HttpStatus.OK);
+        return new ResponseEntity<>(cookie, HttpStatus.OK);
     }
 }

@@ -90,20 +90,27 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                               </PageLink>
                             </IconButton>
                           </Stack>
-                          {/* <PageLink
-                            onClick={() => setOpen(true)}
-                            href={`/chaeyeon/prList/${category.categoryId}`}> */}
-                          <Stack
-                            onClick={() => {
-                              setOpen(true);
-                              setCategoryId(category.categoryId);
-                            }}
-                            sx={{ cursor: 'pointer' }}
-                            pl={4}
-                            py={1}>
-                            PR 연동
-                          </Stack>
-                          {/* </PageLink> */}
+                          {/* FIXME : 레포지토리 연동 여부 받아와야 함 */}
+                          {
+                            <>
+                              <PageLink
+                                onClick={() => {
+                                  setCategoryId(category.categoryId);
+                                }}
+                                href={`/chaeyeon/prList/${category.categoryId}`}>
+                                <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
+                                  PR 연동
+                                </Stack>
+                              </PageLink>
+                              <Stack
+                                onClick={() => setOpen(true)}
+                                sx={{ cursor: 'pointer' }}
+                                pl={4}
+                                py={1}>
+                                PR 연동
+                              </Stack>
+                            </>
+                          }
                           <Stack
                             sx={{
                               padding: '8px',

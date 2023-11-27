@@ -5,6 +5,7 @@ import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.VisitService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +28,12 @@ public class VisitController {
     }
 
     @PostMapping("/visit")
-    public ResponseEntity<Cookie> saveVisitCount(HttpServletRequest request,
+    public ResponseEntity<String> saveVisitCount(HttpServletRequest request,
+                                                 HttpServletResponse response,
                                                  @RequestParam Long blogId) {
 
         Cookie cookie = visitService.addVisitCountByCookie(request, blogId);
-
-        return new ResponseEntity<>(cookie, HttpStatus.OK);
+        response.addCookie(cookie);
+        return new ResponseEntity<>("success save count", HttpStatus.OK);
     }
 }

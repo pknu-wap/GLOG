@@ -1,3 +1,4 @@
+
 // 모아보기 페이지
 export interface ICollect {
   page: number;
@@ -29,25 +30,37 @@ export interface IPostPreviewParams {
   page: number;
 }
 
+export interface IPostPreviewDtos {
+  blogUrl: string;
+  postId: number;
+  title: string;
+  thumbnail: string;
+  likesCount: number;
+  viewsCount: number;
+  repliesCount: number;
+  createdAt: string;
+  isPrivate: true;
+};
+
 // 카테고리별 게시물 미리보기 데이터
 export interface IPostPreview {
-  postPreviewDtos: {
-    blogUrl: string;
-    postId: number;
-    title: string;
-    thumbnail: string;
-    likesCount: number;
-    viewsCount: number;
-    repliesCount: number;
-    createdAt: string;
-    isPrivate: true;
-  }[];
-  totalPages: string;
+  postPreviewDtos: IPostPreviewDtos[];
+  totalPages: number;
 }
 
 // 유저 프로필 사진 불러오기
 export interface IProfile {
   loginedMemberId: number;
+}
+
+// 카테고리 이름 불러오기
+export interface ICategoryParams {
+  categoryId: number;
+}
+
+export interface ICategory {
+  categoryName: string;
+  prCategory: true;
 }
 
 // 댓글 get 정보들
@@ -239,7 +252,7 @@ export interface IFriendsParams {
 }
 
 export interface userSimpleDtos {
-  userSimpleDtos: {
+  simpleDtos: {
     userId: number;
     friendId: number;
     recentPostId: number;

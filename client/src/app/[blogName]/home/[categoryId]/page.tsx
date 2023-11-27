@@ -2,188 +2,115 @@
 import React, { useEffect } from 'react';
 import PostComponent from '../../../../components/Post/Post';
 import { useState } from 'react';
-import { PostAreaComponent, PostPagination, ScrapList } from './category.style';
+import { PostAreaComponent, ScrapList } from './category.style';
 import CenterContent from '@/components/Layout/CenterContent';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockIcon from '@mui/icons-material/Lock';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useGetSidebarQuery } from '@/api/blog-api';
-import { IPostPreview, ISidebarContent } from '@/types/dto';
+import { ICategory, IPostPreview, ISidebarContent } from '@/types/dto';
 import DragAndDrop from '@/components/DND/DragAndDrop';
-import { Stack } from '@mui/material';
-import { useGetPostPreviewQuery } from '@/api/postPreview-api';
+import { Menu, MenuItem, Stack } from '@mui/material';
+import { useGetCategoryQuery, useGetPostPreviewQuery } from '@/api/postPreview-api';
+import Button from '@/components/Button/Button';
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
+
 
 function page({ params }: { params: { blogName: string; categoryId: string } }) {
-  const [page, setPage] = useState(0);
+
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
 
+  const {data: categoryNameData} = useGetCategoryQuery({categoryId: Number(params.categoryId)})
+  const [categoryName, setCategoryName] = useState<ICategory>()
+
+  const [kind, setKind] = useState("likes");
+  const kindList = ["recent", "likes", "views", "randoms"]
   const { data: postPreviewData } = useGetPostPreviewQuery({
-    kind: 'name',
-    page: page,
+    kind: kind,
+    page: Number(params.categoryId),
   });
+  console.log(params.categoryId);
   const [previewData, setPreviewData] = useState<IPostPreview>();
 
-  console.log('refferer', document.referrer);
 
   useEffect(() => {
+    setCategoryName(categoryNameData)
     setWriteList(sidebarData?.sidebarDtos);
     setPreviewData(postPreviewData);
-  }, [sidebarData, postPreviewData]);
+  }, [categoryNameData, sidebarData, postPreviewData]);
 
-  const backend = [
-    {
-      isAuthor: true,
-      categoryName: 'string',
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-      PostPreviewResponse: {
-        count: 0,
-        PostPreviewDtos: [
-          {
-            PostPreviewDto: {
-              blogUrl: 'string',
-              postId: 0,
-              title: 'string',
-              imageUrl: 'string',
-              likesCount: 0,
-              viewsCount: 0,
-              repliesCount: 0,
-              createdAt: 0,
-              isPrivate: 1,
-              isScrapped: true,
-            },
-          },
-          {
-            PostPreviewDto: {
-              blogUrl: 'string',
-              postId: 1,
-              title: 'string',
-              imageUrl: 'string',
-              likesCount: 0,
-              viewsCount: 0,
-              repliesCount: 0,
-              createdAt: 0,
-              isPrivate: 1,
-              isScrapped: false,
-            },
-          },
-          {
-            PostPreviewDto: {
-              blogUrl: 'string',
-              postId: 2,
-              title: 'string',
-              imageUrl: 'string',
-              likesCount: 0,
-              viewsCount: 0,
-              repliesCount: 0,
-              createdAt: 0,
-              isPrivate: 0,
-              isScrapped: true,
-            },
-          },
-          {
-            PostPreviewDto: {
-              blogUrl: 'string',
-              postId: 3,
-              title: 'string',
-              imageUrl: 'string',
-              likesCount: 0,
-              viewsCount: 0,
-              repliesCount: 0,
-              createdAt: 0,
-              isPrivate: 0,
-              isScrapped: false,
-            },
-          },
-          {
-            PostPreviewDto: {
-              blogUrl: 'string',
-              postId: 4,
-              title: 'string',
-              imageUrl: 'string',
-              likesCount: 0,
-              viewsCount: 0,
-              repliesCount: 0,
-              createdAt: 0,
-              isPrivate: 1,
-              isScrapped: true,
-            },
-          },
-        ],
-      },
-    },
-    {
-      PostPreviewResponse: {
-        count: 0,
-        PostPreviewDtos: [
-          {
-            PostPreviewDto: {
-              blogUrl: 'string',
-              postId: 0,
-              title: 'string',
-              imageUrl: 'string',
-              likesCount: 0,
-              viewsCount: 0,
-              repliesCount: 0,
-              createdAt: 0,
-              isPrivate: 1,
-              isScrapped: true,
-            },
-          },
-        ],
-      },
-    },
-  ];
 
-  const result = backend[page];
-
-  const totalPages = backend.length;
 
   return (
     <CenterContent maxWidth={'2000px'}>
-      <ScrapList>{params.categoryId}</ScrapList>
+      <ScrapList>{categoryName?.categoryName}</ScrapList>
       <DragAndDrop
         blogName={params.blogName}
         footprintList={writeList}
         rightContainer={
           <Stack width="100%">
+
+            <Stack flexDirection={'row'}>
+              <Stack>
+                <Button onClick={handleClick} sx={{ padding: '0 10px 0 0', minWidth: '24px' }}>
+                  <AlignHorizontalLeftIcon fontSize="medium"></AlignHorizontalLeftIcon>
+                </Button>
+                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      setKind(kindList[1]);
+                    }}>
+                    인기순
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      setKind(kindList[0]);
+                    }}>
+                    최신순
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      setKind(kindList[2]);;
+                    }}>
+                    조회순
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      setKind(kindList[3]);;
+                    }}>
+                    랜덤
+                  </MenuItem>
+                </Menu>
+              </Stack>
+              <Stack>정렬기준</Stack>
+              </Stack>
+
             <PostAreaComponent>
-              {result.PostPreviewResponse.PostPreviewDtos.map((postInfo) => {
+              {previewData?.postPreviewDtos.map((postInfo) => {
                 return (
                   <PostComponent
                     isPrivate
-                    key={postInfo.PostPreviewDto.postId}
-                    thumbnail={postInfo.PostPreviewDto.imageUrl}
-                    title={postInfo.PostPreviewDto.title}
-                    likesCount={postInfo.PostPreviewDto.likesCount}
-                    viewsCount={postInfo.PostPreviewDto.viewsCount}
-                    Icon={
-                      result.isAuthor ? (
-                        postInfo.PostPreviewDto.isPrivate ? (
-                          <LockIcon fontSize="small" />
-                        ) : (
-                          <LockOpenIcon fontSize="small" />
-                        )
-                      ) : postInfo.PostPreviewDto.isScrapped ? (
-                        <StarIcon fontSize="small" />
-                      ) : (
-                        <StarBorderIcon fontSize="small" />
-                      )
-                    }
+                    key={postInfo.postId}
+                    thumbnail={postInfo.thumbnail}
+                    title={postInfo.title}
+                    likesCount={postInfo.likesCount}
+                    viewsCount={postInfo.viewsCount}
+                    Icon={<></>}
                   />
                 );
               })}
             </PostAreaComponent>
-            <PostPagination
-              count={totalPages}
-              page={page + 1}
-              onChange={(_, newPage) => {
-                setPage(newPage - 1);
-              }}
-              variant="outlined"
-              shape="rounded"
-            />
+
           </Stack>
         }
       />

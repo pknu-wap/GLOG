@@ -17,7 +17,7 @@ function FriendModal({ open, onClose }: ModalType) {
   });
   const [friend, setFriend] = useState<IFriendsContent>();
   const kindList = ['recentFriend', 'name', 'recentPost'];
-  const friendCount = friend?.userSimpleDtos.userSimpleDtos.length;
+  const friendCount = friend?.userSimpleDtos.simpleDtos.length;
 
   const [nickname, setNickname] = useState(' ');
   const { data: searchFriendData } = useGetFriendSearchQuery({
@@ -84,7 +84,7 @@ function FriendModal({ open, onClose }: ModalType) {
             <Button sx={{borderRadius: '20px'}} onClick={() => setSearchOpen(true)}>친구 검색하기</Button>
           </Stack>
           <Stack flexDirection="column" maxHeight="200px">
-            {friend?.userSimpleDtos?.userSimpleDtos.map((friendInfo) => {
+            {friend?.userSimpleDtos?.simpleDtos.map((friendInfo) => {
               return (
                 <FriendListComponent
                   key={friendInfo.friendId}
@@ -119,7 +119,7 @@ function FriendModal({ open, onClose }: ModalType) {
             sx={{ marginBottom: '20px' }} 
             onChange={(e) => {setNickname(e.target.value)}} />
           <Stack>
-          {search?.userSimpleDtos.userSimpleDtos.map((searchInfo) => {
+          {search?.userSimpleDtos.simpleDtos.map((searchInfo) => {
             return(
               <FriendListComponent
               key={searchInfo.friendId}

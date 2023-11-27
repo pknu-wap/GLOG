@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface PathRepository extends JpaRepository<Path, Long> {
 
-    @Query("SELECT p FROM Path p WHERE p.user.id = :userId")
-    List<Path> findAllByUserId(@Param("userId") Long userId);
+    @Query("SELECT p FROM Path p WHERE p.blog.id = :blogId")
+    List<Path> findAllByBlogId(@Param("blogId") Long blogId);
 }

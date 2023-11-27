@@ -28,9 +28,9 @@ public class PathController {
     }
 
     @PostMapping("/path")
-    public ResponseEntity<String> savePath(@RequestParam String path) {
+    public ResponseEntity<String> savePath(@RequestParam String path, @RequestParam Long blogId) {
 
-        pathService.savePath(path);
+        pathService.savePath(path, blogId);
 
         return new ResponseEntity<>("success save path", HttpStatus.OK);
     }

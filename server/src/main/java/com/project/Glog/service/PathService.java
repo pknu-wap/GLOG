@@ -2,8 +2,8 @@ package com.project.Glog.service;
 
 import com.project.Glog.domain.Path;
 import com.project.Glog.dto.PathDto;
+import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.repository.PathRepository;
-import com.project.Glog.repository.UserRepository;
 import com.project.Glog.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,12 @@ public class PathService {
     @Autowired
     private PathRepository pathRepository;
     @Autowired
-    private UserRepository userRepository;
+    private BlogRepository blogRepository;
 
     public List<PathDto> makePathDtos(UserPrincipal userPrincipal) {
         List<PathDto> pathDtos = new ArrayList<>();
-        List<Path> paths = pathRepository.findAllByUserId(userPrincipal.getId());
+        List<Path> paths = pathRepository.findAllByBlogId(
+                blogRepository.findByUserId(userPrincipal.getId()).get().getId());
         paths = paths.stream()
                 .sorted(Comparator.comparing(Path::getId).reversed())
                 .toList();
@@ -43,9 +44,10 @@ public class PathService {
         }
     }
 
-    public void savePath(String pathName) {
+    public void savePath(String pathName, Long blogId) {
         Path path = new Path();
         path.setInfluxPath(pathName);
+        path.setBlog(blogRepository.findById(blogId).get());
         pathRepository.save(path);
     }
 }

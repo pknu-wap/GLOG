@@ -31,7 +31,7 @@ public class Post {
     private List<PostLike> postLikes;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Scrap> scraps;
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private PrPost prPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,7 +65,7 @@ public class Post {
         this.title=req.getTitle();
         this.content=req.getContent();
         this.isPrivate=req.getIsPrivate();
-        this.isPr=req.getIsPr();
+//        this.isPr=req.getPrId();
     }
 
 }

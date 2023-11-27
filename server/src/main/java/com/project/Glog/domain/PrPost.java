@@ -29,6 +29,8 @@ public class PrPost {
     private String prTitle;
     @NotNull
     private Boolean isPosted;
+    @Column(length = 50000)
+    private String prBody;
 
     @OneToOne(fetch = FetchType.LAZY)
     private GithubRepository githubRepository;

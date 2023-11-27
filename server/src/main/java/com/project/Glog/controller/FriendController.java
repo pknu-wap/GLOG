@@ -20,6 +20,14 @@ public class FriendController {
     @Autowired
     private FriendService friendService;
 
+    @GetMapping("/introduce")
+    public ResponseEntity<UserModalResponse> requestModal(@CurrentUser UserPrincipal userPrincipal,
+                                                           @RequestParam Long userId) {
+        UserModalResponse userModalResponse = friendService.makeUserModalResponse(userPrincipal, userId);
+
+        return new ResponseEntity<>(userModalResponse, HttpStatus.OK);
+    }
+
     @PutMapping("/friend")
     public ResponseEntity<UserModalResponse> requestFriend(@CurrentUser UserPrincipal userPrincipal,
                                                            @RequestParam Long userId) {
@@ -73,5 +81,11 @@ public class FriendController {
         }
         UserFriendResponse userFriendResponse = friendService.makeUserFriendResponse(userPrincipal);
         return new ResponseEntity<>(userFriendResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/friend/id")
+    public ResponseEntity<Long> findUserIdByName(@RequestParam String nickname){
+        Long userId = friendService.findUserIdByName(nickname);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 }

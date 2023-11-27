@@ -290,3 +290,8 @@ export interface RepositoryParams {
   category?: number;
   repo?: string;
 }
+
+// PR
+export interface IPRParams {
+  categoryId: number;
+}

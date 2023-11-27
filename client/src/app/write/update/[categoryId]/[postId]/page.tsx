@@ -16,15 +16,16 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
+import { useGetPostQuery } from '@/api/blog-api';
 
 const Update = ({ params }: { params: { categoryId: number; postId: number } }) => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string | undefined>('# Hello World');
+  const [content, setContent] = useState<string | undefined>('');
   const [tags, setTags] = useState<string[]>([]);
   const [templateId] = useTemplateIdSSR();
   const [temporaryId] = useTemporaryIdSSR();
-  // const [temporaryId, setTemporary] = useTemporaryIdSSR();
+  const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
 
   const { data: templateData, refetch: templateRefetch } = useGetTemplateDetailQuery({
     templateId,
@@ -34,24 +35,34 @@ const Update = ({ params }: { params: { categoryId: number; postId: number } }) 
   });
 
   useEffect(() => {
-    templateRefetch();
+    templateId > 0 && templateRefetch();
   }, [templateId]);
 
   useEffect(() => {
-    temporaryRefetch();
+    temporaryId > 0 && temporaryRefetch();
   }, [temporaryId]);
 
   useEffect(() => {
-    setTitle(templateData?.title);
-    setContent(templateData?.content);
-    setTags(templateData?.hashtags);
+    if (templateId > 0) {
+      setTitle(templateData?.title);
+      setContent(templateData?.content);
+      setTags(templateData?.hashtags);
+    }
   }, [templateData]);
 
   useEffect(() => {
-    setTitle(temporaryData?.title);
-    setContent(temporaryData?.content);
-    setTags(temporaryData?.hashtags);
+    if (temporaryId > 0) {
+      setTitle(temporaryData?.title);
+      setContent(temporaryData?.content);
+      setTags(temporaryData?.hashtags);
+    }
   }, [temporaryData]);
+
+  useEffect(() => {
+    setTitle(postData?.title);
+    setContent(postData?.content);
+    setTags(postData?.hashtags);
+  }, [postData]);
 
   const writeProps: WriteProps = {
     title,

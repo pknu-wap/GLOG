@@ -44,7 +44,7 @@ export const useGetTemplateDetailQuery = (params: ITemplateDetailParams) => {
     [`templateDetail`],
     () => GetTemplateDetailApi(params),
     {
-      enabled: !!params.templateId,
+      enabled: false,
     },
   );
   return { data, isLoading, error, refetch };
@@ -100,7 +100,7 @@ export const useGetTemporaryDetailQuery = (params: ITemporaryDetailParams) => {
     [`temporaryDetail`],
     () => GetTemporaryDetailApi(params),
     {
-      enabled: !!params.temporaryId,
+      enabled: false,
     },
   );
   return { data, isLoading, error, refetch };

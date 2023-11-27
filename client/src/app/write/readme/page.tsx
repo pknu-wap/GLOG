@@ -20,7 +20,7 @@ import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/wri
 const Readme = () => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string | undefined>('# Hello World');
+  const [content, setContent] = useState<string | undefined>('');
   const [tags, setTags] = useState<string[]>([]);
   const [templateId] = useTemplateIdSSR();
   const [temporaryId] = useTemporaryIdSSR();

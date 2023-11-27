@@ -20,7 +20,7 @@ import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/wri
 const Write = ({ params }: { params: { categoryId: number } }) => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string | undefined>('# Hello World');
+  const [content, setContent] = useState<string | undefined>('');
   const [tags, setTags] = useState<string[]>([]);
   const [templateId] = useTemplateIdSSR();
   const [temporaryId] = useTemporaryIdSSR();
@@ -52,6 +52,12 @@ const Write = ({ params }: { params: { categoryId: number } }) => {
     setContent(temporaryData?.content);
     setTags(temporaryData?.hashtags);
   }, [temporaryData]);
+
+  useEffect(() => {
+    setTitle('');
+    setContent('');
+    setTags([]);
+  }, []);
 
   const writeProps: WriteProps = {
     title,

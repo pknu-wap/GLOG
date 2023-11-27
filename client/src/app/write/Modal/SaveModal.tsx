@@ -20,8 +20,8 @@ import {
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PostTemplateApi, PostTemporaryApi, PostWriteApi, UpdateWriteApi } from '@/api/write-api';
 import { usePathname, useRouter } from 'next/navigation';
-import Toast from '@/components/Toast/Toast';
 import { WriteModalType, WriteProps } from '@/util/useWriteProps';
+import { enqueueSnackbar } from 'notistack';
 
 function SaveModal({
   open,
@@ -45,7 +45,6 @@ function SaveModal({
   const [image, setImage] = useState('');
   const [privateMode, setPrivateMode] = useState<'private' | 'public'>('private');
   const queryClient = useQueryClient();
-  const [toastOpen, setToastOpen] = useState(false);
   const isPrUpdate = pathname.startsWith('/write/pr/update');
   const isPr = pathname.startsWith('/write/pr');
 
@@ -53,6 +52,10 @@ function SaveModal({
     onSuccess: () => {
       queryClient.invalidateQueries(['post']);
       router.push('/home');
+      enqueueSnackbar({ message: '글 작성이 완료되었습니다.', variant: 'success' });
+    },
+    onError: (e: Error) => {
+      enqueueSnackbar({ message: e.message, variant: 'error' });
     },
   });
 
@@ -60,20 +63,30 @@ function SaveModal({
     onSuccess: () => {
       queryClient.invalidateQueries(['post']);
       router.push('/home');
+      enqueueSnackbar({ message: '글 수정이 완료되었습니다.', variant: 'success' });
+    },
+    onError: (e: Error) => {
+      enqueueSnackbar({ message: e.message, variant: 'error' });
     },
   });
 
   const postTemplateAddTemplate = useMutation(PostTemplateApi, {
     onSuccess() {
       queryClient.invalidateQueries(['template']);
-      setToastOpen(true);
+      enqueueSnackbar({ message: '글 수정이 완료되었습니다.', variant: 'success' });
+    },
+    onError: (e: Error) => {
+      enqueueSnackbar({ message: e.message, variant: 'error' });
     },
   });
 
   const postTemporaryAddTemplate = useMutation(PostTemporaryApi, {
     onSuccess() {
       queryClient.invalidateQueries(['temporaries']);
-      setToastOpen(true);
+      enqueueSnackbar({ message: '글 수정이 완료되었습니다.', variant: 'success' });
+    },
+    onError: (e: Error) => {
+      enqueueSnackbar({ message: e.message, variant: 'error' });
     },
   });
 
@@ -287,7 +300,7 @@ function SaveModal({
       <Dialog
         open={postConfirmOpen}
         onClose={() => setPostConfirmOpen(false)}
-        message="글을 게시하시겠습니까?"
+        message="저장하시겠습니까?"
         action={{
           content: '확인',
           action:
@@ -299,11 +312,6 @@ function SaveModal({
               ? postTemplateOnClick
               : postTemporaryOnClick,
         }}
-      />
-      <Toast
-        toastMessage={'성공적으로 추가되었습니다.'}
-        open={toastOpen}
-        onClose={() => setToastOpen(false)}
       />
     </Modal>
   );

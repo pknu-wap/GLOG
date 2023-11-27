@@ -23,7 +23,7 @@ function TemplateModal({ open, onClose }: ModalType) {
   const deleteTemplateQuery = useMutation(DeleteTemplateApi, {
     onSuccess() {
       queryClient.invalidateQueries(['template']);
-      // onClose();
+      onClose();
     },
   });
 
@@ -53,7 +53,7 @@ function TemplateModal({ open, onClose }: ModalType) {
                   checked: clickList === list.id,
                   onChange: () => setClickList(list.id),
                 }}
-                content={`#${list.id} ${list.title}`}
+                content={`${list.title}`}
                 buttonAction={
                   <Button
                     onClick={() => {

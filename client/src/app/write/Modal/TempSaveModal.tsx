@@ -52,7 +52,7 @@ function TempSaveModal({ open, onClose }: ModalType) {
                   checked: clickList === list.id,
                   onChange: () => setClickList(list.id ?? 0),
                 }}
-                content={`#${list.id} ${list.title}`}
+                content={`${list.title}`}
                 buttonAction={
                   <Button
                     onClick={() => {

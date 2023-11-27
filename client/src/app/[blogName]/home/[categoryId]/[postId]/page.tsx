@@ -31,7 +31,6 @@ import { useUserThemeSSR } from '../../../../../../hooks/useRecoilSSR';
 import { useRouter } from 'next/navigation';
 import IconButton from '@/components/Button/IconButton';
 import Button from '@/components/Button/Button';
-import PageLink from '@/components/PageLink/PageLink';
 import { PostReplyApi, useGetReplyQuery } from '@/api/reply-api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
@@ -86,7 +85,6 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   };
 
   //친구 요청/수락/거절
-
   const [isAccept, setIsAccept] = useState<number>(Number);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
     onSuccess: () => {
@@ -134,7 +132,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(introduce?.imageUrl);
+
   return (
     <Stack>
       <ThumbnailArea>
@@ -281,8 +279,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           <Stack spacing={10} padding={'40px 80px'}>
             <Stack direction="row" width="500px" spacing={10} justifyContent="space-between">
               <Stack direction="row" alignItems="center" spacing={4}>
-                
-                <Image width={30} height={30} src={introduce?.imageUrl ?? ''} alt=''/>
+                <Image width={30} height={30} src={introduce?.imageUrl ?? ''} alt="" />
                 <Stack>
                   <Stack padding="8px" fontSize="25px">
                     {introduce?.nickname}

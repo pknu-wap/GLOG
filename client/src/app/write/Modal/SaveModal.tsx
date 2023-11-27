@@ -153,7 +153,7 @@ function SaveModal({
 
   const postTemplateOnClick = () => {
     onClose();
-    // 폼 데이터 생성
+
     const formData = createToolFormData({
       thumbnail: image,
       postBasicDto: {
@@ -169,7 +169,7 @@ function SaveModal({
 
   const postTemporaryOnClick = () => {
     onClose();
-    // 폼 데이터 생성
+
     const formData = createToolFormData({
       thumbnail: image,
       postBasicDto: {

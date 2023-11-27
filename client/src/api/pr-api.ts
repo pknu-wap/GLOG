@@ -1,7 +1,6 @@
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
-// PR 조회
 export const getPRApi = async () => {
   const { data } = await defaultInstance.get('/pr/posts/posted');
 

@@ -5,10 +5,9 @@ import { ModalContent, ModalTitle } from '../Modal/Modal.style';
 import { Stack, TextField } from '@mui/material';
 import Comment from './Comment';
 import { PostGuestbookApi, useGetGuestbookQuery } from '@/api/guestbook-api';
-import { IGuestbook, IUserDetail } from '@/types/dto';
+import { IGuestbook } from '@/types/dto';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Button from '../Button/Button';
-import { useGetUserDetailQuery } from '@/api/userDetail-api';
 
 function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
   const queryClient = useQueryClient();
@@ -33,15 +32,12 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
     };
     postGuestbookQuery.mutate(newPostGuestbookBody);
   };
-  //test
-  const {data: userDetailData} = useGetUserDetailQuery()
-  const [userDetail, setUserDetail] = useState<IUserDetail>()
+
   
 
   useEffect(() => {
     setGuestBook(guestbookData);
-    setUserDetail(userDetailData);
-  }, [guestbookData, userDetailData]);
+  }, [guestbookData]);
 
   return (
     <Modal maxWidth="lg" open={open} onClose={onClose}>

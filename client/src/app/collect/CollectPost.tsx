@@ -12,6 +12,8 @@ import { LockOutlined } from '@mui/icons-material';
 import { ICollectPost } from '@/types/dto';
 import { useMediaQuery, useTheme } from '@mui/material';
 import IconButton from '@/components/Button/IconButton';
+import Image from 'next/image';
+import { Stack } from '@mui/material';
 
 function CollectPost({ like }: { like: ICollectPost }) {
   const theme = useTheme();
@@ -35,7 +37,9 @@ function CollectPost({ like }: { like: ICollectPost }) {
           <VisibilityIcon fontSize="small" />
           {like.viewsCount}
         </PostPopular>
-        {/* <img alt="" src={like.thumbnail ?? ''} /> */}
+        <Stack>
+          <Image alt="썸네일" fill src={like.thumbnail ?? ''} />
+        </Stack>
         <CostomizeButton>
           <IconButton size="small">
             <LockOutlined />

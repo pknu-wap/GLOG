@@ -11,6 +11,7 @@ import IconButton from '../Button/IconButton';
 import { ArrowRight, Edit } from '@mui/icons-material';
 import CategorySettingModal from './CategorySettingModal';
 import PageLink from '../PageLink/PageLink';
+import Github from '../Github/Github';
 
 type Footprint = {
   categoryId: number;
@@ -31,6 +32,8 @@ interface DragAndDropProps {
 function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [categoryEditOpen, setCategoryEditOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [categoryId, setCategoryId] = useState(0);
 
   const router = useRouter();
   useEffect(() => {
@@ -63,6 +66,9 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                           }}
                           {...provided.droppableProps}
                           ref={provided.innerRef}>
+                          <PageLink href={`/write/create/${category.categoryId}`}>
+                            <Stack sx={{ cursor: 'pointer', width: 'fit-content' }}>글쓰기</Stack>
+                          </PageLink>
                           <Stack
                             direction="row"
                             justifyContent="space-between"
@@ -84,6 +90,27 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                               </PageLink>
                             </IconButton>
                           </Stack>
+                          {/* FIXME : 레포지토리 연동 여부 받아와야 함 */}
+                          {
+                            <>
+                              <PageLink
+                                onClick={() => {
+                                  setCategoryId(category.categoryId);
+                                }}
+                                href={`/chaeyeon/prList/${category.categoryId}`}>
+                                <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
+                                  PR 연동
+                                </Stack>
+                              </PageLink>
+                              <Stack
+                                onClick={() => setOpen(true)}
+                                sx={{ cursor: 'pointer' }}
+                                pl={4}
+                                py={1}>
+                                PR 연동
+                              </Stack>
+                            </>
+                          }
                           <Stack
                             sx={{
                               padding: '8px',
@@ -160,6 +187,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
             open={categoryEditOpen}
             onClose={() => setCategoryEditOpen(false)}
           />
+          <Github categoryId={categoryId} open={open} onClose={() => setOpen(false)} />
         </DragDropContext>
       ) : null}
     </>

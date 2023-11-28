@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@/components/Button/Button';
-import TempSaveModal from '../[categoryId]/[postId]/Modal/TempSaveModal';
-import TemplateModal from '../[categoryId]/[postId]/Modal/TemplateModal';
+import TempSaveModal from '../Modal/TempSaveModal';
+import TemplateModal from '../Modal/TemplateModal';
 import { TopButtonStyle } from '../Write.style';
 
 function TopButton() {

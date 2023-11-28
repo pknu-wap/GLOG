@@ -20,10 +20,6 @@ const MainStack = styled(Stack, {
 
 export default function FullLayout({ children }: Children) {
   const pathname = usePathname();
-  // const [android] = useAndroidSSR();
-  // const [iphone] = useIphoneSSR();
-
-  // console.log(navigator.userAgent.match(/iOS_App/i));
 
   return (
     <MainStack pathname={pathname}>

@@ -45,6 +45,18 @@ export interface IProfile {
   loginedMemberId: number;
 }
 
+//유저 디테일
+export interface IUserDetail {
+  blogId: number;
+  userID: number;
+  nickName: string;
+  blogName: string;
+  email: string;
+  introduction: string | null;
+  thumbnail: string;
+  blogUrl: string;
+}
+
 // 댓글 get 정보들
 export interface IReplyParams {
   postId: number;

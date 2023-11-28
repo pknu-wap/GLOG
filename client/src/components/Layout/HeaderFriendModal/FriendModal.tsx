@@ -5,10 +5,11 @@ import { InputAdornment, Menu, MenuItem, Stack, TextField } from '@mui/material'
 import FriendListComponent, { FriendModalArea, TopStack } from './FriendModal.style';
 import { useGetFriendQuery, useGetFriendSearchQuery } from '@/api/friend-api';
 import React, { useEffect, useState } from 'react';
-import { IFriendsContent } from '@/types/dto';
+import { IFriendsContent, IUserDetail } from '@/types/dto';
 import Button from '@/components/Button/Button';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
 import SearchIcon from '@mui/icons-material/Search';
+import { useGetUserDetailQuery } from '@/api/userDetail-api';
 
 function FriendModal({ open, onClose }: ModalType) {
   const [kind, setKind] = useState('recentFriend');
@@ -18,6 +19,8 @@ function FriendModal({ open, onClose }: ModalType) {
   const [friend, setFriend] = useState<IFriendsContent>();
   const kindList = ['recentFriend', 'name', 'recentPost'];
   const friendCount = friend?.userSimpleDtos.simpleDtos.length;
+  const {data: userDetailData} = useGetUserDetailQuery()
+  const [userDetail, setUserDetail] = useState<IUserDetail>()
 
   const [nickname, setNickname] = useState('');
   const { data: searchFriendData } = useGetFriendSearchQuery({
@@ -27,7 +30,8 @@ function FriendModal({ open, onClose }: ModalType) {
   useEffect(() => {
     setFriend(friendData);
     setSearch(searchFriendData);
-  }, [friendData, searchFriendData]);
+    setUserDetail(userDetailData)
+  }, [friendData, searchFriendData, userDetailData]);
 
   //정렬기준
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -135,7 +139,7 @@ function FriendModal({ open, onClose }: ModalType) {
                   profileImg={searchInfo.nickname}
                   relationship={searchInfo.relationship}
                   haveNewPost={searchInfo.haveNewPost}
-                  recentPostId={`/{blogUrl}/home/1/${searchInfo.recentPostId}`}
+                  recentPostId={`/${userDetail?.blogUrl}/home/1/${searchInfo.recentPostId}`}
                 />
               );
             })}

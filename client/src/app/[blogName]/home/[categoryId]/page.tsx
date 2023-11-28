@@ -12,16 +12,20 @@ import { useGetSidebarQuery } from '@/api/blog-api';
 import { ISidebarContent } from '@/types/dto';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { Stack } from '@mui/material';
+import { usegetblogIdQuery } from '@/api/readme-api';
 
 function page({ params }: { params: { blogName: string; categoryId: string } }) {
   const [page, setPage] = useState(0);
-  const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
+  const [, setBlogId] = useState();
+  const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
+  const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
 
 
   useEffect(() => {
+    setBlogId(blogIdData)
     setWriteList(sidebarData?.sidebarDtos);
-  }, [sidebarData]);
+  }, [blogIdData, sidebarData]);
 
   const backend = [
     {

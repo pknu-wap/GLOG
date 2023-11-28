@@ -8,7 +8,7 @@ const axiosApi = (url: string, data?: any) => {
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token');
   }
-
+  console.log(token);
   const instance = axios.create({
     baseURL: url,
     withCredentials: true,

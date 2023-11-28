@@ -47,13 +47,16 @@ import { usegetblogIdQuery } from '@/api/readme-api';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
-  const [, setBlogId] = useState<IBlogId>();
+  const [blogId, setBlogId] = useState<IBlogId>();
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [userTheme] = useUserThemeSSR();
   const router = useRouter();
   const theme = useTheme();
+
+  console.log(`게시물에서 블로그 ID : ${blogIdData}`);
+  console.log(`useState blogId : ${blogId}`);
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
   const [page, setPage] = useState(0);
@@ -137,7 +140,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(`게시물에서 블로그 ID : ${blogIdData}`);
+  
 
   return (
     <Stack>

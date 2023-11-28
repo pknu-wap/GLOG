@@ -28,7 +28,7 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
   const postGuestbookClick = () => {
     const newPostGuestbookBody = {
       guestbookId: guestbook?.guestbookId,
-      messageId: null,
+      messageId: 0,
       message: message,
     };
     postGuestbookQuery.mutate(newPostGuestbookBody);

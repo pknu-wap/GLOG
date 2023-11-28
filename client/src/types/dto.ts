@@ -355,7 +355,7 @@ export interface IGuestbook {
 //방명록 작성
 export interface IPostGuestbook {
   guestbookId?: number;
-  messageId?: null;
+  messageId?: number;
   message: string;
 }
 
@@ -369,4 +369,33 @@ export interface IPutGuestbook {
 // 방명록 삭제
 export interface IDeleteGuestbook {
   messageId: number;
+}
+
+//카테고리 가져오기
+export interface ICategoryParams {
+  categoryId: number;
+}
+
+//카테고리 가져온 정보
+export interface ICategory {
+  categoryName: string;
+  prCategory: boolean;
+}
+
+//카테고리 생성
+export interface IPostCategory {
+  categoryName: string;
+  isPrCategory: boolean;
+  repositoryUrl: string | null;
+}
+
+//카테고리 이름 수정
+export interface IPutCategory {
+  categoryId: number;
+  newCategoryName: string;
+}
+
+//카테고리 삭제
+export interface IDeleteCategory {
+  categoryId: number;
 }

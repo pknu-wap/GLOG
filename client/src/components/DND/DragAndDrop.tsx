@@ -12,6 +12,10 @@ import { ArrowRight, Edit } from '@mui/icons-material';
 import CategorySettingModal from './CategorySettingModal';
 import PageLink from '../PageLink/PageLink';
 import Github from '../Github/Github';
+import Button from '../Button/Button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { PostCategoryApi } from '@/api/category-api';
+import CreateCategoryModal from './CreateCategoryModal';
 
 type Footprint = {
   categoryId: number;
@@ -32,8 +36,10 @@ interface DragAndDropProps {
 function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [categoryEditOpen, setCategoryEditOpen] = useState(false);
+  const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
+  const queryClient = useQueryClient();
 
   const router = useRouter();
   useEffect(() => {
@@ -53,6 +59,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
           <CenterContent bgcolor="transparent">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
+                <Button onClick={() => setCreateCategoryOpen(true)}>카테고리 생성</Button>
                 {footprintList?.map((category) => {
                   return (
                     <Droppable key={category.categoryId} droppableId={String(category.categoryId)}>
@@ -185,7 +192,12 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
           </CenterContent>
           <CategorySettingModal
             open={categoryEditOpen}
+            categoryId={categoryId}
             onClose={() => setCategoryEditOpen(false)}
+          />
+          <CreateCategoryModal
+            open={createCategoryOpen}
+            onClose={() => setCreateCategoryOpen(false)}
           />
           <Github categoryId={categoryId} open={open} onClose={() => setOpen(false)} />
         </DragDropContext>

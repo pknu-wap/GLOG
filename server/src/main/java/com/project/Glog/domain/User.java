@@ -94,7 +94,7 @@ public class User {
 
     public void updateInfo(UserInfoChangeRequest userInfoChangeRequest) {
         this.nickname = userInfoChangeRequest.getName();
-        this.introduction = userInfoChangeRequest.getIntroducion();
+        this.introduction = userInfoChangeRequest.getIntroduction();
     }
 }
 

@@ -2,21 +2,22 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const removeImports = require('next-remove-imports')();
 
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app www.googletagmanager.com;
-  style-src 'self' 'unsafe-inline';
-  img-src * blob: data:;
-  media-src 'none';
-  connect-src *;
-  font-src 'self';
-  frame-src giscus.app
-`;
+// const ContentSecurityPolicy = `
+//   default-src 'self';
+//   script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app www.googletagmanager.com;
+//   style-src 'self' 'unsafe-inline';
+//   img-src * blob: data:;
+//   media-src 'none';
+//   connect-src *;
+//   font-src 'self';
+//   frame-src giscus.app
+// `;
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ''),
+    value: 'upgrade-insecure-requests',
+    // value: ContentSecurityPolicy.replace(/\n/g, ''),
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
@@ -81,17 +82,8 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: '/http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
         headers: securityHeaders,
-      },
-    ];
-  },
-
-  async rewrites() {
-    return [
-      {
-        source: '/(.*)',
-        destination: 'http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
       },
     ];
   },

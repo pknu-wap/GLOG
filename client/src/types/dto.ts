@@ -312,3 +312,31 @@ export interface RepositoryParams {
 export interface IPRParams {
   categoryId: number;
 }
+
+// history
+export interface IHistory {
+  week?: {
+    mon: boolean;
+    tue: boolean;
+    wed: boolean;
+    thu: boolean;
+    fri: boolean;
+    sat: boolean;
+    sun: boolean;
+  };
+  year?: {
+    from: string;
+    posted: number[];
+  };
+}
+
+// 유저 정보 변경하기
+export interface IUserInfo {
+  name: string;
+  introduction: string;
+}
+
+// 유저 정보 변경하기
+export interface IBlogInfo {
+  newBlogName: string;
+}

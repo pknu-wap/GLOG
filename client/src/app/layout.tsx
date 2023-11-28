@@ -17,6 +17,9 @@ export default function RootLayout(props: { children: ReactNode }) {
 
   return (
     <html lang="en">
+      <head>
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+      </head>
       <body>
         <Recoil>
           <SnackbarProvider>

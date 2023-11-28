@@ -146,6 +146,14 @@ public class PostController {
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<PostPreviewDtos> searchPost(@RequestParam(defaultValue = "content") String type ,@RequestParam(defaultValue = "") String value) {
+        //content 내용을 포함한 게시글의 리스트를 생성한다.
+        PostPreviewDtos postPreviewDtos = postService.searchPost(type, value);
+
+        return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
+    }
+
     @PatchMapping("/post/like")
     public ResponseEntity<String> plusLike(@CurrentUser UserPrincipal userPrincipal,
                                            @RequestParam Long postId) {

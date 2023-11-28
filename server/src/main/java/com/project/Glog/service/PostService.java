@@ -30,6 +30,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -260,6 +261,24 @@ public class PostService {
         User user = userRepository.findUserByNickname(nickname);
         List<Post> posts = postRepository.findAllByUser(user);
         return new PostPreviewDtos(posts, posts.size());
+    }
+
+    public PostPreviewDtos searchPost(String type ,String value){
+        PostPreviewDtos postPreviewDtos;
+        if(type.equals("user")){
+            postPreviewDtos = searchPostsByUser(value);
+        }
+        else if(type.equals("title")){
+            postPreviewDtos = searchPostsByTitle(value);
+        }
+        else if(type.equals("hashtag")){
+            postPreviewDtos = searchPostsByHashtag(value);
+        }
+        else{
+            postPreviewDtos = searchPostsByContent(value);
+        }
+
+        return postPreviewDtos;
     }
 
     public String clickLike(UserPrincipal userPrincipal, Long postId) {

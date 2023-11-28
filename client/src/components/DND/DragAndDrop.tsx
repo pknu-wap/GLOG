@@ -13,8 +13,6 @@ import CategorySettingModal from './CategorySettingModal';
 import PageLink from '../PageLink/PageLink';
 import Github from '../Github/Github';
 import Button from '../Button/Button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { PostCategoryApi } from '@/api/category-api';
 import CreateCategoryModal from './CreateCategoryModal';
 
 type Footprint = {
@@ -39,7 +37,6 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
   const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
-  const queryClient = useQueryClient();
 
   const router = useRouter();
   useEffect(() => {

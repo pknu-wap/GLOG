@@ -9,7 +9,6 @@ import { useIsSearchSSR, useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 import { usePathname } from 'next/navigation';
 import PageLink from '../PageLink/PageLink';
 import Image from 'next/image';
-import Pororo from '../../../public/assets/box.png';
 import SettingMenu from '../Header/SettingMenu';
 import { Home, Search } from '@mui/icons-material';
 import { useGetUserDetailQuery } from '@/api/userDetail-api';
@@ -89,6 +88,7 @@ export default function Header() {
           overflow="hidden"
           sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}>
           <PageLink href={userDetail?.blogUrl ?? ''}>
+            {/* FIXME : 나중에 src={userDetail?.thumbnail} 로 바꿔야함 */}
             <Image width={40} height={40} alt="profile Image" src={'https://elasticbeanstalk-us-east-1-064991853848.s3.amazonaws.com/profile/defaultImages.jpg'} />
           </PageLink>
         </Stack>

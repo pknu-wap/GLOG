@@ -15,7 +15,6 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    //TODO 기능 대부분을 User에 넘길지 고려해봐야 함
     @GetMapping("/mypage")
     public ResponseEntity<MyPageResponse> goToMypage(@CurrentUser UserPrincipal userPrincipal){
 

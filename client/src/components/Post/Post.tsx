@@ -13,14 +13,16 @@ function PostComponent({
   likesCount,
   viewsCount,
   Icon,
-}: IScrapContent & { Icon: ReactNode }) {
+  href,
+}: IScrapContent & { Icon: ReactNode; href?: string }) {
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
-    <Post href="#" isPhone={isPhone} isTablet={isTablet} isLaptop={isLaptop}>
+    // FIXME : Scrap 페이지에선 href 안 되어 있겠네
+    <Post href={href ?? ''} isPhone={isPhone} isTablet={isTablet} isLaptop={isLaptop}>
       <Thumbnail>
         <PostPopular>
           <FavoriteBorderIcon fontSize="small" />

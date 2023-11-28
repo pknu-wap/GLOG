@@ -23,6 +23,23 @@ export interface ICollectContent {
   totalPages: number;
 }
 
+// 모아보기 페이지 검색
+export interface ISearchUser {
+  nickname: string;
+}
+
+export interface ISearchTitle {
+  title: string;
+}
+
+export interface ISearchHashtag {
+  hashtag: string;
+}
+
+export interface ISearchContent {
+  content: string;
+}
+
 // 유저 프로필 사진 불러오기
 export interface IProfile {
   loginedMemberId: number;

@@ -105,10 +105,13 @@ public class SecurityConfig {
                         "/swagger-ui/**")
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,
-                        "/post",
+                        "/post/**",
                         "/collect",
-                        "/post/previews",
                         "/read-me",
+                        "/replies",
+                        "/guestbook",
+                        "/introduce",
+                        "/pr/post/posted",
                         "/search/**")
                 .permitAll()
                 .requestMatchers(HttpMethod.POST,

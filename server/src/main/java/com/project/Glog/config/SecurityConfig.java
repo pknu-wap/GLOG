@@ -111,7 +111,7 @@ public class SecurityConfig {
                         "/replies",
                         "/guestbook",
                         "/introduce",
-                        "/pr/post/posted",
+                        "/pr/posts/posted",
                         "/search/**")
                 .permitAll()
                 .requestMatchers(HttpMethod.POST,

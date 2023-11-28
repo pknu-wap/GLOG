@@ -3,7 +3,7 @@ import Modal from '../Modal/Modal';
 import { ModalActions, ModalContent, ModalTitle } from '../Modal/Modal.style';
 import { Stack, TextField } from '@mui/material';
 import ModalButton from '../Modal/ModalButton';
-import { CategorySettingModalType, ModalType } from '@/types/common';
+import { CategorySettingModalType } from '@/types/common';
 import Button from '../Button/Button';
 import { Dialog } from '../Dialog/Dialog';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

@@ -82,7 +82,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
+        source: '/glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
         headers: securityHeaders,
       },
     ];

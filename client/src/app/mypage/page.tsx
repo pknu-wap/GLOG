@@ -5,6 +5,7 @@ import { Stack, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@m
 import React, { useState } from 'react';
 import Button from '@/components/Button/Button';
 import FootPrint from '@/components/FootPrint/FootPrint';
+// import { useGetMypageQuery } from '@/api/mypage-api';
 
 function page() {
   const theme = useTheme();
@@ -15,6 +16,8 @@ function page() {
       setYearWeekToggle(newYearWeekToggle);
     }
   };
+
+  // const { data } = useGetMypageQuery();
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
 

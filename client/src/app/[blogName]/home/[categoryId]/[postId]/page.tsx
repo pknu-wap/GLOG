@@ -85,7 +85,6 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   };
 
   //친구 요청/수락/거절
-
   const [isAccept, setIsAccept] = useState<number>(Number);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
     onSuccess: () => {
@@ -133,7 +132,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(introduce?.imageUrl);
+
   return (
     <Stack>
       <ThumbnailArea>
@@ -180,6 +179,10 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   <IconButton color="white">
                     <Home fontSize="small" onClick={() => router.push(`/${params.blogName}`)} />
                   </IconButton>
+                  <PageLink href={`/write/update/${params.categoryId}/${params.postId}`}>
+                    <Button>수정</Button>
+                  </PageLink>
+                  <Button color="error">삭제</Button>
                 </Stack>
               </Stack>
             </Stack>
@@ -276,8 +279,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           <Stack spacing={10} padding={'40px 80px'}>
             <Stack direction="row" width="500px" spacing={10} justifyContent="space-between">
               <Stack direction="row" alignItems="center" spacing={4}>
-                
-                <Image width={30} height={30} src={introduce?.imageUrl ?? ''} alt=''/>
+                <Image width={30} height={30} src={introduce?.imageUrl ?? ''} alt="" />
                 <Stack>
                   <Stack padding="8px" fontSize="25px">
                     {introduce?.nickname}

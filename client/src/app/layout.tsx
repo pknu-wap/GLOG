@@ -9,6 +9,7 @@ import ReactQuery from '@/components/ReactQuery/Provider';
 import Header from '@/components/Layout/Header';
 import FullLayout from '@/components/Layout/FullLayout';
 import { usePathname } from 'next/navigation';
+import { SnackbarProvider } from 'notistack';
 
 export default function RootLayout(props: { children: ReactNode }) {
   const { children } = props;
@@ -18,15 +19,17 @@ export default function RootLayout(props: { children: ReactNode }) {
     <html lang="en">
       <body>
         <Recoil>
-          <ReactQuery>
-            <ThemeRegistry options={{ key: 'mui' }}>
-              {!pathname.startsWith('/login') && <Header />}
-              <div className="light">
-                <FullLayout>{children}</FullLayout>
-              </div>
-              {/* <Footer /> */}
-            </ThemeRegistry>
-          </ReactQuery>
+          <SnackbarProvider>
+            <ReactQuery>
+              <ThemeRegistry options={{ key: 'mui' }}>
+                {!pathname.startsWith('/login') && <Header />}
+                <div className="light">
+                  <FullLayout>{children}</FullLayout>
+                </div>
+                {/* <Footer /> */}
+              </ThemeRegistry>
+            </ReactQuery>
+          </SnackbarProvider>
         </Recoil>
       </body>
     </html>

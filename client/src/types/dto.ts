@@ -23,6 +23,23 @@ export interface ICollectContent {
   totalPages: number;
 }
 
+// 모아보기 페이지 검색
+export interface ISearchUser {
+  nickname: string;
+}
+
+export interface ISearchTitle {
+  title: string;
+}
+
+export interface ISearchHashtag {
+  hashtag: string;
+}
+
+export interface ISearchContent {
+  content: string;
+}
+
 // 유저 프로필 사진 불러오기
 export interface IProfile {
   loginedMemberId: number;
@@ -191,6 +208,11 @@ export interface ITemplateDetailParams {
   templateId: number;
 }
 
+// 임시저장 디테일 params
+export interface ITemporaryDetailParams {
+  temporaryId: number;
+}
+
 // 템플릿 디테일 불러오기
 export interface ITemplateDetail {
   title: string;
@@ -211,6 +233,10 @@ export interface ITemplateAdd {
   };
 }
 
+// PR 조회
+export interface IPRSearchParams {
+  categoryId: number;
+}
 // 친구 정보 get 요청값
 export interface IFriendsParams {
   kind: string;
@@ -266,12 +292,23 @@ export interface IIntroduceParams {
 }
 
 export interface IIntroduce {
-    id: number,
-    introduction: string,
-    imageUrl: string,
-    nickname: string,
-    blogName: string,
-    blogUrl: string,
-    relationship: string,
-    friendCount: number
+  id: number;
+  introduction: string;
+  imageUrl: string;
+  nickname: string;
+  blogName: string;
+  blogUrl: string;
+  relationship: string;
+  friendCount: number;
+}
+
+// 레포지토리 가져오기
+export interface RepositoryParams {
+  category?: number;
+  repo?: string;
+}
+
+// PR
+export interface IPRParams {
+  categoryId: number;
 }

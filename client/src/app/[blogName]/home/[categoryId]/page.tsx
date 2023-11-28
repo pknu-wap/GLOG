@@ -5,34 +5,32 @@ import { useState } from 'react';
 import { PostAreaComponent, ScrapList } from './category.style';
 import CenterContent from '@/components/Layout/CenterContent';
 import { useGetSidebarQuery } from '@/api/blog-api';
-import { ICategory, IPostPreview, ISidebarContent } from '@/types/dto';
+import { ICategory, ICollectContent, ISidebarContent } from '@/types/dto';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { Menu, MenuItem, Stack } from '@mui/material';
-import { useGetCategoryQuery, useGetPostPreviewQuery } from '@/api/postPreview-api';
+import { useGetCategoryQuery } from '@/api/postPreview-api';
 import Button from '@/components/Button/Button';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
-
+import { useGetCollectDataQuery } from '@/api/collect-api';
 
 function page({ params }: { params: { blogName: string; categoryId: string } }) {
-
   const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
 
-  const {data: categoryNameData} = useGetCategoryQuery({categoryId: Number(params.categoryId)})
-  const [categoryName, setCategoryName] = useState<ICategory>()
+  const { data: categoryNameData } = useGetCategoryQuery({ categoryId: Number(params.categoryId) });
+  const [categoryName, setCategoryName] = useState<ICategory>();
 
-  const [kind, setKind] = useState("likes");
-  const kindList = ["recent", "likes", "views", "randoms"]
-  const { data: postPreviewData } = useGetPostPreviewQuery({
+  const [kind, setKind] = useState('likes');
+  const kindList = ['recent', 'likes', 'views', 'randoms'];
+  const { data: postPreviewData } = useGetCollectDataQuery({
     kind: kind,
     page: Number(params.categoryId),
   });
-  console.log(params.categoryId);
-  const [previewData, setPreviewData] = useState<IPostPreview>();
-
+  const [previewData, setPreviewData] = useState<ICollectContent>();
+  console.log(previewData);
 
   useEffect(() => {
-    setCategoryName(categoryNameData)
+    setCategoryName(categoryNameData);
     setWriteList(sidebarData?.sidebarDtos);
     setPreviewData(postPreviewData);
   }, [categoryNameData, sidebarData, postPreviewData]);
@@ -45,8 +43,6 @@ function page({ params }: { params: { blogName: string; categoryId: string } }) 
     setAnchorEl(null);
   };
 
-
-
   return (
     <CenterContent maxWidth={'2000px'}>
       <ScrapList>{categoryName?.categoryName}</ScrapList>
@@ -55,7 +51,6 @@ function page({ params }: { params: { blogName: string; categoryId: string } }) 
         footprintList={writeList}
         rightContainer={
           <Stack width="100%">
-
             <Stack flexDirection={'row'}>
               <Stack>
                 <Button onClick={handleClick} sx={{ padding: '0 10px 0 0', minWidth: '24px' }}>
@@ -79,29 +74,29 @@ function page({ params }: { params: { blogName: string; categoryId: string } }) 
                   <MenuItem
                     onClick={() => {
                       handleClose();
-                      setKind(kindList[2]);;
+                      setKind(kindList[2]);
                     }}>
                     조회순
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
                       handleClose();
-                      setKind(kindList[3]);;
+                      setKind(kindList[3]);
                     }}>
                     랜덤
                   </MenuItem>
                 </Menu>
               </Stack>
               <Stack>정렬기준</Stack>
-              </Stack>
+            </Stack>
 
             <PostAreaComponent>
-              {previewData?.postPreviewDtos.map((postInfo) => {
+              {previewData?.postPreviewDtos?.map((postInfo) => {
                 return (
                   <PostComponent
                     isPrivate
                     key={postInfo.postId}
-                    thumbnail={postInfo.thumbnail}
+                    thumbnail={postInfo.thumbnail ?? ''}
                     title={postInfo.title}
                     likesCount={postInfo.likesCount}
                     viewsCount={postInfo.viewsCount}
@@ -110,7 +105,6 @@ function page({ params }: { params: { blogName: string; categoryId: string } }) 
                 );
               })}
             </PostAreaComponent>
-
           </Stack>
         }
       />

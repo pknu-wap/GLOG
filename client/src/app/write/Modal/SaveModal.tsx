@@ -134,11 +134,10 @@ function SaveModal({
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
-        thumbnail: '',
         isPrivate: privateMode === 'private' ? true : false,
-        prId: isPr ? categoryId : undefined,
+        prId: isPr ? Number(categoryId) : undefined,
         hashtags: writeProps?.tags,
-        categoryId,
+        categoryId: Number(categoryId),
       },
     });
 
@@ -152,11 +151,10 @@ function SaveModal({
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
-        thumbnail: '',
         isPrivate: privateMode === 'private' ? true : false,
-        prId: isPrUpdate ? categoryId : undefined,
+        prId: isPrUpdate ? Number(categoryId) : undefined,
         hashtags: writeProps?.tags,
-        categoryId,
+        categoryId: Number(categoryId),
         postId,
       },
     });
@@ -172,7 +170,7 @@ function SaveModal({
       postBasicDto: {
         title: writeProps?.title ?? '',
         content: writeProps?.content ?? '',
-        thumbnail: '',
+        thumbnail: null,
         hashtags: writeProps?.tags ?? [],
       },
     });
@@ -188,7 +186,7 @@ function SaveModal({
       postBasicDto: {
         title: writeProps?.title ?? '',
         content: writeProps?.content ?? '',
-        thumbnail: '',
+        thumbnail: null,
         hashtags: writeProps?.tags ?? [],
       },
     });

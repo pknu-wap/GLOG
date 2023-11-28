@@ -22,7 +22,6 @@ export default function RootLayout(props: { children: ReactNode }) {
         <title>GLOG</title>
         <meta name="description" content="NextJS Events" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <meta name="description" content="블로그를 작성해보세요!" />
       </Head>
       <body>

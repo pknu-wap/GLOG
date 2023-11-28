@@ -24,7 +24,7 @@ export const tokenState = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
-// 아이폰
+// 템플릿 아이디
 export const templateIdState = atom<number>({
   key: 'templateId',
   default: 0,
@@ -34,4 +34,10 @@ export const templateIdState = atom<number>({
 export const temporaryIdState = atom<number>({
   key: 'temporaryId',
   default: 0,
+});
+
+// 모아보기 검색인가
+export const isSearchState = atom<boolean>({
+  key: 'isSearch',
+  default: false,
 });

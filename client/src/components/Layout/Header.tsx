@@ -1,35 +1,37 @@
 'use client';
 
 import { useState } from 'react';
-import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
+import { IconButton, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { useUserThemeSSR } from '../../../hooks/useRecoilSSR';
+import { useIsSearchSSR, useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 import { usePathname } from 'next/navigation';
-import FriendModal from './HeaderFriendModal/FriendModal';
 import PageLink from '../PageLink/PageLink';
 import Image from 'next/image';
 import Pororo from '../../../public/assets/box.png';
+import SettingMenu from '../Header/SettingMenu';
+import { Home, Search } from '@mui/icons-material';
 
 export default function Header() {
   const [userTheme, setUserTheme] = useUserThemeSSR();
   const pathname = usePathname();
-
-  const [friendOpen, setFriendOpen] = useState<boolean>(false);
+  const [isSearch, setIsSearch] = useIsSearchSSR();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const menuopen = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const menuopen = Boolean(anchorEl);
 
   return (
     <Stack
@@ -54,6 +56,15 @@ export default function Header() {
         </PageLink>
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>
+        {isSearch ? (
+          <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={() => setIsSearch(false)}>
+            <Home fontSize="large" />
+          </IconButton>
+        ) : (
+          <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={() => setIsSearch(true)}>
+            <Search fontSize="large" />
+          </IconButton>
+        )}
         {userTheme === 'dark' ? (
           <IconButton sx={{ color: '#ffffff' }} onClick={toggleUserTheme}>
             <DarkModeIcon fontSize="large" />
@@ -76,41 +87,8 @@ export default function Header() {
         <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={handleClick}>
           <MenuIcon fontSize="large" />
         </IconButton>
-        <Menu anchorEl={anchorEl} open={menuopen} onClose={handleClose}>
-          <MenuItem>
-            <PageLink
-              href="/mypage"
-              onClick={() => {
-                setAnchorEl(null);
-              }}>
-              마이페이지
-            </PageLink>
-          </MenuItem>
-          <MenuItem onClick={() => setFriendOpen(true)}>친구</MenuItem>
-          <MenuItem>
-            <PageLink
-              href="/mypage"
-              onClick={() => {
-                setAnchorEl(null);
-              }}>
-              스크랩
-            </PageLink>
-          </MenuItem>
-          <MenuItem onClick={() => localStorage.setItem('token', '')}>Logout</MenuItem>
-          <MenuItem>
-            <PageLink
-              href="/login"
-              onClick={() => {
-                setAnchorEl(null);
-              }}>
-              로그인
-            </PageLink>
-          </MenuItem>
-        </Menu>
+        <SettingMenu open={menuopen} onClose={handleClose} anchorEl={anchorEl} />
       </Stack>
-
-      {/* 친구 목록 모달 */}
-      <FriendModal open={friendOpen} onClose={() => setFriendOpen(false)}></FriendModal>
     </Stack>
   );
 }

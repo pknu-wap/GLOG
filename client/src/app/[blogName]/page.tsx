@@ -4,6 +4,7 @@ import { useGetSidebarQuery } from '@/api/blog-api';
 import { PutReadMeApi, useGetReadMeQuery, usegetblogIdQuery } from '@/api/readme-api';
 import Button from '@/components/Button/Button';
 import DragAndDrop from '@/components/DND/DragAndDrop';
+import FootPrintAnimation from '@/components/FootPrint/FootPrintAnimation';
 import { ISidebarContent } from '@/types/dto';
 import { Stack, TextField } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -63,6 +64,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
           </Stack>
         }
       />
+      <FootPrintAnimation blogId={blogIdData} />
     </Stack>
   );
 };

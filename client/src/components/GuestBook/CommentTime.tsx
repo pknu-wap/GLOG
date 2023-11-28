@@ -1,8 +1,13 @@
 import { Stack, useTheme } from '@mui/material';
 import React from 'react';
 
-function CommentTime({ isMe }: { isMe?: boolean }) {
+function CommentTime({ message, createdAt }: { message: string; createdAt: string }) {
   const theme = useTheme();
+  const createdTime = createdAt;
+  const year = createdTime.slice(0, 4);
+  const month = createdTime.slice(5, 7);
+  const date = createdTime.slice(8, 10);
+  const time = createdTime.slice(11, 19);
   return (
     <Stack
       borderLeft={`1px solid ${theme.palette.primary.main}`}
@@ -10,17 +15,10 @@ function CommentTime({ isMe }: { isMe?: boolean }) {
       alignItems="center"
       paddingLeft={2}
       spacing={4}>
-      {isMe ? (
-        <>
-          <Stack fontSize="11px">2023.09.05 08:13 pm</Stack>
-          <Stack>안녕하세요</Stack>
-        </>
-      ) : (
-        <>
-          <Stack>안녕하세요</Stack>
-          <Stack fontSize="11px">2023.09.05 08:13 pm</Stack>
-        </>
-      )}
+      <Stack>{message}</Stack>
+      <Stack fontSize="11px">
+        {year} / {month} / {date} / {time}
+      </Stack>
     </Stack>
   );
 }

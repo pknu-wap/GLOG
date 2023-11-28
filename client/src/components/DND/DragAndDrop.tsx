@@ -97,7 +97,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                 onClick={() => {
                                   setCategoryId(category.categoryId);
                                 }}
-                                href={`/chaeyeon/prList/${category.categoryId}`}>
+                                href={`${blogName}/prList/${category.categoryId}`}>
                                 <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
                                   PR 연동
                                 </Stack>

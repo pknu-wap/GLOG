@@ -6,7 +6,7 @@ import FootPrintWrap from './FootPrintWrap';
 import { GuestBookButtonStyle, GuestBookTooltipStyle } from './FootPrint.style';
 import GuestBookModal from '../GuestBook/GuestBookModal';
 
-function FootPrintAnimation() {
+function FootPrintAnimation({ blogId }: { blogId: number }) {
   const [open, setOpen] = useState(false);
   const [newFootprints, setNewFootPrints] = useState<number[]>([]);
   const [tooltipOpacity, setTooltipOpacity] = useState<0 | 1>(0);
@@ -55,7 +55,7 @@ function FootPrintAnimation() {
           />
         );
       })}
-      <GuestBookModal open={open} onClose={() => setOpen(false)} />
+      <GuestBookModal open={open} blogId={blogId} onClose={() => setOpen(false)} />
     </>
   );
 }

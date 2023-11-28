@@ -195,6 +195,10 @@ export interface IBlogIdParams {
   blogUrl?: string;
 }
 
+export interface IBlogId {
+  blogId?: number;
+}
+
 // 템플릿 불러오기
 export interface ITemplate {
   postTitleResponse: {
@@ -311,4 +315,46 @@ export interface RepositoryParams {
 // PR
 export interface IPRParams {
   categoryId: number;
+}
+
+// 방명록 get 요청값
+export interface IGuestbookParams {
+  blogId: number;
+}
+
+export interface IGuestbookUserDto {
+  userId: number;
+  nickname: string;
+  profileImage: string;
+}
+
+export interface IGuestbook {
+  messageDto: {
+    userDto: IGuestbookUserDto;
+    messageId: number;
+    message: string;
+    createdAt: string;
+    who: string;
+  }[];
+  imOwner: boolean;
+  guestbookId: number;
+}
+
+//방명록 작성
+export interface IPostGuestbook {
+  guestbookId?: number;
+  messageId?: null;
+  message: string;
+}
+
+//방명록 수정
+export interface IPutGuestbook {
+  guestbookId: number;
+  messageId: number;
+  message: string;
+}
+
+// 방명록 삭제
+export interface IDeleteGuestbook {
+  messageId: number;
 }

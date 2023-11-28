@@ -85,25 +85,28 @@ function page({ params }: { params: { categoryId: string } }) {
       <Stack margin="40px 0px 8px 0px" fontSize="24px">
         작성한 PR 목록
       </Stack>
-      {postedData?.map((post: { id: number }, i: number) => {
-        return (
-          <List
-            key={i}
-            width="100%"
-            content={'asdf'}
-            buttonAction={
-              <Stack direction="row">
-                <Button size="small" color="primary">
-                  수정
-                </Button>
-                <Button size="small" color="error">
-                  삭제
-                </Button>
-              </Stack>
-            }
-          />
-        );
-      }) ?? (
+      {postedData?.prPostedDtos?.prPostedDtos ||
+      postedData?.prPostedDtos?.prPostedDtos?.length > 0 ? (
+        postedData.prPostedDtos.prPostedDtos?.map((post: { id: number }, i: number) => {
+          return (
+            <List
+              key={i}
+              width="100%"
+              content={'asdf'}
+              buttonAction={
+                <Stack direction="row">
+                  <Button size="small" color="primary">
+                    수정
+                  </Button>
+                  <Button size="small" color="error">
+                    삭제
+                  </Button>
+                </Stack>
+              }
+            />
+          );
+        })
+      ) : (
         <Stack width="100%" direction="column" spacing={4} alignItems="center" mt={40}>
           <Image alt="빈 콘텐츠" src={EmptyContent} width={60} height={60} />
           <Stack fontSize={'18px'} width="fit-content">

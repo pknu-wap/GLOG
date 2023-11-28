@@ -55,9 +55,6 @@ function Comment({
     };
     putGuestbookQuery.mutate(newPutGuestbookBody);
   };
-  console.log(who);
-  console.log(`areuowner? : ${areuOwner}`);
-  console.log(`게스트북 Id : ${guestbookId}`);
 
   return (
     <Stack spacing={3} width="100%" alignItems={who === 'me' || who === 'owner(me)' ? 'flex-end' : 'flex-start'}>

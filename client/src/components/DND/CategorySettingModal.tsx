@@ -36,6 +36,7 @@ function CategorySettingModal({ open, categoryId, onClose }: CategorySettingModa
     putCategoryQuery.mutate(newCategoryNameBody);
     onClose();
   }
+  console.log(`카테고리 ID : ${categoryId}`);
 
   return (
     <Modal open={open} onClose={onClose}>

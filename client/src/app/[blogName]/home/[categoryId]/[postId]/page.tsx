@@ -55,7 +55,6 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const router = useRouter();
   const theme = useTheme();
 
-  console.log(`게시물에서 블로그 ID : ${blogIdData}`);
   console.log(`useState blogId : ${blogId}`);
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]

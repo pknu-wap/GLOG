@@ -42,10 +42,6 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
     setGuestBook(guestbookData);
     setUserDetail(userDetailData);
   }, [guestbookData, userDetailData]);
-  console.log(`유저 디테일(나) : ${userDetail?.blogId}`);
-  console.log(`블로그 Id : ${blogId}`);
-  console.log(guestbook?.imOwner);
-  console.log(`게스트북 Id : ${guestbook?.guestbookId}`);
 
   return (
     <Modal maxWidth="lg" open={open} onClose={onClose}>

@@ -37,6 +37,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
   const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
+  const [paramsCategoryId, setParamsCategoryId] = useState(Number)
 
   const router = useRouter();
   useEffect(() => {
@@ -82,7 +83,10 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                             <Stack direction="row" spacing={1}>
                               <Stack color="#000000">{category.categoryName}</Stack>
                               <IconButton
-                                onClick={() => setCategoryEditOpen(true)}
+                                onClick={() => {
+                                  setCategoryEditOpen(true);
+                                  setParamsCategoryId(category.categoryId);
+                                }}
                                 sx={{ padding: '0px' }}
                                 size="small">
                                 <Edit fontSize="small" />
@@ -170,6 +174,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                     </Droppable>
                   );
                 })}
+                
               </Stack>
               <Droppable droppableId="right-droppable">
                 {(provided) => {
@@ -189,7 +194,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
           </CenterContent>
           <CategorySettingModal
             open={categoryEditOpen}
-            categoryId={categoryId}
+            categoryId={paramsCategoryId}
             onClose={() => setCategoryEditOpen(false)}
           />
           <CreateCategoryModal

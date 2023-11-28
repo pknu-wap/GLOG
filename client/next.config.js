@@ -90,7 +90,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/',
+        source: '/(.*)',
         destination: 'http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
       },
     ];

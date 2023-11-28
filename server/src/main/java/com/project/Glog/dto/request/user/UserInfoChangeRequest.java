@@ -10,5 +10,5 @@ import lombok.Setter;
 @Getter @Setter
 public class UserInfoChangeRequest {
     private String name;
-    private String introducion;
+    private String introduction;
 }

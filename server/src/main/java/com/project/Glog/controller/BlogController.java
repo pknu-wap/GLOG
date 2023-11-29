@@ -80,4 +80,11 @@ public class BlogController {
             return false;
         }
     }
+    @GetMapping("/blog/url")
+    public ResponseEntity<String> getBlogUrl(@RequestParam Long categoryId){
+        String blogUrl = blogService.getBlogUrl(categoryId);
+
+        return new ResponseEntity<>(blogUrl, HttpStatus.OK);
+    }
+
 }

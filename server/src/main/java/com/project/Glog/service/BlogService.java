@@ -65,4 +65,8 @@ public class BlogService {
         blog.setReadme(readme);
         blogRepository.save(blog);
     }
+
+    public String getBlogUrl(Long categoryId){
+        return new String(blogRepository.findByCategoryId(categoryId));
+    }
 }

@@ -203,10 +203,10 @@ function RepliesComponent({
               <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
           </IconButton>
           )}
+          {likesCount}
           <ChangeReply>
             {isEdit ? <Button onClick={() => setPutReplyOpen(true)}>수정하기</Button> : <></>}
           </ChangeReply>
-          {likesCount}
         </ReplyLike>
       </ReplySubInfo>
 

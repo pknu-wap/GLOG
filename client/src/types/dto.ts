@@ -89,6 +89,12 @@ export interface IReply {
   message: string;
 }
 
+//댓글 수정
+export interface IPutReply {
+  repyId: number;
+  message: string;
+}
+
 //댓글 좋아요 patch
 export interface IPatchReplyLike {
   replyId: number;

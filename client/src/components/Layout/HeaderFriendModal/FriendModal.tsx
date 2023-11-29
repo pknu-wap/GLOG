@@ -100,7 +100,7 @@ function FriendModal({ open, onClose }: ModalType) {
                   profileImg={friendInfo.nickname}
                   relationship={friendInfo.relationship}
                   haveNewPost={friendInfo.haveNewPost}
-                  recentPostId={`/{blogUrl}/home/1/${friendInfo.recentPostId}`}
+                  recentPostId={`/${userDetail?.blogUrl}`}
                 />
               );
             })}
@@ -139,7 +139,7 @@ function FriendModal({ open, onClose }: ModalType) {
                   profileImg={searchInfo.nickname}
                   relationship={searchInfo.relationship}
                   haveNewPost={searchInfo.haveNewPost}
-                  recentPostId={`/${userDetail?.blogUrl}/home/1/${searchInfo.recentPostId}`}
+                  recentPostId={`/${userDetail?.blogUrl}`}
                 />
               );
             })}

@@ -57,7 +57,6 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
 
   console.log(`categoryId : ${params.categoryId}`);
 
-  //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('like');
   const orderList = ['like', 'recent', 'oldest'];
@@ -139,7 +138,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+  console.log(reply);
 
   return (
     <Stack>

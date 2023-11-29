@@ -1,4 +1,4 @@
-import { IPatchReplyLike, IReply, IReplyParams } from '@/types/dto';
+import { IPatchReplyLike, IPutReply, IReply, IReplyParams } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -23,3 +23,8 @@ export const PatchReplyLikeApi = async (params: IPatchReplyLike) => {
   const {data} = await defaultInstance.patch(`/replies/like/${params.replyId}`, params)
   return data;
 }
+
+export const putReplyApi = async (body: IPutReply) => {
+  const {data} = await defaultInstance.put('/replies', body);
+  return data;
+};

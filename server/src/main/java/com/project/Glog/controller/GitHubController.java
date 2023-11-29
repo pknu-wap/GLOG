@@ -67,7 +67,7 @@ public class GitHubController {
         User user = userRepository.findById(userPrincipal.getId()).get();
         String repo = gitHubService.getRepoName(categoryId);
 
-        GithubRepository githubRepository = githubRepoRepository.findRepoByUserId(user.getId(), repo).get();
+        GithubRepository githubRepository = githubRepoRepository.findRepoByUserId(user.getId(), repo, categoryId).get();
         List<PrInfo> prInfos = gitHubService.getPr(user,githubRepository.getOwnerName(),repo);
 
         return new ResponseEntity<>(gitHubService.saveAndGetPr(prInfos, githubRepository, categoryId, user),HttpStatus.OK);

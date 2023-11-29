@@ -32,7 +32,6 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
       message: message,
     };
     postGuestbookQuery.mutate(newPostGuestbookBody);
-    
   };
 
   
@@ -45,7 +44,7 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
     <Modal maxWidth="lg" open={open} onClose={onClose}>
       <ModalTitle>방명록 📮</ModalTitle>
       <ModalContent>
-        <Stack width="600px" maxHeight="300px" overflow="scroll" spacing={6}>
+        <Stack width="600px" height="275px" overflow="scroll" spacing={6}>
           {guestbook?.messageDto.map((message) => {
             return (
               <Comment
@@ -69,6 +68,7 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
             variant="outlined"
             placeholder="방명록을 남겨보세요"
             sx={{ marginRight: '20px' }}
+            value={message}
             onChange={(e) => {
               setMessage(e.target.value);
             }}
@@ -76,7 +76,6 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
           <Button
             onClick={() => {
               postGuestbookClick();
-              
             }}>
             게시하기
           </Button>

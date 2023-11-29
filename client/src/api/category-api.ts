@@ -1,36 +1,36 @@
-import { ICategoryParams, IDeleteCategory, IPostCategory, IPutCategory } from "@/types/dto";
-import { defaultInstance } from ".";
-import { useQuery } from "@tanstack/react-query";
+import { ICategoryParams, IDeleteCategory, IPostCategory, IPutCategory } from '@/types/dto';
+import { defaultInstance } from '.';
+import { useQuery } from '@tanstack/react-query';
 
 //카테고리 이름/pr연동여부 가져오기
 export const GetCategoryApi = async (params: ICategoryParams) => {
-    const { data } = await defaultInstance.get('/category', { params });
-  
-    return data;
+  const { data } = await defaultInstance.get('/category', { params });
+
+  return data;
 };
-  
-  export const useGetCategoryQuery = (params: ICategoryParams) => {
-    const { isLoading, error, data } = useQuery(['category', params], () => GetCategoryApi(params));
-  
-    return { isLoading, error, data };
+
+export const useGetCategoryQuery = (params: ICategoryParams) => {
+  const { isLoading, error, data } = useQuery(['category', params], () => GetCategoryApi(params));
+
+  return { isLoading, error, data };
 };
 
 //카테고리 생성
 export const PostCategoryApi = async (body: IPostCategory) => {
-    const { data } = await defaultInstance.post('/category', body);
-    return data;
+  const { data } = await defaultInstance.post('/category', body);
+  return data;
 };
 
 //카테고리 이름 수정
 export const PutCategoryApi = async (body: IPutCategory) => {
-    const { data } = await defaultInstance.put('/category', body);
-    return data;
+  const { data } = await defaultInstance.put('/category', body);
+  return data;
 };
 
 //카테고리 삭제
 export const DeleteCategoryApi = async (params: IDeleteCategory) => {
-    const { data } = await defaultInstance.delete('/category', {
-      params,
-    });
-    return data;
+  const { data } = await defaultInstance.delete('/category', {
+    params,
+  });
+  return data;
 };

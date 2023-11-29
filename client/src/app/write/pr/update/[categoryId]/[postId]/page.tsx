@@ -13,11 +13,11 @@ import {
   useTemplateIdSSR,
   useTemporaryIdSSR,
   useUserThemeSSR,
-} from '../../../../../../hooks/useRecoilSSR';
+} from '../../../../../../../hooks/useRecoilSSR';
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
 
-const PR = ({ params }: { params: { categoryId: number } }) => {
+const PR = ({ params }: { params: { categoryId: number; postId: number } }) => {
   const [userTheme] = useUserThemeSSR();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string | undefined>('');
@@ -73,7 +73,7 @@ const PR = ({ params }: { params: { categoryId: number } }) => {
         <TopButton />
       </ToolBar>
       <MDEditor height="68vh" value={content} onChange={setContent} />
-      <BottomButton categoryId={params.categoryId} writeProps={writeProps} />
+      <BottomButton categoryId={params.categoryId} postId={params.postId} writeProps={writeProps} />
     </Stack>
   );
 };

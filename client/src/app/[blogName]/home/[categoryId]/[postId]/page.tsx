@@ -2,6 +2,7 @@
 import {
   Avatar,
   Box,
+  Chip,
   Icon,
   Menu,
   MenuItem,
@@ -44,18 +45,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import FootPrintAnimation from '@/components/FootPrint/FootPrintAnimation';
 import { usegetblogIdQuery } from '@/api/readme-api';
+import { AddLikeApi, DeleteWriteApi } from '@/api/write-api';
+import { enqueueSnackbar } from 'notistack';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
-  const [blogId, setBlogId] = useState<IBlogId>();
+  const [, setBlogId] = useState<IBlogId>();
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [userTheme] = useUserThemeSSR();
   const router = useRouter();
   const theme = useTheme();
-
-  console.log(`useState blogId : ${blogId}`);
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
   const [page, setPage] = useState(0);
@@ -81,6 +83,13 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
       queryClient.invalidateQueries(['replies']);
     },
   });
+
+  const patchAddLikeQuery = useMutation(AddLikeApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['post']);
+    },
+  });
+
   const ReplyOnClick = () => {
     const newReplyBody = {
       postId: Number(params.postId),
@@ -131,6 +140,20 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
     setBlogId(blogIdData);
   }, [sidebarData, postData, introduceData, replyData, blogIdData]);
 
+  const deleteWritePrQuery = useMutation(DeleteWriteApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['postData']);
+      enqueueSnackbar({ message: '게시글 삭제가 완료되었습니다.', variant: 'success' });
+    },
+    onError: () => {
+      enqueueSnackbar({ message: '에러가 발생하였습니다.', variant: 'error' });
+    },
+  });
+
+  const deletePrPostOnClick = (postId: number) => {
+    deleteWritePrQuery.mutate({ postId });
+  };
+
   //댓글 정렬기준
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -139,14 +162,14 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
 
   return (
     <Stack>
       <ThumbnailArea>
         <ImageContainer
           imageSrc={
-            'https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332'
+            postData?.thumbnail ??
+            'https://s3.console.aws.amazon.com/s3/object/elasticbeanstalk-us-east-1-064991853848?region=us-east-1&prefix=thumbnail/road_sunset_horizon_118582_1920x1080.jpg'
           }
         />
         <BlackContainer paddingTop="64px">
@@ -187,10 +210,18 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   <IconButton color="white">
                     <Home fontSize="small" onClick={() => router.push(`/${params.blogName}`)} />
                   </IconButton>
-                  <PageLink href={`/write/update/${params.categoryId}/${params.postId}`}>
-                    <Button>수정</Button>
-                  </PageLink>
-                  <Button color="error">삭제</Button>
+                  {post?.isAuthor && (
+                    <>
+                      <PageLink href={`/write/update/${params.categoryId}/${params.postId}`}>
+                        <Button>수정</Button>
+                      </PageLink>
+                      <Button
+                        onClick={() => deletePrPostOnClick(Number(params?.postId))}
+                        color="error">
+                        삭제
+                      </Button>
+                    </>
+                  )}
                 </Stack>
               </Stack>
             </Stack>
@@ -198,14 +229,34 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
         </BlackContainer>
       </ThumbnailArea>
       <DragAndDrop
+        post={post}
         blogName={params.blogName}
         footprintList={writeList}
         rightContainer={
           <Stack width={'100%'} bgcolor={userTheme === 'dark' ? 'transparent' : '#FCFAF1'} p={12}>
             <MDEditor.Markdown source={post?.content} />
-
             {/* 댓글 */}
             <PostReply>
+              <Stack mb={8} spacing={2}>
+                <Stack direction="row" spacing={4} alignItems="center">
+                  <Stack fontSize="14px">조회수 : {post?.viewsCount} </Stack>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Stack fontSize="14px">추천수 : {post?.likesCount} </Stack>
+                    <IconButton
+                      size="small"
+                      onClick={() => patchAddLikeQuery.mutate({ postId: Number(params?.postId) })}>
+                      <ThumbUpIcon color={post?.isLiked ? 'primary' : undefined} />
+                    </IconButton>
+                  </Stack>
+                </Stack>
+                <Stack direction="row" spacing={2}>
+                  {post?.hashtags?.map((hashtag, i) => {
+                    return (
+                      <Chip color="primary" sx={{ width: 'fit-content' }} key={i} label={hashtag} />
+                    );
+                  })}
+                </Stack>
+              </Stack>
               <ReplyHandle>
                 <Stack flexDirection={'row'}>
                   <Stack>

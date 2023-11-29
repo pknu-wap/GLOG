@@ -25,7 +25,7 @@ function CollectPost({ like }: { like: ICollectPost }) {
   return (
     <Post
       key={like.postId}
-      href={`/${like.blogUrl}/home/1/${like.postId}`}
+      href={`/${like.blogUrl}/home/${like.categoryId}/${like.postId}`}
       isCollect={true}
       isPhone={isPhone}
       isTablet={isTablet}
@@ -40,11 +40,13 @@ function CollectPost({ like }: { like: ICollectPost }) {
         <Stack>
           <Image alt="썸네일" fill src={like.thumbnail ?? ''} />
         </Stack>
-        <CostomizeButton>
-          <IconButton size="small">
-            <LockOutlined />
-          </IconButton>
-        </CostomizeButton>
+        {like?.isPrivate && (
+          <CostomizeButton>
+            <IconButton size="small">
+              <LockOutlined />
+            </IconButton>
+          </CostomizeButton>
+        )}
       </Thumbnail>
       <Title>{like.title}</Title>
     </Post>

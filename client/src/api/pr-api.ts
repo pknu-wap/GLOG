@@ -1,4 +1,4 @@
-import { IPRParams } from '@/types/dto';
+import { IPRParams, IPostedPost, IUnPostedPost } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,7 +9,10 @@ export const getPRApi = async (params: IPRParams) => {
 };
 
 export const useGetPRQuery = (params: IPRParams) => {
-  const { isLoading, error, data } = useQuery([`prList`], () => getPRApi(params));
+  const { isLoading, error, data: backendData } = useQuery([`prList`], () => getPRApi(params));
+
+  const data: IPostedPost = backendData;
+
   return { data, isLoading, error };
 };
 
@@ -20,6 +23,11 @@ export const getPRUnPostedApi = async (params: IPRParams) => {
 };
 
 export const useGetPRUnpostedQuery = (params: IPRParams) => {
-  const { isLoading, error, data } = useQuery([`prUnpostedList`], () => getPRUnPostedApi(params));
+  const {
+    isLoading,
+    error,
+    data: backendData,
+  } = useQuery([`prUnpostedList`], () => getPRUnPostedApi(params));
+  const data: IUnPostedPost = backendData;
   return { data, isLoading, error };
 };

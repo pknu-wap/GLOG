@@ -17,7 +17,7 @@ const Page = () => {
   const [blogUrl, setBlogUrl] = useState<string>('');
   const [blogName, setBlogName] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
-  const { data, isLoading } = useGetIsNewBlogQuery();
+  const { data, isLoading } = useGetIsNewBlogQuery(params.get('token'));
 
   const postMakeAccountCreateQuery = useMutation(PostMakeAccountApi, {
     onSuccess: () => router.push('/collect'),

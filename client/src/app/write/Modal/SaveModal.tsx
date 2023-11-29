@@ -45,7 +45,7 @@ function SaveModal({
   const [image, setImage] = useState('');
   const [privateMode, setPrivateMode] = useState<'private' | 'public'>('private');
   const queryClient = useQueryClient();
-  const isPrUpdate = pathname.startsWith('/write/pr/update');
+  // const isPrUpdate = pathname.startsWith('/write/pr/update');
   const isPr = pathname.startsWith('/write/pr');
 
   const postWriteCreateQuery = useMutation(PostWriteApi, {
@@ -130,7 +130,7 @@ function SaveModal({
   const postOnClick = () => {
     onClose();
     const formData = createFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
@@ -147,15 +147,15 @@ function SaveModal({
   const postUpdateOnClick = () => {
     onClose();
     const formData = createFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
         isPrivate: privateMode === 'private' ? true : false,
-        prId: isPrUpdate ? Number(categoryId) : undefined,
+        // prId: isPrUpdate ? Number(postId) : undefined,
         hashtags: writeProps?.tags,
         categoryId: Number(categoryId),
-        postId,
+        postId: Number(postId),
       },
     });
 
@@ -166,7 +166,7 @@ function SaveModal({
     onClose();
 
     const formData = createToolFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postBasicDto: {
         title: writeProps?.title ?? '',
         content: writeProps?.content ?? '',
@@ -182,7 +182,7 @@ function SaveModal({
     onClose();
 
     const formData = createToolFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postBasicDto: {
         title: writeProps?.title ?? '',
         content: writeProps?.content ?? '',

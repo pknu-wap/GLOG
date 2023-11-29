@@ -25,7 +25,7 @@ const Update = ({ params }: { params: { categoryId: number; postId: number } }) 
   const [tags, setTags] = useState<string[]>([]);
   const [templateId] = useTemplateIdSSR();
   const [temporaryId] = useTemporaryIdSSR();
-  const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
+  const { data: postData } = useGetPostQuery({ postId: Number(params.categoryId) });
 
   const { data: templateData, refetch: templateRefetch } = useGetTemplateDetailQuery({
     templateId,

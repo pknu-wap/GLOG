@@ -19,7 +19,7 @@ export interface ICollectPost {
 
 // 모아보기 페이지 목록
 export interface ICollectContent {
-  postPreviewDtos?: ICollectPost[];
+  postPreviewDtos: ICollectPost[];
   totalPages: number;
 }
 

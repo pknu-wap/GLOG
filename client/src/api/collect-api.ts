@@ -1,4 +1,11 @@
-import { ICollect, ISearchContent, ISearchHashtag, ISearchTitle, ISearchUser } from '@/types/dto';
+import {
+  ICollect,
+  ICollectContent,
+  ISearchContent,
+  ISearchHashtag,
+  ISearchTitle,
+  ISearchUser,
+} from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,9 +16,12 @@ const GetCollectDataApi = async (params: ICollect) => {
 };
 
 export const useGetCollectDataQuery = (params: ICollect) => {
-  const { isLoading, error, data } = useQuery([`collectData`, params], () =>
-    GetCollectDataApi(params),
-  );
+  const {
+    isLoading,
+    error,
+    data: queryData,
+  } = useQuery([`collectData`, params], () => GetCollectDataApi(params));
+  const data: ICollectContent = queryData;
   return { data, isLoading, error };
 };
 

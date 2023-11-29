@@ -35,8 +35,8 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     List<Post> findAllByTitleContaining(String title);
     List<Post> findAllByUser(User user);
-    List<Post> findAllByCategory(Category category);
-    List<Post> findAllByContentContaining(String contnt);
+    Page<Post> findPostsByCategory(Category category, Pageable pageable);
+    List<Post> findAllByContentContaining(String content);
 
 
 

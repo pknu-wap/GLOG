@@ -68,17 +68,14 @@ public class PostService {
 
     public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException {
         User user = userRepository.findById(userPrincipal.getId()).get();
-        Category category = categoryRepository.findById(req.getCategoryId()).get();
         Blog blog = blogRepository.findByUserId(userPrincipal.getId()).get();
-        Post post = req.toPost(user, category, blog);
+        Post post;
 
-
-        //image
-        if (!multipartFile.isEmpty())
-            post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         if (req.getPrId() != null) {
             PrPost prPost = prPostRepository.findPrByPrId(req.getPrId()).get();
+            Category ct = prPostRepository.findByPrId(req.getPrId());
+            post = req.toPost(user, ct, blog);
             post.setPrPost(prPost);
             post.setIsPr(true);
             prPost.setIsPosted(true);
@@ -86,9 +83,14 @@ public class PostService {
             postRepository.save(post);
             prPostRepository.save(prPost);
         } else {
+            Category category = categoryRepository.findById(req.getCategoryId()).get();
+            post = req.toPost(user, category, blog);
             post.setIsPr(false);
             postRepository.save(post);
         }
+        //image
+        if (!multipartFile.isEmpty())
+            post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         //hashtags
 

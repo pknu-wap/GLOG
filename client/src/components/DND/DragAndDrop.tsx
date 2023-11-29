@@ -18,6 +18,7 @@ import CreateCategoryModal from './CreateCategoryModal';
 type Footprint = {
   categoryId: number;
   categoryName: string;
+  isPrCategory: boolean;
   postTitleDtos: {
     postId: number;
     title: string;
@@ -37,7 +38,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
   const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
-  const [paramsCategoryId, setParamsCategoryId] = useState(Number)
+  const [paramsCategoryId, setParamsCategoryId] = useState(Number);
 
   const router = useRouter();
   useEffect(() => {
@@ -98,27 +99,28 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                               </PageLink>
                             </IconButton>
                           </Stack>
-                          {/* FIXME : 레포지토리 연동 여부 받아와야 함 */}
-                          {
-                            <>
-                              <PageLink
-                                onClick={() => {
-                                  setCategoryId(category.categoryId);
-                                }}
-                                href={`${blogName}/prList/${category.categoryId}`}>
-                                <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
-                                  PR 연동
-                                </Stack>
-                              </PageLink>
-                              <Stack
-                                onClick={() => setOpen(true)}
-                                sx={{ cursor: 'pointer' }}
-                                pl={4}
-                                py={1}>
+                          {category?.isPrCategory ? (
+                            <PageLink
+                              onClick={() => {
+                                setCategoryId(category.categoryId);
+                              }}
+                              href={`/${blogName}/prList/${category.categoryId}`}>
+                              <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
                                 PR 연동
                               </Stack>
-                            </>
-                          }
+                            </PageLink>
+                          ) : (
+                            <Stack
+                              onClick={() => {
+                                setOpen(true);
+                                setCategoryId(category.categoryId);
+                              }}
+                              sx={{ cursor: 'pointer' }}
+                              pl={4}
+                              py={1}>
+                              PR 연동
+                            </Stack>
+                          )}
                           <Stack
                             sx={{
                               padding: '8px',
@@ -174,7 +176,6 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                     </Droppable>
                   );
                 })}
-                
               </Stack>
               <Droppable droppableId="right-droppable">
                 {(provided) => {

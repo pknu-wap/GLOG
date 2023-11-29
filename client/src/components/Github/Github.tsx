@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from '../Modal/Modal';
 import { ModalTitle } from '../Modal/Modal.style';
 import { PostRepository, useGetRepositoryQuery } from '@/api/github-api';
-import { Stack } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import List from '../List/List';
+import Button from '../Button/Button';
+import { Stack } from '@mui/material';
 
 function Github({
   open,
@@ -17,6 +19,7 @@ function Github({
 }) {
   const queryClient = useQueryClient();
   const { data: datas } = useGetRepositoryQuery();
+  const [clickList, setClickList] = useState<number>(0);
 
   const putAllowFriendIdCreateQuery = useMutation(PostRepository, {
     onSuccess: () => {
@@ -25,17 +28,37 @@ function Github({
   });
   return (
     <Modal open={open} onClose={onClose}>
-      <ModalTitle>Repository 선택</ModalTitle>
-      {/* FIXME : 백엔드 타입 알게 되면 수정해야함 */}
-      {datas?.repository?.map((data: any, i: any) => {
-        return (
-          <Stack
-            onClick={() => putAllowFriendIdCreateQuery.mutate({ category: categoryId, repo: i })}
-            key={i}>
-            {data}
-          </Stack>
-        );
-      })}
+      <Stack pr={2}>
+        <Stack direction="row" alignItems="flex-end" height="100%" justifyContent="space-between">
+          <ModalTitle>Repository 선택</ModalTitle>
+          <Button
+            onClick={() => {
+              putAllowFriendIdCreateQuery.mutate({
+                categoryId,
+                repo: datas?.repository[clickList],
+              });
+            }}
+            size="medium"
+            variant="outlined"
+            color="primary">
+            선택
+          </Button>
+        </Stack>
+        <Stack maxHeight="300px" py={4}>
+          {datas?.repository?.map((repo, i: number) => {
+            return (
+              <List
+                radioProps={{
+                  checked: clickList === i,
+                  onChange: () => setClickList(i),
+                }}
+                content={repo}
+                key={i}
+              />
+            );
+          })}
+        </Stack>
+      </Stack>
     </Modal>
   );
 }

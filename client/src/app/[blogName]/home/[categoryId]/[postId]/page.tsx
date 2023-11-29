@@ -44,6 +44,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import FootPrintAnimation from '@/components/FootPrint/FootPrintAnimation';
 import { usegetblogIdQuery } from '@/api/readme-api';
+import { DeleteWriteApi } from '@/api/write-api';
+import { enqueueSnackbar } from 'notistack';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
@@ -131,6 +133,20 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
     setBlogId(blogIdData);
   }, [sidebarData, postData, introduceData, replyData, blogIdData]);
 
+  const deleteWritePrQuery = useMutation(DeleteWriteApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['postData']);
+      enqueueSnackbar({ message: '게시글 삭제가 완료되었습니다.', variant: 'success' });
+    },
+    onError: () => {
+      enqueueSnackbar({ message: '에러가 발생하였습니다.', variant: 'error' });
+    },
+  });
+
+  const deletePrPostOnClick = (postId: number) => {
+    deleteWritePrQuery.mutate({ postId });
+  };
+
   //댓글 정렬기준
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -139,7 +155,6 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
 
   return (
     <Stack>
@@ -190,7 +205,9 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   <PageLink href={`/write/update/${params.categoryId}/${params.postId}`}>
                     <Button>수정</Button>
                   </PageLink>
-                  <Button color="error">삭제</Button>
+                  <Button onClick={() => deletePrPostOnClick(Number(params?.postId))} color="error">
+                    삭제
+                  </Button>
                 </Stack>
               </Stack>
             </Stack>

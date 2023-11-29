@@ -139,6 +139,7 @@ export interface ISidebar {
 export interface ISidebarContent {
   categoryId: number;
   categoryName: string;
+  isPrCategory: boolean;
   postTitleDtos: {
     postId: number;
     title: string;
@@ -196,6 +197,11 @@ export interface IPostContent {
   thumbnail?: string;
   title?: string;
   viewsCount?: number;
+}
+
+// 게시글 삭제
+export interface IRemovePostParams {
+  postId: number;
 }
 
 //리드미 get
@@ -323,9 +329,14 @@ export interface IIntroduce {
   friendCount: number;
 }
 
+// 레포지토리
+export interface Repository {
+  repository: string[];
+}
+
 // 레포지토리 가져오기
 export interface RepositoryParams {
-  category?: number;
+  categoryId?: number;
   repo?: string;
 }
 
@@ -431,4 +442,29 @@ export interface IUserInfo {
 // 유저 정보 변경하기
 export interface IBlogInfo {
   newBlogName: string;
+}
+
+// pr unposted
+export interface IUnPostedPost {
+  isAuthor: boolean;
+  prUnpostedDtos: {
+    prUnpostedDtos: {
+      prId: number;
+      prNumber: number;
+      prTitle: string;
+    }[];
+  };
+}
+
+// pr posted
+export interface IPostedPost {
+  isAuthor: boolean;
+  prPostedDtos: {
+    prPostedDtos: {
+      postId: number;
+      prId: number;
+      prNumber: number;
+      prTitle: string;
+    }[];
+  };
 }

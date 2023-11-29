@@ -11,10 +11,27 @@ import Image from 'next/image';
 import React from 'react';
 import EmptyContent from '../../../../../public/assets/box.png';
 import Complete from '../../../../../public/assets/complete-icon.svg';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { DeleteWriteApi } from '@/api/write-api';
+import { enqueueSnackbar } from 'notistack';
 
 function page({ params }: { params: { categoryId: string } }) {
   const { data: postedData } = useGetPRQuery({ categoryId: Number(params.categoryId) });
   const { data: unPostedData } = useGetPRUnpostedQuery({ categoryId: Number(params.categoryId) });
+  const queryClient = useQueryClient();
+  const deleteWritePrQuery = useMutation(DeleteWriteApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['prList']);
+      enqueueSnackbar({ message: 'PR 삭제가 완료되었습니다.', variant: 'success' });
+    },
+    onError: () => {
+      enqueueSnackbar({ message: '에러가 발생하였습니다.', variant: 'error' });
+    },
+  });
+
+  const deletePrPostOnClick = (postId: number) => {
+    deleteWritePrQuery.mutate({ postId });
+  };
 
   return (
     <CenterContent maxWidth="1080px">
@@ -22,9 +39,9 @@ function page({ params }: { params: { categoryId: string } }) {
         작성하지 않은 PR
       </Stack>
       <Stack p={2} direction="row" spacing={4} overflow={'scroll'}>
-        {unPostedData?.map((unPost: { id: number }, i: number) => {
+        {unPostedData?.prUnpostedDtos?.prUnpostedDtos?.map((unPost) => {
           return (
-            <PageLink key={i} href={`/write/pr/${i}`}>
+            <PageLink key={unPost.prId} href={`/write/pr/${unPost.prId}`}>
               <Stack
                 sx={{
                   transition: 'all .35s ease-in-out',
@@ -41,17 +58,6 @@ function page({ params }: { params: { categoryId: string } }) {
                   <Stack color="#000000" fontSize="20px" fontWeight="bold">
                     #77
                   </Stack>
-                  {/* FIXME : 이미지 수정해야함. */}
-                  {/* <img
-                style={{
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '50%',
-                  cursor: 'pointer',
-                }}
-                src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332"
-                alt="profileImage"
-              /> */}
                 </Stack>
                 <Stack
                   color="#000000"
@@ -60,7 +66,7 @@ function page({ params }: { params: { categoryId: string } }) {
                   textOverflow="ellipsis"
                   display="inline"
                   whiteSpace="nowrap">
-                  로딩구현 ㅏㅁㅇ나러ㅏㅇㅁㄹ ㄴ아 ㄴㅇ라ㅓ ㄴ ㄹ
+                  {unPost.prTitle}
                 </Stack>
               </Stack>
             </PageLink>
@@ -85,20 +91,24 @@ function page({ params }: { params: { categoryId: string } }) {
       <Stack margin="40px 0px 8px 0px" fontSize="24px">
         작성한 PR 목록
       </Stack>
-      {postedData?.prPostedDtos?.prPostedDtos ||
-      postedData?.prPostedDtos?.prPostedDtos?.length > 0 ? (
-        postedData.prPostedDtos.prPostedDtos?.map((post: { id: number }, i: number) => {
+      {postedData?.prPostedDtos?.prPostedDtos?.length > 0 ? (
+        postedData.prPostedDtos.prPostedDtos?.map((post) => {
           return (
             <List
-              key={i}
+              key={post?.postId}
               width="100%"
-              content={'asdf'}
+              content={post?.prTitle}
               buttonAction={
                 <Stack direction="row">
-                  <Button size="small" color="primary">
-                    수정
-                  </Button>
-                  <Button size="small" color="error">
+                  <PageLink href={`/write/pr/update/${post.postId}`}>
+                    <Button size="small" color="primary">
+                      수정
+                    </Button>
+                  </PageLink>
+                  <Button
+                    onClick={() => deletePrPostOnClick(post.postId)}
+                    size="small"
+                    color="error">
                     삭제
                   </Button>
                 </Stack>

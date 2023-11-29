@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconButton, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -9,15 +9,18 @@ import { useIsSearchSSR, useUserThemeSSR } from '../../../hooks/useRecoilSSR';
 import { usePathname } from 'next/navigation';
 import PageLink from '../PageLink/PageLink';
 import Image from 'next/image';
-import Pororo from '../../../public/assets/box.png';
 import SettingMenu from '../Header/SettingMenu';
 import { Home, Search } from '@mui/icons-material';
+import { useGetUserDetailQuery } from '@/api/userDetail-api';
+import { IUserDetail } from '@/types/dto';
 
 export default function Header() {
   const [userTheme, setUserTheme] = useUserThemeSSR();
   const pathname = usePathname();
   const [isSearch, setIsSearch] = useIsSearchSSR();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const {data: userDetailData} = useGetUserDetailQuery()
+  const [userDetail, setUserDetail] = useState<IUserDetail>()
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -32,6 +35,10 @@ export default function Header() {
   };
 
   const menuopen = Boolean(anchorEl);
+
+  useEffect(() => {
+    setUserDetail(userDetailData);
+  }, [userDetailData]);
 
   return (
     <Stack
@@ -80,8 +87,9 @@ export default function Header() {
           borderRadius="20px"
           overflow="hidden"
           sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}>
-          <PageLink href={'/chaeyeon'}>
-            <Image width={40} height={40} alt="profile Image" src={Pororo} />
+          <PageLink href={userDetail?.blogUrl ?? ''}>
+            {/* FIXME : 나중에 src={userDetail?.thumbnail} 로 바꿔야함 */}
+            <Image width={40} height={40} alt="profile Image" src={userDetail?.thumbnail ?? ''} />
           </PageLink>
         </Stack>
         <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={handleClick}>

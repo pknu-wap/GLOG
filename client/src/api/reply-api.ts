@@ -1,9 +1,9 @@
-import { IReply, IReplyParams } from '@/types/dto';
+import { IPatchReplyLike, IReply, IReplyParams } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
 export const getReplyApi = async (params: IReplyParams) => {
-  const { data } = await defaultInstance.get('/replies', { params });
+  const { data } = await defaultInstance.get(`/replies`, { params });
 
   return data;
 };
@@ -18,3 +18,8 @@ export const PostReplyApi = async (body: IReply) => {
 
   return data;
 };
+
+export const PatchReplyLikeApi = async (params: IPatchReplyLike) => {
+  const {data} = await defaultInstance.patch(`/replies/like/${params.replyId}`, params)
+  return data;
+}

@@ -7,6 +7,20 @@ export type ModalType = {
   onClose: () => void;
 };
 
+// guestbook modal type
+export type GuestbookType = {
+  open: boolean;
+  blogId: number;
+  onClose: () => void;
+};
+
+// CategorySettingModalType
+export type CategorySettingModalType = {
+  open: boolean;
+  categoryId: number;
+  onClose: () => void;
+}
+
 // Private 버튼 Map Type
 type ColorType = 'oppositeColor' | 'primary';
 type VariantType = 'text' | 'contained';

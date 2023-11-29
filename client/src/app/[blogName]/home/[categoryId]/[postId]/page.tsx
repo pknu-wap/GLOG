@@ -23,7 +23,7 @@ import RepliesComponent, {
 } from './postId.style';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, useGetPostQuery } from '@/api/blog-api';
-import { IIntroduce, IPostContent, IReplyContent, ISidebarContent } from '@/types/dto';
+import { IBlogId, IIntroduce, IPostContent, IReplyContent, ISidebarContent } from '@/types/dto';
 import CenterContent from '@/components/Layout/CenterContent';
 import { Home, KeyboardArrowRight } from '@mui/icons-material';
 import MDEditor from '@uiw/react-md-editor';
@@ -42,14 +42,20 @@ import { PutFriendAllowApi, PutFriendRequestApi } from '@/api/friend-api';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
+import FootPrintAnimation from '@/components/FootPrint/FootPrintAnimation';
+import { usegetblogIdQuery } from '@/api/readme-api';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
-  const { data: sidebarData } = useGetSidebarQuery({ blogId: 3 });
+  const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
+  const [blogId, setBlogId] = useState<IBlogId>();
+  const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [userTheme] = useUserThemeSSR();
   const router = useRouter();
   const theme = useTheme();
+
+  console.log(`useState blogId : ${blogId}`);
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
   const [page, setPage] = useState(0);
@@ -122,7 +128,8 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
     setPost(postData);
     setIntroduce(introduceData);
     setReply(replyData);
-  }, [sidebarData, postData, introduceData, replyData]);
+    setBlogId(blogIdData);
+  }, [sidebarData, postData, introduceData, replyData, blogIdData]);
 
   //댓글 정렬기준
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -132,6 +139,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const handleClose = () => {
     setAnchorEl(null);
   };
+  
 
   return (
     <Stack>
@@ -253,6 +261,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                 return (
                   <RepliesComponent
                     key={replyInfo.replyId}
+                    replyId={replyInfo.replyId}
                     userId={replyInfo.userDto.userId}
                     nickname={replyInfo.userDto.nickname}
                     profileImage={replyInfo.userDto.profileImage}
@@ -354,6 +363,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           </Stack>
         </ModalContent>
       </Modal>
+      <FootPrintAnimation blogId={Number(blogIdData)} />
     </Stack>
   );
 };

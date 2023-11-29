@@ -45,6 +45,18 @@ export interface IProfile {
   loginedMemberId: number;
 }
 
+//유저 디테일
+export interface IUserDetail {
+  blogId: number;
+  userID: number;
+  nickName: string;
+  blogName: string;
+  email: string;
+  introduction: string | null;
+  thumbnail: string;
+  blogUrl: string;
+}
+
 // 댓글 get 정보들
 export interface IReplyParams {
   postId: number;
@@ -75,6 +87,11 @@ export interface IReplyContent {
 export interface IReply {
   postId: number;
   message: string;
+}
+
+//댓글 좋아요 patch
+export interface IPatchReplyLike {
+  replyId: number;
 }
 
 // 글쓰기 페이지
@@ -195,6 +212,10 @@ export interface IBlogIdParams {
   blogUrl?: string;
 }
 
+export interface IBlogId {
+  blogId?: number;
+}
+
 // 템플릿 불러오기
 export interface ITemplate {
   postTitleResponse: {
@@ -310,6 +331,77 @@ export interface RepositoryParams {
 
 // PR
 export interface IPRParams {
+  categoryId: number;
+}
+
+// 방명록 get 요청값
+export interface IGuestbookParams {
+  blogId: number;
+}
+
+export interface IGuestbookUserDto {
+  userId: number;
+  nickname: string;
+  profileImage: string;
+}
+
+export interface IGuestbook {
+  messageDto: {
+    userDto: IGuestbookUserDto;
+    messageId: number;
+    message: string;
+    createdAt: string;
+    who: string;
+  }[];
+  imOwner: boolean;
+  guestbookId: number;
+}
+
+//방명록 작성
+export interface IPostGuestbook {
+  guestbookId?: number;
+  messageId?: number;
+  message: string;
+}
+
+//방명록 수정
+export interface IPutGuestbook {
+  guestbookId: number;
+  messageId: number;
+  message: string;
+}
+
+// 방명록 삭제
+export interface IDeleteGuestbook {
+  messageId: number;
+}
+
+//카테고리 가져오기
+export interface ICategoryParams {
+  categoryId: number;
+}
+
+//카테고리 가져온 정보
+export interface ICategory {
+  categoryName: string;
+  prCategory: boolean;
+}
+
+//카테고리 생성
+export interface IPostCategory {
+  categoryName: string;
+  isPrCategory: boolean;
+  repositoryUrl: string | null;
+}
+
+//카테고리 이름 수정
+export interface IPutCategory {
+  categoryId: number;
+  newCategoryName: string;
+}
+
+//카테고리 삭제
+export interface IDeleteCategory {
   categoryId: number;
 }
 

@@ -3,8 +3,7 @@
 import { Stack } from '@mui/material';
 import { Theme, styled } from '@mui/material/styles';
 import { usePathname } from 'next/navigation';
-import FootPrintAnimation from '../FootPrint/FootPrintAnimation';
-import { SnackbarProvider } from 'notistack';
+// import { useAndroidSSR, useIphoneSSR } from '../../../hooks/useRecoilSSR';
 
 type Children = {
   children: React.ReactNode;
@@ -23,12 +22,5 @@ const MainStack = styled(Stack, {
 export default function FullLayout({ children }: Children) {
   const pathname = usePathname();
 
-  return (
-    <SnackbarProvider>
-      <MainStack pathname={pathname}>
-        {children}
-        <FootPrintAnimation />
-      </MainStack>
-    </SnackbarProvider>
-  );
+  return <MainStack pathname={pathname}>{children}</MainStack>;
 }

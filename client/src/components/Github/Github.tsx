@@ -27,16 +27,15 @@ function Github({
     <Modal open={open} onClose={onClose}>
       <ModalTitle>Repository 선택</ModalTitle>
       {/* FIXME : 백엔드 타입 알게 되면 수정해야함 */}
-      {datas &&
-        datas?.repository?.map((data: any, i: any) => {
-          return (
-            <Stack
-              onClick={() => putAllowFriendIdCreateQuery.mutate({ category: categoryId, repo: i })}
-              key={i}>
-              {data}
-            </Stack>
-          );
-        })}
+      {datas?.repository?.map((data: any, i: any) => {
+        return (
+          <Stack
+            onClick={() => putAllowFriendIdCreateQuery.mutate({ category: categoryId, repo: i })}
+            key={i}>
+            {data}
+          </Stack>
+        );
+      })}
     </Modal>
   );
 }

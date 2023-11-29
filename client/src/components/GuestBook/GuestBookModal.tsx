@@ -1,64 +1,82 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '../Modal/Modal';
-import { ModalType } from '@/types/common';
+import { GuestbookType } from '@/types/common';
 import { ModalContent, ModalTitle } from '../Modal/Modal.style';
-import { Stack } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import Comment from './Comment';
+import { PostGuestbookApi, useGetGuestbookQuery } from '@/api/guestbook-api';
+import { IGuestbook } from '@/types/dto';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Button from '../Button/Button';
 
-function GuestBookModal({ open, onClose }: ModalType) {
-  const data = {
-    simpleMessageDtos: [
-      {
-        simpleMessageDto: {
-          messageId: '',
-          userId: '',
-          profileImage: 'string',
-          nickname: 'string',
-          message: 'string',
-          createdAt: 'datetime',
-          who: 'other', // 해당 댓글이 방장인지 나인지 other인지
-        },
-      },
-      {
-        simpleMessageDto: {
-          messageId: '',
-          userId: '',
-          profileImage: 'string',
-          nickname: 'string',
-          message: 'string',
-          createdAt: 'datetime',
-          who: 'me', // 해당 댓글이 방장인지 나인지 other인지
-        },
-      },
-      {
-        simpleMessageDto: {
-          messageId: '',
-          userId: '',
-          profileImage: 'string',
-          nickname: 'string',
-          message: 'string',
-          createdAt: 'datetime',
-          who: 'other', // 해당 댓글이 방장인지 나인지 other인지
-        },
-      },
-    ],
-    imOwner: false, // 내가 방장인지 아닌지
-    guestbookId: '0L',
+function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
+  const queryClient = useQueryClient();
+  //방명록 get
+  const { data: guestbookData } = useGetGuestbookQuery({
+    blogId: blogId,
+  });
+  const [guestbook, setGuestBook] = useState<IGuestbook>();
+
+  //방명록 post
+  const [message, setMessage] = useState('');
+  const postGuestbookQuery = useMutation(PostGuestbookApi, {
+    onSuccess() {
+      queryClient.invalidateQueries(['guestbook']);
+    },
+  });
+  const postGuestbookClick = () => {
+    const newPostGuestbookBody = {
+      guestbookId: guestbook?.guestbookId,
+      messageId: 0,
+      message: message,
+    };
+    postGuestbookQuery.mutate(newPostGuestbookBody);
   };
+
+  
+
+  useEffect(() => {
+    setGuestBook(guestbookData);
+  }, [guestbookData]);
 
   return (
     <Modal maxWidth="lg" open={open} onClose={onClose}>
       <ModalTitle>방명록 📮</ModalTitle>
       <ModalContent>
-        <Stack width="600px" maxHeight="600px" spacing={6}>
-          {data.simpleMessageDtos.map((message) => {
+        <Stack width="600px" maxHeight="300px" overflow="scroll" spacing={6}>
+          {guestbook?.messageDto.map((message) => {
             return (
               <Comment
-                isMe={message.simpleMessageDto.who === 'me'}
-                key={message.simpleMessageDto.messageId}
+                key={message.messageId}
+                nickname={message.userDto.nickname}
+                profileImage={message.userDto.profileImage}
+                who={message.who}
+                messageId={message.messageId}
+                guestbookId={guestbook.guestbookId}
+                areuOwner={guestbook.imOwner}
+                message={message.message}
+                createdAt={message.createdAt}
               />
             );
           })}
+        </Stack>
+        <Stack flexDirection="row" marginTop="20px">
+          <TextField
+            size="small"
+            fullWidth
+            variant="outlined"
+            placeholder="방명록을 남겨보세요"
+            sx={{ marginRight: '20px' }}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
+          <Button
+            onClick={() => {
+              postGuestbookClick();
+            }}>
+            게시하기
+          </Button>
         </Stack>
       </ModalContent>
     </Modal>

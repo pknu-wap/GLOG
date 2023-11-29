@@ -12,6 +12,8 @@ import { ArrowRight, Edit } from '@mui/icons-material';
 import CategorySettingModal from './CategorySettingModal';
 import PageLink from '../PageLink/PageLink';
 import Github from '../Github/Github';
+import Button from '../Button/Button';
+import CreateCategoryModal from './CreateCategoryModal';
 
 type Footprint = {
   categoryId: number;
@@ -32,8 +34,10 @@ interface DragAndDropProps {
 function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [categoryEditOpen, setCategoryEditOpen] = useState(false);
+  const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
+  const [paramsCategoryId, setParamsCategoryId] = useState(Number)
 
   const router = useRouter();
   useEffect(() => {
@@ -53,6 +57,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
           <CenterContent bgcolor="transparent">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
+                <Button onClick={() => setCreateCategoryOpen(true)}>카테고리 생성</Button>
                 {footprintList?.map((category) => {
                   return (
                     <Droppable key={category.categoryId} droppableId={String(category.categoryId)}>
@@ -78,7 +83,10 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                             <Stack direction="row" spacing={1}>
                               <Stack color="#000000">{category.categoryName}</Stack>
                               <IconButton
-                                onClick={() => setCategoryEditOpen(true)}
+                                onClick={() => {
+                                  setCategoryEditOpen(true);
+                                  setParamsCategoryId(category.categoryId);
+                                }}
                                 sx={{ padding: '0px' }}
                                 size="small">
                                 <Edit fontSize="small" />
@@ -97,7 +105,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                 onClick={() => {
                                   setCategoryId(category.categoryId);
                                 }}
-                                href={`/chaeyeon/prList/${category.categoryId}`}>
+                                href={`${blogName}/prList/${category.categoryId}`}>
                                 <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
                                   PR 연동
                                 </Stack>
@@ -166,6 +174,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                     </Droppable>
                   );
                 })}
+                
               </Stack>
               <Droppable droppableId="right-droppable">
                 {(provided) => {
@@ -185,7 +194,12 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
           </CenterContent>
           <CategorySettingModal
             open={categoryEditOpen}
+            categoryId={paramsCategoryId}
             onClose={() => setCategoryEditOpen(false)}
+          />
+          <CreateCategoryModal
+            open={createCategoryOpen}
+            onClose={() => setCreateCategoryOpen(false)}
           />
           <Github categoryId={categoryId} open={open} onClose={() => setOpen(false)} />
         </DragDropContext>

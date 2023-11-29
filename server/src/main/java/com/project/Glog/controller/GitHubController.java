@@ -48,7 +48,7 @@ public class GitHubController {
                                                 @RequestParam String repo) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         if(!gitHubService.regiRepo(user, categoryId, repo)){
-            return new ResponseEntity<>("Fail Register Repository",HttpStatus.OK);
+            return new ResponseEntity<>("Fail Register Repository",HttpStatus.NOT_ACCEPTABLE);
         }
 
         return new ResponseEntity<>("Success Register Repository",HttpStatus.OK);

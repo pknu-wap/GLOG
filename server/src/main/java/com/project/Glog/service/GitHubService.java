@@ -110,14 +110,23 @@ public class GitHubService {
         if(githubRepository.getCategory() != null){
             return false;
         }
-        if(category.getReopsitoryUrl() != null){
+        if(!category.getReopsitoryUrl().equals("")){
             return  false;
         }
 
         category.setIsPrcategory(true);
         category.setReopsitoryUrl(repo);
         githubRepository.setCategory(category);
+        githubRepository.setIsCategoryRegi(true);
+
+        GithubRepository newGr = new GithubRepository();
+        newGr.setRepoName(repo);
+        newGr.setUser(user);
+        newGr.setOwnerName(githubRepository.getOwnerName());
+        newGr.setIsCategoryRegi(false);
+
         githubRepositoryRepository.save(githubRepository);
+        githubRepositoryRepository.save(newGr);
         categoryRepository.save(category);
 
         return true;
@@ -138,6 +147,7 @@ public class GitHubService {
             githubRepository.setUser(user);
             githubRepository.setRepoName(repo.getName());
             githubRepository.setOwnerName(repo.getOwner().getLogin());
+            githubRepository.setIsCategoryRegi(false);
 
             if(!isPresentRepo(user.getId(), githubRepository.getRepoName())) {
                 githubRepositoryRepository.save(githubRepository);

@@ -1,8 +1,10 @@
+'use client';
+
 import { Stack } from '@mui/material';
 import { Theme, styled } from '@mui/material/styles';
 import { usePathname } from 'next/navigation';
 import FootPrintAnimation from '../FootPrint/FootPrintAnimation';
-// import { useAndroidSSR, useIphoneSSR } from '../../../hooks/useRecoilSSR';
+import { SnackbarProvider } from 'notistack';
 
 type Children = {
   children: React.ReactNode;
@@ -22,9 +24,11 @@ export default function FullLayout({ children }: Children) {
   const pathname = usePathname();
 
   return (
-    <MainStack pathname={pathname}>
-      {children}
-      <FootPrintAnimation />
-    </MainStack>
+    <SnackbarProvider>
+      <MainStack pathname={pathname}>
+        {children}
+        <FootPrintAnimation />
+      </MainStack>
+    </SnackbarProvider>
   );
 }

@@ -45,7 +45,7 @@ function SaveModal({
   const [image, setImage] = useState('');
   const [privateMode, setPrivateMode] = useState<'private' | 'public'>('private');
   const queryClient = useQueryClient();
-  const isPrUpdate = pathname.startsWith('/write/pr/update');
+  // const isPrUpdate = pathname.startsWith('/write/pr/update');
   const isPr = pathname.startsWith('/write/pr');
 
   const postWriteCreateQuery = useMutation(PostWriteApi, {
@@ -152,10 +152,10 @@ function SaveModal({
         title: writeProps?.title,
         content: writeProps?.content,
         isPrivate: privateMode === 'private' ? true : false,
-        prId: isPrUpdate ? Number(categoryId) : undefined,
+        // prId: isPrUpdate ? Number(postId) : undefined,
         hashtags: writeProps?.tags,
         categoryId: Number(categoryId),
-        postId,
+        postId: Number(postId),
       },
     });
 

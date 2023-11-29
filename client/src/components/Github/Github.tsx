@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import List from '../List/List';
 import Button from '../Button/Button';
 import { Stack } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
 
 function Github({
   open,
@@ -24,6 +25,8 @@ function Github({
   const putAllowFriendIdCreateQuery = useMutation(PostRepository, {
     onSuccess: () => {
       queryClient.invalidateQueries(['repository']);
+      onClose();
+      enqueueSnackbar({ message: 'Repository 연동이 완료되었습니다.', variant: 'success' });
     },
   });
   return (

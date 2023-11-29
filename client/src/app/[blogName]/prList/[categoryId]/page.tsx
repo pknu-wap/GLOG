@@ -1,7 +1,6 @@
 'use client';
 
 import { useGetPRQuery, useGetPRUnpostedQuery } from '@/api/pr-api';
-// import { useGetPRQuery } from '@/api/pr-api';
 import Button from '@/components/Button/Button';
 import CenterContent from '@/components/Layout/CenterContent';
 import List from '@/components/List/List';
@@ -17,7 +16,9 @@ import { enqueueSnackbar } from 'notistack';
 
 function page({ params }: { params: { categoryId: string } }) {
   const { data: postedData } = useGetPRQuery({ categoryId: Number(params.categoryId) });
-  const { data: unPostedData } = useGetPRUnpostedQuery({ categoryId: Number(params.categoryId) });
+  const { data: unPostedData } = useGetPRUnpostedQuery({
+    categoryId: Number(params.categoryId),
+  });
   const [unPosted, setUnPosted] = useState(unPostedData);
   const queryClient = useQueryClient();
   const deleteWritePrQuery = useMutation(DeleteWriteApi, {
@@ -38,7 +39,6 @@ function page({ params }: { params: { categoryId: string } }) {
     setUnPosted(unPostedData);
   }, [unPostedData]);
 
-  console.log(unPosted);
   return (
     <CenterContent maxWidth="1080px">
       <Stack fontSize="24px" marginBottom="8px">
@@ -46,9 +46,8 @@ function page({ params }: { params: { categoryId: string } }) {
       </Stack>
       <Stack p={2} direction="row" spacing={4} overflow={'scroll'}>
         {unPosted?.prUnPostedDtos?.prUnPostedDtos?.map((unPost) => {
-          console.log('1', unPost);
           return (
-            <PageLink key={unPost.prId} href={`/write/pr/${Number(params.categoryId)}`}>
+            <PageLink key={unPost.prId} href={`/write/pr/${unPost.prId}`}>
               <Stack
                 sx={{
                   transition: 'all .35s ease-in-out',
@@ -63,7 +62,7 @@ function page({ params }: { params: { categoryId: string } }) {
                 justifyContent="space-around">
                 <Stack direction="row" justifyContent="space-between">
                   <Stack color="#000000" fontSize="20px" fontWeight="bold">
-                    #77
+                    #{unPost.prId}
                   </Stack>
                 </Stack>
                 <Stack
@@ -107,7 +106,7 @@ function page({ params }: { params: { categoryId: string } }) {
               content={post?.prTitle}
               buttonAction={
                 <Stack direction="row">
-                  <PageLink href={`/write/pr/update/${post.postId}`}>
+                  <PageLink href={`/write/pr/update/${Number(params.categoryId)}/${post.postId}`}>
                     <Button size="small" color="primary">
                       수정
                     </Button>

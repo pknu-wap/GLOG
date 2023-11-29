@@ -184,7 +184,7 @@ public class GitHubService {
 
         List<PrPost> pr = prPostRepository.findByRepo(githubRepository.getId());
         List<PrPost> unPostedPr = pr.stream()
-                .filter(prPost -> prPost.getIsPosted().equals(0))
+                .filter(prPost -> prPost.getIsPosted().equals(false))
                 .collect(Collectors.toList());
 
         PrUnPostedDtos prUnPostedDtos = new PrUnPostedDtos(unPostedPr);

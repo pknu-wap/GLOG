@@ -1,5 +1,6 @@
 package com.project.Glog.repository;
 
+import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
 import com.project.Glog.domain.PrPost;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,5 +23,8 @@ public interface PrPostRepository extends JpaRepository<PrPost, Long> {
 
     @Query("SELECT pr FROM PrPost pr WHERE pr.id=:prId")
     Optional<PrPost> findPrByPrId( @Param("prId") Long prId);
+
+    @Query("SELECT p.category FROM PrPost p WHERE p.category.id=:PrId")
+    Category findByPrId(@Param("PrId") Long PrId);
 
 }

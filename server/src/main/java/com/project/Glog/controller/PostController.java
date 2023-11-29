@@ -155,9 +155,9 @@ public class PostController {
     }
 
     @GetMapping("/search/category")
-    public ResponseEntity<PostPreviewDtos> searchContentsByCategory(@RequestParam Long categoryId) {
+    public ResponseEntity<PostPreviewDtos> searchContentsByCategory(@RequestParam Long categoryId, @RequestParam int page) {
         //content 내용을 포함한 게시글의 리스트를 생성한다.
-        PostPreviewDtos postPreviewDtos = postService.searchPostsByCategory(categoryId);
+        PostPreviewDtos postPreviewDtos = postService.searchPostsByCategory(categoryId, page);
 
         return new ResponseEntity<>(postPreviewDtos, HttpStatus.OK);
     }

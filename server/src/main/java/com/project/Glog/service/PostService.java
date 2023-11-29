@@ -312,11 +312,12 @@ public class PostService {
         }
     }
 
-    public PostPreviewDtos searchPostsByCategory(Long categoryId) {
+    public PostPreviewDtos searchPostsByCategory(Long categoryId, int page) {
         Category category = categoryRepository.findByCategoryId(categoryId);
-        List<Post> posts = postRepository.findAllByCategory(category);
+        PageRequest pageRequest = PageRequest.of(page, 8,  Sort.by("id").descending());
+        Page<Post> posts = postRepository.findPostsByCategory(category, pageRequest);
 
-        return new PostPreviewDtos(posts, posts.size());
+        return new PostPreviewDtos(posts.getContent(), -1);
     }
 
     private void setPostHashtag(Post post, List<String> hashtagList) {

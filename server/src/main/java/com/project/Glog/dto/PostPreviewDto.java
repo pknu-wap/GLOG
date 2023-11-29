@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class PostPreviewDto {
     private String blogUrl;
     private Long postId;
+    private Long categoryId;
     private String title;
     private String thumbnail;
     private Integer likesCount;
@@ -20,11 +21,11 @@ public class PostPreviewDto {
     private LocalDateTime createdAt;
     private Boolean isPrivate;
 
-
     public static PostPreviewDto of (Post post){
         return new PostPreviewDto(
                 post.getBlogUrl(),
                 post.getId(),
+                post.getCategory().getId(),
                 post.getTitle(),
                 post.getThumbnail(),
                 post.getLikesCount(),

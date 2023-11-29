@@ -3,7 +3,7 @@
 const removeImports = require('next-remove-imports')();
 
 const nextConfig = {
-  // ...options
+  // ...options,
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,

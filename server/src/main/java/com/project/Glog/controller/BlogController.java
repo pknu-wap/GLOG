@@ -1,7 +1,9 @@
 package com.project.Glog.controller;
 
+import com.project.Glog.domain.Blog;
 import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.response.blog.MyPageResponse;
+import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
 import com.project.Glog.service.BlogService;
@@ -10,12 +12,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class BlogController {
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private BlogRepository blogRepository;
 
-    //TODO 기능 대부분을 User에 넘길지 고려해봐야 함
     @GetMapping("/mypage")
     public ResponseEntity<MyPageResponse> goToMypage(@CurrentUser UserPrincipal userPrincipal){
 
@@ -62,5 +67,17 @@ public class BlogController {
         blogService.registerReadme(userPrincipal, readme);
 
         return new ResponseEntity<>("success update read-me", HttpStatus.OK);
+    }
+
+    @GetMapping("/is/new/blog")
+    public Boolean readHasBlog(@CurrentUser UserPrincipal userPrincipal){
+        Optional<Blog> blogOptional = blogRepository.findByUserId(userPrincipal.getId());
+
+        if(blogOptional.isPresent()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

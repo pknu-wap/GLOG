@@ -41,17 +41,25 @@ function CollectArray({ kind }: { kind: 'likes' | 'views' | 'recent' }) {
   useEffect(() => {
     if (!kindArray) {
       setKindArray(data);
+    } else {
+      setKindArray((prevData) => {
+        return {
+          postPreviewDtos: [...(prevData?.postPreviewDtos ?? []), ...(data?.postPreviewDtos ?? [])],
+          totalPages: prevData.totalPages,
+        };
+      });
     }
   }, [data]);
 
   const newDataButtonClick = () => {
-    if (page < kindArray.totalPages - 1) {
+    if (page < Math.max(kindArray.totalPages, kindArray.postPreviewDtos.length / postCount) - 1) {
       setPage((prevPage) => prevPage + 1);
       setBackendSendPage((prevPage) => prevPage + 1);
     } else {
       setToastOpen(true);
     }
   };
+
   return (
     <Stack direction="row" justifyContent="left" alignItems="center">
       <Toast

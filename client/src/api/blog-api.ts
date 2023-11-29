@@ -43,3 +43,14 @@ export const useGetSidebarQuery = (params: ISidebar) => {
   });
   return { data, isLoading, error };
 };
+
+export const getIsNewBlogApi = async () => {
+  const { data } = await defaultInstance.get('/is/new/blog');
+
+  return data;
+};
+
+export const useGetIsNewBlogQuery = () => {
+  const { isLoading, error, data } = useQuery([`isNewBlog`], () => getIsNewBlogApi(), {});
+  return { data, isLoading, error };
+};

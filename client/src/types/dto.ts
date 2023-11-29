@@ -19,7 +19,7 @@ export interface ICollectPost {
 
 // 모아보기 페이지 목록
 export interface ICollectContent {
-  postPreviewDtos?: ICollectPost[];
+  postPreviewDtos: ICollectPost[];
   totalPages: number;
 }
 
@@ -403,4 +403,32 @@ export interface IPutCategory {
 //카테고리 삭제
 export interface IDeleteCategory {
   categoryId: number;
+}
+
+// history
+export interface IHistory {
+  week?: {
+    mon: boolean;
+    tue: boolean;
+    wed: boolean;
+    thu: boolean;
+    fri: boolean;
+    sat: boolean;
+    sun: boolean;
+  };
+  year?: {
+    from: string;
+    posted: number[];
+  };
+}
+
+// 유저 정보 변경하기
+export interface IUserInfo {
+  name: string;
+  introduction: string;
+}
+
+// 유저 정보 변경하기
+export interface IBlogInfo {
+  newBlogName: string;
 }

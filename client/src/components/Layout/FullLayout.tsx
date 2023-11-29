@@ -1,3 +1,5 @@
+'use client';
+
 import { Stack } from '@mui/material';
 import { Theme, styled } from '@mui/material/styles';
 import { usePathname } from 'next/navigation';

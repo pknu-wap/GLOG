@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect } from 'react';
 import PostComponent from '../../../components/Post/Post';
 import { useState } from 'react';
@@ -10,7 +11,7 @@ import { IScrapContent } from '@/types/dto';
 
 export default function Scrap() {
   const [page, setPage] = useState(0);
-  const { data } = useGetScrapQuery({ page: page });
+  const { data } = useGetScrapQuery({ page });
   const [result, setResult] = useState<IScrapContent[]>();
 
   useEffect(() => {

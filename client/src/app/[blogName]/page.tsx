@@ -29,6 +29,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
       queryClient.invalidateQueries(['readMe']);
     },
   });
+
   const ReadMeOnClick = () => {
     const newReadMeBody = {
       content: content,
@@ -42,6 +43,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
     setReadMe(readMeData?.body?.content);
     setBlogId(blogIdData);
   }, [sidebarData, readMeData, blogIdData]);
+
   return (
     <Stack height={'fit-content'}>
       <DragAndDrop

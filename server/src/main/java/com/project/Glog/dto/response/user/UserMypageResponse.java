@@ -16,6 +16,8 @@ public class UserMypageResponse {
     private String blogName;
     private String email;
     private String introduction;
+    private String thumbnail;
+    private String blogUrl;
 
     public static UserMypageResponse of(User user, Blog blog){
         return new UserMypageResponse(user.getId(),
@@ -23,7 +25,9 @@ public class UserMypageResponse {
                 user.getNickname(),
                 blog.getBlogName(),
                 user.getEmail(),
-                user.getIntroduction());
+                user.getIntroduction(),
+                user.getImageUrl(),
+                blog.getBlogUrl());
     }
 
 }

@@ -68,4 +68,8 @@ public class Post {
 //        this.isPr=req.getPrId();
     }
 
+    public void addCount(){
+        viewsCount++;
+    }
+
 }

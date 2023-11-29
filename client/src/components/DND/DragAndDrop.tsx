@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import FootPrint from '../../../public/assets/yellowFootPrint.png';
 import IconButton from '../Button/IconButton';
-import { ArrowRight, Edit } from '@mui/icons-material';
+import { Add, Edit } from '@mui/icons-material';
 import CategorySettingModal from './CategorySettingModal';
 import PageLink from '../PageLink/PageLink';
 import Github from '../Github/Github';
@@ -82,7 +82,13 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                             padding="4px 8px"
                             borderRadius="0px 8px">
                             <Stack direction="row" spacing={1}>
-                              <Stack color="#000000">{category.categoryName}</Stack>
+                              <PageLink href={`/${blogName}/home/${category.categoryId}`}>
+                                <Stack
+                                  sx={{ padding: 1, ':hover': { color: 'rgba(0,0,0,0.4)' } }}
+                                  color="#000000">
+                                  {category.categoryName}
+                                </Stack>
+                              </PageLink>
                               <IconButton
                                 onClick={() => {
                                   setCategoryEditOpen(true);
@@ -93,11 +99,13 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                 <Edit fontSize="small" />
                               </IconButton>
                             </Stack>
-                            <IconButton sx={{ padding: '0px' }} size="small">
-                              <PageLink href={`/${blogName}/home/${category.categoryId}`}>
-                                <ArrowRight />
+                            <Stack direction="row" alignItems="center" spacing={1}>
+                              <PageLink href={`/write/create/${category.categoryId}`}>
+                                <IconButton sx={{ padding: '0px' }} size="small">
+                                  <Add fontSize="small" />
+                                </IconButton>
                               </PageLink>
-                            </IconButton>
+                            </Stack>
                           </Stack>
                           {category?.isPrCategory ? (
                             <PageLink
@@ -105,8 +113,16 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                 setCategoryId(category.categoryId);
                               }}
                               href={`/${blogName}/prList/${category.categoryId}`}>
-                              <Stack sx={{ cursor: 'pointer' }} pl={4} py={1}>
-                                PR 연동
+                              <Stack
+                                height="100%"
+                                alignItems="center"
+                                sx={{
+                                  cursor: 'pointer',
+                                  ':hover': { color: 'rgba(0,0,0,0.4)' },
+                                }}
+                                pl={4}
+                                pt={1}>
+                                PR 연동 보러가기 {'->'}
                               </Stack>
                             </PageLink>
                           ) : (
@@ -115,10 +131,13 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                 setOpen(true);
                                 setCategoryId(category.categoryId);
                               }}
-                              sx={{ cursor: 'pointer' }}
+                              sx={{
+                                cursor: 'pointer',
+                                ':hover': { color: 'rgba(0,0,0,0.4)' },
+                              }}
                               pl={4}
-                              py={1}>
-                              PR 연동
+                              pt={1}>
+                              PR 연동 하러가기 {'->'}
                             </Stack>
                           )}
                           <Stack

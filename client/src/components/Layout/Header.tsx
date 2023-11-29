@@ -88,7 +88,7 @@ export default function Header() {
           borderRadius="20px"
           overflow="hidden"
           sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}>
-          <PageLink href={userDetail?.blogUrl ?? ''}>
+          <PageLink href={`/${userDetail?.blogUrl}` ?? ''}>
             <Image width={40} height={40} alt="profile Image" src={userDetail?.thumbnail ?? ''} />
           </PageLink>
         </Stack>

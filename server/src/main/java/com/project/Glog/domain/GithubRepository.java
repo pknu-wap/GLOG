@@ -30,4 +30,7 @@ public class GithubRepository {
     @OneToOne(fetch = FetchType.LAZY)
     private Category category;
 
+    @NotNull
+    private Boolean isCategoryRegi;
+
 }

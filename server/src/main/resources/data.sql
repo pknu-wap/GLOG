@@ -23,9 +23,10 @@ VALUES(1, '2023-11-01 12:39:35.630800', 'hello', 1, 1),
 
 
 INSERT INTO category(id, category_name, is_prcategory, reopsitory_url, blog_id)
-VALUES(1, 'category1', 0, NULL, 1),
-      (2, 'category2', 0, NULL, 3),
-      (3, 'githubCategory', 0, NULL, 4);
+VALUES(1, 'category1', 0, '', 1),
+      (2, 'category2', 0, '', 3),
+      (3, 'githubCategory', 0, '', 4),
+      (4, '2githubCategory', 0, '', 4);
 
 INSERT INTO post(id, blog_url, content, created_at, thumbnail, is_pr, is_private, likes_count, title, views_count, blog_id, category_id, user_id, pr_post_id)
 VALUES(1, 'dueit', 'It is a post 1', '2023-10-08 13:14:07.377201' , NULL, 0, 0, 0, 'post1', 0, 1, 1, 1,NULL),

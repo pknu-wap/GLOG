@@ -29,7 +29,7 @@ function SettingMenu({ open, onClose, anchorEl }: ModalType & { anchorEl: null |
       <MenuItem onClick={() => setFriendOpen(true)}>친구</MenuItem>
       <MenuItem>
         <PageLink
-          href="/mypage"
+          href="/scrap"
           onClick={() => {
             onClose();
           }}>

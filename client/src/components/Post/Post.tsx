@@ -21,7 +21,6 @@ function PostComponent({
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
-    // FIXME : Scrap 페이지에선 href 안 되어 있겠네
     <Post href={href ?? ''} isPhone={isPhone} isTablet={isTablet} isLaptop={isLaptop}>
       <Thumbnail>
         <PostPopular>

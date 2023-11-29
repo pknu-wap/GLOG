@@ -10,6 +10,7 @@ export interface ICollectPost {
   createdAt?: string;
   isPrivate?: boolean;
   likesCount?: number;
+  categoryId?: number;
   postId?: number;
   repliesCount?: number;
   thumbnail?: string | null;
@@ -26,6 +27,12 @@ export interface ICollectContent {
 // 모아보기 페이지 검색
 export interface ISearchUser {
   nickname: string;
+}
+
+// 모아보기 페이지 검색
+export interface ISearch {
+  type: string;
+  value: string;
 }
 
 export interface ISearchTitle {
@@ -447,8 +454,8 @@ export interface IBlogInfo {
 // pr unposted
 export interface IUnPostedPost {
   isAuthor: boolean;
-  prUnpostedDtos: {
-    prUnpostedDtos: {
+  prUnPostedDtos: {
+    prUnPostedDtos: {
       prId: number;
       prNumber: number;
       prTitle: string;

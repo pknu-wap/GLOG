@@ -130,7 +130,7 @@ function SaveModal({
   const postOnClick = () => {
     onClose();
     const formData = createFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
@@ -147,7 +147,7 @@ function SaveModal({
   const postUpdateOnClick = () => {
     onClose();
     const formData = createFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postCreateRequest: {
         title: writeProps?.title,
         content: writeProps?.content,
@@ -166,7 +166,7 @@ function SaveModal({
     onClose();
 
     const formData = createToolFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postBasicDto: {
         title: writeProps?.title ?? '',
         content: writeProps?.content ?? '',
@@ -182,7 +182,7 @@ function SaveModal({
     onClose();
 
     const formData = createToolFormData({
-      thumbnail: image,
+      thumbnail: image ?? null,
       postBasicDto: {
         title: writeProps?.title ?? '',
         content: writeProps?.content ?? '',

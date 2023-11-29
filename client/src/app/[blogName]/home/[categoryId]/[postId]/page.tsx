@@ -161,7 +161,8 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
       <ThumbnailArea>
         <ImageContainer
           imageSrc={
-            'https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fe4%2F9a%2Ff8%2Fe49af87c36b78490745115cc14b5a80e.gif&type=ff332_332'
+            postData?.thumbnail ??
+            'https://s3.console.aws.amazon.com/s3/object/elasticbeanstalk-us-east-1-064991853848?region=us-east-1&prefix=thumbnail/road_sunset_horizon_118582_1920x1080.jpg'
           }
         />
         <BlackContainer paddingTop="64px">

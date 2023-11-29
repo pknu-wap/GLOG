@@ -44,7 +44,7 @@ export const ProfileImg = styled(Stack)(({ imageSrc }: { imageSrc: string }) => 
   backgroundImage: `url(${imageSrc})`,
   backgroundRepeat: 'no-repeat',
   borderRadius: '50%',
-}))
+}));
 
 export const PostReply = styled(Stack)({
   height: '100%',
@@ -96,8 +96,8 @@ function RepliesComponent({
   isLiked,
   isEdit,
 }: {
-  userId: number,
-  replyId: number,
+  userId: number;
+  replyId: number;
   profileImage: string;
   nickname: string;
   message: string;
@@ -107,9 +107,9 @@ function RepliesComponent({
 }) {
   const theme = useTheme();
   const queryClient = useQueryClient();
-  
+
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
-  const {data: introduceData} = useGetIntroduceQuery({
+  const { data: introduceData } = useGetIntroduceQuery({
     userId: userId,
   });
   const [introduce, setIntroduce] = useState<IIntroduce>();
@@ -117,7 +117,7 @@ function RepliesComponent({
   const [isAccept, setIsAccept] = useState<number>(Number);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['friend'])
+      queryClient.invalidateQueries(['friend']);
     },
   });
   const AllowFriendOnClick = () => {
@@ -131,36 +131,38 @@ function RepliesComponent({
 
   const PutFriendRequestQuery = useMutation(PutFriendRequestApi, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['friend'])
+      queryClient.invalidateQueries(['friend']);
     },
   });
   const FriendRequestOnClick = () => {
     const newRequestBody = {
-      userId: userId
+      userId: userId,
     };
     PutFriendRequestQuery.mutate(newRequestBody);
   };
 
   const PatchReplyLikeQuery = useMutation(PatchReplyLikeApi, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['replies'])
+      queryClient.invalidateQueries(['replies']);
     },
   });
   const ReplyLikeOnClick = () => {
     const newReplyLikeBody = {
-      replyId: replyId
+      replyId: replyId,
     };
     PatchReplyLikeQuery.mutate(newReplyLikeBody);
   };
 
   useInsertionEffect(() => {
     setIntroduce(introduceData);
-  }, [introduceData])
+  }, [introduceData]);
 
   return (
     <Stack flexDirection={'column'}>
       <ReplyMainInfo>
-        <Button sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%'}} onClick={() => setIntroduceOpen(true)}>
+        <Button
+          sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%' }}
+          onClick={() => setIntroduceOpen(true)}>
           <img
             style={{
               width: '35px',
@@ -171,7 +173,7 @@ function RepliesComponent({
             alt="profileImage"
           />
         </Button>
-        
+
         <Stack>
           <Stack>{nickname}</Stack>
           <Stack>{message}</Stack>
@@ -179,17 +181,16 @@ function RepliesComponent({
       </ReplyMainInfo>
       <ReplySubInfo>
         <ReplyLike>
-          {isLiked ? 
-          (<IconButton onClick={ReplyLikeOnClick}>
-            <ThumbUpAltIcon></ThumbUpAltIcon>
-          </IconButton>) : (
+          {isLiked ? (
+            <IconButton onClick={ReplyLikeOnClick}>
+              <ThumbUpAltIcon></ThumbUpAltIcon>
+            </IconButton>
+          ) : (
             <IconButton onClick={ReplyLikeOnClick}>
               <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
-          </IconButton>
+            </IconButton>
           )}
-          <ChangeReply>
-            {isEdit ? <Button>수정하기</Button> : <></>}
-          </ChangeReply>
+          <ChangeReply>{isEdit ? <Button>수정하기</Button> : <></>}</ChangeReply>
           {likesCount}
         </ReplyLike>
       </ReplySubInfo>
@@ -210,7 +211,9 @@ function RepliesComponent({
                   alt="profileImage"
                 />
                 <Stack>
-                  <Stack padding="8px" fontSize='25px'>{introduce?.nickname}</Stack>
+                  <Stack padding="8px" fontSize="25px">
+                    {introduce?.nickname}
+                  </Stack>
                   <Stack direction="row" spacing={2}>
                     <Button size="small" variant="outlined">
                       <PageLink href={`/${introduce?.blogUrl}`}> </PageLink>
@@ -220,17 +223,21 @@ function RepliesComponent({
                 </Stack>
               </Stack>
               <Stack>
-                <Stack fontSize='18px' marginBottom='15px'>친구 {introduce?.friendCount} 명</Stack>
+                <Stack fontSize="18px" marginBottom="15px">
+                  친구 {introduce?.friendCount} 명
+                </Stack>
                 {introduce?.relationship === 'friend' ? (
-                  <Stack color='#00BFFF'>팔로잉</Stack>
+                  <Stack color="#00BFFF">팔로잉</Stack>
                 ) : introduce?.relationship === 'friending' ? (
-                  <Stack marginLeft="10px" fontSize="15px" color="#FFA07A">요청 중</Stack>
+                  <Stack marginLeft="10px" fontSize="15px" color="#FFA07A">
+                    요청 중
+                  </Stack>
                 ) : introduce?.relationship === 'friended' ? (
                   <>
-                    <Stack margin='0 5px 0 10px'>친구 요청</Stack>
+                    <Stack margin="0 5px 0 10px">친구 요청</Stack>
                     <Tooltip title="수락" arrow>
                       <Button
-                        sx={{minWidth: '36px', height: '36px', padding: '0'}}
+                        sx={{ minWidth: '36px', height: '36px', padding: '0' }}
                         onClick={() => {
                           setIsAccept(0);
                           AllowFriendOnClick();
@@ -239,10 +246,10 @@ function RepliesComponent({
                         <CheckIcon />
                       </Button>
                     </Tooltip>
-                      
+
                     <Tooltip title="거절" arrow>
                       <Button
-                        sx={{minWidth: '36px', height: '36px', padding: '0'}}
+                        sx={{ minWidth: '36px', height: '36px', padding: '0' }}
                         onClick={() => {
                           setIsAccept(1);
                           AllowFriendOnClick();
@@ -253,9 +260,9 @@ function RepliesComponent({
                     </Tooltip>
                   </>
                 ) : (
-                <Stack>
-                  <Button onClick={() => FriendRequestOnClick()}>친구 요청</Button>
-                </Stack>
+                  <Stack>
+                    <Button onClick={() => FriendRequestOnClick()}>친구 요청</Button>
+                  </Stack>
                 )}
               </Stack>
             </Stack>

@@ -19,8 +19,8 @@ function FriendModal({ open, onClose }: ModalType) {
   const [friend, setFriend] = useState<IFriendsContent>();
   const kindList = ['recentFriend', 'name', 'recentPost'];
   const friendCount = friend?.userSimpleDtos.simpleDtos.length;
-  const {data: userDetailData} = useGetUserDetailQuery()
-  const [userDetail, setUserDetail] = useState<IUserDetail>()
+  const { data: userDetailData } = useGetUserDetailQuery();
+  const [userDetail, setUserDetail] = useState<IUserDetail>();
 
   const [nickname, setNickname] = useState('');
   const { data: searchFriendData } = useGetFriendSearchQuery({
@@ -30,7 +30,7 @@ function FriendModal({ open, onClose }: ModalType) {
   useEffect(() => {
     setFriend(friendData);
     setSearch(searchFriendData);
-    setUserDetail(userDetailData)
+    setUserDetail(userDetailData);
   }, [friendData, searchFriendData, userDetailData]);
 
   //정렬기준
@@ -100,6 +100,7 @@ function FriendModal({ open, onClose }: ModalType) {
                   profileImg={friendInfo.nickname}
                   relationship={friendInfo.relationship}
                   haveNewPost={friendInfo.haveNewPost}
+                  // FIXME : 1 하드코딩
                   recentPostId={`/{blogUrl}/home/1/${friendInfo.recentPostId}`}
                 />
               );
@@ -139,6 +140,7 @@ function FriendModal({ open, onClose }: ModalType) {
                   profileImg={searchInfo.nickname}
                   relationship={searchInfo.relationship}
                   haveNewPost={searchInfo.haveNewPost}
+                  // FIXME : 1 하드코딩
                   recentPostId={`/${userDetail?.blogUrl}/home/1/${searchInfo.recentPostId}`}
                 />
               );

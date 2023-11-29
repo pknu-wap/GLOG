@@ -8,7 +8,7 @@ import List from '@/components/List/List';
 import PageLink from '@/components/PageLink/PageLink';
 import { Stack } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import EmptyContent from '../../../../../public/assets/box.png';
 import Complete from '../../../../../public/assets/complete-icon.svg';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -18,6 +18,7 @@ import { enqueueSnackbar } from 'notistack';
 function page({ params }: { params: { categoryId: string } }) {
   const { data: postedData } = useGetPRQuery({ categoryId: Number(params.categoryId) });
   const { data: unPostedData } = useGetPRUnpostedQuery({ categoryId: Number(params.categoryId) });
+  const [unPosted, setUnPosted] = useState(unPostedData);
   const queryClient = useQueryClient();
   const deleteWritePrQuery = useMutation(DeleteWriteApi, {
     onSuccess: () => {
@@ -33,15 +34,21 @@ function page({ params }: { params: { categoryId: string } }) {
     deleteWritePrQuery.mutate({ postId });
   };
 
+  useEffect(() => {
+    setUnPosted(unPostedData);
+  }, [unPostedData]);
+
+  console.log(unPosted);
   return (
     <CenterContent maxWidth="1080px">
       <Stack fontSize="24px" marginBottom="8px">
         작성하지 않은 PR
       </Stack>
       <Stack p={2} direction="row" spacing={4} overflow={'scroll'}>
-        {unPostedData?.prUnpostedDtos?.prUnpostedDtos?.map((unPost) => {
+        {unPosted?.prUnPostedDtos?.prUnPostedDtos?.map((unPost) => {
+          console.log('1', unPost);
           return (
-            <PageLink key={unPost.prId} href={`/write/pr/${unPost.prId}`}>
+            <PageLink key={unPost.prId} href={`/write/pr/${Number(params.categoryId)}`}>
               <Stack
                 sx={{
                   transition: 'all .35s ease-in-out',

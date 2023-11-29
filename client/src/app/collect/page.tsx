@@ -5,35 +5,20 @@ import React, { useState } from 'react';
 import CollectArray from './CollectArray';
 import { Search, Star } from '@mui/icons-material';
 import { useIsSearchSSR } from '../../../hooks/useRecoilSSR';
-import {
-  useGetCollectSearchContentQuery,
-  useGetCollectSearchHashtagQuery,
-  useGetCollectSearchTitleQuery,
-  useGetCollectSearchUserQuery,
-} from '@/api/collect-api';
+import { useGetCollectSearchQuery } from '@/api/collect-api';
 import { ICollectPost } from '@/types/dto';
 import PostComponent from '@/components/Post/Post';
-import { PostAreaComponent } from '../[blogName]/scrap/scrap.style';
+import { PostAreaComponent } from '../scrap/scrap.style';
 
 function Collect() {
   const [isSearch] = useIsSearchSSR();
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<'user' | 'title' | 'hashtag' | 'content'>('user');
 
-  const { data: userData } = useGetCollectSearchUserQuery({ nickname: searchText });
-  const { data: titleData } = useGetCollectSearchTitleQuery({ title: searchText });
-  const { data: hashtagData } = useGetCollectSearchHashtagQuery({ hashtag: searchText });
-  const { data: contentData } = useGetCollectSearchContentQuery({ content: searchText });
-
-  const typeToDataMap = {
-    user: userData,
-    title: titleData,
-    hashtag: hashtagData,
-    content: contentData,
-  };
+  const { data } = useGetCollectSearchQuery({ type: searchType, value: searchText });
 
   return (
-    <Stack mt={8}>
+    <Stack mt={16}>
       {!isSearch ? (
         <Stack padding={'10px 40px'} spacing={4}>
           <Typography color="oppositeColor.main" fontSize="24px">
@@ -79,7 +64,7 @@ function Collect() {
         </Stack>
       )}
       <PostAreaComponent style={{ marginTop: '16px' }}>
-        {typeToDataMap[searchType]?.postPreviewDtos.map((user: ICollectPost) => {
+        {data?.postPreviewDtos.map((user: ICollectPost) => {
           return (
             <PostComponent
               key={user.postId}
@@ -88,7 +73,7 @@ function Collect() {
               likesCount={user.likesCount}
               viewsCount={user.viewsCount}
               Icon={<Star fontSize="small" />}
-              href={`/${user.blogUrl}/home/1/${user.postId}`}
+              href={`/${user.blogUrl}/home/${user.categoryId}/${user.postId}`}
             />
           );
         })}

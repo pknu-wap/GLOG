@@ -18,7 +18,7 @@ public class PostBasicDto {
     private String title;
     private String content;
     private String thumbnail;
-    private List<String> hashtags; //TODO 리스트로 주고 받는게 편할듯?
+    private List<String> hashtags;
     
     public static <T extends TemplateTemporary> PostBasicDto of(T templateTemporary, List<String> hashtags) {
         return new PostBasicDto(

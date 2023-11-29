@@ -22,6 +22,12 @@ export const UpdateWriteApi = async (body: FormData) => {
   return data;
 };
 
+export const AddLikeApi = async (params: { postId: number }) => {
+  const { data } = await defaultInstance.patch(`/post/like?postId=${params?.postId}`);
+
+  return data;
+};
+
 export const DeleteWriteApi = async (params: IRemovePostParams) => {
   const { data } = await defaultInstance.delete('/post', { params });
 

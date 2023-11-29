@@ -2,6 +2,7 @@
 import {
   Avatar,
   Box,
+  Chip,
   Icon,
   Menu,
   MenuItem,
@@ -44,8 +45,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import FootPrintAnimation from '@/components/FootPrint/FootPrintAnimation';
 import { usegetblogIdQuery } from '@/api/readme-api';
-import { DeleteWriteApi } from '@/api/write-api';
+import { AddLikeApi, DeleteWriteApi } from '@/api/write-api';
 import { enqueueSnackbar } from 'notistack';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
@@ -83,6 +85,13 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
       queryClient.invalidateQueries(['replies']);
     },
   });
+
+  const patchAddLikeQuery = useMutation(AddLikeApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['post']);
+    },
+  });
+
   const ReplyOnClick = () => {
     const newReplyBody = {
       postId: Number(params.postId),
@@ -221,9 +230,25 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
         rightContainer={
           <Stack width={'100%'} bgcolor={userTheme === 'dark' ? 'transparent' : '#FCFAF1'} p={12}>
             <MDEditor.Markdown source={post?.content} />
-
             {/* 댓글 */}
             <PostReply>
+              <Stack mb={8} spacing={2}>
+                <Stack direction="row" spacing={4} alignItems="center">
+                  <Stack>조회수 : {post?.viewsCount} </Stack>
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <Stack>추천수 : {post?.likesCount} </Stack>
+                    <IconButton
+                      onClick={() => patchAddLikeQuery.mutate({ postId: Number(params?.postId) })}>
+                      <ThumbUpIcon color={post?.isLiked ? 'primary' : undefined} />
+                    </IconButton>
+                  </Stack>
+                </Stack>
+                {post?.hashtags?.map((hashtag, i) => {
+                  return (
+                    <Chip color="primary" sx={{ width: 'fit-content' }} key={i} label={hashtag} />
+                  );
+                })}
+              </Stack>
               <ReplyHandle>
                 <Stack flexDirection={'row'}>
                   <Stack>

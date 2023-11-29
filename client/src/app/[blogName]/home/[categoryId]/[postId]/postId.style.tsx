@@ -47,13 +47,14 @@ export const ProfileImg = styled(Stack)(({ imageSrc }: { imageSrc: string }) => 
 }));
 
 export const PostReply = styled(Stack)({
+  marginTop: '60px',
   height: '100%',
   flexDirection: 'column',
 });
 
 export const ReplyHandle = styled(Stack)({
   flexDirection: 'row',
-  marginBottom: '20px',
+  // marginBottom: '20px',
 });
 
 export const ReplyCount = styled(Stack)({});

@@ -1,7 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 import CenterContent from '@/components/Layout/CenterContent';
-import { Stack } from '@mui/material';
+import { Stack, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { useRouter } from 'next/navigation';
@@ -58,7 +58,13 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
           <CenterContent bgcolor="transparent">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
-                <Button onClick={() => setCreateCategoryOpen(true)}>카테고리 생성</Button>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  onClick={() => setCreateCategoryOpen(true)}
+                  sx={{ marginBottom: '-24px' }}>
+                  카테고리 생성
+                </Button>
                 {footprintList?.map((category) => {
                   return (
                     <Droppable key={category.categoryId} droppableId={String(category.categoryId)}>
@@ -72,9 +78,6 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                           }}
                           {...provided.droppableProps}
                           ref={provided.innerRef}>
-                          <PageLink href={`/write/create/${category.categoryId}`}>
-                            <Stack sx={{ cursor: 'pointer', width: 'fit-content' }}>글쓰기</Stack>
-                          </PageLink>
                           <Stack
                             direction="row"
                             justifyContent="space-between"
@@ -83,112 +86,123 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                             borderRadius="0px 8px">
                             <Stack direction="row" spacing={1}>
                               <PageLink href={`/${blogName}/home/${category.categoryId}`}>
-                                <Stack
-                                  sx={{ padding: 1, ':hover': { color: 'rgba(0,0,0,0.4)' } }}
-                                  color="#000000">
-                                  {category.categoryName}
-                                </Stack>
+                                <Tooltip title="카테고리 모아보기" placement="left">
+                                  <Stack
+                                    sx={{ padding: 1, ':hover': { color: 'rgba(0,0,0,0.4)' } }}
+                                    color="#000000">
+                                    {category.categoryName}
+                                  </Stack>
+                                </Tooltip>
                               </PageLink>
-                              <IconButton
+                              <Tooltip
                                 onClick={() => {
                                   setCategoryEditOpen(true);
                                   setParamsCategoryId(category.categoryId);
                                 }}
-                                sx={{ padding: '0px' }}
-                                size="small">
-                                <Edit fontSize="small" />
-                              </IconButton>
+                                title="게시글 수정">
+                                <IconButton sx={{ padding: '0px' }} size="small">
+                                  <Edit fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
                             </Stack>
                             <Stack direction="row" alignItems="center" spacing={1}>
                               <PageLink href={`/write/create/${category.categoryId}`}>
-                                <IconButton sx={{ padding: '0px' }} size="small">
-                                  <Add fontSize="small" />
-                                </IconButton>
+                                <Tooltip title="게시글 작성">
+                                  <IconButton sx={{ padding: '0px' }} size="small">
+                                    <Add fontSize="small" />
+                                  </IconButton>
+                                </Tooltip>
                               </PageLink>
                             </Stack>
                           </Stack>
-                          {category?.isPrCategory ? (
-                            <PageLink
-                              onClick={() => {
-                                setCategoryId(category.categoryId);
-                              }}
-                              href={`/${blogName}/prList/${category.categoryId}`}>
+                          <Stack>
+                            {category?.isPrCategory ? (
+                              <PageLink
+                                onClick={() => {
+                                  setCategoryId(category.categoryId);
+                                }}
+                                href={`/${blogName}/prList/${category.categoryId}`}>
+                                <Stack
+                                  height="100%"
+                                  alignItems="center"
+                                  sx={{
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    ':hover': { color: 'rgba(0,0,0,0.4)' },
+                                  }}
+                                  pl={4}
+                                  pt={1}>
+                                  PR 연동 보러가기 {'->'}
+                                </Stack>
+                              </PageLink>
+                            ) : (
                               <Stack
-                                height="100%"
-                                alignItems="center"
+                                onClick={() => {
+                                  setOpen(true);
+                                  setCategoryId(category.categoryId);
+                                }}
                                 sx={{
+                                  fontSize: '14px',
                                   cursor: 'pointer',
                                   ':hover': { color: 'rgba(0,0,0,0.4)' },
                                 }}
                                 pl={4}
                                 pt={1}>
-                                PR 연동 보러가기 {'->'}
+                                PR 연동 하러가기 {'->'}
                               </Stack>
-                            </PageLink>
-                          ) : (
+                            )}
+                          </Stack>
+                          {!category?.isPrCategory && (
                             <Stack
-                              onClick={() => {
-                                setOpen(true);
-                                setCategoryId(category.categoryId);
-                              }}
                               sx={{
-                                cursor: 'pointer',
-                                ':hover': { color: 'rgba(0,0,0,0.4)' },
-                              }}
-                              pl={4}
-                              pt={1}>
-                              PR 연동 하러가기 {'->'}
+                                padding: '8px',
+                                borderRadius: '8px',
+                              }}>
+                              {category.postTitleDtos?.map((post) => {
+                                return (
+                                  <Draggable
+                                    key={post.postId}
+                                    draggableId={`${post.postId}`}
+                                    index={post.postId}>
+                                    {(provided) => (
+                                      <Stack
+                                        sx={{
+                                          padding: '4px 8px',
+                                          ':hover': {
+                                            borderRadius: '8px',
+                                            backgroundColor: 'primary.light',
+                                          },
+                                          ':active': {
+                                            backgroundColor: 'transparent',
+                                          },
+                                        }}
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}>
+                                        <PageLink
+                                          href={`/${blogName}/home/${category.categoryId}/${post.postId}`}>
+                                          <Stack
+                                            direction="row"
+                                            justifyContent="left"
+                                            alignItems="center"
+                                            width="fit-content"
+                                            gap={2}>
+                                            <Image
+                                              src={FootPrint}
+                                              alt="footPrint"
+                                              width="15"
+                                              height="15"
+                                            />
+                                            <Stack width="101px">{post.title}</Stack>
+                                          </Stack>
+                                        </PageLink>
+                                      </Stack>
+                                    )}
+                                  </Draggable>
+                                );
+                              })}
                             </Stack>
                           )}
-                          <Stack
-                            sx={{
-                              padding: '8px',
-                              borderRadius: '8px',
-                            }}>
-                            {category.postTitleDtos?.map((post) => {
-                              return (
-                                <Draggable
-                                  key={post.postId}
-                                  draggableId={`${post.postId}`}
-                                  index={post.postId}>
-                                  {(provided) => (
-                                    <Stack
-                                      sx={{
-                                        padding: '4px 8px',
-                                        ':hover': {
-                                          borderRadius: '8px',
-                                          backgroundColor: 'primary.light',
-                                        },
-                                        ':active': {
-                                          backgroundColor: 'transparent',
-                                        },
-                                      }}
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}>
-                                      <PageLink
-                                        href={`/${blogName}/home/${category.categoryId}/${post.postId}`}>
-                                        <Stack
-                                          direction="row"
-                                          justifyContent="left"
-                                          alignItems="center"
-                                          width="fit-content"
-                                          gap={2}>
-                                          <Image
-                                            src={FootPrint}
-                                            alt="footPrint"
-                                            width="15"
-                                            height="15"
-                                          />
-                                          <Stack width="101px">{post.title}</Stack>
-                                        </Stack>
-                                      </PageLink>
-                                    </Stack>
-                                  )}
-                                </Draggable>
-                              );
-                            })}
-                          </Stack>
                           {provided.placeholder}
                         </div>
                       )}

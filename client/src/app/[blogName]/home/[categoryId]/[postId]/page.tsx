@@ -261,6 +261,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                 return (
                   <RepliesComponent
                     key={replyInfo.replyId}
+                    replyId={replyInfo.replyId}
                     userId={replyInfo.userDto.userId}
                     nickname={replyInfo.userDto.nickname}
                     profileImage={replyInfo.userDto.profileImage}

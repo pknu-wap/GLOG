@@ -15,6 +15,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PutFriendAllowApi, PutFriendRequestApi } from '@/api/friend-api';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { PatchReplyLikeApi } from '@/api/reply-api';
 
 export const ThumbnailArea = styled(Stack)({
   width: '100%',
@@ -87,6 +88,7 @@ const ChangeReply = styled(Stack)({});
 
 function RepliesComponent({
   userId,
+  replyId,
   profileImage,
   nickname,
   message,
@@ -95,6 +97,7 @@ function RepliesComponent({
   isEdit,
 }: {
   userId: number,
+  replyId: number,
   profileImage: string;
   nickname: string;
   message: string;
@@ -138,6 +141,18 @@ function RepliesComponent({
     PutFriendRequestQuery.mutate(newRequestBody);
   };
 
+  const PatchReplyLikeQuery = useMutation(PatchReplyLikeApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['replies'])
+    },
+  });
+  const ReplyLikeOnClick = () => {
+    const newReplyLikeBody = {
+      replyId: replyId
+    };
+    PatchReplyLikeQuery.mutate(newReplyLikeBody);
+  };
+
   useInsertionEffect(() => {
     setIntroduce(introduceData);
   }, [introduceData])
@@ -164,11 +179,16 @@ function RepliesComponent({
       </ReplyMainInfo>
       <ReplySubInfo>
         <ReplyLike>
-          <IconButton>
-            {isLiked ? <ThumbUpAltIcon></ThumbUpAltIcon> : <ThumbUpOffAltIcon></ThumbUpOffAltIcon>}
+          {isLiked ? 
+          (<IconButton onClick={ReplyLikeOnClick}>
+            <ThumbUpAltIcon></ThumbUpAltIcon>
+          </IconButton>) : (
+            <IconButton onClick={ReplyLikeOnClick}>
+              <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
           </IconButton>
+          )}
           <ChangeReply>
-            {isEdit ? <Button>수정하기</Button> : <Button>신고하기</Button>}
+            {isEdit ? <Button>수정하기</Button> : <></>}
           </ChangeReply>
           {likesCount}
         </ReplyLike>

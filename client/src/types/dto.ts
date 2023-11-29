@@ -89,6 +89,11 @@ export interface IReply {
   message: string;
 }
 
+//댓글 좋아요 patch
+export interface IPatchReplyLike {
+  replyId: number;
+}
+
 // 글쓰기 페이지
 export interface IWrite {
   thumbnail?: string | null;

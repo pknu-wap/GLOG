@@ -4,17 +4,12 @@ import { ModalActions, ModalContent, ModalTitle } from '../Modal/Modal.style';
 import { Stack, TextField } from '@mui/material';
 import ModalButton from '../Modal/ModalButton';
 import { ModalType } from '@/types/common';
-import Button from '../Button/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {  PostCategoryApi } from '@/api/category-api';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 
 function CreateCategoryModal({ open, onClose }: ModalType) {
   const queryClient = useQueryClient();
   const [categoryName, setCategoryName] = useState('');
-  const [repositoryUrl, setRepositoryUrl] = useState('');
-  const [isPrCategory, setIsPrCategory] = useState<boolean>(Boolean);
   const postCategoryQuery = useMutation(PostCategoryApi, {
     onSuccess() {
       queryClient.invalidateQueries(['guestbook']);
@@ -23,8 +18,8 @@ function CreateCategoryModal({ open, onClose }: ModalType) {
   const postCategoryClick = () => {
     const newCategoryBody = {
       categoryName: categoryName,
-      isPrCategory: isPrCategory,
-      repositoryUrl: repositoryUrl,
+      isPrCategory: false,
+      repositoryUrl: null,
     };
     postCategoryQuery.mutate(newCategoryBody);
     onClose();
@@ -47,36 +42,6 @@ function CreateCategoryModal({ open, onClose }: ModalType) {
                     }} 
                 />
             </Stack>
-          <Stack flexDirection='row' fontSize="18px" fontWeight="bold">
-            깃허브 연동 여부 : 
-                <Stack flexDirection='row' marginLeft='10px'>
-                    <Button
-                      sx={{minWidth: '36px', height: '36px', padding: '0'}}
-                      onClick={() => {
-                        setIsPrCategory(true);
-                      }}
-                      color="success">
-                      <CheckIcon />
-                    </Button>
-
-                    <Button
-                      sx={{minWidth: '36px', height: '36px', padding: '0'}}
-                      onClick={() => {
-                        setIsPrCategory(false);
-                      }}
-                      color="error">
-                      <CloseIcon />
-                    </Button>
-                </Stack>
-          </Stack>
-          <Stack direction="row" alignItems="center" spacing={3}>
-            <Stack fontSize="18px" fontWeight="bold">
-              레포지토리 URL :
-            </Stack>
-            <TextField variant="standard" onChange={(e) => {
-              setRepositoryUrl(e.target.value);
-            }} />
-          </Stack>
         </Stack>
       </ModalContent>
       <ModalActions>

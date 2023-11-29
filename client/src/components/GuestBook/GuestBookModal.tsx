@@ -22,6 +22,7 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
   const postGuestbookQuery = useMutation(PostGuestbookApi, {
     onSuccess() {
       queryClient.invalidateQueries(['guestbook']);
+      setMessage('');
     },
   });
   const postGuestbookClick = () => {
@@ -31,6 +32,7 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
       message: message,
     };
     postGuestbookQuery.mutate(newPostGuestbookBody);
+    
   };
 
   
@@ -74,6 +76,7 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
           <Button
             onClick={() => {
               postGuestbookClick();
+              
             }}>
             게시하기
           </Button>

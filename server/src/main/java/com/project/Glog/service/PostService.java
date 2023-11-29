@@ -222,6 +222,7 @@ public class PostService {
     public PostPreviewDtos getPreviews(String kind, int page) {
         if (!kind.equals("randoms")) {
             PageRequest pageRequest = null;
+
             if (kind.equals("recent")) {
                 pageRequest = PageRequest.of(page, 8, Sort.by("id").descending());
             } else if (kind.equals("likes")) {
@@ -229,7 +230,8 @@ public class PostService {
             } else if (kind.equals("views")) {
                 pageRequest = PageRequest.of(page, 8, Sort.by("viewsCount").descending());
             }
-            Page<Post> postsByPagination = postRepository.findAll(pageRequest);
+
+            Page<Post> postsByPagination = postRepository.findByisPrivate(false,pageRequest);
             return new PostPreviewDtos(postsByPagination.getContent(), postsByPagination.getTotalPages());
         } else if (kind.equals("randoms")) {
             List<Post> posts = postRepository.findPostsByRandom();

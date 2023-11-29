@@ -4,6 +4,7 @@ import com.project.Glog.domain.Post;
 import com.project.Glog.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,7 +27,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query("SELECT p FROM Post p ORDER BY p.likesCount DESC")
     List<Post> findAllByOrderByLikesDesc();
 
-    Page<Post> findAll(Pageable pageable);
+    Page<Post> findByisPrivate(boolean isPrivate, Pageable pageable);
 
     @Query(value = "SELECT * FROM post ORDER BY RAND() LIMIT 8", nativeQuery = true)
     List<Post> findPostsByRandom();

@@ -47,6 +47,7 @@ export const ProfileImg = styled(Stack)(({ imageSrc }: { imageSrc: string }) => 
 }))
 
 export const PostReply = styled(Stack)({
+  marginTop: '50px',
   height: '100%',
   flexDirection: 'column',
 });

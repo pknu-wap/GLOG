@@ -435,5 +435,10 @@ export interface IBlogInfo {
 
 // categoryId -> 블로그 URL
 export interface IBlogUrlParams {
-  categoryId: number;
+  categoryId?: number;
+}
+
+// categoryId -> 블로그 URL 응답값
+export interface IBlogUrl {
+  blogUrl: string;
 }

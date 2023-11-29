@@ -24,7 +24,6 @@ public interface PrPostRepository extends JpaRepository<PrPost, Long> {
     @Query("SELECT pr FROM PrPost pr WHERE pr.id=:prId")
     Optional<PrPost> findPrByPrId( @Param("prId") Long prId);
 
-    @Query("SELECT p.category FROM PrPost p WHERE p.category.id=:PrId")
-    Category findByPrId(@Param("PrId") Long PrId);
+
 
 }

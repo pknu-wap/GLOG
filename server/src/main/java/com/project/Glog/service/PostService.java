@@ -74,7 +74,7 @@ public class PostService {
 
         if (req.getPrId() != null) {
             PrPost prPost = prPostRepository.findPrByPrId(req.getPrId()).get();
-            Category ct = prPostRepository.findByPrId(req.getPrId());
+            Category ct = prPost.getCategory();
             post = req.toPost(user, ct, blog);
             post.setPrPost(prPost);
             post.setIsPr(true);
@@ -310,6 +310,13 @@ public class PostService {
             return "add";
 
         }
+    }
+
+    public PostPreviewDtos searchPostsByCategory(Long categoryId) {
+        Category category = categoryRepository.findByCategoryId(categoryId);
+        List<Post> posts = postRepository.findAllByCategory(category);
+
+        return new PostPreviewDtos(posts, posts.size());
     }
 
     private void setPostHashtag(Post post, List<String> hashtagList) {

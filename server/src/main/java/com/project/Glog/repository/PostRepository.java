@@ -1,5 +1,6 @@
 package com.project.Glog.repository;
 
+import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
 import com.project.Glog.domain.User;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     List<Post> findAllByTitleContaining(String title);
     List<Post> findAllByUser(User user);
+    List<Post> findAllByCategory(Category category);
     List<Post> findAllByContentContaining(String contnt);
 
 

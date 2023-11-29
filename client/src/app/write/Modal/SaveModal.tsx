@@ -95,7 +95,7 @@ function SaveModal({
   };
 
   // FormData 생성 함수
-  // [FIXME : 템플릿 수정하면서 같이한 거라 나중에 수정 예정]
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createFormData = (postData: any) => {
     const formData = new FormData();

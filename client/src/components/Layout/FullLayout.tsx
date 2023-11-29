@@ -3,6 +3,7 @@
 import { Stack } from '@mui/material';
 import { Theme, styled } from '@mui/material/styles';
 import { usePathname } from 'next/navigation';
+import { SnackbarProvider } from 'notistack';
 // import { useAndroidSSR, useIphoneSSR } from '../../../hooks/useRecoilSSR';
 
 type Children = {
@@ -22,5 +23,5 @@ const MainStack = styled(Stack, {
 export default function FullLayout({ children }: Children) {
   const pathname = usePathname();
 
-  return <MainStack pathname={pathname}>{children}</MainStack>;
+  return <SnackbarProvider><MainStack pathname={pathname}>{children}</MainStack></SnackbarProvider>;
 }

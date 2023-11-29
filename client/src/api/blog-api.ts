@@ -1,4 +1,4 @@
-import { IBlog, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
+import { IBlog, IBlogUrlParams, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -54,3 +54,13 @@ export const useGetIsNewBlogQuery = () => {
   const { isLoading, error, data } = useQuery([`isNewBlog`], () => getIsNewBlogApi(), {});
   return { data, isLoading, error };
 };
+
+export const getBlogUrl = async (params: IBlogUrlParams) => {
+  const {data} = await defaultInstance.get('blog/url', {params});
+  return data;
+}
+
+export const useGetBlogUrlQuery = (params: IBlogUrlParams) => {
+  const { isLoading, error, data } = useQuery([`blogUrl`, params], () => getBlogUrl(params), {});
+  return { data, isLoading, error };
+}

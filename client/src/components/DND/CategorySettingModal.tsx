@@ -8,15 +8,20 @@ import Button from '../Button/Button';
 import { Dialog } from '../Dialog/Dialog';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DeleteCategoryApi, PutCategoryApi } from '@/api/category-api';
+import { enqueueSnackbar } from 'notistack';
 
 function CategorySettingModal({ open, categoryId, onClose }: CategorySettingModalType) {
   const queryClient = useQueryClient();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const deleteCategoryQuery = useMutation(DeleteCategoryApi, {
     onSuccess() {
-      queryClient.invalidateQueries(['category']);
+      queryClient.invalidateQueries(['sidebar']);
+      enqueueSnackbar({ message: '카테고리가 삭제되었습니다', variant: 'success' });
     },
-  });
+    onError() {
+      enqueueSnackbar({ message: '카테고리가 삭제되지 않았습니다', variant: 'error' });
+    }
+    });
   const deleteClick = () => {
     deleteCategoryQuery.mutate({ categoryId : categoryId });
     onClose();

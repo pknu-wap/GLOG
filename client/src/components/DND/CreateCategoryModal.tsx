@@ -6,24 +6,31 @@ import ModalButton from '../Modal/ModalButton';
 import { ModalType } from '@/types/common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {  PostCategoryApi } from '@/api/category-api';
+import { enqueueSnackbar } from 'notistack';
 
 function CreateCategoryModal({ open, onClose }: ModalType) {
   const queryClient = useQueryClient();
   const [categoryName, setCategoryName] = useState('');
   const postCategoryQuery = useMutation(PostCategoryApi, {
     onSuccess() {
-      queryClient.invalidateQueries(['guestbook']);
+      queryClient.invalidateQueries(['sidebar']);
+      enqueueSnackbar({ message: '카테고리가 생성되었습니다.', variant: 'success' });
     },
+    onError() {
+      enqueueSnackbar({ message: '카테고리가 생성되지 않았습니다.', variant: 'error' });
+    }
   });
   const postCategoryClick = () => {
     const newCategoryBody = {
       categoryName: categoryName,
       isPrCategory: false,
-      repositoryUrl: null,
+      repositoryUrl: '',
     };
     postCategoryQuery.mutate(newCategoryBody);
     onClose();
   };
+
+
 
 
   return (

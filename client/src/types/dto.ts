@@ -432,3 +432,8 @@ export interface IUserInfo {
 export interface IBlogInfo {
   newBlogName: string;
 }
+
+// categoryId -> 블로그 URL
+export interface IBlogUrlParams {
+  categoryId: number;
+}

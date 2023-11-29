@@ -40,6 +40,8 @@ function GuestBookModal({ open, blogId, onClose }: GuestbookType) {
     setGuestBook(guestbookData);
   }, [guestbookData]);
 
+
+
   return (
     <Modal maxWidth="lg" open={open} onClose={onClose}>
       <ModalTitle>방명록 📮</ModalTitle>

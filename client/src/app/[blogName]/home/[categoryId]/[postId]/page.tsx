@@ -210,12 +210,18 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   <IconButton color="white">
                     <Home fontSize="small" onClick={() => router.push(`/${params.blogName}`)} />
                   </IconButton>
-                  <PageLink href={`/write/update/${params.categoryId}/${params.postId}`}>
-                    <Button>수정</Button>
-                  </PageLink>
-                  <Button onClick={() => deletePrPostOnClick(Number(params?.postId))} color="error">
-                    삭제
-                  </Button>
+                  {post?.isAuthor && (
+                    <>
+                      <PageLink href={`/write/update/${params.categoryId}/${params.postId}`}>
+                        <Button>수정</Button>
+                      </PageLink>
+                      <Button
+                        onClick={() => deletePrPostOnClick(Number(params?.postId))}
+                        color="error">
+                        삭제
+                      </Button>
+                    </>
+                  )}
                 </Stack>
               </Stack>
             </Stack>
@@ -223,6 +229,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
         </BlackContainer>
       </ThumbnailArea>
       <DragAndDrop
+        post={post}
         blogName={params.blogName}
         footprintList={writeList}
         rightContainer={

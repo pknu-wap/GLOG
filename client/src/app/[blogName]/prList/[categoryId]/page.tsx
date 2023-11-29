@@ -9,7 +9,6 @@ import { Stack } from '@mui/material';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import EmptyContent from '../../../../../public/assets/box.png';
-import Complete from '../../../../../public/assets/complete-icon.svg';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DeleteWriteApi } from '@/api/write-api';
 import { enqueueSnackbar } from 'notistack';
@@ -45,54 +44,40 @@ function page({ params }: { params: { categoryId: string } }) {
         작성하지 않은 PR
       </Stack>
       <Stack p={2} direction="row" spacing={4} overflow={'scroll'}>
-        {unPosted?.prUnPostedDtos?.prUnPostedDtos?.map((unPost) => {
-          return (
-            <PageLink key={unPost.prId} href={`/write/pr/${unPost.prId}`}>
-              <Stack
-                sx={{
-                  transition: 'all .35s ease-in-out',
-                  cursor: 'pointer',
-                  ':hover': { transform: 'translateY(-4px)' },
-                }}
-                minWidth="220px"
-                height="124px"
-                bgcolor="primary.main"
-                p={4}
-                borderRadius="8px"
-                justifyContent="space-around">
-                <Stack direction="row" justifyContent="space-between">
-                  <Stack color="#000000" fontSize="20px" fontWeight="bold">
-                    #{unPost.prId}
+        {unPosted?.isAuthor &&
+          unPosted?.prUnPostedDtos?.prUnPostedDtos?.map((unPost) => {
+            return (
+              <PageLink key={unPost.prId} href={`/write/pr/${unPost.prId}`}>
+                <Stack
+                  sx={{
+                    transition: 'all .35s ease-in-out',
+                    cursor: 'pointer',
+                    ':hover': { transform: 'translateY(-4px)' },
+                  }}
+                  minWidth="220px"
+                  height="124px"
+                  bgcolor="primary.main"
+                  p={4}
+                  borderRadius="8px"
+                  justifyContent="space-around">
+                  <Stack direction="row" justifyContent="space-between">
+                    <Stack color="#000000" fontSize="20px" fontWeight="bold">
+                      #{unPost.prId}
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    color="#000000"
+                    sx={{ wordBreak: 'break-all' }}
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    display="inline"
+                    whiteSpace="nowrap">
+                    {unPost.prTitle}
                   </Stack>
                 </Stack>
-                <Stack
-                  color="#000000"
-                  sx={{ wordBreak: 'break-all' }}
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                  display="inline"
-                  whiteSpace="nowrap">
-                  {unPost.prTitle}
-                </Stack>
-              </Stack>
-            </PageLink>
-          );
-        }) ?? (
-          <Stack
-            width="100%"
-            direction="column"
-            spacing={4}
-            justifyContent="center"
-            alignItems="center"
-            height={200}>
-            <Stack width={40} height={40}>
-              <Complete color="#834" />
-            </Stack>
-            <Stack fontSize={'18px'} width="fit-content">
-              모든 PR 글 작성을 완료하셨습니다.
-            </Stack>
-          </Stack>
-        )}
+              </PageLink>
+            );
+          })}
       </Stack>
       <Stack margin="40px 0px 8px 0px" fontSize="24px">
         작성한 PR 목록

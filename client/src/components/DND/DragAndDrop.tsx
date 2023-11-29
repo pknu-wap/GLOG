@@ -14,6 +14,7 @@ import PageLink from '../PageLink/PageLink';
 import Github from '../Github/Github';
 import Button from '../Button/Button';
 import CreateCategoryModal from './CreateCategoryModal';
+import { IPostContent } from '@/types/dto';
 
 type Footprint = {
   categoryId: number;
@@ -30,9 +31,10 @@ interface DragAndDropProps {
   rightContainer: ReactNode;
   footprintList?: Footprint[];
   categoryNumber?: string;
+  post?: IPostContent;
 }
 
-function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropProps) {
+function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [categoryEditOpen, setCategoryEditOpen] = useState(false);
   const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
@@ -58,13 +60,15 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
           <CenterContent bgcolor="transparent">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  onClick={() => setCreateCategoryOpen(true)}
-                  sx={{ marginBottom: '-24px' }}>
-                  카테고리 생성
-                </Button>
+                {post?.isAuthor && (
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    onClick={() => setCreateCategoryOpen(true)}
+                    sx={{ marginBottom: '-24px' }}>
+                    카테고리 생성
+                  </Button>
+                )}
                 {footprintList?.map((category) => {
                   return (
                     <Droppable key={category.categoryId} droppableId={String(category.categoryId)}>
@@ -94,25 +98,29 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                   </Stack>
                                 </Tooltip>
                               </PageLink>
-                              <Tooltip
-                                onClick={() => {
-                                  setCategoryEditOpen(true);
-                                  setParamsCategoryId(category.categoryId);
-                                }}
-                                title="게시글 수정">
-                                <IconButton sx={{ padding: '0px' }} size="small">
-                                  <Edit fontSize="small" />
-                                </IconButton>
-                              </Tooltip>
-                            </Stack>
-                            <Stack direction="row" alignItems="center" spacing={1}>
-                              <PageLink href={`/write/create/${category.categoryId}`}>
-                                <Tooltip title="게시글 작성">
+                              {post?.isAuthor && (
+                                <Tooltip
+                                  onClick={() => {
+                                    setCategoryEditOpen(true);
+                                    setParamsCategoryId(category.categoryId);
+                                  }}
+                                  title="게시글 수정">
                                   <IconButton sx={{ padding: '0px' }} size="small">
-                                    <Add fontSize="small" />
+                                    <Edit fontSize="small" />
                                   </IconButton>
                                 </Tooltip>
-                              </PageLink>
+                              )}
+                            </Stack>
+                            <Stack direction="row" alignItems="center" spacing={1}>
+                              {post?.isAuthor && (
+                                <PageLink href={`/write/create/${category.categoryId}`}>
+                                  <Tooltip title="게시글 작성">
+                                    <IconButton sx={{ padding: '0px' }} size="small">
+                                      <Add fontSize="small" />
+                                    </IconButton>
+                                  </Tooltip>
+                                </PageLink>
+                              )}
                             </Stack>
                           </Stack>
                           <Stack>
@@ -136,20 +144,22 @@ function DragAndDrop({ rightContainer, footprintList, blogName }: DragAndDropPro
                                 </Stack>
                               </PageLink>
                             ) : (
-                              <Stack
-                                onClick={() => {
-                                  setOpen(true);
-                                  setCategoryId(category.categoryId);
-                                }}
-                                sx={{
-                                  fontSize: '14px',
-                                  cursor: 'pointer',
-                                  ':hover': { color: 'rgba(0,0,0,0.4)' },
-                                }}
-                                pl={4}
-                                pt={1}>
-                                PR 연동 하러가기 {'->'}
-                              </Stack>
+                              post?.isAuthor && (
+                                <Stack
+                                  onClick={() => {
+                                    setOpen(true);
+                                    setCategoryId(category.categoryId);
+                                  }}
+                                  sx={{
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    ':hover': { color: 'rgba(0,0,0,0.4)' },
+                                  }}
+                                  pl={4}
+                                  pt={1}>
+                                  PR 연동 하러가기 {'->'}
+                                </Stack>
+                              )
                             )}
                           </Stack>
                           {!category?.isPrCategory && (

@@ -19,7 +19,9 @@ export const useGetRepositoryQuery = () => {
 };
 
 export const PostRepository = async (body: RepositoryParams) => {
-  const { data } = await defaultInstance.post('/repository', body);
+  const { data } = await defaultInstance.post(
+    `/repository?categoryId=${body.categoryId}&repo=${body.repo}`,
+  );
 
   return data;
 };

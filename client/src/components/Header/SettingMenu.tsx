@@ -1,11 +1,19 @@
+'use client';
+
 import { ModalType } from '@/types/common';
 import { Menu, MenuItem } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageLink from '../PageLink/PageLink';
 import FriendModal from '../Layout/HeaderFriendModal/FriendModal';
+import { enqueueSnackbar } from 'notistack';
 
 function SettingMenu({ open, onClose, anchorEl }: ModalType & { anchorEl: null | HTMLElement }) {
   const [friendOpen, setFriendOpen] = useState<boolean>(false);
+  const [token, setToken] = useState<string | null>('');
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, []);
 
   return (
     <Menu anchorEl={anchorEl} open={open} onClose={onClose}>
@@ -28,16 +36,30 @@ function SettingMenu({ open, onClose, anchorEl }: ModalType & { anchorEl: null |
           스크랩
         </PageLink>
       </MenuItem>
-      <MenuItem onClick={() => localStorage.setItem('token', '')}>Logout</MenuItem>
-      <MenuItem>
+      {token && (
         <PageLink
           href="/login"
           onClick={() => {
-            onClose();
+            enqueueSnackbar({
+              message: '로그아웃이 성공적으로 완료되었습니다.',
+              variant: 'success',
+            });
+            localStorage.setItem('token', '');
           }}>
-          로그인
+          <MenuItem>Logout</MenuItem>
         </PageLink>
-      </MenuItem>
+      )}
+      {!token && (
+        <MenuItem>
+          <PageLink
+            href="/login"
+            onClick={() => {
+              onClose();
+            }}>
+            로그인
+          </PageLink>
+        </MenuItem>
+      )}
       <FriendModal open={friendOpen} onClose={() => setFriendOpen(false)}></FriendModal>
     </Menu>
   );

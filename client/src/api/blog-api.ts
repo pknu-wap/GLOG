@@ -1,5 +1,5 @@
 import { IBlog, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
-import { defaultInstance } from '.';
+import { defaultInstance, unAxiosDefaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
 // 초기 블로그 생성
@@ -44,13 +44,17 @@ export const useGetSidebarQuery = (params: ISidebar) => {
   return { data, isLoading, error };
 };
 
-export const getIsNewBlogApi = async () => {
-  const { data } = await defaultInstance.get('/is/new/blog');
+export const getIsNewBlogApi = async (token?: string | null) => {
+  const { data } = await unAxiosDefaultInstance.get('/is/new/blog', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };
 
-export const useGetIsNewBlogQuery = () => {
-  const { isLoading, error, data } = useQuery([`isNewBlog`], () => getIsNewBlogApi(), {});
+export const useGetIsNewBlogQuery = (token?: string | null) => {
+  const { isLoading, error, data } = useQuery([`isNewBlog`], () => getIsNewBlogApi(token), {});
   return { data, isLoading, error };
 };

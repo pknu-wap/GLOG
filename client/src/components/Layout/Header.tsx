@@ -19,8 +19,8 @@ export default function Header() {
   const pathname = usePathname();
   const [isSearch, setIsSearch] = useIsSearchSSR();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const {data: userDetailData} = useGetUserDetailQuery()
-  const [userDetail, setUserDetail] = useState<IUserDetail>()
+  const { data: userDetailData } = useGetUserDetailQuery();
+  const [userDetail, setUserDetail] = useState<IUserDetail>();
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -63,15 +63,16 @@ export default function Header() {
         </PageLink>
       </Stack>
       <Stack direction="row" alignItems="center" gap={2}>
-        {isSearch ? (
-          <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={() => setIsSearch(false)}>
-            <Home fontSize="large" />
-          </IconButton>
-        ) : (
-          <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={() => setIsSearch(true)}>
-            <Search fontSize="large" />
-          </IconButton>
-        )}
+        {pathname.includes('/collect') &&
+          (isSearch ? (
+            <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={() => setIsSearch(false)}>
+              <Home fontSize="large" />
+            </IconButton>
+          ) : (
+            <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={() => setIsSearch(true)}>
+              <Search fontSize="large" />
+            </IconButton>
+          ))}
         {userTheme === 'dark' ? (
           <IconButton sx={{ color: '#ffffff' }} onClick={toggleUserTheme}>
             <DarkModeIcon fontSize="large" />
@@ -88,7 +89,6 @@ export default function Header() {
           overflow="hidden"
           sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}>
           <PageLink href={userDetail?.blogUrl ?? ''}>
-            {/* FIXME : 나중에 src={userDetail?.thumbnail} 로 바꿔야함 */}
             <Image width={40} height={40} alt="profile Image" src={userDetail?.thumbnail ?? ''} />
           </PageLink>
         </Stack>

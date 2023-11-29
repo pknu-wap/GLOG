@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GitHubService {
@@ -182,7 +183,11 @@ public class GitHubService {
         }
 
         List<PrPost> pr = prPostRepository.findByRepo(githubRepository.getId());
-        PrUnPostedDtos prUnPostedDtos = new PrUnPostedDtos(pr);
+        List<PrPost> unPostedPr = pr.stream()
+                .filter(prPost -> prPost.getIsPosted().equals(0))
+                .collect(Collectors.toList());
+
+        PrUnPostedDtos prUnPostedDtos = new PrUnPostedDtos(unPostedPr);
         Boolean isAuthor;
         if(categoryRepository.findUserByCategoryId(categoryId).getId() == user.getId()){
             isAuthor = true;

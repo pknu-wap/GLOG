@@ -89,7 +89,7 @@ export default function Header() {
           sx={{ cursor: 'pointer', backgroundColor: '#ffffff' }}>
           <PageLink href={userDetail?.blogUrl ?? ''}>
             {/* FIXME : 나중에 src={userDetail?.thumbnail} 로 바꿔야함 */}
-            <Image width={40} height={40} alt="profile Image" src={'https://elasticbeanstalk-us-east-1-064991853848.s3.amazonaws.com/profile/defaultImages.jpg'} />
+            <Image width={40} height={40} alt="profile Image" src={userDetail?.thumbnail ?? ''} />
           </PageLink>
         </Stack>
         <IconButton sx={{ color: '#ffffff' }} size="medium" onClick={handleClick}>

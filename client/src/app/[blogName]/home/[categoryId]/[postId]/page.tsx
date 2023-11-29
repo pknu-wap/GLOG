@@ -51,15 +51,13 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
-  const [blogId, setBlogId] = useState<IBlogId>();
+  const [, setBlogId] = useState<IBlogId>();
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [userTheme] = useUserThemeSSR();
   const router = useRouter();
   const theme = useTheme();
-
-  console.log(`useState blogId : ${blogId}`);
 
   //[FIXME: repliese get할 때 body말고 parameter로 바뀌어졌을 때 useState() 바꿔주기]
   const [page, setPage] = useState(0);
@@ -234,20 +232,23 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
             <PostReply>
               <Stack mb={8} spacing={2}>
                 <Stack direction="row" spacing={4} alignItems="center">
-                  <Stack>조회수 : {post?.viewsCount} </Stack>
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <Stack>추천수 : {post?.likesCount} </Stack>
+                  <Stack fontSize="14px">조회수 : {post?.viewsCount} </Stack>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Stack fontSize="14px">추천수 : {post?.likesCount} </Stack>
                     <IconButton
+                      size="small"
                       onClick={() => patchAddLikeQuery.mutate({ postId: Number(params?.postId) })}>
                       <ThumbUpIcon color={post?.isLiked ? 'primary' : undefined} />
                     </IconButton>
                   </Stack>
                 </Stack>
-                {post?.hashtags?.map((hashtag, i) => {
-                  return (
-                    <Chip color="primary" sx={{ width: 'fit-content' }} key={i} label={hashtag} />
-                  );
-                })}
+                <Stack direction="row" spacing={2}>
+                  {post?.hashtags?.map((hashtag, i) => {
+                    return (
+                      <Chip color="primary" sx={{ width: 'fit-content' }} key={i} label={hashtag} />
+                    );
+                  })}
+                </Stack>
               </Stack>
               <ReplyHandle>
                 <Stack flexDirection={'row'}>

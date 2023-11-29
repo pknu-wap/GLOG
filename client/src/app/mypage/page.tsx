@@ -98,6 +98,12 @@ function page() {
     setImageSrc(userData?.thumbnail ?? '');
   }, [userData, isUserInfoEdit]);
 
+  useEffect(() => {
+    setName(userData?.nickName ?? '');
+    setIntroduction(userData?.introduction ?? '');
+    setImageSrc(userData?.thumbnail ?? '');
+  }, []);
+
   const onUpload = async (e: any) => {
     const file = e.target.files[0];
     const reader: any = new FileReader();

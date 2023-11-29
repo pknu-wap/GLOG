@@ -23,5 +23,9 @@ const MainStack = styled(Stack, {
 export default function FullLayout({ children }: Children) {
   const pathname = usePathname();
 
-  return <SnackbarProvider><MainStack pathname={pathname}>{children}</MainStack></SnackbarProvider>;
+  return (
+    <SnackbarProvider>
+      <MainStack pathname={pathname}>{children}</MainStack>
+    </SnackbarProvider>
+  );
 }

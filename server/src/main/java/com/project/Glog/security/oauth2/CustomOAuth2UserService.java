@@ -75,7 +75,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setProviderId(oAuth2UserInfo.getId());
         user.setNickname(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
-        user.setImageUrl(oAuth2UserInfo.getImageUrl());
+        user.setImageUrl("https://elasticbeanstalk-us-east-1-064991853848.s3.amazonaws.com/profile/defaultImages.jpg");
 
         if (registrationId.equalsIgnoreCase(AuthProvider.github.toString())) {
             user.setGithubID(oAuth2UserInfo.getName());
@@ -90,7 +90,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
 
         existingUser.setNickname(oAuth2UserInfo.getName());
-        existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
         if (registrationId.equalsIgnoreCase(AuthProvider.github.toString())) {
             existingUser.setGithubID(oAuth2UserInfo.getName());
             existingUser.setGithubToken(token);

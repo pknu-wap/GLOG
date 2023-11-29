@@ -1,6 +1,7 @@
 import {
   ICollect,
   ICollectContent,
+  ISearch,
   ISearchContent,
   ISearchHashtag,
   ISearchTitle,
@@ -22,6 +23,23 @@ export const useGetCollectDataQuery = (params: ICollect) => {
     data: queryData,
   } = useQuery([`collectData`, params], () => GetCollectDataApi(params));
   const data: ICollectContent = queryData;
+  return { data, isLoading, error };
+};
+
+const GetColletSearchApi = async (params: ISearch) => {
+  const { data } = await defaultInstance.get(`/search`, { params });
+
+  return data;
+};
+
+export const useGetCollectSearchQuery = (params: ISearch) => {
+  const { isLoading, error, data } = useQuery(
+    [`search`, params],
+    () => GetColletSearchApi(params),
+    {
+      enabled: !!params.value,
+    },
+  );
   return { data, isLoading, error };
 };
 

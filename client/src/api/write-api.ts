@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { defaultInstance } from '.';
-import { ITemplateDetailParams, ITemporaryDetailParams } from '@/types/dto';
+import { IRemovePostParams, ITemplateDetailParams, ITemporaryDetailParams } from '@/types/dto';
 
 export const PostWriteApi = async (body: FormData) => {
   const { data } = await defaultInstance.post('/post', body, {
@@ -18,6 +18,18 @@ export const UpdateWriteApi = async (body: FormData) => {
       'Content-Type': 'multipart/form-data',
     },
   });
+
+  return data;
+};
+
+export const AddLikeApi = async (params: { postId: number }) => {
+  const { data } = await defaultInstance.patch(`/post/like?postId=${params?.postId}`);
+
+  return data;
+};
+
+export const DeleteWriteApi = async (params: IRemovePostParams) => {
+  const { data } = await defaultInstance.delete('/post', { params });
 
   return data;
 };

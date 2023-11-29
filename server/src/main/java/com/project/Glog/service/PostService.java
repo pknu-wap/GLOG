@@ -68,17 +68,14 @@ public class PostService {
 
     public Post create(UserPrincipal userPrincipal, MultipartFile multipartFile, PostCreateRequest req) throws IOException {
         User user = userRepository.findById(userPrincipal.getId()).get();
-        Category category = categoryRepository.findById(req.getCategoryId()).get();
         Blog blog = blogRepository.findByUserId(userPrincipal.getId()).get();
-        Post post = req.toPost(user, category, blog);
+        Post post;
 
-
-        //image
-        if (!multipartFile.isEmpty())
-            post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         if (req.getPrId() != null) {
             PrPost prPost = prPostRepository.findPrByPrId(req.getPrId()).get();
+            Category ct = prPost.getCategory();
+            post = req.toPost(user, ct, blog);
             post.setPrPost(prPost);
             post.setIsPr(true);
             prPost.setIsPosted(true);
@@ -86,9 +83,14 @@ public class PostService {
             postRepository.save(post);
             prPostRepository.save(prPost);
         } else {
+            Category category = categoryRepository.findById(req.getCategoryId()).get();
+            post = req.toPost(user, category, blog);
             post.setIsPr(false);
             postRepository.save(post);
         }
+        //image
+        if (!multipartFile.isEmpty())
+            post.setThumbnail(awsUtils.upload(multipartFile, "thumbnail").getPath());
 
         //hashtags
 
@@ -222,6 +224,7 @@ public class PostService {
     public PostPreviewDtos getPreviews(String kind, int page) {
         if (!kind.equals("randoms")) {
             PageRequest pageRequest = null;
+
             if (kind.equals("recent")) {
                 pageRequest = PageRequest.of(page, 8, Sort.by("id").descending());
             } else if (kind.equals("likes")) {
@@ -229,7 +232,8 @@ public class PostService {
             } else if (kind.equals("views")) {
                 pageRequest = PageRequest.of(page, 8, Sort.by("viewsCount").descending());
             }
-            Page<Post> postsByPagination = postRepository.findAll(pageRequest);
+
+            Page<Post> postsByPagination = postRepository.findByisPrivate(false,pageRequest);
             return new PostPreviewDtos(postsByPagination.getContent(), postsByPagination.getTotalPages());
         } else if (kind.equals("randoms")) {
             List<Post> posts = postRepository.findPostsByRandom();
@@ -306,6 +310,14 @@ public class PostService {
             return "add";
 
         }
+    }
+
+    public PostPreviewDtos searchPostsByCategory(Long categoryId, int page) {
+        Category category = categoryRepository.findByCategoryId(categoryId);
+        PageRequest pageRequest = PageRequest.of(page, 8,  Sort.by("id").descending());
+        Page<Post> posts = postRepository.findPostsByCategory(category, pageRequest);
+
+        return new PostPreviewDtos(posts.getContent(), -1);
     }
 
     private void setPostHashtag(Post post, List<String> hashtagList) {

@@ -19,8 +19,8 @@ function FriendModal({ open, onClose }: ModalType) {
   const [friend, setFriend] = useState<IFriendsContent>();
   const kindList = ['recentFriend', 'name', 'recentPost'];
   const friendCount = friend?.userSimpleDtos.simpleDtos.length;
-  const {data: userDetailData} = useGetUserDetailQuery()
-  const [userDetail, setUserDetail] = useState<IUserDetail>()
+  const { data: userDetailData } = useGetUserDetailQuery();
+  const [userDetail, setUserDetail] = useState<IUserDetail>();
 
   const [nickname, setNickname] = useState('');
   const { data: searchFriendData } = useGetFriendSearchQuery({
@@ -30,7 +30,7 @@ function FriendModal({ open, onClose }: ModalType) {
   useEffect(() => {
     setFriend(friendData);
     setSearch(searchFriendData);
-    setUserDetail(userDetailData)
+    setUserDetail(userDetailData);
   }, [friendData, searchFriendData, userDetailData]);
 
   //정렬기준

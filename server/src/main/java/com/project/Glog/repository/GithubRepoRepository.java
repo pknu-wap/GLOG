@@ -11,12 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface GithubRepoRepository extends JpaRepository<GithubRepository, Long> {
-    @Query("SELECT gr FROM GithubRepository gr WHERE gr.user.id = :userId AND gr.repoName= :reponame")
+    @Query("SELECT gr FROM GithubRepository gr WHERE gr.user.id = :userId AND gr.repoName= :reponame AND gr.isCategoryRegi=false")
     Optional <GithubRepository> findByRepoName(@Param("userId") Long userid , @Param("reponame") String reponame);
 
-    @Query("SELECT gr FROM GithubRepository gr WHERE gr.user.id = :userId AND gr.repoName=:repo")
-    Optional <GithubRepository> findRepoByUserId(@Param("userId") Long userid, @Param("repo") String repo);
+    @Query("SELECT gr FROM GithubRepository gr WHERE gr.user.id = :userId AND gr.repoName=:repo AND gr.category.id=:categoryId")
+    Optional <GithubRepository> findRepoByUserId(@Param("userId") Long userid, @Param("repo") String repo,@Param("categoryId") Long categoryId);
 
-    @Query("SELECT gr.repoName FROM GithubRepository gr WHERE gr.user.id = :userId")
+    @Query("SELECT gr.repoName FROM GithubRepository gr WHERE gr.user.id = :userId AND gr.isCategoryRegi=false")
     List<String> findRepoNameByUserId(@Param("userId") Long userid);
 }

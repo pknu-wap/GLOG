@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GitHubService {
@@ -110,14 +111,23 @@ public class GitHubService {
         if(githubRepository.getCategory() != null){
             return false;
         }
-        if(category.getReopsitoryUrl() != null){
+        if(!category.getReopsitoryUrl().equals("")){
             return  false;
         }
 
         category.setIsPrcategory(true);
         category.setReopsitoryUrl(repo);
         githubRepository.setCategory(category);
+        githubRepository.setIsCategoryRegi(true);
+
+        GithubRepository newGr = new GithubRepository();
+        newGr.setRepoName(repo);
+        newGr.setUser(user);
+        newGr.setOwnerName(githubRepository.getOwnerName());
+        newGr.setIsCategoryRegi(false);
+
         githubRepositoryRepository.save(githubRepository);
+        githubRepositoryRepository.save(newGr);
         categoryRepository.save(category);
 
         return true;
@@ -138,6 +148,7 @@ public class GitHubService {
             githubRepository.setUser(user);
             githubRepository.setRepoName(repo.getName());
             githubRepository.setOwnerName(repo.getOwner().getLogin());
+            githubRepository.setIsCategoryRegi(false);
 
             if(!isPresentRepo(user.getId(), githubRepository.getRepoName())) {
                 githubRepositoryRepository.save(githubRepository);
@@ -172,7 +183,11 @@ public class GitHubService {
         }
 
         List<PrPost> pr = prPostRepository.findByRepo(githubRepository.getId());
-        PrUnPostedDtos prUnPostedDtos = new PrUnPostedDtos(pr);
+        List<PrPost> unPostedPr = pr.stream()
+                .filter(prPost -> prPost.getIsPosted().equals(false))
+                .collect(Collectors.toList());
+
+        PrUnPostedDtos prUnPostedDtos = new PrUnPostedDtos(unPostedPr);
         Boolean isAuthor;
         if(categoryRepository.findUserByCategoryId(categoryId).getId() == user.getId()){
             isAuthor = true;

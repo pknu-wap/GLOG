@@ -1,5 +1,5 @@
-import { IBlog, IBlogUrlParams, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
-import { defaultInstance } from '.';
+import { IBlog, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
+import { defaultInstance, unAxiosDefaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
 // 초기 블로그 생성
@@ -44,24 +44,28 @@ export const useGetSidebarQuery = (params: ISidebar) => {
   return { data, isLoading, error };
 };
 
-export const getIsNewBlogApi = async () => {
-  const { data } = await defaultInstance.get('/is/new/blog');
+export const getIsNewBlogApi = async (token?: string | null) => {
+  const { data } = await unAxiosDefaultInstance.get('/is/new/blog', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };
 
-export const useGetIsNewBlogQuery = () => {
-  const { isLoading, error, data } = useQuery([`isNewBlog`], () => getIsNewBlogApi(), {});
+export const useGetIsNewBlogQuery = (token?: string | null) => {
+  const { isLoading, error, data } = useQuery([`isNewBlog`], () => getIsNewBlogApi(token), {});
   return { data, isLoading, error };
 };
 
 // 카테고리 아이디로 블로그url 불러오기
 export const getBlogUrl = async (params: IBlogUrlParams) => {
-  const {data} = await defaultInstance.get('blog/url', {params});
+  const { data } = await defaultInstance.get('blog/url', { params });
   return data;
-}
+};
 
 export const useGetBlogUrlQuery = (params: IBlogUrlParams) => {
   const { isLoading, error, data } = useQuery([`blogUrl`, params], () => getBlogUrl(params), {});
   return { data, isLoading, error };
-}
+};

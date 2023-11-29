@@ -112,7 +112,8 @@ public class SecurityConfig {
                         "/guestbook",
                         "/introduce",
                         "/pr/posts/posted",
-                        "/search/**")
+                        "/search/**",
+                        "/blog/url")
                 .permitAll()
                 .requestMatchers(HttpMethod.POST,
                         "/visit")

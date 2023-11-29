@@ -38,7 +38,7 @@ public class BlogService {
         blog.setBlogName(userCreateRequest.getBlogName());
         blog.setBlogUrl(userCreateRequest.getBlogUrl());
         user.setNickname(userCreateRequest.getNickname());
-        user.setImageUrl("https://elasticbeanstalk-us-east-1-064991853848.s3.amazonaws.com/profile/defaultImages.jpg");
+//        user.setImageUrl("https://elasticbeanstalk-us-east-1-064991853848.s3.amazonaws.com/profile/defaultImages.jpg");
 
         Guestbook guestBook = new Guestbook();
         guestBook.setBlog(blog);

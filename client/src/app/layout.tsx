@@ -10,7 +10,12 @@ import Header from '@/components/Layout/Header';
 import FullLayout from '@/components/Layout/FullLayout';
 import { usePathname } from 'next/navigation';
 import { SnackbarProvider } from 'notistack';
-import Head from 'next/head';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'GLOG',
+  description: '블로그를 작성해보세요!',
+};
 
 export default function RootLayout(props: { children: ReactNode }) {
   const { children } = props;
@@ -18,12 +23,6 @@ export default function RootLayout(props: { children: ReactNode }) {
 
   return (
     <html lang="en">
-      <Head>
-        <title>GLOG</title>
-        <meta name="description" content="NextJS Events" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="description" content="블로그를 작성해보세요!" />
-      </Head>
       <body>
         <Recoil>
           <SnackbarProvider>

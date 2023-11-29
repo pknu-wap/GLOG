@@ -58,3 +58,14 @@ export const useGetIsNewBlogQuery = (token?: string | null) => {
   const { isLoading, error, data } = useQuery([`isNewBlog`], () => getIsNewBlogApi(token), {});
   return { data, isLoading, error };
 };
+
+// 카테고리 아이디로 블로그url 불러오기
+export const getBlogUrl = async (params: IBlogUrlParams) => {
+  const { data } = await defaultInstance.get('blog/url', { params });
+  return data;
+};
+
+export const useGetBlogUrlQuery = (params: IBlogUrlParams) => {
+  const { isLoading, error, data } = useQuery([`blogUrl`, params], () => getBlogUrl(params), {});
+  return { data, isLoading, error };
+};

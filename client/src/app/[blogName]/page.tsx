@@ -9,6 +9,7 @@ import { ISidebarContent } from '@/types/dto';
 import { Stack, TextField } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import MDEditor from '@uiw/react-md-editor';
+import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 
 const Home = ({ params }: { params: { blogName: string } }) => {
@@ -27,8 +28,13 @@ const Home = ({ params }: { params: { blogName: string } }) => {
   const putReadMeCreateQuery = useMutation(PutReadMeApi, {
     onSuccess: () => {
       queryClient.invalidateQueries(['readMe']);
+      enqueueSnackbar({ message: '리드미 페이지가 수정되었습니다.', variant: 'success' });
     },
-  });
+    onError: () => {
+      enqueueSnackbar({ message: '리드미 페이지가 수정되지 않았습니다.', variant: 'error' });
+    },
+    }
+  );
 
   const ReadMeOnClick = () => {
     const newReadMeBody = {
@@ -52,8 +58,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
         rightContainer={
           <Stack width="80%" margin="auto" overflow={'scroll'}>
             <TextField
-              id="standard-basic"
-              label="Standard"
+              label="수정할 리드미를 입력해주세요"
               variant="standard"
               onChange={(e) => {
                 setContent(e.target.value);

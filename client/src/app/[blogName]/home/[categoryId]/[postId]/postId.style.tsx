@@ -1,5 +1,5 @@
 import IconButton from '@/components/Button/IconButton';
-import { Pagination, Tooltip } from '@mui/material';
+import { Pagination, TextField, Tooltip } from '@mui/material';
 import { Stack } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
@@ -9,13 +9,13 @@ import { IIntroduce } from '@/types/dto';
 import { useGetIntroduceQuery } from '@/api/introduce-api';
 import { useInsertionEffect, useState } from 'react';
 import Modal from '@/components/Modal/Modal';
-import { ModalContent } from '@/components/Modal/Modal.style';
+import { ModalContent, ModalTitle } from '@/components/Modal/Modal.style';
 import PageLink from '@/components/PageLink/PageLink';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PutFriendAllowApi, PutFriendRequestApi } from '@/api/friend-api';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { PatchReplyLikeApi } from '@/api/reply-api';
+import { PatchReplyLikeApi, putReplyApi } from '@/api/reply-api';
 
 export const ThumbnailArea = styled(Stack)({
   width: '100%',
@@ -47,7 +47,7 @@ export const ProfileImg = styled(Stack)(({ imageSrc }: { imageSrc: string }) => 
 }));
 
 export const PostReply = styled(Stack)({
-  marginTop: '60px',
+  marginTop: '50px',
   height: '100%',
   flexDirection: 'column',
 });
@@ -108,6 +108,7 @@ function RepliesComponent({
 }) {
   const theme = useTheme();
   const queryClient = useQueryClient();
+  const [putReplyOpen, setPutReplyOpen] = useState<boolean>(false);
 
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const { data: introduceData } = useGetIntroduceQuery({
@@ -140,6 +141,20 @@ function RepliesComponent({
       userId: userId,
     };
     PutFriendRequestQuery.mutate(newRequestBody);
+  };
+
+  const [newReply, setNewReply] = useState('');
+  const PutReplyQuery = useMutation(putReplyApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['replies']);
+    },
+  });
+  const PutReplyOnClick = () => {
+    const newReplyBody = {
+      repyId: replyId,
+      message: newReply,
+    };
+    PutReplyQuery.mutate(newReplyBody);
   };
 
   const PatchReplyLikeQuery = useMutation(PatchReplyLikeApi, {
@@ -191,10 +206,30 @@ function RepliesComponent({
               <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
             </IconButton>
           )}
-          <ChangeReply>{isEdit ? <Button>수정하기</Button> : <></>}</ChangeReply>
           {likesCount}
+          <ChangeReply>
+            {isEdit ? <Button onClick={() => setPutReplyOpen(true)}>수정하기</Button> : <></>}
+          </ChangeReply>
         </ReplyLike>
       </ReplySubInfo>
+
+      <Modal open={putReplyOpen} onClose={() => setPutReplyOpen(false)}>
+        <ModalTitle>수정하기</ModalTitle>
+        <ModalContent>
+          <TextField
+            fullWidth
+            defaultValue={message}
+            onChange={(e) => {
+              setNewReply(e.target.value);
+            }}></TextField>
+          <Button
+            onClick={() => {
+              PutReplyOnClick();
+            }}>
+            게시하기
+          </Button>
+        </ModalContent>
+      </Modal>
 
       {/* 댓글 상대방 introduction */}
       <Modal open={IntroduceOpen} maxWidth="md" onClose={() => setIntroduceOpen(false)}>

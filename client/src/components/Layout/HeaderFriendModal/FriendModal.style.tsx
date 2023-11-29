@@ -83,6 +83,8 @@ function FriendListComponent({
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const [deleteConfirmOpen, setDeleteConFirmOpen] = useState<boolean>(false);
   const [isAccept, setIsAccept] = useState<number>(Number);
+  const [acceptConfirmOpen, setAcceptConfirmOpen] = useState<boolean>(false);
+  const [refuseConfirmOpen, setRefuseConfirmOpen] = useState<boolean>(false);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
     onSuccess: () => {
       queryClient.invalidateQueries(['friend'])
@@ -159,10 +161,7 @@ function FriendListComponent({
               <Tooltip title="수락" arrow>
                 <Button
                   sx={{minWidth: '36px', height: '36px', padding: '0'}}
-                  onClick={() => {
-                    setIsAccept(0);
-                    AllowFriendOnClick();
-                  }}
+                  onClick={() => {setIsAccept(0); setAcceptConfirmOpen(true);}}
                   color="success">
                   <CheckIcon />
                 </Button>
@@ -171,10 +170,7 @@ function FriendListComponent({
               <Tooltip title="거절" arrow>
                 <Button
                   sx={{minWidth: '36px', height: '36px', padding: '0'}}
-                  onClick={() => {
-                    setIsAccept(1);
-                    AllowFriendOnClick();
-                  }}
+                  onClick={() => {setIsAccept(1); setRefuseConfirmOpen(true)}}
                   color="error">
                   <CloseIcon />
                 </Button>
@@ -205,6 +201,24 @@ function FriendListComponent({
         action={{
           content: '확인',
           action: deleteClick,
+        }}
+      />
+      <Dialog
+        open={acceptConfirmOpen}
+        onClose={() => setAcceptConfirmOpen(false)}
+        message="친구 추가하시겠습니까?"
+        action={{
+          content: '확인',
+          action: AllowFriendOnClick,
+        }}
+      />
+      <Dialog
+        open={refuseConfirmOpen}
+        onClose={() => setAcceptConfirmOpen(false)}
+        message="친구 거절하시겠습니까?"
+        action={{
+          content: '확인',
+          action: AllowFriendOnClick,
         }}
       />
 

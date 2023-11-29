@@ -100,8 +100,7 @@ function FriendModal({ open, onClose }: ModalType) {
                   profileImg={friendInfo.nickname}
                   relationship={friendInfo.relationship}
                   haveNewPost={friendInfo.haveNewPost}
-                  // FIXME : 1 하드코딩
-                  recentPostId={`/{blogUrl}/home/1/${friendInfo.recentPostId}`}
+                  recentPostId={`/${userDetail?.blogUrl}`}
                 />
               );
             })}
@@ -140,8 +139,7 @@ function FriendModal({ open, onClose }: ModalType) {
                   profileImg={searchInfo.nickname}
                   relationship={searchInfo.relationship}
                   haveNewPost={searchInfo.haveNewPost}
-                  // FIXME : 1 하드코딩
-                  recentPostId={`/${userDetail?.blogUrl}/home/1/${searchInfo.recentPostId}`}
+                  recentPostId={`/${userDetail?.blogUrl}`}
                 />
               );
             })}

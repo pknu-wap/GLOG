@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Modal from '@/components/Modal/Modal';
 import { Dialog } from '@/components/Dialog/Dialog';
 import { ModalType, PrivateMapType } from '@/types/common';
@@ -22,6 +22,8 @@ import { PostTemplateApi, PostTemporaryApi, PostWriteApi, UpdateWriteApi } from 
 import { usePathname, useRouter } from 'next/navigation';
 import { WriteModalType, WriteProps } from '@/util/useWriteProps';
 import { enqueueSnackbar } from 'notistack';
+import { useGetBlogUrlQuery } from '@/api/blog-api';
+import { IBlogUrl } from '@/types/dto';
 
 function SaveModal({
   open,
@@ -47,11 +49,16 @@ function SaveModal({
   const queryClient = useQueryClient();
   // const isPrUpdate = pathname.startsWith('/write/pr/update');
   const isPr = pathname.startsWith('/write/pr');
+  const {data: blogUrlData} = useGetBlogUrlQuery({
+    categoryId: categoryId,
+  });
+  const [blogUrl, setBlogUrl] = useState<IBlogUrl>();
 
   const postWriteCreateQuery = useMutation(PostWriteApi, {
     onSuccess: () => {
+
       queryClient.invalidateQueries(['post']);
-      router.push('/home');
+      router.push(`/${blogUrl}`);
       enqueueSnackbar({ message: '글 작성이 완료되었습니다.', variant: 'success' });
     },
     onError: (e: Error) => {
@@ -95,7 +102,7 @@ function SaveModal({
   };
 
   // FormData 생성 함수
-  // [FIXME : 템플릿 수정하면서 같이한 거라 나중에 수정 예정]
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createFormData = (postData: any) => {
     const formData = new FormData();
@@ -211,6 +218,10 @@ function SaveModal({
   const handleButtonClick = () => {
     fileInput.current?.click();
   };
+
+  useEffect(() => {
+    setBlogUrl(blogUrlData);
+  }, [blogUrlData]);
 
   const privateMap: PrivateMapType = {
     publicButton: {

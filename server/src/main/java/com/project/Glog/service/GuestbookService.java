@@ -33,7 +33,7 @@ public class GuestbookService {
     public void save(UserPrincipal userPrincipal, GuestbookMessageRequest req) {
         User user = userRepository.findById(userPrincipal.getId()).get();
         Blog blog = user.getBlog();
-        Guestbook guestBook = blog.getGuestBook();
+        Guestbook guestBook = guestbookRepository.findById(req.getGuestbookId()).get();
 
         BookMessage bookMessage = new BookMessage();
         bookMessage.setMessage(req.getMessage());

@@ -4,7 +4,7 @@
 INSERT INTO user (id, email, email_verified, friend_count, image_url, introduction, nickname, provider, provider_id, skin)
 VALUES (1, 'doyeong32@gmail.com', 0, 0, 'https://lh3.googleusercontent.com/a/ACg8ocL0TM05twyPZ0eQsEWouix_zP5Kmz9z6TqY4Pm8VMyxkg=s96-c', NULL, 'Y eong', 'google', 104384823454308011759, 0),
        (2, 'yiyop@naver.com', 0, 0, 'https://avatars.githubusercontent.com/u/48638700?v=4', NULL, 'Due_it', 'github', 48638700, 0),
-       (3,	'oo7bangjk@gmail.com', 0, 0, 'https://lh3.googleusercontent.com/a/ACg8ocISaV9dG1q60VmzjW0_pxYAYYVg8T2-cVmGmxhmdNaRz4k=s96-c' , NULL, 'anonymous', 'google' ,105693697773599263104, 0),
+       (3,	'oo7bangjk@gmail.com', 0, 0, 'https://lh3.googleusercontent.com/a/ACg8ocISaV9dG1q60VmzjW0_pxYAYYVg8T2-cVmGmxhmdNaRz4k=s96-c' , NULL, 'jk', 'google' ,105693697773599263104, 0),
        (4,	'oo7bangjk@naver.com', 0, 0, 'https://avatars.githubusercontent.com/u/111286262?v=4' , NULL, 'JONG-KYEONG', 'github' ,111286262, 0);
 
 INSERT INTO blog(id, blog_name, blog_url, readme, user_id)

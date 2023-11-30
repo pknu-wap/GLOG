@@ -1,4 +1,4 @@
-import { IPatchReplyLike, IPutReply, IReply, IReplyParams } from '@/types/dto';
+import { IDeleteReply, IPatchReplyLike, IPutReply, IReply, IReplyParams } from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -26,5 +26,13 @@ export const PatchReplyLikeApi = async (params: IPatchReplyLike) => {
 
 export const putReplyApi = async (body: IPutReply) => {
   const { data } = await defaultInstance.put('/replies', body);
+  return data;
+};
+
+export const DeleteReplyApi = async (params: IDeleteReply) => {
+  const { data } = await defaultInstance.delete('/replies', {
+    params,
+  });
+
   return data;
 };

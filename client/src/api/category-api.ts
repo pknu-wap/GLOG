@@ -1,4 +1,10 @@
-import { ICategoryParams, IDeleteCategory, IPostCategory, IPutCategory } from '@/types/dto';
+import {
+  ICategoryParams,
+  IDeleteCategory,
+  IPostCategory,
+  IPutCategory,
+  ISearchCategoryParams,
+} from '@/types/dto';
 import { defaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 
@@ -33,4 +39,19 @@ export const DeleteCategoryApi = async (params: IDeleteCategory) => {
     params,
   });
   return data;
+};
+
+//카테고리별 미리보기
+export const GetSearchCategoryApi = async (params: ISearchCategoryParams) => {
+  const { data } = await defaultInstance.get('/search/category', { params });
+
+  return data;
+};
+
+export const useGetSearchCategoryQuery = (params: ISearchCategoryParams) => {
+  const { isLoading, error, data } = useQuery(['searchCategory', params], () =>
+    GetSearchCategoryApi(params),
+  );
+
+  return { isLoading, error, data };
 };

@@ -118,6 +118,11 @@ export interface IPatchReplyLike {
   replyId: number;
 }
 
+//댓글 삭제
+export interface IDeleteReply {
+  replyId: number;
+}
+
 // 글쓰기 페이지
 export interface IWrite {
   thumbnail?: string | null;
@@ -438,6 +443,29 @@ export interface IPutCategory {
 //카테고리 삭제
 export interface IDeleteCategory {
   categoryId: number;
+}
+
+//카테고리별 미리보기
+export interface ISearchCategoryParams {
+  categoryId: number;
+  page: number;
+}
+
+//카테고리별 미리보기 가져온 정보
+export interface ISearchCategory {
+  postPreviewDtos: {
+    blogUrl: string;
+    postId: number;
+    categoryId: number;
+    title: string;
+    thumbnail: string;
+    likesCount: number;
+    viewsCount: number;
+    repliesCount: number;
+    createdAt: string;
+    isPrivate: boolean;
+  }[];
+  totalPages: number;
 }
 
 // history

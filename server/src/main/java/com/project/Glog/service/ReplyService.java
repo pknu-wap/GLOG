@@ -54,17 +54,29 @@ public class ReplyService  {
 
     public ReplyGetResponse getReplies(UserPrincipal userPrincipal, ReplyGetRequest req) {
         Post post = postRepository.findById(req.getPostId()).get();
-        User currentUser = userRepository.findById(userPrincipal.getId()).get();
+//        Optional<User> currentUserOptional = userRepository.findById(userPrincipal.getId());
+        Boolean imOwner;
         Long authorId = postRepository.findById(post.getId()).get().getUser().getId();
+        User currentUser = null;
 
-        Boolean imOwner = (authorId == userPrincipal.getId());
+        if (userPrincipal == null){
+           imOwner = false;
+           currentUser = userRepository.findUserByNickname("anonymous");
+        }
+        else{
+            imOwner = (authorId == userPrincipal.getId());
+            currentUser = userRepository.findById(userPrincipal.getId()).get();
+        }
+       
+
+
+
 
         PageRequest pageRequest = PageRequest.of(req.getPage(), 10, Sort.by(req.getOrder()).descending());
         List<Reply> replys = replyRepository.findRepliesByPost(post, pageRequest).getContent();
         List<ReplyDto> replyDtos = new ArrayList<>();
         for(Reply reply : replys){
             ReplyDto replyDto = ReplyDto.of(reply);
-
             Boolean isLiked = replyLikeRepository.findByReplyAndUser(reply.getId(), currentUser.getId()).isPresent();
             replyDto.setIsLiked(isLiked);
 

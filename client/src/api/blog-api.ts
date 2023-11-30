@@ -1,4 +1,4 @@
-import { IBlog, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
+import { IBlog, IBlogUrlParams, IChangeBlogName, IPost, ISidebar } from '@/types/dto';
 import { defaultInstance, unAxiosDefaultInstance } from '.';
 import { useQuery } from '@tanstack/react-query';
 

@@ -30,6 +30,11 @@ html {
 .wmde-markdown h1 {
   border-bottom: transparent !important;
 }
+
+.wmde-markdown p {
+  color: #000;
+  border-bottom: transparent !important;
+}
 .wmde-markdown h2 {
   border-bottom: transparent !important;
 }

@@ -32,17 +32,18 @@ function CreateCategoryModal({ open, onClose }: ModalType) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ModalTitle fontSize="24px" fontWeight="bold">
+      <ModalTitle mb={8} fontSize="24px" fontWeight="bold">
         카테고리 생성
       </ModalTitle>
       <ModalContent sx={{ '&&.MuiDialogContent-root': { paddingTop: '0px' } }}>
-        <Stack width="600px" spacing={5}>
-          <Stack direction="row" alignItems="center" spacing={3}>
+        <Stack spacing={5}>
+          <Stack direction="row" alignItems="center" spacing={8}>
             <Stack fontSize="18px" fontWeight="bold">
-              카테고리 이름 :
+              카테고리 이름
             </Stack>
             <TextField
-              variant="standard"
+              variant="outlined"
+              size="small"
               onChange={(e) => {
                 setCategoryName(e.target.value);
               }}

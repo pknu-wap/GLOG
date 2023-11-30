@@ -20,8 +20,8 @@ function CategorySettingModal({ open, categoryId, onClose }: CategorySettingModa
     },
     onError() {
       enqueueSnackbar({ message: '카테고리가 삭제되지 않았습니다', variant: 'error' });
-    }
-    });
+    },
+  });
   const deleteClick = () => {
     deleteCategoryQuery.mutate({ categoryId: categoryId });
     onClose();
@@ -59,16 +59,15 @@ function CategorySettingModal({ open, categoryId, onClose }: CategorySettingModa
         </Stack>
       </ModalTitle>
       <ModalContent sx={{ '&&.MuiDialogContent-root': { paddingTop: '0px' } }}>
-        <Stack width="600px" spacing={5}>
-          <Stack fontSize="16px" fontWeight="bold">
-            깃허브 연동 여부 : X
-          </Stack>
-          <Stack direction="row" alignItems="center" spacing={3}>
+        <Stack mt={4} width="600px" spacing={5}>
+          <Stack direction="row" alignItems="center" spacing={8}>
             <Stack fontSize="16px" fontWeight="bold">
-              카테고리 이름 :
+              카테고리 이름
             </Stack>
             <TextField
-              variant="standard"
+              sx={{ width: '350px' }}
+              variant="outlined"
+              size="small"
               onChange={(e) => {
                 setNewCategoryName(e.target.value);
               }}

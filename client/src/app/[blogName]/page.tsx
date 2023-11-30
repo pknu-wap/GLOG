@@ -17,7 +17,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
 
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: readMeData } = useGetReadMeQuery({ blogId: blogIdData });
-  const [readMe, setReadMe] = useState('');
+  const [readMe, setReadMe] = useState<{ blogName: string; content: string; isMe: boolean }>();
   const router = useRouter();
 
   useEffect(() => {
@@ -31,13 +31,18 @@ const Home = ({ params }: { params: { blogName: string } }) => {
         blogName={params.blogName}
         footprintList={writeList}
         rightContainer={
-          <Stack alignItems="flex-end" spacing={2}>
-            <Button
-              onClick={() => router.push(`/write/readme/${params.blogName}`)}
-              sx={{ width: 'fit-content' }}
-              variant="contained">
-              수정
-            </Button>
+          <Stack spacing={3}>
+            <Stack direction="row" alignItems="center" justifyContent="space-between">
+              <Stack sx={{ fontSize: '24px' }}>{readMe?.blogName}</Stack>
+              {readMe?.isMe && (
+                <Button
+                  onClick={() => router.push(`/write/readme/${params.blogName}`)}
+                  sx={{ width: 'fit-content' }}
+                  variant="contained">
+                  수정
+                </Button>
+              )}
+            </Stack>
             <Stack
               boxShadow="2px 2px 5px rgba(0, 0, 0, 0.1)"
               p={8}
@@ -45,7 +50,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
               margin="auto"
               minHeight="80vh"
               overflow={'scroll'}>
-              <MDEditor.Markdown source={readMe} />
+              <MDEditor.Markdown source={readMe?.content} />
             </Stack>
           </Stack>
         }

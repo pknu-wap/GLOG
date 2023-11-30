@@ -187,7 +187,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           <CenterContent bgcolor="transparent">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack width="140px" height="100%"></Stack>
-              <Stack mt={'5%'} color="#ffffff">
+              <Stack color="#ffffff">
                 <Stack height="24px" direction={'row'} alignItems="center" gap={1}>
                   <Box>
                     {

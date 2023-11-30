@@ -434,6 +434,29 @@ export interface IDeleteCategory {
   categoryId: number;
 }
 
+//카테고리별 미리보기
+export interface ISearchCategoryParams {
+  categoryId: number;
+  page: number;
+}
+
+//카테고리별 미리보기 가져온 정보
+export interface ISearchCategory {
+  postPreviewDtos: {
+    blogUrl: string;
+    postId: number;
+    categoryId: number;
+    title: string;
+    thumbnail: string;
+    likesCount: number;
+    viewsCount: number;
+    repliesCount: number;
+    createdAt: string;
+    isPrivate: boolean;
+  }[];
+  totalPages: number;
+}
+
 // history
 export interface IHistory {
   week?: {

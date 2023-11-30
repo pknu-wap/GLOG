@@ -65,7 +65,12 @@ const Page = () => {
             variant="outlined"
             value={blogUrl}
             onChange={(e) => {
-              setBlogUrl(e.target.value);
+              const value = e.target.value;
+              const ALPHA_NUMERIC_DASH_REGEX = /^[a-zA-Z0-9-]+$/;
+              if (value !== '' && !ALPHA_NUMERIC_DASH_REGEX.test(value)) {
+                return;
+              }
+              setBlogUrl(value);
             }}
           />
           <Stack fontSize="10px" color="red" marginBottom="15px">

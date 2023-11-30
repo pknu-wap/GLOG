@@ -28,17 +28,20 @@ html {
 }
 
 .wmde-markdown h1 {
+  color: #9e9e9e;
   border-bottom: transparent !important;
 }
 
 .wmde-markdown p {
-  color: #000;
+  color: #9e9e9e;
   border-bottom: transparent !important;
 }
 .wmde-markdown h2 {
+  color: #9e9e9e;
   border-bottom: transparent !important;
 }
 .wmde-markdown h3 {
+  color: #9e9e9e;
   border-bottom: transparent !important;
 }
 

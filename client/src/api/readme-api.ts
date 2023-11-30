@@ -17,9 +17,7 @@ export const useGetReadMeQuery = (params: IReadMeParams) => {
     enabled: !!params.blogId,
   });
 
-  const data: {
-    readMeDto: { blogName: string; content: string; isMe: boolean };
-  } = backendData;
+  const data: { blogName: string; content: string; isMe: boolean } = backendData;
   return { data, isLoading, error };
 };
 

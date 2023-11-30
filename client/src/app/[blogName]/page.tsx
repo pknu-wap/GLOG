@@ -26,7 +26,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
 
   useEffect(() => {
     setWriteList(sidebarData?.sidebarDtos);
-    setReadMe(readMeData?.readMeDto);
+    setReadMe(readMeData);
   }, [sidebarData, readMeData]);
 
   return (

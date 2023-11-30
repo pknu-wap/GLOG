@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import Link, { LinkProps } from 'next/link';
 import React, { ReactNode } from 'react';
 
@@ -8,9 +9,15 @@ function PageLink({
   ...rest
 }: LinkProps &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & { children: ReactNode; color?: string }) {
+  const theme = useTheme();
   return (
     <Link
-      style={{ width: 'fit-content', textDecoration: 'none', color: color ?? '#000000', ...style }}
+      style={{
+        width: 'fit-content',
+        textDecoration: 'none',
+        color: color ?? theme.palette.oppositeColor.main,
+        ...style,
+      }}
       {...rest}>
       {children}
     </Link>

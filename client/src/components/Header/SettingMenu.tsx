@@ -1,7 +1,7 @@
 'use client';
 
 import { ModalType } from '@/types/common';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import PageLink from '../PageLink/PageLink';
 import FriendModal from '../Layout/HeaderFriendModal/FriendModal';
@@ -10,6 +10,7 @@ import { enqueueSnackbar } from 'notistack';
 function SettingMenu({ open, onClose, anchorEl }: ModalType & { anchorEl: null | HTMLElement }) {
   const [friendOpen, setFriendOpen] = useState<boolean>(false);
   const [token, setToken] = useState<string | null>('');
+  const theme = useTheme();
 
   useEffect(() => {
     setToken(localStorage.getItem('token'));
@@ -26,7 +27,11 @@ function SettingMenu({ open, onClose, anchorEl }: ModalType & { anchorEl: null |
           마이페이지
         </PageLink>
       </MenuItem>
-      <MenuItem onClick={() => setFriendOpen(true)}>친구</MenuItem>
+      <MenuItem
+        sx={{ color: theme.palette.oppositeColor.main }}
+        onClick={() => setFriendOpen(true)}>
+        친구
+      </MenuItem>
       {/* <MenuItem>
         <PageLink
           href="/scrap"

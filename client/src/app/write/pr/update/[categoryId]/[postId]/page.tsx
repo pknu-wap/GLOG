@@ -16,6 +16,7 @@ import {
 } from '../../../../../../../hooks/useRecoilSSR';
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
+import { useGetPostQuery } from '@/api/blog-api';
 
 const PR = ({ params }: { params: { categoryId: number; postId: number } }) => {
   const [userTheme] = useUserThemeSSR();
@@ -25,6 +26,7 @@ const PR = ({ params }: { params: { categoryId: number; postId: number } }) => {
   const [templateId] = useTemplateIdSSR();
   const [temporaryId] = useTemporaryIdSSR();
   // const [temporaryId, setTemporary] = useTemporaryIdSSR();
+  const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
 
   const { data: templateData, refetch: templateRefetch } = useGetTemplateDetailQuery({
     templateId,
@@ -52,6 +54,12 @@ const PR = ({ params }: { params: { categoryId: number; postId: number } }) => {
     setContent(temporaryData?.content);
     setTags(temporaryData?.hashtags);
   }, [temporaryData]);
+
+  useEffect(() => {
+    setTitle(postData?.title);
+    setContent(postData?.content);
+    setTags(postData?.hashtags);
+  }, [postData]);
 
   const writeProps: WriteProps = {
     title,

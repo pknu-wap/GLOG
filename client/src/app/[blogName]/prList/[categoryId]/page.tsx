@@ -40,45 +40,48 @@ function page({ params }: { params: { categoryId: string } }) {
 
   return (
     <CenterContent maxWidth="1080px">
-      <Stack fontSize="24px" marginBottom="8px">
-        작성하지 않은 PR
-      </Stack>
-      <Stack p={2} direction="row" spacing={4} overflow={'scroll'}>
-        {unPosted?.isAuthor &&
-          unPosted?.prUnPostedDtos?.prUnPostedDtos?.map((unPost) => {
-            return (
-              <PageLink key={unPost.prId} href={`/write/pr/${unPost.prId}`}>
-                <Stack
-                  sx={{
-                    transition: 'all .35s ease-in-out',
-                    cursor: 'pointer',
-                    ':hover': { transform: 'translateY(-4px)' },
-                  }}
-                  minWidth="220px"
-                  height="124px"
-                  bgcolor="primary.main"
-                  p={4}
-                  borderRadius="8px"
-                  justifyContent="space-around">
-                  <Stack direction="row" justifyContent="space-between">
-                    <Stack color="#000000" fontSize="20px" fontWeight="bold">
-                      #{unPost.prId}
+      {unPosted?.isAuthor && (
+        <>
+          <Stack fontSize="24px" marginBottom="8px">
+            작성하지 않은 PR
+          </Stack>
+          <Stack p={2} direction="row" spacing={4} overflow={'scroll'}>
+            {unPosted?.prUnPostedDtos?.prUnPostedDtos?.map((unPost) => {
+              return (
+                <PageLink key={unPost.prId} href={`/write/pr/${unPost.prId}`}>
+                  <Stack
+                    sx={{
+                      transition: 'all .35s ease-in-out',
+                      cursor: 'pointer',
+                      ':hover': { transform: 'translateY(-4px)' },
+                    }}
+                    minWidth="220px"
+                    height="124px"
+                    bgcolor="primary.main"
+                    p={4}
+                    borderRadius="8px"
+                    justifyContent="space-around">
+                    <Stack direction="row" justifyContent="space-between">
+                      <Stack color="#000000" fontSize="20px" fontWeight="bold">
+                        #{unPost.prId}
+                      </Stack>
+                    </Stack>
+                    <Stack
+                      color="#000000"
+                      sx={{ wordBreak: 'break-all' }}
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      display="inline"
+                      whiteSpace="nowrap">
+                      {unPost.prTitle}
                     </Stack>
                   </Stack>
-                  <Stack
-                    color="#000000"
-                    sx={{ wordBreak: 'break-all' }}
-                    overflow="hidden"
-                    textOverflow="ellipsis"
-                    display="inline"
-                    whiteSpace="nowrap">
-                    {unPost.prTitle}
-                  </Stack>
-                </Stack>
-              </PageLink>
-            );
-          })}
-      </Stack>
+                </PageLink>
+              );
+            })}
+          </Stack>
+        </>
+      )}
       <Stack margin="40px 0px 8px 0px" fontSize="24px">
         작성한 PR 목록
       </Stack>

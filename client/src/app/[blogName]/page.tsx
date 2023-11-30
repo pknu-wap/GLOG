@@ -22,7 +22,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
 
   useEffect(() => {
     setWriteList(sidebarData?.sidebarDtos);
-    setReadMe(readMeData?.body?.content);
+    setReadMe(readMeData?.content);
   }, [sidebarData, readMeData]);
 
   return (

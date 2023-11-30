@@ -1,7 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 import CenterContent from '@/components/Layout/CenterContent';
-import { Stack, Tooltip } from '@mui/material';
+import { Stack, Tooltip, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { useRouter } from 'next/navigation';
@@ -41,6 +41,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
   const [paramsCategoryId, setParamsCategoryId] = useState(Number);
+  const theme = useTheme();
 
   const router = useRouter();
   useEffect(() => {
@@ -57,7 +58,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
     <>
       {isBrowser ? (
         <DragDropContext onDragEnd={dragHandler}>
-          <CenterContent bgcolor="transparent">
+          <CenterContent sx={{ zIndex: 200 }} bgcolor="themeColor.main">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
                 {post?.isAuthor && (
@@ -93,7 +94,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
                                 <Tooltip title="카테고리 모아보기" placement="left">
                                   <Stack
                                     sx={{ padding: 1, ':hover': { color: 'rgba(0,0,0,0.4)' } }}
-                                    color="#000000">
+                                    color={theme.palette.oppositeColor.main}>
                                     {category.categoryName}
                                   </Stack>
                                 </Tooltip>
@@ -136,7 +137,8 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
                                   sx={{
                                     fontSize: '14px',
                                     cursor: 'pointer',
-                                    ':hover': { color: 'rgba(0,0,0,0.4)' },
+                                    ':hover': { opacity: 0.6 },
+                                    color: theme.palette.oppositeColor.main,
                                   }}
                                   pl={4}
                                   pt={1}>
@@ -153,7 +155,8 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
                                   sx={{
                                     fontSize: '14px',
                                     cursor: 'pointer',
-                                    ':hover': { color: 'rgba(0,0,0,0.4)' },
+                                    ':hover': { opacity: 0.6 },
+                                    color: theme.palette.oppositeColor.main,
                                   }}
                                   pl={4}
                                   pt={1}>
@@ -203,7 +206,11 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
                                               width="15"
                                               height="15"
                                             />
-                                            <Stack width="101px">{post.title}</Stack>
+                                            <Stack
+                                              width="101px"
+                                              color={theme.palette.oppositeColor.main}>
+                                              {post.title}
+                                            </Stack>
                                           </Stack>
                                         </PageLink>
                                       </Stack>

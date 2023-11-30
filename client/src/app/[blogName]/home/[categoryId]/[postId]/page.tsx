@@ -24,7 +24,7 @@ import RepliesComponent, {
 } from './postId.style';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import { useGetSidebarQuery, useGetPostQuery } from '@/api/blog-api';
-import { IBlogId, IIntroduce, IPostContent, IReplyContent, ISidebarContent } from '@/types/dto';
+import { IIntroduce, IPostContent, IReplyContent, ISidebarContent } from '@/types/dto';
 import CenterContent from '@/components/Layout/CenterContent';
 import { Home, KeyboardArrowRight } from '@mui/icons-material';
 import MDEditor from '@uiw/react-md-editor';
@@ -52,7 +52,7 @@ import { postVisitApi } from '@/api/mypage-api';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
-  const [blogId, setBlogId] = useState<IBlogId>();
+  const [blogId, setBlogId] = useState<number>();
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
@@ -97,8 +97,8 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   });
 
   useEffect(() => {
-    postVisitQuery.mutate({ blogId: blogId?.blogId ?? 0 });
-  }, []);
+    blogId && blogId > 0 && postVisitQuery.mutate({ blogId });
+  }, [blogId]);
 
   const ReplyOnClick = () => {
     const newReplyBody = {
@@ -186,7 +186,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
           <CenterContent bgcolor="transparent">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack width="140px" height="100%"></Stack>
-              <Stack color="#ffffff">
+              <Stack mt={'5%'} color="#ffffff">
                 <Stack height="24px" direction={'row'} alignItems="center" gap={1}>
                   <Box>
                     {

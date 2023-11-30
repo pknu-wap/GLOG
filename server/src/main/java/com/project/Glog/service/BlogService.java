@@ -5,6 +5,7 @@ import com.project.Glog.domain.Guestbook;
 import com.project.Glog.domain.User;
 import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.response.blog.MyPageResponse;
+import com.project.Glog.dto.response.blog.ReadMeDto;
 import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.repository.GuestbookRepository;
 import com.project.Glog.repository.UserRepository;
@@ -56,8 +57,26 @@ public class BlogService {
         return blogRepository.findByBlogUrl(blogUrl);
     }
 
-    public String getReadme(Long blogId){
-        return blogRepository.getReferenceById(blogId).getReadme();
+    public ReadMeDto getReadme(UserPrincipal userPrincipal, Long blogId){
+        ReadMeDto readMeDto = new ReadMeDto();
+        Blog blog = blogRepository.getReferenceById(blogId);
+        Boolean isMe;
+
+        if(userPrincipal == null){
+            isMe = false;
+        }
+        else{
+            if(userPrincipal.getId() == blogRepository.findByBlogId(blogId).get().getId()){
+                isMe = true;
+            }
+            else{
+                isMe = false;
+            }
+        }
+        readMeDto.setBlogName(blog.getBlogName());
+        readMeDto.setContent(blog.getReadme());
+        readMeDto.setIsMe(isMe);
+        return readMeDto;
     }
 
     public void registerReadme(UserPrincipal userPrincipal, String readme){

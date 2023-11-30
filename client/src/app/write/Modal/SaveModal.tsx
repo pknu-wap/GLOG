@@ -49,14 +49,13 @@ function SaveModal({
   const queryClient = useQueryClient();
   // const isPrUpdate = pathname.startsWith('/write/pr/update');
   const isPr = pathname.startsWith('/write/pr');
-  const {data: blogUrlData} = useGetBlogUrlQuery({
+  const { data: blogUrlData } = useGetBlogUrlQuery({
     categoryId: categoryId,
   });
   const [blogUrl, setBlogUrl] = useState<IBlogUrl>();
 
   const postWriteCreateQuery = useMutation(PostWriteApi, {
     onSuccess: () => {
-
       queryClient.invalidateQueries(['post']);
       router.push(`/${blogUrl}`);
       enqueueSnackbar({ message: '글 작성이 완료되었습니다.', variant: 'success' });
@@ -69,7 +68,7 @@ function SaveModal({
   const updateWriteCreateQuery = useMutation(UpdateWriteApi, {
     onSuccess: () => {
       queryClient.invalidateQueries(['post']);
-      router.push('/home');
+      router.push(`/${blogUrl}`);
       enqueueSnackbar({ message: '글 수정이 완료되었습니다.', variant: 'success' });
     },
     onError: (e: Error) => {
@@ -80,7 +79,7 @@ function SaveModal({
   const postTemplateAddTemplate = useMutation(PostTemplateApi, {
     onSuccess() {
       queryClient.invalidateQueries(['template']);
-      enqueueSnackbar({ message: '글 수정이 완료되었습니다.', variant: 'success' });
+      enqueueSnackbar({ message: '템플릿 추가가 완료되었습니다.', variant: 'success' });
     },
     onError: (e: Error) => {
       enqueueSnackbar({ message: e.message, variant: 'error' });
@@ -90,7 +89,7 @@ function SaveModal({
   const postTemporaryAddTemplate = useMutation(PostTemporaryApi, {
     onSuccess() {
       queryClient.invalidateQueries(['temporaries']);
-      enqueueSnackbar({ message: '글 수정이 완료되었습니다.', variant: 'success' });
+      enqueueSnackbar({ message: '임시저장 글 저장이 완료되었습니다.', variant: 'success' });
     },
     onError: (e: Error) => {
       enqueueSnackbar({ message: e.message, variant: 'error' });

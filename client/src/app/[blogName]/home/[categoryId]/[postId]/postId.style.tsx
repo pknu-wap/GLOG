@@ -17,6 +17,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { DeleteReplyApi, PatchReplyLikeApi, putReplyApi } from '@/api/reply-api';
 import { Dialog } from '@/components/Dialog/Dialog';
+import { enqueueSnackbar } from 'notistack';
 
 export const ThumbnailArea = styled(Stack)({
   width: '100%',
@@ -123,13 +124,23 @@ function RepliesComponent({
 
   const deleteReplyQuery = useMutation(DeleteReplyApi, {
     onSuccess() {
-      queryClient.invalidateQueries(['reply']);
+      queryClient.invalidateQueries(['replies']);
     },
   });
 
-
   const deleteClick = () => {
-    deleteReplyQuery.mutate({ replyId: replyId});
+    deleteReplyQuery.mutate(
+      { replyId: replyId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['replies']);
+          enqueueSnackbar({ message: '댓글이 성공적으로 삭제되었습니다.', variant: 'success' });
+        },
+        onError: () => {
+          enqueueSnackbar({ message: '에러입니다.', variant: 'error' });
+        },
+      },
+    );
   };
 
   const [isAccept, setIsAccept] = useState<number>(Number);
@@ -190,9 +201,15 @@ function RepliesComponent({
   }, [introduceData]);
 
   return (
-    <Stack flexDirection={'column'} padding='15px' width='100%' margin='20px 0 10px 0' border='3px solid rgb(189,189,189)' borderRadius='15px'>
+    <Stack
+      flexDirection={'column'}
+      padding="15px"
+      width="100%"
+      margin="20px 0 10px 0"
+      border="3px solid rgb(189,189,189)"
+      borderRadius="15px">
       <ReplyMainInfo>
-        <Stack flexDirection='row' alignItems='center' marginBottom='10px'>
+        <Stack flexDirection="row" alignItems="center" marginBottom="10px">
           <Button
             sx={{ minWidth: '35px', width: '35px', height: '35px', borderRadius: '50%' }}
             onClick={() => setIntroduceOpen(true)}>
@@ -206,38 +223,40 @@ function RepliesComponent({
               alt="profileImage"
             />
           </Button>
-          <Stack margin='0 10px'>{nickname}</Stack>
+          <Stack margin="0 10px">{nickname}</Stack>
           <ReplyLike>
-            <Stack marginTop='5px'>
-              {likesCount}
-            </Stack>
-              {isLiked ? (
-                <IconButton sx={{padding: '0px', marginLeft: '10px'}} onClick={ReplyLikeOnClick}>
-                  <ThumbUpAltIcon></ThumbUpAltIcon>
-                </IconButton>
+            <Stack marginTop="5px">{likesCount}</Stack>
+            {isLiked ? (
+              <IconButton sx={{ padding: '0px', marginLeft: '10px' }} onClick={ReplyLikeOnClick}>
+                <ThumbUpAltIcon></ThumbUpAltIcon>
+              </IconButton>
+            ) : (
+              <IconButton sx={{ padding: '0px', marginLeft: '10px' }} onClick={ReplyLikeOnClick}>
+                <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
+              </IconButton>
+            )}
+            <ChangeReply>
+              {who === 'me(author)' || who === 'me' ? (
+                <Button onClick={() => setPutReplyOpen(true)}>수정하기</Button>
               ) : (
-                <IconButton sx={{padding: '0px' ,marginLeft: '10px'}} onClick={ReplyLikeOnClick}>
-                  <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
-                </IconButton>
+                <></>
               )}
-              <ChangeReply>
-                {who === 'me(author)' || who === 'me' ? <Button onClick={() => setPutReplyOpen(true)}>수정하기</Button> : <></>}
-              </ChangeReply>
-              <Stack>
-                {who === 'me(author)' || who === 'me' ? <Button onClick={() => setDeleteReplyOpen(true)}>삭제하기</Button> : <></>}
-              </Stack>
-            </ReplyLike>
+            </ChangeReply>
+            <Stack>
+              {who === 'me(author)' || who === 'me' ? (
+                <Button onClick={() => deleteClick()}>삭제하기</Button>
+              ) : (
+                <></>
+              )}
+            </Stack>
+          </ReplyLike>
         </Stack>
 
         <Stack>
-          
-          <ReplySubInfo>
-          
-          </ReplySubInfo>
+          <ReplySubInfo></ReplySubInfo>
         </Stack>
         <Stack>{message}</Stack>
       </ReplyMainInfo>
-    
 
       <Modal open={putReplyOpen} onClose={() => setPutReplyOpen(false)}>
         <ModalTitle>수정하기</ModalTitle>
@@ -265,7 +284,6 @@ function RepliesComponent({
           }}
         />
       </Modal>
-      
 
       {/* 댓글 상대방 introduction */}
       <Modal open={IntroduceOpen} maxWidth="md" onClose={() => setIntroduceOpen(false)}>

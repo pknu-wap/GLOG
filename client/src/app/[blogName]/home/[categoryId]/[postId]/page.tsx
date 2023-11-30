@@ -48,10 +48,11 @@ import { usegetblogIdQuery } from '@/api/readme-api';
 import { AddLikeApi, DeleteWriteApi } from '@/api/write-api';
 import { enqueueSnackbar } from 'notistack';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { postVisitApi } from '@/api/mypage-api';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
-  const [, setBlogId] = useState<IBlogId>();
+  const [blogId, setBlogId] = useState<IBlogId>();
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: postData } = useGetPostQuery({ postId: Number(params.postId) });
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
@@ -88,6 +89,16 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
       queryClient.invalidateQueries(['post']);
     },
   });
+
+  const postVisitQuery = useMutation(postVisitApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['visit']);
+    },
+  });
+
+  useEffect(() => {
+    postVisitQuery.mutate({ blogId: blogId?.blogId ?? 0 });
+  }, []);
 
   const ReplyOnClick = () => {
     const newReplyBody = {
@@ -345,8 +356,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   </Stack>
                   <Stack direction="row" spacing={2}>
                     <Button size="small" variant="outlined">
-                      <PageLink href={`/${introduce?.blogUrl}`}> </PageLink>
-                      블로그 바로가기
+                      <PageLink href={`/${introduce?.blogUrl}`}>블로그 바로가기</PageLink>
                     </Button>
                   </Stack>
                 </Stack>

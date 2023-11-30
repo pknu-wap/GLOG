@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { defaultInstance } from '.';
+import { IUserDetail } from '@/types/dto';
 
 export const GetUserDetailApi = async () => {
   const { data } = await defaultInstance.get('/user/detail');
@@ -8,7 +9,13 @@ export const GetUserDetailApi = async () => {
 };
 
 export const useGetUserDetailQuery = () => {
-  const { isLoading, error, data } = useQuery(['userDetail'], () => GetUserDetailApi());
+  const {
+    isLoading,
+    error,
+    data: backendData,
+  } = useQuery(['userDetail'], () => GetUserDetailApi());
+
+  const data: IUserDetail = backendData;
 
   return { isLoading, error, data };
 };

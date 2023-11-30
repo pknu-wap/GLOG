@@ -252,8 +252,7 @@ function RepliesComponent({
                   </Stack>
                   <Stack direction="row" spacing={2}>
                     <Button size="small" variant="outlined">
-                      <PageLink href={`/${introduce?.blogUrl}`}> </PageLink>
-                      블로그 바로가기
+                      <PageLink href={`/${introduce?.blogUrl}`}> 블로그 바로가기</PageLink>
                     </Button>
                   </Stack>
                 </Stack>

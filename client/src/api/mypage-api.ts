@@ -45,3 +45,20 @@ export const postChangeBlogNameApi = async (body: IBlogInfo) => {
 
   return data;
 };
+
+export const getVisitApi = async () => {
+  const { data } = await defaultInstance.get(`/visit`);
+
+  return data;
+};
+
+export const useGetVisitQuery = () => {
+  const { isLoading, error, data } = useQuery([`visit`], () => getVisitApi());
+  return { data, isLoading, error };
+};
+
+export const postVisitApi = async (body: { blogId: number }) => {
+  const { data } = await defaultInstance.post(`/visit?blogId=${body.blogId}`);
+
+  return data;
+};

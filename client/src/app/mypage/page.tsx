@@ -19,6 +19,7 @@ import {
   postChangeUserInfoApi,
   useGetHistoryQuery,
   useGetMypageQuery,
+  useGetVisitQuery,
 } from '@/api/mypage-api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -35,6 +36,7 @@ function page() {
   const fileInput = useRef<any>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [image, setImage] = useState('');
+  const { data } = useGetVisitQuery();
 
   const handleAlignment = (_: React.MouseEvent<HTMLElement>, newYearWeekToggle: string | null) => {
     if (newYearWeekToggle !== null) {
@@ -345,6 +347,7 @@ function page() {
             )}
           </CenterContent>
         </Stack>
+        <Stack>방문자 수 : {data} </Stack>
       </CenterContent>
     </>
   );

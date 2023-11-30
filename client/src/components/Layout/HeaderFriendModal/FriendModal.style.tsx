@@ -84,10 +84,10 @@ function FriendListComponent({
   const [deleteConfirmOpen, setDeleteConFirmOpen] = useState<boolean>(false);
   const [isAccept, setIsAccept] = useState<number>(Number);
   const [acceptConfirmOpen, setAcceptConfirmOpen] = useState<boolean>(false);
-  const [refuseConfirmOpen, setRefuseConfirmOpen] = useState<boolean>(false);
+  const [refuseConfirmOpen] = useState<boolean>(false);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['friend'])
+      queryClient.invalidateQueries(['friend']);
     },
   });
   const AllowFriendOnClick = () => {
@@ -105,10 +105,10 @@ function FriendListComponent({
     },
   });
 
-  const {data: friendReadData} = useGetFriendReadQuery({
-    userId: userId
-  })
-  const [, setReadData] = useState()
+  const { data: friendReadData } = useGetFriendReadQuery({
+    userId: userId,
+  });
+  const [, setReadData] = useState();
 
   const deleteClick = () => {
     deleteFriendQuery.mutate({ userId: userId });
@@ -123,7 +123,7 @@ function FriendListComponent({
     setAnchorEl(null);
   };
 
-  const {data: introduceData} = useGetIntroduceQuery({
+  const { data: introduceData } = useGetIntroduceQuery({
     userId: userId,
   });
   const [introduce, setIntroduce] = useState<IIntroduce>();
@@ -136,14 +136,17 @@ function FriendListComponent({
   return (
     <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
       <Stack margin="6px 0" flexDirection="row" justifyContent="left" alignItems="center">
-        <Button sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%'}} onClick={() => setIntroduceOpen(true)}>
+        <Button
+          sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%' }}
+          onClick={() => setIntroduceOpen(true)}>
           <ProfileImage imageSrc={profileImg} />
         </Button>
-        
 
         <UserName alignItems="center">
-          <Stack fontSize='18px' margin="0 10px 0 10px">{nickname}</Stack>
-          
+          <Stack fontSize="18px" margin="0 10px 0 10px">
+            {nickname}
+          </Stack>
+
           {relationship === 'friend' ? (
             haveNewPost ? (
               <Button>
@@ -154,14 +157,19 @@ function FriendListComponent({
               <Stack></Stack>
             )
           ) : relationship === 'friending' ? (
-            <Stack marginLeft="10px" fontSize="15px" color="#FFA07A">요청 중</Stack>
+            <Stack marginLeft="10px" fontSize="15px" color="#FFA07A">
+              요청 중
+            </Stack>
           ) : relationship === 'friended' ? (
             <>
-              <Stack margin='0 5px 0 10px'>친구 요청</Stack>
+              <Stack margin="0 5px 0 10px">친구 요청</Stack>
               <Tooltip title="수락" arrow>
                 <Button
-                  sx={{minWidth: '36px', height: '36px', padding: '0'}}
-                  onClick={() => {setIsAccept(0); setAcceptConfirmOpen(true);}}
+                  sx={{ minWidth: '36px', height: '36px', padding: '0' }}
+                  onClick={() => {
+                    setIsAccept(0);
+                    AllowFriendOnClick();
+                  }}
                   color="success">
                   <CheckIcon />
                 </Button>
@@ -169,8 +177,11 @@ function FriendListComponent({
 
               <Tooltip title="거절" arrow>
                 <Button
-                  sx={{minWidth: '36px', height: '36px', padding: '0'}}
-                  onClick={() => {setIsAccept(1); setRefuseConfirmOpen(true)}}
+                  sx={{ minWidth: '36px', height: '36px', padding: '0' }}
+                  onClick={() => {
+                    setIsAccept(1);
+                    AllowFriendOnClick();
+                  }}
                   color="error">
                   <CloseIcon />
                 </Button>
@@ -182,7 +193,9 @@ function FriendListComponent({
         </UserName>
       </Stack>
       <Stack>
-        <Button onClick={handleClick} sx={{justifyContent: 'center', padding: '0', minWidth: '30px' }}>
+        <Button
+          onClick={handleClick}
+          sx={{ justifyContent: 'center', padding: '0', minWidth: '30px' }}>
           <MoreVertIcon fontSize="medium" />
         </Button>
         <Menu anchorEl={anchorEl} open={friendopen} onClose={handleClose}>
@@ -237,18 +250,21 @@ function FriendListComponent({
                   alt="profileImage"
                 />
                 <Stack>
-                  <Stack padding="8px" fontSize='25px'>{introduce?.nickname}</Stack>
+                  <Stack padding="8px" fontSize="25px">
+                    {introduce?.nickname}
+                  </Stack>
                   <Stack direction="row" spacing={2}>
                     <Button size="small" variant="outlined">
-                      <PageLink href={`/${introduce?.blogUrl}`}> </PageLink>
-                      블로그 바로가기
+                      <PageLink href={`/${introduce?.blogUrl}`}>블로그 바로가기</PageLink>
                     </Button>
                   </Stack>
                 </Stack>
               </Stack>
               <Stack>
-                <Stack fontSize='18px' marginBottom='15px'>친구 {introduce?.friendCount} 명</Stack>
-                <Stack color='#00BFFF'>팔로잉</Stack>
+                <Stack fontSize="18px" marginBottom="15px">
+                  친구 {introduce?.friendCount} 명
+                </Stack>
+                <Stack color="#00BFFF">팔로잉</Stack>
               </Stack>
             </Stack>
             <Stack width="500px" spacing={2}>

@@ -1,73 +1,52 @@
 'use client';
 
 import { useGetSidebarQuery } from '@/api/blog-api';
-import { PutReadMeApi, useGetReadMeQuery, usegetblogIdQuery } from '@/api/readme-api';
+import { useGetReadMeQuery, usegetblogIdQuery } from '@/api/readme-api';
 import Button from '@/components/Button/Button';
 import DragAndDrop from '@/components/DND/DragAndDrop';
 import FootPrintAnimation from '@/components/FootPrint/FootPrintAnimation';
 import { ISidebarContent } from '@/types/dto';
-import { Stack, TextField } from '@mui/material';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Stack } from '@mui/material';
 import MDEditor from '@uiw/react-md-editor';
-import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Home = ({ params }: { params: { blogName: string } }) => {
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
-
-  //[FIXME: 나중에 blogName blogUrl로 바꾸기]
-  const [, setBlogId] = useState();
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
 
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: readMeData } = useGetReadMeQuery({ blogId: blogIdData });
   const [readMe, setReadMe] = useState('');
-  const queryClient = useQueryClient();
-
-  const [content, setContent] = useState<string>('');
-  const putReadMeCreateQuery = useMutation(PutReadMeApi, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['readMe']);
-      enqueueSnackbar({ message: '리드미 페이지가 수정되었습니다.', variant: 'success' });
-    },
-    onError: () => {
-      enqueueSnackbar({ message: '리드미 페이지가 수정되지 않았습니다.', variant: 'error' });
-    },
-    }
-  );
-
-  const ReadMeOnClick = () => {
-    const newReadMeBody = {
-      content: content,
-    };
-
-    putReadMeCreateQuery.mutate(newReadMeBody);
-  };
+  const router = useRouter();
 
   useEffect(() => {
     setWriteList(sidebarData?.sidebarDtos);
     setReadMe(readMeData?.body?.content);
-    setBlogId(blogIdData);
-  }, [sidebarData, readMeData, blogIdData]);
+  }, [sidebarData, readMeData]);
 
   return (
-    <Stack height={'fit-content'}>
+    <Stack mt={3} height={'fit-content'}>
       <DragAndDrop
         blogName={params.blogName}
         footprintList={writeList}
         rightContainer={
-          <Stack width="80%" margin="auto" overflow={'scroll'}>
-            <TextField
-              label="수정할 리드미를 입력해주세요"
-              variant="standard"
-              onChange={(e) => {
-                setContent(e.target.value);
-              }}
-            />
-            <Button variant="outlined" sx={{ width: '100px' }} onClick={() => ReadMeOnClick()}>
-              수정하기
+          <Stack alignItems="flex-end" spacing={2}>
+            <Button
+              onClick={() => router.push(`/write/readme/${params.blogName}`)}
+              sx={{ width: 'fit-content' }}
+              variant="contained">
+              수정
             </Button>
-            <MDEditor.Markdown source={readMe} />
+            <Stack
+              boxShadow="2px 2px 5px rgba(0, 0, 0, 0.1)"
+              p={8}
+              width="100%"
+              margin="auto"
+              minHeight="80vh"
+              overflow={'scroll'}>
+              <MDEditor.Markdown source={readMe} />
+            </Stack>
           </Stack>
         }
       />

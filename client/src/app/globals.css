@@ -14,6 +14,7 @@ html {
 }
 
 .w-md-editor {
+  color: #000;
   background-color: transparent !important;
   --md-editor-box-shadow-color: #d0d7de !important;
 }

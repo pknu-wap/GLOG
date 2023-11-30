@@ -27,9 +27,7 @@ export const usegetblogIdQuery = (params: IBlogIdParams) => {
 };
 
 export const PutReadMeApi = async (body: IReadMe) => {
-  const { data } = await defaultInstance.put('/read-me', {
-    body,
-  });
+  const { data } = await defaultInstance.put('/read-me', body);
 
   return data;
 };

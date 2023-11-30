@@ -107,6 +107,11 @@ export interface IPatchReplyLike {
   replyId: number;
 }
 
+//댓글 삭제
+export interface IDeleteReply {
+  replyId: number;
+}
+
 // 글쓰기 페이지
 export interface IWrite {
   thumbnail?: string | null;

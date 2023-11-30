@@ -15,7 +15,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PutFriendAllowApi, PutFriendRequestApi } from '@/api/friend-api';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { PatchReplyLikeApi, putReplyApi } from '@/api/reply-api';
+import { DeleteReplyApi, PatchReplyLikeApi, putReplyApi } from '@/api/reply-api';
+import { Dialog } from '@/components/Dialog/Dialog';
 
 export const ThumbnailArea = styled(Stack)({
   width: '100%',
@@ -68,13 +69,13 @@ export const GetReplies = styled(Stack)({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  maring: '30px 0',
+  margin: '60px 0',
 });
 
 export const ReplyPagenation = styled(Pagination)({});
 
 const ReplyMainInfo = styled(Stack)({
-  flexDirection: 'row',
+  flexDirection: 'column',
 });
 
 const ReplySubInfo = styled(Stack)({
@@ -83,6 +84,7 @@ const ReplySubInfo = styled(Stack)({
 
 const ReplyLike = styled(Stack)({
   flexDirection: 'row',
+  marginLeft: '20px',
 });
 
 const ChangeReply = styled(Stack)({});
@@ -95,7 +97,7 @@ function RepliesComponent({
   message,
   likesCount,
   isLiked,
-  isEdit,
+  who,
 }: {
   userId: number;
   replyId: number;
@@ -104,17 +106,31 @@ function RepliesComponent({
   message: string;
   likesCount: number;
   isLiked: boolean;
-  isEdit: boolean;
+  who: string;
 }) {
+  console.log(who);
+
   const theme = useTheme();
   const queryClient = useQueryClient();
   const [putReplyOpen, setPutReplyOpen] = useState<boolean>(false);
+  const [deleteReplyOpen, setDeleteReplyOpen] = useState<boolean>(false);
 
   const [IntroduceOpen, setIntroduceOpen] = useState<boolean>(false);
   const { data: introduceData } = useGetIntroduceQuery({
     userId: userId,
   });
   const [introduce, setIntroduce] = useState<IIntroduce>();
+
+  const deleteReplyQuery = useMutation(DeleteReplyApi, {
+    onSuccess() {
+      queryClient.invalidateQueries(['reply']);
+    },
+  });
+
+
+  const deleteClick = () => {
+    deleteReplyQuery.mutate({ replyId: replyId});
+  };
 
   const [isAccept, setIsAccept] = useState<number>(Number);
   const putAllowFriendIdCreateQuery = useMutation(PutFriendAllowApi, {
@@ -174,44 +190,54 @@ function RepliesComponent({
   }, [introduceData]);
 
   return (
-    <Stack flexDirection={'column'}>
+    <Stack flexDirection={'column'} padding='15px' width='100%' margin='20px 0 10px 0' border='3px solid rgb(189,189,189)' borderRadius='15px'>
       <ReplyMainInfo>
-        <Button
-          sx={{ minWidth: '30px', width: '30px', height: '30px', borderRadius: '50%' }}
-          onClick={() => setIntroduceOpen(true)}>
-          <img
-            style={{
-              width: '35px',
-              height: '35px',
-              borderRadius: '50%',
-            }}
-            src={profileImage}
-            alt="profileImage"
-          />
-        </Button>
+        <Stack flexDirection='row' alignItems='center' marginBottom='10px'>
+          <Button
+            sx={{ minWidth: '35px', width: '35px', height: '35px', borderRadius: '50%' }}
+            onClick={() => setIntroduceOpen(true)}>
+            <img
+              style={{
+                width: '35px',
+                height: '35px',
+                borderRadius: '50%',
+              }}
+              src={profileImage}
+              alt="profileImage"
+            />
+          </Button>
+          <Stack margin='0 10px'>{nickname}</Stack>
+          <ReplyLike>
+            <Stack marginTop='5px'>
+              {likesCount}
+            </Stack>
+              {isLiked ? (
+                <IconButton sx={{padding: '0px', marginLeft: '10px'}} onClick={ReplyLikeOnClick}>
+                  <ThumbUpAltIcon></ThumbUpAltIcon>
+                </IconButton>
+              ) : (
+                <IconButton sx={{padding: '0px' ,marginLeft: '10px'}} onClick={ReplyLikeOnClick}>
+                  <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
+                </IconButton>
+              )}
+              <ChangeReply>
+                {who === 'me(author)' || who === 'me' ? <Button onClick={() => setPutReplyOpen(true)}>수정하기</Button> : <></>}
+              </ChangeReply>
+              <Stack>
+                {who === 'me(author)' || who === 'me' ? <Button onClick={() => setDeleteReplyOpen(true)}>삭제하기</Button> : <></>}
+              </Stack>
+            </ReplyLike>
+        </Stack>
 
         <Stack>
-          <Stack>{nickname}</Stack>
-          <Stack>{message}</Stack>
+          
+          <ReplySubInfo>
+          
+          </ReplySubInfo>
         </Stack>
+        <Stack>{message}</Stack>
       </ReplyMainInfo>
-      <ReplySubInfo>
-        <ReplyLike>
-          {isLiked ? (
-            <IconButton onClick={ReplyLikeOnClick}>
-              <ThumbUpAltIcon></ThumbUpAltIcon>
-            </IconButton>
-          ) : (
-            <IconButton onClick={ReplyLikeOnClick}>
-              <ThumbUpOffAltIcon></ThumbUpOffAltIcon>
-            </IconButton>
-          )}
-          {likesCount}
-          <ChangeReply>
-            {isEdit ? <Button onClick={() => setPutReplyOpen(true)}>수정하기</Button> : <></>}
-          </ChangeReply>
-        </ReplyLike>
-      </ReplySubInfo>
+    
 
       <Modal open={putReplyOpen} onClose={() => setPutReplyOpen(false)}>
         <ModalTitle>수정하기</ModalTitle>
@@ -229,7 +255,17 @@ function RepliesComponent({
             게시하기
           </Button>
         </ModalContent>
+        <Dialog
+          open={deleteReplyOpen}
+          onClose={() => setDeleteReplyOpen(false)}
+          message="친구 삭제하시겠습니까?"
+          action={{
+            content: '확인',
+            action: deleteClick,
+          }}
+        />
       </Modal>
+      
 
       {/* 댓글 상대방 introduction */}
       <Modal open={IntroduceOpen} maxWidth="md" onClose={() => setIntroduceOpen(false)}>

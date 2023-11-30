@@ -60,8 +60,8 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const theme = useTheme();
 
   const [page, setPage] = useState(0);
-  const [order, setOrder] = useState('like');
-  const orderList = ['like', 'recent', 'oldest'];
+  const [order, setOrder] = useState('likesCount');
+  const orderList = ['likesCount', 'createdAt'];
   const { data: replyData } = useGetReplyQuery({
     postId: Number(params.postId),
     page: page,
@@ -80,6 +80,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
   const postReplyCreateQuery = useMutation(PostReplyApi, {
     onSuccess: () => {
       queryClient.invalidateQueries(['replies']);
+      setMessage('');
     },
   });
 
@@ -277,13 +278,6 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                         }}>
                         최신순
                       </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handleClose();
-                          setOrder(orderList[2]);
-                        }}>
-                        오래된순
-                      </MenuItem>
                     </Menu>
                   </Stack>
                   <Stack>정렬기준</Stack>
@@ -296,6 +290,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                   variant="standard"
                   label={'댓글 추가'}
                   sx={{ margin: '0 30px' }}
+                  value={message}
                   onChange={(e) => {
                     setMessage(e.target.value);
                   }}
@@ -318,7 +313,7 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
                     message={replyInfo.message}
                     likesCount={replyInfo.likesCount}
                     isLiked={replyInfo.isLiked}
-                    isEdit={replyInfo.isEdit}></RepliesComponent>
+                    who={replyInfo.who}></RepliesComponent>
                 );
               })}
               <ReplyPagenation

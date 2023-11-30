@@ -184,6 +184,7 @@ public class PostService {
             if (!oldCookie.getValue().contains("[" + postId + "]")) {
                 oldCookie.setValue(oldCookie.getValue() + "[" + postId + "]");
                 oldCookie.setPath("/");
+                oldCookie.setHttpOnly(false);
                 addViewCount(postId);
             }
             return oldCookie;
@@ -191,6 +192,7 @@ public class PostService {
 
         Cookie newCookie = new Cookie(VIEW_COOKIE_NAME, "[" + postId + "]");
         newCookie.setPath("/");
+        newCookie.setHttpOnly(false);
         addViewCount(postId);
         return newCookie;
     }

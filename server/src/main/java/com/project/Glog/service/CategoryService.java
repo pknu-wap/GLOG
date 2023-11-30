@@ -61,10 +61,11 @@ public class CategoryService {
         List<SidebarDto> sidebarDtos = new ArrayList<>();
         for(Category category : categories){
             List<Post> posts = postRepository.findAllByCategoryId(category.getId());
-            sidebarDtos.add(new SidebarDto(category, posts,isMyPage));
+            sidebarDtos.add(new SidebarDto(category, posts));
         }
 
-        return new SidebarDtos(sidebarDtos);
+
+        return new SidebarDtos(sidebarDtos,isMyPage);
     }
 
     public void deletePosts(Long id, List<Long> postsIds) throws Exception{

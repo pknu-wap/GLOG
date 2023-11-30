@@ -14,14 +14,12 @@ public class SidebarDto {
     private Long categoryId;
     private String categoryName;
     private Boolean isPrCategory;
-    private Boolean isMyPage;
     private List<PostTitleDto> postTitleDtos = new ArrayList<>();   //TODO 일급 컬렉션으로 수정
 
-    public SidebarDto(Category category, List<Post> posts, Boolean isMyPages){
+    public SidebarDto(Category category, List<Post> posts){
         categoryId = category.getId();
         categoryName = category.getCategoryName();
         isPrCategory = category.getIsPrcategory();
-        isMyPage = isMyPages;
         for(Post post : posts){
             postTitleDtos.add(PostTitleDto.of(post));
         }

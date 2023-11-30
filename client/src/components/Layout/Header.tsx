@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { IconButton, Stack } from '@mui/material';
+import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -12,15 +12,26 @@ import Image from 'next/image';
 import SettingMenu from '../Header/SettingMenu';
 import { Home, Search } from '@mui/icons-material';
 import { useGetUserDetailQuery } from '@/api/userDetail-api';
-import { IUserDetail } from '@/types/dto';
+import { IAlarm, IUserDetail } from '@/types/dto';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useGetAlarmsQuery } from '@/api/blog-api';
+import CommentIcon from '@mui/icons-material/Comment';
 
 export default function Header() {
   const [userTheme, setUserTheme] = useUserThemeSSR();
   const pathname = usePathname();
   const [isSearch, setIsSearch] = useIsSearchSSR();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [alarmAnchorEl, setAlarmAnchorEl] = useState<null | HTMLElement>(null);
   const { data: userDetailData } = useGetUserDetailQuery();
   const [userDetail, setUserDetail] = useState<IUserDetail>();
+  const [open, setOpen] = useState(false);
+  const { data: alarmData } = useGetAlarmsQuery();
+  const [alarm, setAlarm] = useState<IAlarm>();
+
+  useEffect(() => {
+    setAlarm(alarmData);
+  }, [alarmData]);
 
   const toggleUserTheme = () => {
     setUserTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -28,6 +39,10 @@ export default function Header() {
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleAlarmClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAlarmAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -82,6 +97,15 @@ export default function Header() {
             <LightModeIcon fontSize="large" />
           </IconButton>
         )}
+        <IconButton
+          sx={{ color: '#ffffff' }}
+          size="medium"
+          onClick={(e) => {
+            setOpen(true);
+            handleAlarmClick(e);
+          }}>
+          <NotificationsIcon fontSize="large" />
+        </IconButton>
         <Stack
           width="40px"
           height="40px"
@@ -97,6 +121,34 @@ export default function Header() {
         </IconButton>
         <SettingMenu open={menuopen} onClose={handleClose} anchorEl={anchorEl} />
       </Stack>
+      <Menu
+        anchorEl={alarmAnchorEl}
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setAnchorEl(null);
+        }}>
+        {alarm?.alarmDtos?.map((alarm, i) => {
+          return (
+            <MenuItem sx={{ padding: '4px' }} key={i}>
+              <Stack
+                bgcolor={alarm.checked ? 'primary.light' : 'transparent'}
+                py={4}
+                px={6}
+                spacing={2}>
+                <Stack>
+                  <CommentIcon sx={{ marginBottom: '4px' }} />
+                  {alarm.message}
+                </Stack>
+                <Stack direction="row" spacing={2}>
+                  <Stack fontSize="13px">{alarm.createdAt.slice(0, 10)}</Stack>
+                  <Stack fontSize="13px">{alarm.createdAt.slice(11, 19)}</Stack>
+                </Stack>
+              </Stack>
+            </MenuItem>
+          );
+        })}
+      </Menu>
     </Stack>
   );
 }

@@ -64,6 +64,17 @@ export interface IUserDetail {
   blogUrl: string;
 }
 
+// 알람
+export interface IAlarm {
+  alarmDtos: {
+    message: string;
+    checked: boolean;
+    type: string;
+    referencedId: number;
+    createdAt: string;
+  }[];
+}
+
 // 댓글 get 정보들
 export interface IReplyParams {
   postId: number;

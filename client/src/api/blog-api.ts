@@ -21,6 +21,17 @@ export const useGetPostQuery = (params: IPost) => {
   return { data, isLoading, error };
 };
 
+export const getAlarmsApi = async () => {
+  const { data } = await defaultInstance.get('/alarms');
+
+  return data;
+};
+
+export const useGetAlarmsQuery = () => {
+  const { isLoading, error, data } = useQuery([`alarms`], () => getAlarmsApi());
+  return { data, isLoading, error };
+};
+
 // 블로그 이름 변경
 export const PostChangeBlogNameApi = async (body: IChangeBlogName) => {
   const { data } = await defaultInstance.post('/change/blog/name', body);

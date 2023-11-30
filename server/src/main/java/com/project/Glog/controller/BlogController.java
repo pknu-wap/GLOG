@@ -3,6 +3,7 @@ package com.project.Glog.controller;
 import com.project.Glog.domain.Blog;
 import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.response.blog.MyPageResponse;
+import com.project.Glog.dto.response.blog.ReadMeDto;
 import com.project.Glog.repository.BlogRepository;
 import com.project.Glog.security.CurrentUser;
 import com.project.Glog.security.UserPrincipal;
@@ -54,11 +55,12 @@ public class BlogController {
     }
 
     @GetMapping("/read-me")
-    public ResponseEntity<String> readReadme(@RequestParam Long blogId){
+    public ResponseEntity<ReadMeDto> readReadme(@CurrentUser UserPrincipal userPrincipal,
+                                                @RequestParam Long blogId){
 
-        String readme = blogService.getReadme(blogId);
+        ReadMeDto readMeDto = blogService.getReadme(userPrincipal, blogId);
 
-        return new ResponseEntity<>(readme, HttpStatus.OK);
+        return new ResponseEntity<>(readMeDto, HttpStatus.OK);
     }
 
     @PutMapping("/read-me")

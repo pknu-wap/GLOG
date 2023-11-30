@@ -1,6 +1,7 @@
 package com.project.Glog.repository;
 
 import com.project.Glog.domain.Blog;
+import com.project.Glog.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,9 @@ import java.util.Optional;
 public interface BlogRepository extends JpaRepository<Blog, Long> {
     @Query("SELECT b FROM Blog b JOIN b.user u WHERE u.id=:userId")
     Optional<Blog> findByUserId(@Param("userId") Long uid);
+
+    @Query("SELECT b.user FROM Blog b WHERE b.id=:blogId")
+    Optional<User> findByBlogId(@Param("blogId") Long blogid);
 
     @Query("SELECT b.id FROM Blog b WHERE b.blogUrl=:blogUrl")
     Long findByBlogUrl(@Param("blogUrl") String blogUrl);

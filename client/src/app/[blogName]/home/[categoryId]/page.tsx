@@ -40,6 +40,7 @@ function page({ params }: { params: { blogName: string; categoryId: string } }) 
       <DragAndDrop
         blogName={params.blogName}
         footprintList={writeList}
+        isMe={sidebarData?.isMyPage}
         rightContainer={
           <Stack width="100%">
             <PostAreaComponent>

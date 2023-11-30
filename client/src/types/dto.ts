@@ -240,7 +240,7 @@ export interface IReadMeParams {
 
 //리드미 put
 export interface IReadMe {
-  content?: string;
+  readme?: string;
 }
 
 export interface IBlogIdParams {

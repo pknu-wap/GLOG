@@ -240,9 +240,9 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
         </BlackContainer>
       </ThumbnailArea>
       <DragAndDrop
-        post={post}
         blogName={params.blogName}
         footprintList={writeList}
+        isMe={sidebarData?.isMyPage}
         rightContainer={
           <Stack width={'100%'} bgcolor={userTheme === 'dark' ? 'transparent' : '#FCFAF1'} p={12}>
             <MDEditor.Markdown source={post?.content} />

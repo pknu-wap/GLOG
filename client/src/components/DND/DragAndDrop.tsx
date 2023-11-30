@@ -14,7 +14,6 @@ import PageLink from '../PageLink/PageLink';
 import Github from '../Github/Github';
 import Button from '../Button/Button';
 import CreateCategoryModal from './CreateCategoryModal';
-import { IPostContent } from '@/types/dto';
 
 type Footprint = {
   categoryId: number;
@@ -31,10 +30,10 @@ interface DragAndDropProps {
   rightContainer: ReactNode;
   footprintList?: Footprint[];
   categoryNumber?: string;
-  post?: IPostContent;
+  isMe?: boolean;
 }
 
-function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndDropProps) {
+function DragAndDrop({ rightContainer, footprintList, blogName, isMe }: DragAndDropProps) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [categoryEditOpen, setCategoryEditOpen] = useState(false);
   const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
@@ -61,7 +60,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
           <CenterContent sx={{ zIndex: 200 }} bgcolor="themeColor.main">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
-                {post?.isAuthor && (
+                {isMe && (
                   <Button
                     variant="outlined"
                     fullWidth
@@ -99,7 +98,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
                                   </Stack>
                                 </Tooltip>
                               </PageLink>
-                              {post?.isAuthor && (
+                              {isMe && (
                                 <Tooltip
                                   onClick={() => {
                                     setCategoryEditOpen(true);
@@ -113,7 +112,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
                               )}
                             </Stack>
                             <Stack direction="row" alignItems="center" spacing={1}>
-                              {post?.isAuthor && (
+                              {isMe && (
                                 <PageLink href={`/write/create/${category.categoryId}`}>
                                   <Tooltip title="게시글 작성">
                                     <IconButton sx={{ padding: '0px' }} size="small">
@@ -146,7 +145,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, post }: DragAndD
                                 </Stack>
                               </PageLink>
                             ) : (
-                              post?.isAuthor && (
+                              isMe && (
                                 <Stack
                                   onClick={() => {
                                     setOpen(true);

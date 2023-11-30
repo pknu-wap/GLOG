@@ -32,7 +32,7 @@ const ReadMe = ({ params }: { params: { blogName: string } }) => {
 
   const readmeSaveOnClick = () => {
     const newReadMeBody = {
-      content: content,
+      readme: content,
     };
 
     putReadmeQuery.mutate(newReadMeBody);

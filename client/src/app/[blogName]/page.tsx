@@ -14,7 +14,6 @@ import { useRouter } from 'next/navigation';
 const Home = ({ params }: { params: { blogName: string } }) => {
   const [writeList, setWriteList] = useState<ISidebarContent[]>();
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
-
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: readMeData } = useGetReadMeQuery({ blogId: blogIdData });
   const [readMe, setReadMe] = useState<{
@@ -34,6 +33,7 @@ const Home = ({ params }: { params: { blogName: string } }) => {
       <DragAndDrop
         blogName={params.blogName}
         footprintList={writeList}
+        isMe={sidebarData?.isMyPage}
         rightContainer={
           <Stack spacing={3}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">

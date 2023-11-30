@@ -1,14 +1,14 @@
 'use client';
 
 import { Stack } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { useUserThemeSSR } from '../../../../../hooks/useRecoilSSR';
 import Button from '@/components/Button/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { PutReadMeApi } from '@/api/readme-api';
+import { PutReadMeApi, useGetReadMeQuery, usegetblogIdQuery } from '@/api/readme-api';
 import { useRouter } from 'next/navigation';
 
 const ReadMe = ({ params }: { params: { blogName: string } }) => {
@@ -16,6 +16,8 @@ const ReadMe = ({ params }: { params: { blogName: string } }) => {
   const [content, setContent] = useState<string | undefined>('');
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
+  const { data: readMeData } = useGetReadMeQuery({ blogId: blogIdData });
 
   const putReadmeQuery = useMutation(PutReadMeApi, {
     onSuccess: () => {
@@ -23,6 +25,10 @@ const ReadMe = ({ params }: { params: { blogName: string } }) => {
       router.push(`/${params.blogName}`);
     },
   });
+
+  useEffect(() => {
+    setContent(readMeData.content);
+  }, [readMeData]);
 
   const readmeSaveOnClick = () => {
     const newReadMeBody = {

@@ -9,9 +9,17 @@ export const getReadMeApi = async (params: IReadMeParams) => {
 };
 
 export const useGetReadMeQuery = (params: IReadMeParams) => {
-  const { isLoading, error, data } = useQuery([`readMe`, params], () => getReadMeApi(params), {
+  const {
+    isLoading,
+    error,
+    data: backendData,
+  } = useQuery([`readMe`, params], () => getReadMeApi(params), {
     enabled: !!params.blogId,
   });
+
+  const data: {
+    readMeDto: { blogName: string; content: string; isMe: boolean };
+  } = backendData;
   return { data, isLoading, error };
 };
 

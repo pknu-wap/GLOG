@@ -17,12 +17,16 @@ const Home = ({ params }: { params: { blogName: string } }) => {
 
   const { data: sidebarData } = useGetSidebarQuery({ blogId: blogIdData });
   const { data: readMeData } = useGetReadMeQuery({ blogId: blogIdData });
-  const [readMe, setReadMe] = useState<{ blogName: string; content: string; isMe: boolean }>();
+  const [readMe, setReadMe] = useState<{
+    blogName: string;
+    content: string;
+    isMe: boolean;
+  }>();
   const router = useRouter();
 
   useEffect(() => {
     setWriteList(sidebarData?.sidebarDtos);
-    setReadMe(readMeData?.content);
+    setReadMe(readMeData?.readMeDto);
   }, [sidebarData, readMeData]);
 
   return (

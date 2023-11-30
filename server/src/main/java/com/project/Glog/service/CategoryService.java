@@ -3,6 +3,7 @@ package com.project.Glog.service;
 import com.project.Glog.domain.Blog;
 import com.project.Glog.domain.Category;
 import com.project.Glog.domain.Post;
+import com.project.Glog.domain.User;
 import com.project.Glog.dto.request.category.CategoryCreateRequest;
 import com.project.Glog.dto.request.category.CategoryUpdateRequest;
 import com.project.Glog.dto.response.category.CategoryDto;
@@ -44,15 +45,23 @@ public class CategoryService {
         categoryRepository.delete(categoryRepository.findById(categoryId).get());
     }
 
-    public SidebarDtos getSideBarByBlog(Long blogId) {
+    public SidebarDtos getSideBarByBlog(UserPrincipal userPrincipal, Long blogId) {
         //해당 블로그의 카테고리를 모두 불러온다.
         List<Category> categories = categoryRepository.findAllByBlogId(blogId);
+        Boolean isMyPage;
+
+        if (userPrincipal == null){
+            isMyPage = false;
+        }
+        else{
+            isMyPage = (blogRepository.findById(blogId).get().getUser().getId() == userPrincipal.getId());
+        }
 
         //모든 카테고리를 순회하며, 각 카테고리당 게시글을 모두 불러와서 SidebarDto에 담는다.
         List<SidebarDto> sidebarDtos = new ArrayList<>();
         for(Category category : categories){
             List<Post> posts = postRepository.findAllByCategoryId(category.getId());
-            sidebarDtos.add(new SidebarDto(category, posts));
+            sidebarDtos.add(new SidebarDto(category, posts,isMyPage));
         }
 
         return new SidebarDtos(sidebarDtos);

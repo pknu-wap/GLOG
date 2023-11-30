@@ -72,10 +72,11 @@ public class CategoryController {
     }
 
     @GetMapping ("/category/sidebar/{blogId}")
-    public ResponseEntity<SidebarDtos> getSidebarByBlog(@PathVariable Long blogId){
+    public ResponseEntity<SidebarDtos> getSidebarByBlog(@CurrentUser UserPrincipal userPrincipal,
+                                                        @PathVariable Long blogId){
 
         //해당 블로그의 사이드바를 읽어 온다
-        SidebarDtos sidebarResponse = categoryService.getSideBarByBlog(blogId);
+        SidebarDtos sidebarResponse = categoryService.getSideBarByBlog(userPrincipal, blogId);
 
         return new ResponseEntity<>(sidebarResponse,HttpStatus.OK);
     }

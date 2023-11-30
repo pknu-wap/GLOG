@@ -161,7 +161,7 @@ public class PostService {
                 if (scrapRepository.findByUserIdAndPostId(user.getId(), post.getId()).isPresent())
                     isScraped = true;
 
-                if (postLikeRepository.findByPostAndUser(post.getId(), user.getId()).isPresent())
+                if (postLikeRepository.findPostLikeByPostAndUser(post, user).isPresent())
                     isLiked = true;
 
                 if (post.getUser().equals(user))

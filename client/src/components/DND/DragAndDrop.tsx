@@ -57,7 +57,7 @@ function DragAndDrop({ rightContainer, footprintList, blogName, isMe }: DragAndD
     <>
       {isBrowser ? (
         <DragDropContext onDragEnd={dragHandler}>
-          <CenterContent sx={{ zIndex: 200 }} bgcolor="themeColor.main">
+          <CenterContent bgcolor="themeColor.main">
             <Stack gap={8} width="100%" height="100%" direction="row">
               <Stack sx={{ transition: 'all .35s ease-in-out' }} position="relative" gap={8}>
                 {isMe && (

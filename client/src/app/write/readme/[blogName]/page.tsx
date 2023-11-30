@@ -10,6 +10,7 @@ import Button from '@/components/Button/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PutReadMeApi, useGetReadMeQuery, usegetblogIdQuery } from '@/api/readme-api';
 import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 
 const ReadMe = ({ params }: { params: { blogName: string } }) => {
   const [userTheme] = useUserThemeSSR();
@@ -35,7 +36,12 @@ const ReadMe = ({ params }: { params: { blogName: string } }) => {
       readme: content,
     };
 
-    putReadmeQuery.mutate(newReadMeBody);
+    putReadmeQuery.mutate(newReadMeBody, {
+      onSuccess: () =>
+        enqueueSnackbar({ message: '리드미 생성에 성공하였습니다.', variant: 'success' }),
+      onError: () =>
+        enqueueSnackbar({ message: '리드미 생성에 실패하였습니다.', variant: 'error' }),
+    });
   };
 
   return (

@@ -347,7 +347,15 @@ function page() {
             )}
           </CenterContent>
         </Stack>
-        <Stack>방문자 수 : {data} </Stack>
+        <Stack spacing={2}>
+          <Typography fontSize="24px">통계</Typography>
+          <CenterContent
+            bgcolor={theme.palette.mode === 'dark' ? 'transparent' : '#ffffff'}
+            width={'100%'}
+            border="1px solid #e8e2b4">
+            <Stack>방문자 수 : {data} </Stack>
+          </CenterContent>
+        </Stack>
       </CenterContent>
     </>
   );

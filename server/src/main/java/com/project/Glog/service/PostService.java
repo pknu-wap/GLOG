@@ -161,7 +161,7 @@ public class PostService {
                 if (scrapRepository.findByUserIdAndPostId(user.getId(), post.getId()).isPresent())
                     isScraped = true;
 
-                if (postLikeRepository.findByPostAndUser(post.getId(), user.getId()).isPresent())
+                if (postLikeRepository.findPostLikeByPostAndUser(post, user).isPresent())
                     isLiked = true;
 
                 if (post.getUser().equals(user))
@@ -290,7 +290,7 @@ public class PostService {
         Post post = postRepository.findById(postId).get();
         User currentUser = userRepository.findById(userPrincipal.getId()).get();
 
-        Optional<PostLike> postLikeOptional = postLikeRepository.findByPostAndUser(post.getId(), currentUser.getId());
+        Optional<PostLike> postLikeOptional = postLikeRepository.findPostLikeByPostAndUser(post, currentUser);
         if (postLikeOptional.isPresent()) {
 
             post.setLikesCount(post.getLikesCount() - 1);

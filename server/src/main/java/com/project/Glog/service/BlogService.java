@@ -59,7 +59,7 @@ public class BlogService {
 
     public ReadMeDto getReadme(UserPrincipal userPrincipal, Long blogId){
         ReadMeDto readMeDto = new ReadMeDto();
-        Blog blog = blogRepository.getReferenceById(blogId);
+        Blog blog = blogRepository.findById(blogId).get();
         Boolean isMe;
 
         if(userPrincipal == null){

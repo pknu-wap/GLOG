@@ -1,6 +1,7 @@
 package com.project.Glog.controller;
 
 import com.project.Glog.domain.Blog;
+import com.project.Glog.dto.ReadmeDto;
 import com.project.Glog.dto.request.user.UserCreateRequest;
 import com.project.Glog.dto.response.blog.MyPageResponse;
 import com.project.Glog.dto.response.blog.ReadMeDto;
@@ -65,8 +66,8 @@ public class BlogController {
 
     @PutMapping("/read-me")
     public ResponseEntity<String> putReadme(@CurrentUser UserPrincipal userPrincipal,
-                                            @RequestBody String readme){
-        blogService.registerReadme(userPrincipal, readme);
+                                            @RequestBody ReadmeDto readme){
+        blogService.registerReadme(userPrincipal, readme.getReadme());
 
         return new ResponseEntity<>("success update read-me", HttpStatus.OK);
     }

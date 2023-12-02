@@ -74,6 +74,17 @@ ex) 베이스 브랜치에 포함되기 위한 코드는 모두 정상적으로 
 ex) 여기에서 이 부분 잘 모르겠는데 한번 봐주실 수 있나요?
 ```
 
+### 작동 화면
+
+- 게시글 모아보기 페이지
+
+![화면 기록 2023-12-02 오전 11 16 41 mov](https://github.com/pknu-wap/GLOG/assets/66813821/04dcf53f-0bb9-4fed-ab4e-53cfdf594d38)
+
+
+- 게시글 보기
+
+![화면 기록 2023-12-02 오전 11 22 45 mov](https://github.com/pknu-wap/GLOG/assets/66813821/443a2cf3-76b0-4617-8a3b-e1bdede50938)
+
 
 ### Contributor
 |  <img src="https://github.com/pknu-wap/GLOG/assets/66813821/9d17f0a6-ed4d-4b80-8f8f-d9ba61f560e1" alt="3_pano" width="100" height="100">  | <img src="https://github.com/pknu-wap/GLOG/assets/66813821/31fa8a99-7f76-49eb-99fc-d4695b107d2c" alt="3_jumo" width="100" height="100"> | <img src="https://github.com/pknu-wap/GLOG/assets/66813821/79de9800-c16d-4a7a-b306-c933d276cb2d" alt="3_simba" width="100" height="100">  | <img src="https://github.com/pknu-wap/GLOG/assets/48638700/160f21e5-40da-44dc-9e26-1f234c731791" alt="3_pano" width="100" height="100"> | <img src="https://github.com/pknu-wap/GLOG/assets/66813821/aece1d61-7853-42a6-ace3-ce8023cc91e0" alt="3_miki" width="100" height="100"> |

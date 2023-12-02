@@ -1,39 +1,39 @@
-name: NodeJS with Grunt
+# name: NodeJS with Grunt
 
-on:
-  push:
-    branches: ["main", "develop"]
+# on:
+#   push:
+#     branches: ["main", "develop"]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    env:
-      CI: false
-    strategy:
-      matrix:
-        node-version: [18.x]
+#     env:
+#       CI: false
+#     strategy:
+#       matrix:
+#         node-version: [18.x]
 
-    steps:
-      - uses: actions/checkout@v3
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - name: Deploy
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: 'ubuntu'
-          key: ${{ secrets.PRIVATE_KEY }}
-          script: |
-            cd /home/ubuntu/app/GLOG
-            git pull origin develop
-            cd client
-            npm install
+#       - name: Deploy
+#         uses: appleboy/ssh-action@v1.0.0
+#         with:
+#           host: ${{ secrets.HOST }}
+#           username: 'ubuntu'
+#           key: ${{ secrets.PRIVATE_KEY }}
+#           script: |
+#             cd /home/ubuntu/app/GLOG
+#             git pull origin develop
+#             cd client
+#             npm install
             
-            echo "Build!!"
-            npm run build
+#             echo "Build!!"
+#             npm run build
             
-            echo "Restart pm2!!"
-            pm2 kill
-            pm2 start "npm run start"
+#             echo "Restart pm2!!"
+#             pm2 kill
+#             pm2 start "npm run start"
             
-            echo "Finished!!"
+#             echo "Finished!!"

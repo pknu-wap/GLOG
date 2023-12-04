@@ -16,6 +16,7 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { WriteProps } from '@/util/useWriteProps';
 import { useGetTemplateDetailQuery, useGetTemporaryDetailQuery } from '@/api/write-api';
+import onImagePasted from '@/util/onImagePasted';
 
 const Write = ({ params }: { params: { categoryId: number } }) => {
   const [userTheme] = useUserThemeSSR();
@@ -78,7 +79,17 @@ const Write = ({ params }: { params: { categoryId: number } }) => {
         <TagList editTagArray={(newValue) => setTags(newValue)} tagArray={tags} />
         <TopButton />
       </ToolBar>
-      <MDEditor height="68vh" value={content} onChange={setContent} />
+      <MDEditor
+        onPaste={async (event) => {
+          await onImagePasted(event.clipboardData, setContent);
+        }}
+        onDrop={async (event) => {
+          await onImagePasted(event.dataTransfer, setContent);
+        }}
+        height="68vh"
+        value={content}
+        onChange={setContent}
+      />
       <BottomButton categoryId={params.categoryId} writeProps={writeProps} />
     </Stack>
   );

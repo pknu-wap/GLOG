@@ -41,16 +41,16 @@ public class VisitService {
         if (oldCookie != null) {
             if (!oldCookie.getValue().contains("[" + blogId + "]")) {
                 oldCookie.setValue(oldCookie.getValue() + "[" + blogId + "]");
+                oldCookie.setDomain("15.164.221.35:3000");
                 oldCookie.setPath("/");
-                oldCookie.setHttpOnly(false);
                 addVisitCount(blogId);
             }
             return oldCookie;
         }
 
         Cookie newCookie = new Cookie(VISIT_COOKIE_NAME, "[" + blogId + "]");
+        newCookie.setDomain("15.164.221.35:3000");
         newCookie.setPath("/");
-        newCookie.setHttpOnly(false);
         addVisitCount(blogId);
         return newCookie;
     }

@@ -183,7 +183,6 @@ public class PostService {
         if (oldCookie != null) {
             if (!oldCookie.getValue().contains("[" + postId + "]")) {
                 oldCookie.setValue(oldCookie.getValue() + "[" + postId + "]");
-                oldCookie.setDomain("15.164.221.35:3000");
                 oldCookie.setPath("/");
                 addViewCount(postId);
             }
@@ -191,7 +190,6 @@ public class PostService {
         }
 
         Cookie newCookie = new Cookie(VIEW_COOKIE_NAME, "[" + postId + "]");
-        newCookie.setDomain("15.164.221.35:3000");
         newCookie.setPath("/");
         addViewCount(postId);
         return newCookie;

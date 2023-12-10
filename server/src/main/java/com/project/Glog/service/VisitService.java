@@ -41,7 +41,6 @@ public class VisitService {
         if (oldCookie != null) {
             if (!oldCookie.getValue().contains("[" + blogId + "]")) {
                 oldCookie.setValue(oldCookie.getValue() + "[" + blogId + "]");
-                oldCookie.setDomain("15.164.221.35:3000");
                 oldCookie.setPath("/");
                 addVisitCount(blogId);
             }
@@ -49,7 +48,6 @@ public class VisitService {
         }
 
         Cookie newCookie = new Cookie(VISIT_COOKIE_NAME, "[" + blogId + "]");
-        newCookie.setDomain("15.164.221.35:3000");
         newCookie.setPath("/");
         addVisitCount(blogId);
         return newCookie;

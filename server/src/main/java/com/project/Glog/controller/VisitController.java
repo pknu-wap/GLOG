@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ public class VisitController {
     }
 
     @PostMapping("/visit")
+    @CrossOrigin(origins = "http://15.164.221.35:3000", allowedHeaders = "*")
     public ResponseEntity<String> saveVisitCount(HttpServletRequest request,
                                                  HttpServletResponse response,
                                                  @RequestParam Long blogId) {

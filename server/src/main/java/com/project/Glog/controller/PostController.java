@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -82,6 +83,7 @@ public class PostController {
     }
 
     @GetMapping("/post")
+    @CrossOrigin(origins = "http://15.164.221.35:3000", allowedHeaders = "*")
     public ResponseEntity<?> readPost(HttpServletRequest httpServletRequest,
                                       HttpServletResponse httpServletResponse,
                                       @CurrentUser UserPrincipal userPrincipal,

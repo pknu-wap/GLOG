@@ -49,7 +49,6 @@ import { AddLikeApi, DeleteWriteApi } from '@/api/write-api';
 import { enqueueSnackbar } from 'notistack';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { postVisitApi } from '@/api/mypage-api';
-import SEO from '@/components/SEO';
 
 const page = ({ params }: { params: { blogName: string; categoryId: string; postId: string } }) => {
   const { data: blogIdData } = usegetblogIdQuery({ blogUrl: params.blogName });
@@ -177,11 +176,6 @@ const page = ({ params }: { params: { blogName: string; categoryId: string; post
 
   return (
     <Stack>
-      <SEO
-        title={post?.title}
-        description={post?.content?.slice(0, 30)}
-        ogImage={{ url: post?.thumbnail ?? '', width: 1200, height: 630 }}
-      />
       <ThumbnailArea>
         <ImageContainer
           imageSrc={

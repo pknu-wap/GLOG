@@ -2,7 +2,7 @@ import PostData from '@/components/Post/PostData';
 import { Metadata } from 'next';
 import React from 'react';
 
-export const getData = async (id: number) => {
+const getData = async (id: number) => {
   const res = await fetch(
     `http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com/post?postId=${id}`,
   );

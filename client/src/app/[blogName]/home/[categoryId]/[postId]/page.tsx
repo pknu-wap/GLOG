@@ -1,7 +1,6 @@
 import PostData from '@/components/Post/PostData';
 import { SERVER_URL } from '@/constant/common';
 import { Metadata } from 'next';
-import Head from 'next/head';
 import React from 'react';
 
 const getData = async (id: number) => {
@@ -28,14 +27,9 @@ export const generateMetadata = async ({
 
 function page({ params }: { params: { blogName: string; categoryId: string; postId: string } }) {
   return (
-    <>
-      <Head>
-        <title key={'title'}>{`${params.blogName} | Next Movies`}</title>
-      </Head>
-      <PostData
-        params={{ blogName: params.blogName, categoryId: params.categoryId, postId: params.postId }}
-      />
-    </>
+    <PostData
+      params={{ blogName: params.blogName, categoryId: params.categoryId, postId: params.postId }}
+    />
   );
 }
 

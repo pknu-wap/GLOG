@@ -20,15 +20,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/collect',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 module.exports = removeImports({

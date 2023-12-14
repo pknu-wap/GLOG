@@ -1,7 +1,10 @@
-import React from 'react';
+import { useRouter } from 'next/navigation';
 
 function Collect() {
-  return <></>;
+  const router = useRouter();
+  router.replace('/i/flow/login');
+
+  return null;
 }
 
 export default Collect;

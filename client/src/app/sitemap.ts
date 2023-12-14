@@ -1,11 +1,19 @@
-// import { useGetCollectDataQuery } from '@/api/collect-api';
+// import { ICollectContent } from '@/types/dto';
 import { MetadataRoute } from 'next';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  //   const { data } = useGetCollectDataQuery({ kind: 'likes', page: 0 });
-  //   const allThePostData = data?.postPreviewDtos;
+export const getData = async (id: number) => {
+  const res = await fetch(
+    `http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com/post/previews/likes?page=${id}`,
+  );
+  return res.json();
+};
 
-  //   const sitemapUrls = allThePostData.map((post) => {
+export default function sitemap(): MetadataRoute.Sitemap {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //   const data: any = getData(0);
+  //   const allThePostData: ICollectContent['postPreviewDtos'] = data?.postPreviewDtos;
+
+  //   const sitemapUrls = allThePostData?.map((post) => {
   //     return {
   //       url: `http://15.164.221.35:3000/${post.blogUrl}/home/${post.categoryId}/${post.postId}`,
   //     };

@@ -1,11 +1,7 @@
-import { useRouter } from 'next/navigation';
-import { Fragment } from 'react';
+import { redirect } from 'next/navigation';
 
 function Collect() {
-  const router = useRouter();
-  router.replace('/i/flow/login');
-
-  return <Fragment></Fragment>;
+  redirect('/i/flow/login');
 }
 
 export default Collect;

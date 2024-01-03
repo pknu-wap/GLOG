@@ -33,10 +33,6 @@ const unAxiosApi = (url: string, data?: any) => {
   return instance;
 };
 
-export const defaultInstance = axiosApi(
-  'http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
-);
+export const defaultInstance = axiosApi('http://3.35.24.11:8080');
 
-export const unAxiosDefaultInstance = unAxiosApi(
-  'http://glogglogglog-env.eba-fuksumx7.ap-northeast-2.elasticbeanstalk.com',
-);
+export const unAxiosDefaultInstance = unAxiosApi('http://3.35.24.11:8080');

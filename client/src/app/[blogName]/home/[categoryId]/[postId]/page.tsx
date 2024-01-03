@@ -11,9 +11,9 @@ const getData = async (id: number) => {
 export const generateMetadata = async ({
   params,
 }: {
-  params: { id: string };
+  params: { postId: string };
 }): Promise<Metadata> => {
-  const data = await getData(Number(params.id));
+  const data = await getData(Number(params.postId));
 
   return {
     title: data.title,
@@ -21,6 +21,8 @@ export const generateMetadata = async ({
     openGraph: {
       title: data.title,
       description: data.content,
+      images:
+        'https://elasticbeanstalk-us-east-1-064991853848.s3.amazonaws.com/profile/defaultImages.jpg',
     },
   };
 };

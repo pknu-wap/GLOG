@@ -21,7 +21,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: cd server
-      run: cd server
+      run: cd /home/runner/work/GLOG/GLOG/server
     - name: Generate Gradle Wrapper
       run: gradle wrapper
     - name: Grant execute permission for gradlew

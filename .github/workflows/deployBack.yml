@@ -11,9 +11,8 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -23,11 +22,10 @@ jobs:
         distribution: 'temurin'
     - name: Generate Gradle Wrapper
       run: gradle wrapper
-      working-directory: path/to/your/project
+      working-directory: ./server
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       working-directory: ./server
-    - name: Change to project directory
-      run: cd path/to/your/project
     - name: Build with Gradle
       run: ./gradlew clean build --exclude-task test
+      working-directory: path/to/your/project

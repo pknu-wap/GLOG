@@ -22,8 +22,9 @@ jobs:
         distribution: 'temurin'
     # - name: cd server
     #   run: cd /home/runner/work/GLOG/GLOG/server
-    # - name: Generate Gradle Wrapper
-    #   run: gradle wrapper
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper
+      working-directory: server
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle

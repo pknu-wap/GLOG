@@ -12,6 +12,6 @@ permissions:
     group: ubuntu
 hooks:
   AfterInstall:
-    - location: /home/ubuntu/GLOG/scripts/deploy.sh
+    - location: /scripts/deploy.sh
       timeout: 60
       runas: ubuntu

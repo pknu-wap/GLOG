@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
 env:
-  PROJECT_NAME: glog
+  PROJECT_NAME: GLOG
   BUCKET_NAME: glog-cicd-bucket
   CODE_DEPLOY_APP_NAME: glog_cicd
   DEPLOYMENT_GROUP_NAME: glog_cicd

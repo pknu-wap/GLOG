@@ -22,10 +22,7 @@ jobs:
         distribution: 'temurin'
     - name: Generate Gradle Wrapper
       run: gradle wrapper
-      working-directory: ./server
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      working-directory: ./server
     - name: Build with Gradle
       run: ./gradlew clean build --exclude-task test
-      working-directory: path/to/your/project

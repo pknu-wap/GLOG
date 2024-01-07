@@ -4,8 +4,8 @@ REPOSITORY=/home/ubuntu/GLOG
 cd $REPOSITORY
 
 APP_NAME=GLOG
-JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep 'SNAPSHOT.jar' | tail -n 1)
-JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
+JAR_NAME=$(ls $REPOSITORY/server/build/libs/ | grep 'Glog-0.0.1-SNAPSHOT.jar' | tail -n 1)
+JAR_PATH=$REPOSITORY/server/build/libs/$JAR_NAME
 
 CURRENT_PID=$(pgrep -f $APP_NAME)
 

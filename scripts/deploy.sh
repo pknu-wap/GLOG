@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/GLOG/server
+REPOSITORY=/home/ubuntu/GLOGG
 cd $REPOSITORY
 
 APP_NAME=GLOGG

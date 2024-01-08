@@ -3,11 +3,11 @@ os: linux
 
 files:
   - source: /
-    destination: /home/ubuntu/GLOGG
+    destination: /home/ubuntu/GGLOGG
     overwrite: yes
 file_exists_behavior: OVERWRITE
 permissions:
-  - object: /home/ubuntu/GLOGG/
+  - object: /home/ubuntu/GGLOGG/
     owner: ubuntu
     group: ubuntu
 hooks:

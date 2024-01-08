@@ -18,6 +18,7 @@ else
   sleep 5
 fi
 
+cd /home/ubuntu/GLOGG/server/build/libs
 echo "> Deploy - $JAR_PATH "
 nohup java -jar Glog-0.0.1-SNAPSHOT.jar &
 #nohup java -jar $JAR_PATH &

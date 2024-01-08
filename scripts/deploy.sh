@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/glog
+REPOSITORY=/home/ubuntu/GGLOGG
 cd $REPOSITORY
 
-APP_NAME=glog
+APP_NAME=GGLOGG
 JAR_NAME=$(ls $REPOSITORY/server/build/libs/ | grep 'SNAPSHOT.jar' | tail -n 1)
 JAR_PATH=$REPOSITORY/server/build/libs/$JAR_NAME
 

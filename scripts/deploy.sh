@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/GLOG
+REPOSITORY=/home/ubuntu/GLOG/server
 cd $REPOSITORY
 
-APP_NAME=GLOG
-JAR_NAME=$(ls $REPOSITORY/server/build/libs/ | grep 'SNAPSHOT.jar' | tail -n 1)
-JAR_PATH=$REPOSITORY/server/build/libs/$JAR_NAME
+APP_NAME=GLOGG
+JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep 'SNAPSHOT.jar' | tail -n 1)
+JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
 CURRENT_PID=$(pgrep -f $APP_NAME)
 
